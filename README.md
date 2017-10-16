@@ -1,5 +1,7 @@
 # Pretty UI (WIP)
 
+demo: https://renaudtertrais.github.io/pretty-ui
+
 ## Getting started
 
 1. Clone or download project
