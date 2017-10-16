@@ -1,0 +1,9 @@
+@import "../../style/inc";
+
+.Button {
+  @extend %reset-button;
+}
+
+.Button--primary {
+  color: $color__primary;
+}

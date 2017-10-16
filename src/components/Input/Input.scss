@@ -1,0 +1,13 @@
+@import "../../style/inc";
+
+.Input {
+  @extend %reset-input;
+}
+
+.Input--primary {
+  color: $color__primary;
+}
+
+.Input--small {
+  font-size: .8rem;
+}

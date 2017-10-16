@@ -1,0 +1,48 @@
+{
+  "name": "pretty-ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://renaudtertrais.github.io/pretty-ui",
+  "author": "Renaud Tertrais <renaud.tertrais@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "lint:style": "stylelint \"src/*.scss\" \"src/**/*.scss\" \"src/*.css\" \"src/**/*.css\"",
+    "lint:script": "eslint .",
+    "lint": "npm run lint:script && npm run lint:style",
+    "prebuild:storybook": "npm run lint",
+    "build:storybook": "build-storybook -c .storybook -o build/storybook",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build": "npm run build:storybook",
+    "start": "npm run storybook"
+  },
+  "devDependencies": {
+    "@storybook/addon-centered": "3.2.12",
+    "@storybook/addon-info": "3.2.12",
+    "@storybook/addon-knobs": "3.2.12",
+    "@storybook/addon-options": "3.2.12",
+    "@storybook/react": "3.1.6",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-import-resolver-webpack": "^0.8.3",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "gh-pages": "^1.0.0",
+    "github-markdown-css": "^2.9.0",
+    "node-sass": "^4.5.3",
+    "raw-loader": "^0.5.1",
+    "sass-loader": "^6.0.6",
+    "storybook-addon-jsx": "^4.2.0",
+    "storybook-readme": "^3.0.6",
+    "stylelint": "^8.2.0",
+    "stylelint-config-recommended": "^1.0.0",
+    "stylelint-scss": "^2.1.0"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "lodash": "^4.17.4",
+    "prop-types": "^15.6.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}
