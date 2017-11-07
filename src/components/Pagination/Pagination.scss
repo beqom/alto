@@ -1,0 +1,43 @@
+@import "../../style/inc";
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Pagination__page-button {
+  @extend %reset-button;
+
+  color: $color__grey;
+  padding: 3px 7px;
+  margin: 0 2px;
+  border-radius: 3px;
+
+  &:hover {
+    background-color: $color__grey--light;
+  }
+
+  &:disabled {
+    opacity: .5;
+  }
+
+  &--current,
+  &--current:hover {
+    background-color: $color__primary;
+    color: white;
+  }
+
+  &--arrow {
+    font-size: .8em;
+    padding: .2em 0;
+    width: 1.6em;
+    text-align: center;
+  }
+}
+
+.Pagination__ellipsis {
+  margin: 0 2px;
+  color: $color__grey;
+}
+

@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
 html {
   font-size: $size__font--main;
   font-family: $font-family--main;
   color: $color__font--main;
+  background: $color__grey--ultra-light;
   line-height: $lineheight--main;
 }
