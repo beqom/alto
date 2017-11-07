@@ -34,12 +34,12 @@ const Pagination = ({ className, max, current, onClick }) => {
   const pages = range(1, max + 1);
 
   const firstPage = pages.slice(0, 1);
-  const beforePages = pages.slice(1, Math.max(1, currentValue - 3));
+  const beforePages = pages.slice(1, Math.max(1, currentValue - 2));
   const currentPages = pages.slice(
-    Math.max(1, currentValue - 3),
-    Math.min(maxValue - 1, currentValue + 2)
+    Math.max(1, currentValue - 2),
+    Math.min(maxValue - 1, currentValue + 1)
   );
-  const afterPages = pages.slice(Math.min(maxValue - 1, currentValue + 2), maxValue - 1);
+  const afterPages = pages.slice(Math.min(maxValue - 1, currentValue + 1), maxValue - 1);
   const lastPage = pages.slice(1).slice(-1);
 
   return (
