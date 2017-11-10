@@ -16,7 +16,7 @@ storiesOf('Icons')
     const size = `${number('size', 20, { range: true, step: 1, min: 5, max: 400 })}px`;
     const col = color('color', 'black');
     const iconsElts = icons.map(Icon => (
-      <div style={{ textAlign: 'center', display: 'inline-block', margin: 10 }}>
+      <div key={Icon.displayName} style={{ textAlign: 'center', display: 'inline-block', margin: 10 }}>
         <div style={{ padding: 10 }}>
           <Icon size={size} color={col} />
         </div>

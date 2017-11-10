@@ -9,7 +9,6 @@ import centered from '@storybook/addon-centered';
 import fixAddonInfo from './fixAddonInfo';
 
 import '../src/style/index.scss';
-import 'github-markdown-css';
 
 setAddon(JSXAddon);
 

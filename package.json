@@ -6,6 +6,7 @@
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "test": "jest --json --outputFile=.jest-test-results.json",
     "lint:style": "stylelint \"src/*.scss\" \"src/**/*.scss\" \"src/*.css\" \"src/**/*.css\"",
     "lint:script": "eslint .",
     "lint": "npm run lint:script && npm run lint:style",
@@ -24,6 +25,11 @@
     "@storybook/addon-knobs": "3.2.12",
     "@storybook/addon-options": "3.2.12",
     "@storybook/react": "3.1.6",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
+    "enzyme": "^3.1.1",
+    "enzyme-adapter-react-16": "^1.0.4",
     "eslint": "^4.8.0",
     "eslint-config-airbnb": "^16.0.0",
     "eslint-config-prettier": "^2.7.0",
@@ -33,10 +39,12 @@
     "eslint-plugin-react": "^7.4.0",
     "gh-pages": "^1.0.0",
     "github-markdown-css": "^2.9.0",
+    "jest-cli": "^21.2.1",
     "node-sass": "^4.5.3",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
+    "storybook-addon-jest": "^0.0.1",
     "storybook-addon-jsx": "^4.2.0",
     "storybook-readme": "^3.0.6",
     "stylelint": "^8.2.0",
@@ -49,5 +57,32 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0"
+  },
+  "browserslist": [
+    "last 3 versions",
+    "IE >= 11"
+  ],
+  "jest": {
+    "verbose": true,
+    "coverageDirectory": "coverage/",
+    "notify": true,
+    "setupTestFrameworkScriptFile": "<rootDir>/.jest-setup.js",
+    "transform": {
+      ".*": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.s?css$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "src/*.{js,jsx}",
+      "!src/.*",
+      "!src/__test__/*",
+      "!src/**/__test__/*",
+      "!src/**/index.js",
+      "!src/**/story.js"
+    ]
   }
 }

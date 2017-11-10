@@ -2,3 +2,5 @@ node_modules
 team-extension.log
 build
 .DS_Store
+coverage/**
+.jest-test-results.json
