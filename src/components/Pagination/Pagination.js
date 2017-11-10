@@ -31,6 +31,8 @@ const renderPageDots = pages =>
 const Pagination = ({ className, max, current, onClick }) => {
   const maxValue = Math.max(0, max);
   const currentValue = Math.min(max, Math.max(1, current));
+  if(maxValue === 0) return null;
+
   const pages = range(1, max + 1);
 
   const firstPage = pages.slice(0, 1);
