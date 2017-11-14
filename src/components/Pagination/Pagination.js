@@ -93,9 +93,9 @@ const Pagination = ({ className, max, current, onClick }) => {
         <ChevronLeftIcon />
       </PageButtonArrow>
       {renderPageButton(firstPage, onClick, currentValue)}
-      {beforePages.length && <Ellipsis />}
+      {!!beforePages.length && <Ellipsis />}
       {renderPageButton(currentPages, onClick, currentValue)}
-      {afterPages.length && <Ellipsis />}
+      {!!afterPages.length && <Ellipsis />}
       {renderPageButton(lastPage, onClick, currentValue)}
       <PageButtonArrow
         onClick={() => onClick(currentValue + 1)}
