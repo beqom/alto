@@ -18,7 +18,7 @@
     "predeploy": "npm run build:storybook",
     "deploy": "gh-pages -d build/storybook",
     "clean:dist": "rimraf dist",
-    "prebuild": "npm run clean:dist && copy ./package.json ./dist",
+    "prebuild": "npm run clean:dist && copy ./package.json ./README.md ./dist",
     "build": "cross-env NODE_ENV=production babel ./theme.js ./src/** -d ./dist --ignore story.js,__tests__,",
     "start": "npm run storybook"
   },
