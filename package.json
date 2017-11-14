@@ -1,6 +1,6 @@
 {
   "name": "pretty-ui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "index.js",
   "repository": "https://renaudtertrais.github.io/pretty-ui",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com>",
