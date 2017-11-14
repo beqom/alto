@@ -1,37 +1,80 @@
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import range from 'lodash/range';
+import get from 'lodash/fp/get';
+import styled from 'styled-components';
 
 import ChevronLeftIcon from '../Icons/ChervronLeft';
 import ChevronRightIcon from '../Icons/ChervronRight';
 
-import './Pagination.scss';
+const getColors = color => get(['theme', 'colors', color]);
+
+export const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const PageButton = styled.button`
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+
+  color: ${getColors('grey')};
+  padding: 3px 7px;
+  margin: 0 2px;
+  border-radius: 3px;
+
+  :hover {
+    background-color: ${getColors('greyLight')};
+  }
+
+  :disabled {
+    opacity: 0.5;
+  }
+`;
+
+export const PageButtonCurrent = PageButton.withComponent('div').extend`
+  &,
+  :hover {
+    background-color: ${getColors('primary')};
+    color: white;
+  }
+`;
+
+export const PageButtonArrow = PageButton.extend`
+  font-size: 0.8em;
+  padding: 0.2em 0;
+  width: 1.6em;
+  text-align: center;
+`;
+
+export const Ellipsis = styled.span`
+  margin: 0 2px;
+  color: ${getColors('grey')};
+  :before {
+    content: '...';
+  }
+`;
 
 const renderPageButton = (pages, onClick, current) =>
   pages.map(page => {
     if (current === page) {
-      return (
-        <div key={page} className="Pagination__page-button Pagination__page-button--current">
-          {page}
-        </div>
-      );
+      return <PageButtonCurrent key={page}>{page}</PageButtonCurrent>;
     }
 
-    return(
-      <button key={page} className="Pagination__page-button" onClick={() => onClick(page)}>
+    return (
+      <PageButton key={page} onClick={() => onClick(page)}>
         {page}
-      </button>
+      </PageButton>
     );
   });
-
-const renderPageDots = pages =>
-  pages.length ? <span className="Pagination__ellipsis">...</span> : null;
 
 const Pagination = ({ className, max, current, onClick }) => {
   const maxValue = Math.max(0, max);
   const currentValue = Math.min(max, Math.max(1, current));
-  if(maxValue === 0) return null;
+  if (maxValue === 0) return null;
 
   const pages = range(1, max + 1);
 
@@ -45,33 +88,30 @@ const Pagination = ({ className, max, current, onClick }) => {
   const lastPage = pages.slice(1).slice(-1);
 
   return (
-    <div className={classnames('Pagination', className)}>
-      <button
-        className="Pagination__page-button Pagination__page-button--arrow"
-        onClick={() => onClick(currentValue - 1)}
-        disabled={currentValue === 1}
-      >
+    <Container className={className}>
+      <PageButtonArrow onClick={() => onClick(currentValue - 1)} disabled={currentValue === 1}>
         <ChevronLeftIcon />
-      </button>
+      </PageButtonArrow>
       {renderPageButton(firstPage, onClick, currentValue)}
-      {renderPageDots(beforePages)}
+      {beforePages.length && <Ellipsis />}
       {renderPageButton(currentPages, onClick, currentValue)}
-      {renderPageDots(afterPages)}
+      {afterPages.length && <Ellipsis />}
       {renderPageButton(lastPage, onClick, currentValue)}
-      <button
-        className="Pagination__page-button Pagination__page-button--arrow"
+      <PageButtonArrow
         onClick={() => onClick(currentValue + 1)}
         disabled={currentValue === maxValue}
       >
         <ChevronRightIcon />
-      </button>
-    </div>
+      </PageButtonArrow>
+    </Container>
   );
 };
 
 Pagination.displayName = 'Pagination';
 
-Pagination.defaultProps = {};
+Pagination.defaultProps = {
+  className: '',
+};
 
 Pagination.propTypes = {
   /** additonal class to add to the wrapper component */

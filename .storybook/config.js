@@ -6,9 +6,12 @@ import JSXAddon from 'storybook-addon-jsx';
 import { withInfo, setDefaults } from '@storybook/addon-info';
 import centered from '@storybook/addon-centered';
 
+import { ThemeProvider } from 'styled-components';
+
 import fixAddonInfo from './fixAddonInfo';
 
-import '../src/style/index.scss';
+import '../src/scss/index.scss';
+import theme from '../src/theme';
 
 setAddon(JSXAddon);
 
@@ -47,6 +50,12 @@ addDecorator(fixAddonInfo);
 addDecorator(withKnobs);
 
 addDecorator(centered);
+
+addDecorator(story => (
+  <ThemeProvider theme={theme}>
+    {story()}
+  </ThemeProvider>
+));
 
 function loadStories() {
   // require('../src/components/Button/story');
