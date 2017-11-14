@@ -5,7 +5,7 @@ import { number } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import { action } from '@storybook/addon-actions';
 // import { checkA11y } from 'storybook-addon-a11y'
-import withTests from '../../withTests';
+import withTests from '../../../withTests';
 
 import Pagination from './Pagination';
 import README from './README.md';

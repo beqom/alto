@@ -11,7 +11,7 @@ import { ThemeProvider } from 'styled-components';
 import fixAddonInfo from './fixAddonInfo';
 
 import '../src/scss/index.scss';
-import theme from '../src/theme';
+import theme from '../theme';
 
 setAddon(JSXAddon);
 
