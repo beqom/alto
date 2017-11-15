@@ -1,6 +1,6 @@
 # Pretty UI (WIP)
 
-demo: https://renaudtertrais.github.io/pretty-ui
+demo: https://beqom.github.io/pretty-ui
 
 ## Getting started
 
