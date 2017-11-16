@@ -105,17 +105,21 @@ export const flatButton = (colorDefault, colorHover) => css`
 `;
 
 const Button = styled.button`
-  ${resetButton}
+  ${resetButton};
 
   border-radius: ${getTheme('borderRadius')};
   cursor: pointer;
   border: 1px solid transparent;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 2.6;
   font-size: 1rem;
   padding: 0 2em;
   text-align: center;
   display: inline-block;
+  transition:
+    background .2s ease-in-out,
+    box-shadow .2s ease-in-out,
+    border-color .2s ease-in-out;
 
   :focus {
     box-shadow: 0 0 0 3px ${colorFocus};

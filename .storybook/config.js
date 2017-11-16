@@ -59,8 +59,8 @@ addDecorator(story => (
 
 function loadStories() {
   require('../src/components/Button/story');
-  // require('../src/components/Input/story');
   require('../src/components/Icons/story');
+  require('../src/components/Input/story');
   require('../src/components/Pagination/story');
 }
 
