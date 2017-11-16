@@ -4,10 +4,12 @@ import range from 'lodash/range';
 import get from 'lodash/fp/get';
 import styled from 'styled-components';
 
+import { resetButton } from '../Button';
 import ChevronLeftIcon from '../Icons/ChervronLeft';
 import ChevronRightIcon from '../Icons/ChervronRight';
 
-const getColors = color => get(['theme', 'colors', color]);
+const getTheme = (...path) => get(['theme', ...path]);
+const getColors = color => getTheme('colors', color);
 
 export const Container = styled.div`
   display: flex;
@@ -16,15 +18,12 @@ export const Container = styled.div`
 `;
 
 export const PageButton = styled.button`
-  font: inherit;
-  background: transparent;
-  border: 0;
-  outline: 0;
+  ${resetButton}
 
-  color: ${getColors('grey')};
   padding: 3px 7px;
   margin: 0 2px;
-  border-radius: 3px;
+  color: ${getColors('secondary')};
+  border-radius: ${getTheme('borderRadius')};
 
   :hover {
     background-color: ${getColors('greyLight')};
@@ -52,7 +51,7 @@ export const PageButtonArrow = PageButton.extend`
 
 export const Ellipsis = styled.span`
   margin: 0 2px;
-  color: ${getColors('grey')};
+  color: ${getColors('secondary')};
   :before {
     content: '...';
   }
