@@ -13,7 +13,7 @@
     "lint": "npm run lint:script && npm run lint:style",
     "clean:storybook": "rimraf build/storybook",
     "prebuild:storybook": "npm run clean:storybook && npm run lint && npm run test",
-    "build:storybook": "build-storybook -c .storybook -o build/storybook",
+    "build:storybook": "cross-env NODE_ENV=development build-storybook -c .storybook -o build/storybook",
     "storybook": "start-storybook -p 9006 -c .storybook",
     "predeploy": "npm run build:storybook",
     "deploy": "gh-pages -d build/storybook",
@@ -23,11 +23,12 @@
     "start": "npm run storybook"
   },
   "devDependencies": {
-    "@storybook/addon-centered": "3.2.12",
-    "@storybook/addon-info": "3.2.12",
-    "@storybook/addon-knobs": "3.2.12",
-    "@storybook/addon-options": "3.2.12",
-    "@storybook/react": "3.1.6",
+    "@storybook/addon-a11y": "^3.2.16",
+    "@storybook/addon-centered": "3.2.16",
+    "@storybook/addon-info": "3.2.16",
+    "@storybook/addon-knobs": "3.2.16",
+    "@storybook/addon-options": "3.2.16",
+    "@storybook/react": "3.2.16",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
@@ -60,7 +61,8 @@
     "storybook-readme": "^3.0.6",
     "stylelint": "^8.2.0",
     "stylelint-config-recommended": "^1.0.0",
-    "stylelint-scss": "^2.1.0"
+    "stylelint-scss": "^2.1.0",
+    "webpack-merge": "^4.1.1"
   },
   "dependencies": {
     "styled-components": "^2.2.3"

@@ -5,6 +5,7 @@ import { setOptions } from '@storybook/addon-options';
 import JSXAddon from 'storybook-addon-jsx';
 import { withInfo, setDefaults } from '@storybook/addon-info';
 import centered from '@storybook/addon-centered';
+import { checkA11y } from '@storybook/addon-a11y';
 
 import { ThemeProvider } from 'styled-components';
 
@@ -43,6 +44,8 @@ setDefaults({
 });
 
 
+addDecorator(checkA11y);
+
 addDecorator((story, context) => withInfo('')(story)(context));
 
 addDecorator(fixAddonInfo);
@@ -50,6 +53,7 @@ addDecorator(fixAddonInfo);
 addDecorator(withKnobs);
 
 addDecorator(centered);
+
 
 addDecorator(story => (
   <ThemeProvider theme={theme}>
