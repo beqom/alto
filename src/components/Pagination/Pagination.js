@@ -88,14 +88,16 @@ const Pagination = ({ className, max, current, onClick }) => {
 
   return (
     <Container className={className}>
-      <PageButtonArrow onClick={() => onClick(currentValue - 1)} disabled={currentValue === 1}>
-        <ChevronLeftIcon />
-      </PageButtonArrow>
+
       {renderPageButton(firstPage, onClick, currentValue)}
       {!!beforePages.length && <Ellipsis />}
       {renderPageButton(currentPages, onClick, currentValue)}
       {!!afterPages.length && <Ellipsis />}
       {renderPageButton(lastPage, onClick, currentValue)}
+
+      <PageButtonArrow onClick={() => onClick(currentValue - 1)} disabled={currentValue === 1}>
+        <ChevronLeftIcon />
+      </PageButtonArrow>
       <PageButtonArrow
         onClick={() => onClick(currentValue + 1)}
         disabled={currentValue === maxValue}
