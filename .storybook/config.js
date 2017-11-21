@@ -12,7 +12,7 @@ import { ThemeProvider } from 'styled-components';
 import fixAddonInfo from './fixAddonInfo';
 
 import '../src/scss/index.scss';
-import theme from '../theme';
+import theme from '../src/theme';
 
 setAddon(JSXAddon);
 
@@ -62,10 +62,10 @@ addDecorator(story => (
 ));
 
 function loadStories() {
-  require('../src/components/Button/story');
-  require('../src/components/Icons/story');
-  require('../src/components/Input/story');
-  require('../src/components/Pagination/story');
+  require('../src/Button/story');
+  require('../src/Icons/story');
+  require('../src/Input/story');
+  require('../src/Pagination/story');
 }
 
 configure(loadStories, module);

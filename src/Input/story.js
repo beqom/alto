@@ -52,11 +52,13 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input placeholder="default" />
+        <Input label="Default" id="default" placeholder="default" />
         <Input
           {...modifiers}
           {...typeProps}
-          placeholder={text('placeholder', 'customisable')}
+          label="Customizable"
+          id="customizable"
+          placeholder={text('placeholder', 'Type something here...')}
           helpText={text('helpText', 'Help text')}
         />
       </SimpleWrapper>
@@ -67,9 +69,9 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input {...modifiers} defaultValue="default" />
-        <Input {...modifiers} success defaultValue="success" />
-        <Input {...modifiers} error defaultValue="error" />
+        <Input label="Default" id="default" {...modifiers} defaultValue="default" />
+        <Input label="Success" id="success" {...modifiers} success defaultValue="success" />
+        <Input label="Error" id="error" {...modifiers} error defaultValue="error" />
       </SimpleWrapper>
     );
   })
@@ -78,9 +80,9 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input {...modifiers} small defaultValue="small" />
-        <Input {...modifiers} defaultValue="default" />
-        <Input {...modifiers} large defaultValue="large" />
+        <Input label="Small" id="small" {...modifiers} small defaultValue="small" />
+        <Input label="Default" id="default" {...modifiers} defaultValue="default" />
+        <Input label="Large" id="large" {...modifiers} large defaultValue="large" />
       </SimpleWrapper>
     );
   })
@@ -89,8 +91,8 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input {...modifiers} defaultValue="default" />
-        <Input {...modifiers} disabled defaultValue="disabled" />
+        <Input label="Default" id="default" {...modifiers} defaultValue="default" />
+        <Input label="Disabled" id="disabled" {...modifiers} disabled defaultValue="disabled" />
       </SimpleWrapper>
     );
   });

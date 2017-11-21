@@ -1,16 +1,14 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import get from 'lodash/fp/get';
 
-const getTheme = (...path) => get(['theme', ...path]);
-const getColor = color => props => getTheme('colors', color)(props) || color;
+import { getColor, getTheme } from '../helpers/theme';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
 
 const colorFocus = props => {
-  if (props.secondary) return getColor('primaryLight')(props);
-  return getColor('primaryLight')(props);
+  if (props.secondary) return getColor('primary', 20)(props);
+  return getColor('primary', 20)(props);
 };
 
 export const resetButton = css`
@@ -37,8 +35,8 @@ export const solidButton = (colorDefault, colorHover, colorFont = 'white') => cs
   }
 
   :disabled {
-    background: ${getColor('greyLight')};
-    border-color: ${getColor('greyLight')};
+    background: ${getColor('coolGrey.50')};
+    border-color: ${getColor('coolGrey.50')};
   }
 
   ${modifier('active')(css`
@@ -64,8 +62,8 @@ export const outlineButton = (colorDefault, colorHover) => css`
 
   :disabled {
     background: transparent;
-    color: ${getColor('greyLight')};
-    border-color: ${getColor('greyLight')};
+    color: ${getColor('coolGrey.50')};
+    border-color: ${getColor('coolGrey.50')};
   }
 
   ${modifier('active')(css`
@@ -100,7 +98,7 @@ export const flatButton = (colorDefault, colorHover) => css`
   }
 
   :disabled {
-    color: ${getColor('greyLight')};
+    color: ${getColor('coolGrey.50')};
   }
 `;
 
@@ -117,9 +115,9 @@ const Button = styled.button`
   text-align: center;
   display: inline-block;
   transition:
-    background .2s ease-in-out,
-    box-shadow .2s ease-in-out,
-    border-color .2s ease-in-out;
+    background ${getTheme('transition')},
+    box-shadow ${getTheme('transition')},
+    border-color ${getTheme('transition')};
 
   :focus {
     box-shadow: 0 0 0 3px ${colorFocus};
@@ -129,11 +127,11 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 
-  ${solidButton('primary', 'primaryDark')};
+  ${solidButton('primary', 'primary.80')};
 
-  ${modifier('outline')(outlineButton('primary', 'primaryUltraLight'))};
+  ${modifier('outline')(outlineButton('primary', 'primary.10'))};
 
-  ${modifier('flat')(flatButton('primary', 'primaryDark'))};
+  ${modifier('flat')(flatButton('primary', 'primary.80'))};
 
   ${modifier('large')(css`
     font-size: 1.15rem;

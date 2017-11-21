@@ -1,15 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import range from 'lodash/range';
-import get from 'lodash/fp/get';
 import styled from 'styled-components';
 
 import { resetButton } from '../Button';
 import ChevronLeftIcon from '../Icons/ChervronLeft';
 import ChevronRightIcon from '../Icons/ChervronRight';
-
-const getTheme = (...path) => get(['theme', ...path]);
-const getColors = color => getTheme('colors', color);
+import { getColor, getTheme, fontSize } from '../helpers/theme';
 
 export const Container = styled.div`
   display: flex;
@@ -18,15 +15,16 @@ export const Container = styled.div`
 `;
 
 export const PageButton = styled.button`
-  ${resetButton}
-
+  ${resetButton};
+  ${fontSize('small')};
+  font-weight: 600;
   padding: 3px 7px;
   margin: 0 2px;
-  color: ${getColors('secondary')};
+  color: ${getColor('coolGrey.50')};
   border-radius: ${getTheme('borderRadius')};
 
   :hover {
-    background-color: ${getColors('greyLight')};
+    background-color: ${getColor('coolGrey.20')};
   }
 
   :disabled {
@@ -37,13 +35,12 @@ export const PageButton = styled.button`
 export const PageButtonCurrent = PageButton.withComponent('div').extend`
   &,
   :hover {
-    background-color: ${getColors('primary')};
+    background-color: ${getColor('primary')};
     color: white;
   }
 `;
 
 export const PageButtonArrow = PageButton.extend`
-  font-size: 0.8em;
   padding: 0.2em 0;
   width: 1.6em;
   text-align: center;
@@ -51,7 +48,7 @@ export const PageButtonArrow = PageButton.extend`
 
 export const Ellipsis = styled.span`
   margin: 0 2px;
-  color: ${getColors('secondary')};
+  color: ${getColor('coolGrey.40')};
   :before {
     content: '...';
   }
@@ -60,11 +57,15 @@ export const Ellipsis = styled.span`
 const renderPageButton = (pages, onClick, current) =>
   pages.map(page => {
     if (current === page) {
-      return <PageButtonCurrent key={page}>{page}</PageButtonCurrent>;
+      return (
+        <PageButtonCurrent key={page} aria-label={`Current Page, Page ${page}`} aria-current>
+          {page}
+        </PageButtonCurrent>
+      );
     }
 
     return (
-      <PageButton key={page} onClick={() => onClick(page)}>
+      <PageButton key={page} onClick={() => onClick(page)} aria-label={`Goto Page ${page}`}>
         {page}
       </PageButton>
     );

@@ -19,7 +19,7 @@
     "deploy": "gh-pages -d build/storybook",
     "clean:dist": "rimraf dist",
     "prebuild": "npm run lint && npm test && npm run clean:dist && copy ./package.json ./README.md ./dist",
-    "build": "cross-env NODE_ENV=production babel ./theme.js ./src/** -d ./dist --ignore story.js,__tests__,",
+    "build": "cross-env NODE_ENV=production babel ./src -d ./dist --ignore story.js,__tests__,",
     "start": "npm run storybook"
   },
   "devDependencies": {

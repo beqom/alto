@@ -11,7 +11,7 @@ import ChevronDown from './ChervronDown';
 const icons = [ChevronLeft, ChevronRight, ChevronUp, ChevronDown];
 
 
-storiesOf('Icons')
+storiesOf('Icons', module)
   .add('all', () => {
     const size = `${number('size', 20, { range: true, step: 1, min: 5, max: 400 })}px`;
     const col = color('color', '#333C48');
