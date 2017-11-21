@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { getColor, getTheme } from '../helpers/theme';
+import { getColor, getTheme, fontSize } from '../helpers/theme';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
@@ -104,13 +104,12 @@ export const flatButton = (colorDefault, colorHover) => css`
 
 const Button = styled.button`
   ${resetButton};
-
+  ${fontSize('medium')};
   border-radius: ${getTheme('borderRadius')};
   cursor: pointer;
   border: 1px solid transparent;
   font-weight: 400;
-  line-height: 2.6;
-  font-size: 1rem;
+  line-height: 2.375;
   padding: 0 2em;
   text-align: center;
   display: inline-block;
@@ -134,14 +133,14 @@ const Button = styled.button`
   ${modifier('flat')(flatButton('primary', 'primary.80'))};
 
   ${modifier('large')(css`
-    font-size: 1.15rem;
-    line-height: 2.6;
+    ${fontSize('large')};
+    line-height: 2.67;
     padding: 0 3em;
   `)};
 
   ${modifier('small')(css`
-    font-size: .85rem;
-    line-height: 2.2;
+    ${fontSize('small')};
+    line-height: 2;
     padding: 0 1.5em;
   `)};
 
