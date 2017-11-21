@@ -1,34 +1,33 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const ChevronLeft = ({ size, color }) => (
+const ArrowLeft = ({ size, color }) => (
   <svg
     version="1.1"
     viewBox="0 0 36 36"
-    width={size}
-    height={size}
     xmlns="http://www.w3.org/2000/svg"
     role="img"
+    width={size}
+    height={size}
     transform="rotate(-90)"
   >
     <path
       fill={color}
-      d="M29.52,22.52,18,10.6,6.48,22.52a1.7,1.7,0,0,0,2.45,2.36L18,15.49l9.08,9.39a1.7,1.7,0,0,0,2.45-2.36Z"
+      d="M27.66,15.61,18,6,8.34,15.61A1,1,0,1,0,9.75,17L17,9.81V28.94a1,1,0,1,0,2,0V9.81L26.25,17a1,1,0,0,0,1.41-1.42Z"
     />
   </svg>
 );
 
+ArrowLeft.displayName = 'ArrowLeft';
 
-ChevronLeft.displayName = 'ChevronLeft';
-
-ChevronLeft.defaultProps = {
+ArrowLeft.defaultProps = {
   size: '1em',
   color: 'currentColor',
 };
 
-ChevronLeft.propTypes = {
+ArrowLeft.propTypes = {
   size: PropTypes.string,
   color: PropTypes.string,
 };
 
-export default ChevronLeft;
+export default ArrowLeft;
