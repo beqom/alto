@@ -16,14 +16,14 @@ export const resetInput = css`
 
 const InputElement = styled.input`
   ${resetInput};
-
+  ${fontSize('medium')};
   background: white;
   color: ${getColor('text')};
   border-radius: ${getTheme('borderRadius')};
   border: 1px solid ${getColor('coolGrey.20')};
   font-weight: 400;
   line-height: 2.6;
-  font-size: 1rem;
+  line-height: 2.375;
   padding: 0 10px;
   display: block;
   width: 100%;
@@ -49,19 +49,24 @@ const InputElement = styled.input`
       border-color: ${getColor('success')};
       box-shadow: 0 0 0 3px ${getColor('success.20')};
     }
-  `)} ${modifier('error')(css`
+  `)};
+  ${modifier('error')(css`
+    border-color: ${getColor('error')};
+    :focus {
       border-color: ${getColor('error')};
-      :focus {
-        border-color: ${getColor('error')};
-        box-shadow: 0 0 0 3px ${getColor('error.20')};
-      }
-    `)} ${modifier('large')(css`
-      font-size: 1.15rem;
-      padding: 0 20px;
-    `)} ${modifier('small')(css`
-      font-size: 0.85rem;
-      line-height: 2.2;
-    `)} :disabled {
+      box-shadow: 0 0 0 3px ${getColor('error.20')};
+    }
+  `)};
+  ${modifier('large')(css`
+    ${fontSize('large')};
+    padding: 0 20px;
+    line-height: 2.67;
+  `)};
+  ${modifier('small')(css`
+    ${fontSize('small')};
+    line-height: 2;
+  `)};
+  :disabled {
     cursor: not-allowed;
     color: ${getColor('coolGrey.40')};
     background: ${getColor('coolGrey.10')};
