@@ -4,9 +4,9 @@ import range from 'lodash/range';
 import styled from 'styled-components';
 
 import { resetButton } from '../Button';
-import ChevronLeftIcon from '../Icons/ChervronLeft';
-import ChevronRightIcon from '../Icons/ChervronRight';
-import { getColor, getTheme, fontSize } from '../helpers/theme';
+import ChevronLeftIcon from '../Icons/ChevronLeft';
+import ChevronRightIcon from '../Icons/ChevronRight';
+import { getColor, fontSize } from '../helpers/theme';
 
 export const Container = styled.div`
   display: flex;
@@ -46,9 +46,8 @@ export const PageButtonCurrent = PageButton.withComponent('div').extend`
 `;
 
 export const PageButtonArrow = PageButton.extend`
-  padding: 0.2em 0;
-  width: 1.6em;
-  text-align: center;
+  ${fontSize('medium')};
+  padding: 0;
 `;
 
 export const Ellipsis = styled.span`

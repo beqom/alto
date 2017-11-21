@@ -3,10 +3,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, color } from '@storybook/addon-knobs';
 
-import ChevronLeft from './ChervronLeft';
-import ChevronRight from './ChervronRight';
-import ChevronUp from './ChervronUp';
-import ChevronDown from './ChervronDown';
+import ChevronLeft from './ChevronLeft';
+import ChevronRight from './ChevronRight';
+import ChevronUp from './ChevronUp';
+import ChevronDown from './ChevronDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
 import ArrowUp from './ArrowUp';

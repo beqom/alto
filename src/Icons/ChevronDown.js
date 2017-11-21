@@ -2,25 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Icon from './Icon';
 
-const ArrowDown = props => (
+const ChevronDown = props => (
   <Icon {...props}>
     <g transform="rotate(180, 18, 18)">
       <path
         fill={props.color}
-        d="M27.66,15.61,18,6,8.34,15.61A1,1,0,1,0,9.75,17L17,9.81V28.94a1,1,0,1,0,2,0V9.81L26.25,17a1,1,0,0,0,1.41-1.42Z"
+        d="M29.52,22.52,18,10.6,6.48,22.52a1.7,1.7,0,0,0,2.45,2.36L18,15.49l9.08,9.39a1.7,1.7,0,0,0,2.45-2.36Z"
       />
     </g>
   </Icon>
 );
 
-ArrowDown.displayName = 'ArrowDown';
+ChevronDown.displayName = 'ChevronDown';
 
-ArrowDown.defaultProps = {
+ChevronDown.defaultProps = {
   color: 'currentColor',
 };
 
-ArrowDown.propTypes = {
+ChevronDown.propTypes = {
   color: PropTypes.string,
 };
 
-export default ArrowDown;
+export default ChevronDown;
