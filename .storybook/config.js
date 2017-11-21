@@ -17,7 +17,8 @@ import theme from '../src/theme';
 setAddon(JSXAddon);
 
 setOptions({
-  name: 'Pretty UI',
+  name: 'Alto UI',
+  url: 'https://github.com/beqom/alto-ui',
   downPanelInRight: true ,
   showLeftPanel: true,
 });

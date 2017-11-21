@@ -1,8 +1,8 @@
 {
-  "name": "pretty-ui",
+  "name": "alto-ui",
   "version": "0.1.1",
   "main": "index.js",
-  "repository": "https://renaudtertrais.github.io/pretty-ui",
+  "repository": "https://github.com/beqom/alto-ui",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com>",
   "license": "MIT",
   "scripts": {
