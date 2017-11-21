@@ -17,14 +17,19 @@ export const Container = styled.div`
 export const PageButton = styled.button`
   ${resetButton};
   ${fontSize('small')};
+  cursor: pointer;
   font-weight: 600;
-  padding: 3px 7px;
+  padding: 0 10px;
   margin: 0 2px;
+  line-height: 26px;
+  text-align: center;
+  min-width: 26px;
   color: ${getColor('coolGrey.50')};
-  border-radius: ${getTheme('borderRadius')};
+  border-radius: 13px;
 
   :hover {
-    background-color: ${getColor('coolGrey.20')};
+    color: ${getColor('coolGrey.70')};
+    background-color: ${getColor('coolGrey.10')};
   }
 
   :disabled {
