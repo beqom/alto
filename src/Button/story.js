@@ -23,6 +23,8 @@ SimpleWrapper.displayName = 'Story';
 const modifierNames = [
   'outline',
   'flat',
+  'error',
+  'success',
   'large',
   'small',
   'active',
@@ -60,6 +62,17 @@ storiesOf('Button', module)
         <Button {...modifiers}>default</Button>
         <Button {...modifiers} outline>outline</Button>
         <Button {...modifiers} flat>flat</Button>
+      </SimpleWrapper>
+    );
+  })
+  .addWithJSX('colors', () => {
+    const modifiers = getModifiers('error', 'success');
+
+    return (
+      <SimpleWrapper>
+        <Button {...modifiers}>default</Button>
+        <Button {...modifiers} success>success</Button>
+        <Button {...modifiers} error>error</Button>
       </SimpleWrapper>
     );
   })

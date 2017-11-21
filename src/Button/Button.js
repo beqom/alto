@@ -7,8 +7,9 @@ const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
 
 const colorFocus = props => {
-  if (props.secondary) return getColor('primary', 20)(props);
-  return getColor('primary', 20)(props);
+  if (props.success) return getColor('success.20')(props);
+  if (props.error) return getColor('error.20')(props);
+  return getColor('primary.20')(props);
 };
 
 export const resetButton = css`
@@ -127,10 +128,16 @@ const Button = styled.button`
   }
 
   ${solidButton('primary', 'primary.80')};
+  ${modifier('success')(solidButton('success', 'success.80'))};
+  ${modifier('error')(solidButton('error', 'error.80'))};
 
   ${modifier('outline')(outlineButton('primary', 'primary.10'))};
+  ${modifier('outline', 'success')(outlineButton('success', 'success.10'))};
+  ${modifier('outline', 'error')(outlineButton('error', 'error.10'))};
 
   ${modifier('flat')(flatButton('primary', 'primary.80'))};
+  ${modifier('flat', 'success')(flatButton('success', 'success.80'))};
+  ${modifier('flat', 'error')(flatButton('error', 'error.80'))};
 
   ${modifier('large')(css`
     ${fontSize('large')};
