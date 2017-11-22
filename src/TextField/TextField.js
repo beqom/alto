@@ -23,7 +23,6 @@ export const TextFieldTag = styled.input`
   border-radius: ${getTheme('borderRadius')};
   border: 1px solid ${getColor('coolGrey.20')};
   font-weight: 400;
-  line-height: 2.6;
   line-height: 2.375;
   padding: 0 10px;
   display: block;

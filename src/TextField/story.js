@@ -38,15 +38,11 @@ storiesOf('TextField', module)
     const modifiers = getModifiers();
 
     const defaultType = 'default (text)';
-    const type = select('type', [
-      defaultType,
-      'email',
-      'number',
-      'password',
-      'tel',
-      'search',
-      'url',
-    ], defaultType);
+    const type = select(
+      'type',
+      [defaultType, 'email', 'number', 'password', 'tel', 'search', 'url'],
+      defaultType
+    );
 
     const typeProps = type === defaultType ? {} : { type };
 
@@ -69,9 +65,29 @@ storiesOf('TextField', module)
 
     return (
       <SimpleWrapper>
-        <TextField label="Default" id="default" {...modifiers} defaultValue="default" />
-        <TextField label="Success" id="success" {...modifiers} success defaultValue="success" />
-        <TextField label="Error" id="error" {...modifiers} error defaultValue="error" />
+        <TextField
+          label="Default"
+          id="default"
+          {...modifiers}
+          defaultValue="default"
+          helpText="Default text"
+        />
+        <TextField
+          label="Success"
+          id="success"
+          {...modifiers}
+          success
+          defaultValue="success"
+          helpText="Success, you did it right"
+        />
+        <TextField
+          label="Error"
+          id="error"
+          {...modifiers}
+          error
+          defaultValue="error"
+          helpText="Oops, something is wrong"
+        />
       </SimpleWrapper>
     );
   })
