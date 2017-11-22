@@ -27,7 +27,10 @@ const Icon = props => (
       xmlns="http://www.w3.org/2000/svg"
       role="img"
     >
-      {props.children}
+      {props.children({
+        fill: props.outline ? 'none' : props.color,
+        stroke: props.outline ? props.color : 'none',
+      })}
     </svg>
   </IconContainer>
 )
@@ -35,12 +38,16 @@ const Icon = props => (
 Icon.defaultProps = {
   size: '1em',
   viewBox: '0 0 36 36',
+  outline: false,
+  color: 'currentColor',
 };
 
 Icon.propTypes = {
   children: PropTypes.element.isRequired,
+  outline: PropTypes.bool,
   viewBox: PropTypes.string,
   size: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default Icon;
