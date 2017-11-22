@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { getColor, fontSize } from '../../helpers/theme';
+import { getColor, getTheme, fontSize } from '../../helpers/theme';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
@@ -29,27 +29,52 @@ const RadioButtonLabel = styled.label`
   padding-left: 1.6em;
   position: relative;
 
-  ::before {
+  ::before,
+  ::after {
     position: absolute;
     content: "";
     display: inline-block;
-  }
-
-  ::before {
     left: 0;
-    border: 1px solid ${getColor('coolGrey.20')};
-    background-color: white;
     height: .875em;
     width: .875em;
     border-radius: 50%;
+    transition:
+      background-color ${getTheme('transition')},
+      box-shadow ${getTheme('transition')},
+      border-color ${getTheme('transition')};
+  }
+
+  ::before {
+    border: 1px solid ${getColor('coolGrey.20')};
+    background-color: white;
+    transition:
+      background-color ${getTheme('transition')},
+      box-shadow ${getTheme('transition')},
+      border-color ${getTheme('transition')};
 
     ${modifier('checked')(css`
-      border-color: ${getColor('primary')};
-      box-shadow: inset 0 0 0 .25em ${getColor('primary')};
+      border-color: transparent;
+      background-color: transparent;
     `)};
 
     ${modifier('disabled')(css`
       background-color: ${getColor('coolGrey.10')};
+    `)};
+  }
+
+  input:focus + & {
+    ::before {
+      box-shadow: 0 0 0 3px ${getColor('primary.20')};
+    }
+  }
+
+  ::after {
+    border: 1px solid transparent;
+
+    ${modifier('checked')(css`
+      border-color: ${getColor('primary')};
+      background-color: white;
+      box-shadow: inset 0 0 0 .25em ${getColor('primary')};
     `)};
 
     ${modifier('checked', 'disabled')(css`
