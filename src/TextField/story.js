@@ -5,7 +5,7 @@ import { text, boolean, select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import withReadme from 'storybook-readme/with-readme';
 
-import Input from './Input';
+import TextField from './TextField';
 import README from './README.md';
 
 const SimpleWrapper = styled.div`
@@ -32,7 +32,7 @@ const getModifiers = (...modifiersExcluded) =>
     .filter(({ value }) => value)
     .reduce((acc, { name, value }) => Object.assign({}, acc, { [name]: value }), {});
 
-storiesOf('Input', module)
+storiesOf('TextField', module)
   .addDecorator(withReadme(README))
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
@@ -52,8 +52,8 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input label="Default" id="default" placeholder="default" />
-        <Input
+        <TextField label="Default" id="default" placeholder="default" />
+        <TextField
           {...modifiers}
           {...typeProps}
           label="Customizable"
@@ -69,9 +69,9 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input label="Default" id="default" {...modifiers} defaultValue="default" />
-        <Input label="Success" id="success" {...modifiers} success defaultValue="success" />
-        <Input label="Error" id="error" {...modifiers} error defaultValue="error" />
+        <TextField label="Default" id="default" {...modifiers} defaultValue="default" />
+        <TextField label="Success" id="success" {...modifiers} success defaultValue="success" />
+        <TextField label="Error" id="error" {...modifiers} error defaultValue="error" />
       </SimpleWrapper>
     );
   })
@@ -80,9 +80,9 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input label="Small" id="small" {...modifiers} small defaultValue="small" />
-        <Input label="Default" id="default" {...modifiers} defaultValue="default" />
-        <Input label="Large" id="large" {...modifiers} large defaultValue="large" />
+        <TextField label="Small" id="small" {...modifiers} small defaultValue="small" />
+        <TextField label="Default" id="default" {...modifiers} defaultValue="default" />
+        <TextField label="Large" id="large" {...modifiers} large defaultValue="large" />
       </SimpleWrapper>
     );
   })
@@ -91,8 +91,8 @@ storiesOf('Input', module)
 
     return (
       <SimpleWrapper>
-        <Input label="Default" id="default" {...modifiers} defaultValue="default" />
-        <Input label="Disabled" id="disabled" {...modifiers} disabled defaultValue="disabled" />
+        <TextField label="Default" id="default" {...modifiers} defaultValue="default" />
+        <TextField label="Disabled" id="disabled" {...modifiers} disabled defaultValue="disabled" />
       </SimpleWrapper>
     );
   });

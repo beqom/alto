@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 import { getColor, getTheme, fontSize } from '../helpers/theme';
+import FormElement from '../FormElement';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
@@ -14,7 +15,7 @@ export const resetInput = css`
   outline: 0;
 `;
 
-const InputElement = styled.input`
+export const TextField = styled.input`
   ${resetInput};
   ${fontSize('medium')};
   background: white;
@@ -75,59 +76,16 @@ const InputElement = styled.input`
   }
 `;
 
-InputElement.displayName = 'Input';
+TextField.displayName = 'Input';
 
-InputElement.defaultProps = {
+TextField.defaultProps = {
   type: 'text',
 };
 
-const InputHelpText = styled.div`
-  ${fontSize('small')};
-  text-align: left;
-  font-weight: 600;
-  padding: 10px 0;
-  color: ${getColor('coolGrey.50')};
+const TextFieldFormElement = props => (
+  <FormElement {...props}>
+    <TextField {...props} />
+  </FormElement>
+);
 
-  ${modifier('success')(css`
-    color: ${getColor('success')};
-  `)} ${modifier('error')(css`
-      color: ${getColor('error')};
-    `)} ${modifier('disabled')(css`
-      color: ${getColor('coolGrey.20')};
-    `)};
-`;
-
-const InputLabel = styled.label`
-  ${fontSize('small')};
-  font-weight: 700;
-  color: ${getColor('coolGrey.50')};
-  text-align: left;
-  padding-bottom: 10px;
-  display: block;
-`;
-
-const Input = props => {
-  const { error, disabled, success, id } = props;
-  return (
-    <div>
-      <InputLabel htmlFor={id} id={`${id}__label`} {...{ error, disabled, success }}>
-        {props.label}
-      </InputLabel>
-      <InputElement {...props} />
-      <InputHelpText id={`${id}__help-text`} {...{ error, disabled, success }}>
-        {props.helpText}
-      </InputHelpText>
-    </div>
-  );
-};
-
-Input.propTypes = {
-  helpText: PropTypes.string,
-  label: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  error: PropTypes.bool,
-  disabled: PropTypes.bool,
-  success: PropTypes.bool,
-};
-
-export default Input;
+export default TextFieldFormElement;
