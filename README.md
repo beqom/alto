@@ -1,6 +1,6 @@
 # Alto UI - Storybook (WIP)
 
-demo: https://beqom.github.io/pretty-ui
+demo: https://beqom.github.io/alto-ui
 
 ## Getting started
 
