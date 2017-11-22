@@ -36,8 +36,8 @@ export const solidButton = (colorDefault, colorHover, colorFont = 'white') => cs
   }
 
   :disabled {
-    background: ${getColor('coolGrey.50')};
-    border-color: ${getColor('coolGrey.50')};
+    background: ${getColor('coolGrey.30')};
+    border-color: ${getColor('coolGrey.30')};
   }
 
   ${modifier('active')(css`
