@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { resetButton } from '../Button';
 import ChevronLeftIcon from '../Icons/ChevronLeft';
 import ChevronRightIcon from '../Icons/ChevronRight';
-import { getColor, fontSize } from '../helpers/theme';
+import { getTheme, getColor, fontSize } from '../helpers/theme';
 
 export const Container = styled.div`
   display: flex;
@@ -26,6 +26,7 @@ export const PageButton = styled.button`
   min-width: 26px;
   color: ${getColor('coolGrey.50')};
   border-radius: 13px;
+  transition: color ${getTheme('transition')}, background-color ${getTheme('transition')};
 
   :hover {
     color: ${getColor('coolGrey.70')};
