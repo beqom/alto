@@ -15,7 +15,7 @@ export const resetInput = css`
   outline: 0;
 `;
 
-export const TextField = styled.input`
+export const TextFieldTag = styled.input`
   ${resetInput};
   ${fontSize('medium')};
   background: white;
@@ -76,16 +76,22 @@ export const TextField = styled.input`
   }
 `;
 
-TextField.displayName = 'Input';
+TextFieldTag.displayName = 'Input';
 
-TextField.defaultProps = {
+TextFieldTag.defaultProps = {
   type: 'text',
 };
 
-const TextFieldFormElement = props => (
+TextFieldTag.PropTypes = {
+  type: PropTypes.string,
+};
+
+const TextField = props => (
   <FormElement {...props}>
-    <TextField {...props} />
+    <TextFieldTag {...props} />
   </FormElement>
 );
 
-export default TextFieldFormElement;
+TextField.displayName = 'TextField';
+
+export default TextField;

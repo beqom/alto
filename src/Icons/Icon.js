@@ -43,7 +43,7 @@ Icon.defaultProps = {
 };
 
 Icon.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.func.isRequired,
   outline: PropTypes.bool,
   viewBox: PropTypes.string,
   size: PropTypes.string,

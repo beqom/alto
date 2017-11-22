@@ -61,6 +61,7 @@ FormElement.propTypes = {
   error: PropTypes.bool,
   disabled: PropTypes.bool,
   success: PropTypes.bool,
+  children: PropTypes.element.isRequired,
 };
 
 export default FormElement;
