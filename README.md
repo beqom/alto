@@ -1,4 +1,4 @@
-# Pretty UI (WIP)
+# Alto UI - Storybook (WIP)
 
 demo: https://beqom.github.io/pretty-ui
 
@@ -6,4 +6,5 @@ demo: https://beqom.github.io/pretty-ui
 
 1. Clone or download project
 2. `yarn install` or (`npm install`)
-3. `npm start`
+4. `yarn test:output` or `npm test:output`
+3. `yarn start` or `npm start`
