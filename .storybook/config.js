@@ -66,6 +66,7 @@ function loadStories() {
   require('../src/Button/story');
   require('../src/Icons/story');
   require('../src/Pagination/story');
+  require('../src/Select/story');
   require('../src/TextArea/story');
   require('../src/TextField/story');
 }
