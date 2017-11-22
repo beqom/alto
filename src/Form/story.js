@@ -4,8 +4,9 @@ import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
 // import { text, boolean, select } from '@storybook/addon-knobs';
 
-import Select from './Select';
+import Checkbox from './CheckBox';
 import RadioButton from './RadioButton';
+import Select from './Select';
 import TextArea from './TextArea';
 import TextField from './TextField';
 import Button from '../Button';
@@ -39,15 +40,21 @@ storiesOf('Form/Overview', module).addWithJSX('Static example', () => (
         'South America',
       ]}
     />
+    <br />
     <RadioButton id="male" label="Male" name="gender" checked />
     <RadioButton id="female" label="Female" name="gender" />
+    <br />
     <TextArea id="bio" label="Bio" placeholder="Write something about yourself..." />
-
+    <br />
+    <Checkbox id="accept-term" label="I accept the Terms of Service" />
+    <Checkbox id="subscribed" label="Subcribe me to the newsletter" checked />
+    <br />
     <Button type="submit">Submit</Button>
   </Form>
 ));
 
-require('./Select/story');
+require('./CheckBox/story');
 require('./RadioButton/story');
+require('./Select/story');
 require('./TextArea/story');
 require('./TextField/story');
