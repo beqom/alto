@@ -2,16 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { getColor, fontSize } from '../helpers/theme';
+import { getColor, fontSize } from '../../helpers/theme';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
 
-export const resetFormElement = css`
-  font: inherit;
-  background: transparent;
-  border: 0;
-  outline: 0;
+
+const FormElementWrapper = styled.div`
+  margin-bottom: 20px;
 `;
 
 const FormElementHelpText = styled.div`
@@ -42,15 +40,17 @@ const FormElementLabel = styled.label`
 const FormElement = props => {
   const { error, disabled, success, id, children } = props;
   return (
-    <div>
+    <FormElementWrapper>
       <FormElementLabel htmlFor={id} id={`${id}__label`} {...{ error, disabled, success }}>
         {props.label}
       </FormElementLabel>
       {children}
-      <FormElementHelpText id={`${id}__help-text`} {...{ error, disabled, success }}>
-        {props.helpText}
-      </FormElementHelpText>
-    </div>
+      {props.helpText && (
+        <FormElementHelpText id={`${id}__help-text`} {...{ error, disabled, success }}>
+          {props.helpText}
+        </FormElementHelpText>
+      )}
+    </FormElementWrapper>
   );
 };
 

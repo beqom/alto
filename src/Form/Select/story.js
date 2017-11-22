@@ -43,7 +43,7 @@ const options = [
   },
 ];
 
-storiesOf('Select', module)
+storiesOf('Form/Select', module)
   .addDecorator(withReadme(README))
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();

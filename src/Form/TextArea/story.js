@@ -1,11 +1,11 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean, select } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import withReadme from 'storybook-readme/with-readme';
 
-import TextField from './TextField';
+import TextArea from './TextArea';
 import README from './README.md';
 
 const SimpleWrapper = styled.div`
@@ -32,26 +32,16 @@ const getModifiers = (...modifiersExcluded) =>
     .filter(({ value }) => value)
     .reduce((acc, { name, value }) => Object.assign({}, acc, { [name]: value }), {});
 
-storiesOf('TextField', module)
+storiesOf('Form/TextArea', module)
   .addDecorator(withReadme(README))
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
 
-    const defaultType = 'default (text)';
-    const type = select(
-      'type',
-      [defaultType, 'email', 'number', 'password', 'tel', 'search', 'url'],
-      defaultType
-    );
-
-    const typeProps = type === defaultType ? {} : { type };
-
     return (
       <SimpleWrapper>
-        <TextField label="Default" id="default" placeholder="default" />
-        <TextField
+        <TextArea label="Default" id="default" placeholder="default" />
+        <TextArea
           {...modifiers}
-          {...typeProps}
           label="Customizable"
           id="customizable"
           placeholder={text('placeholder', 'Type something here...')}
@@ -65,14 +55,14 @@ storiesOf('TextField', module)
 
     return (
       <SimpleWrapper>
-        <TextField
+        <TextArea
           label="Default"
           id="default"
           {...modifiers}
           defaultValue="default"
           helpText="Default text"
         />
-        <TextField
+        <TextArea
           label="Success"
           id="success"
           {...modifiers}
@@ -80,7 +70,7 @@ storiesOf('TextField', module)
           defaultValue="success"
           helpText="Success, you did it right"
         />
-        <TextField
+        <TextArea
           label="Error"
           id="error"
           {...modifiers}
@@ -96,9 +86,9 @@ storiesOf('TextField', module)
 
     return (
       <SimpleWrapper>
-        <TextField label="Small" id="small" {...modifiers} small defaultValue="small" />
-        <TextField label="Default" id="default" {...modifiers} defaultValue="default" />
-        <TextField label="Large" id="large" {...modifiers} large defaultValue="large" />
+        <TextArea label="Small" id="small" {...modifiers} small defaultValue="small" />
+        <TextArea label="Default" id="default" {...modifiers} defaultValue="default" />
+        <TextArea label="Large" id="large" {...modifiers} large defaultValue="large" />
       </SimpleWrapper>
     );
   })
@@ -107,8 +97,8 @@ storiesOf('TextField', module)
 
     return (
       <SimpleWrapper>
-        <TextField label="Default" id="default" {...modifiers} defaultValue="default" />
-        <TextField label="Disabled" id="disabled" {...modifiers} disabled defaultValue="disabled" />
+        <TextArea label="Default" id="default" {...modifiers} defaultValue="default" />
+        <TextArea label="Disabled" id="disabled" {...modifiers} disabled defaultValue="disabled" />
       </SimpleWrapper>
     );
   });

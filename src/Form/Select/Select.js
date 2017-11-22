@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import isArray from 'lodash/isArray';
 
-import { getColor, getTheme, fontSize } from '../helpers/theme';
+import { getColor, getTheme, fontSize } from '../../helpers/theme';
 import FormElement from '../FormElement';
 
 const modifier = (...ms) => val => props =>

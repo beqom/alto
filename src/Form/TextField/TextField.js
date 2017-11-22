@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { getColor, getTheme, fontSize } from '../helpers/theme';
+import { getColor, getTheme, fontSize } from '../../helpers/theme';
 import FormElement from '../FormElement';
 
 const modifier = (...ms) => val => props =>
