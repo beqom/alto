@@ -1,6 +1,6 @@
-# Alto UI - Storybook (WIP)
+# Alto UI
 
-demo: https://beqom.github.io/alto-ui
+[Documentation](https://beqom.github.io/alto-ui)
 
 ## Getting started
 
@@ -14,13 +14,13 @@ demo: https://beqom.github.io/alto-ui
 
 Checkout the branch you want to deploy (usually `master`):
 
-```
+```sh
 $ git checkout master
 ```
 
 Be sure taht all commits have beed pushed to Github. Then run:
 
-```
+```sh
 $ npm run deploy
 
 # or
