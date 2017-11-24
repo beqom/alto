@@ -1,6 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+
+import { getColor, fontSize } from '../helpers/theme';
+
+const getColorFromProps = prop => props => getColor(props[prop])(props);
+
+const modifier = (...ms) => val => props =>
+  ms.reduce((acc, m) => acc && props[m], true) ? val : '';
 
 const IconContainer = styled.i`
   display: inline-flex;
@@ -8,11 +15,14 @@ const IconContainer = styled.i`
   position: relative;
   height: ${({ size }) => size};
   width: ${({ size }) => size};
+  font-size: ${({ size }) => size};
 
-  svg {
-    bottom: -0.125em;
-    position: absolute;
-  }
+  ${props => props.baseline && css`
+    svg {
+      bottom: -0.125em;
+      position: absolute;
+    }
+  `}
 `;
 
 IconContainer.displayName = 'IconContainer';
@@ -22,14 +32,13 @@ const Icon = props => (
     <svg
       version="1.1"
       viewBox={props.viewBox}
-      width={props.size}
-      height={props.size}
+      width="1em"
+      height="1em"
       xmlns="http://www.w3.org/2000/svg"
       role="img"
     >
       {props.children({
-        fill: props.outline ? 'none' : props.color,
-        stroke: props.outline ? props.color : 'none',
+        fill: props.color,
       })}
     </svg>
   </IconContainer>
