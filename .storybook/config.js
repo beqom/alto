@@ -67,6 +67,7 @@ function loadStories() {
   require('../src/Icons/story');
   require('../src/Form/story');
   require('../src/Pagination/story');
+  require('../src/SideNav/story');
 }
 
 configure(loadStories, module);

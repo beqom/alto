@@ -181,8 +181,9 @@ export default {
   borderRadius: '3px',
   transition: '.15s ease-in-out',
   fontSize: {
-    small: '.875em', // 14px
+    small: '.875rem', // 14px
     medium: '1rem',  // 16px
     large: '1.125rem', // 18px
+    xlarge: '1.5rem', // 24px
   },
 };

@@ -2,13 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { getColor, fontSize } from '../helpers/theme';
-
-const getColorFromProps = prop => props => getColor(props[prop])(props);
-
-const modifier = (...ms) => val => props =>
-  ms.reduce((acc, m) => acc && props[m], true) ? val : '';
-
 const IconContainer = styled.i`
   display: inline-flex;
   align-self: center;

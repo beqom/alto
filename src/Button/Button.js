@@ -17,6 +17,7 @@ export const resetButton = css`
   background: transparent;
   border: 0;
   outline: 0;
+  border-radius: 0;
 `;
 
 export const solidButton = (colorDefault, colorHover, colorFont = 'white') => css`

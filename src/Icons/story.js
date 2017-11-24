@@ -2,7 +2,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, color, boolean, text } from '@storybook/addon-knobs';
-import { withTheme } from 'styled-components';
 
 import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
