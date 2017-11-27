@@ -177,6 +177,7 @@ export default {
     error: 'red',
     success: 'green',
     text: 'coolGrey',
+    brand: 'red',
   },
   borderRadius: '3px',
   transition: '.15s ease-in-out',

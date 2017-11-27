@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { number, color, boolean, text } from '@storybook/addon-knobs';
+import { number, color, boolean } from '@storybook/addon-knobs';
 
 import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';

@@ -8,6 +8,9 @@ import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import { resetButton } from '../Button';
 
+const modifier = (...ms) => val => props =>
+  ms.reduce((acc, m) => acc && props[m], true) ? val : '';
+
 const sideNavIconContainerCSS = css`
   display: flex;
 
@@ -22,7 +25,7 @@ const sideNavIconContainerCSS = css`
 const SideNavContainer = styled.aside`
   height: 100%;
   width: 200px;
-  background-color: ${getColor('primary.80')};
+  background-color: ${getColor('coolGrey.90')};
   display: flex;
   flex-direction: column;
   transition: width ${getTheme('transition')};
@@ -38,16 +41,20 @@ const SideNavButton = styled.button`
   display: flex;
   height: 3.25rem;
   cursor: pointer;
-  transition: background ${getTheme('transition')}, color ${getTheme('transition')},
-    border-color ${getTheme('transition')};
-
-  :hover {
-    background-color: ${getColor('primary.70')};
-  }
+  transition: background-color ${getTheme('transition')}, box-shadow ${getTheme('transition')},
+    color ${getTheme('transition')}, border-color ${getTheme('transition')};
 
   :focus {
-    box-shadow: inset 0 0 0 3px ${getColor('primary.60')};
+    box-shadow: inset 0 0 0 3px ${getColor('brand')};
   }
+
+  :hover {
+    background-color: ${getColor('brand')};
+  }
+
+  ${modifier('active')(css`
+    background-color: ${getColor('brand')};
+  `)};
 `;
 
 const SideNavLogo = SideNavButton.withComponent('a').extend`
@@ -59,7 +66,8 @@ const SideNavLogo = SideNavButton.withComponent('a').extend`
   height: 3.125em;
   overflow: hidden;
   color: white;
-  border-bottom: 1px solid ${getColor('primary.70')};
+  border-bottom: 1px solid ${getColor('coolGrey.80')};
+  box-shadow: inset 0 5px 0 ${getColor('brand')};
 `;
 
 const SideNavIconButton = SideNavButton.extend`
@@ -69,7 +77,7 @@ const SideNavIconButton = SideNavButton.extend`
 
 const SideNavItemList = styled.ul`
   color: white;
-  border-bottom: 1px solid ${getColor('primary.70')};
+  border-bottom: 1px solid ${getColor('coolGrey.80')};
   flex: 1;
   list-style: none;
 `;
@@ -80,9 +88,29 @@ const SideNavSectionButton = SideNavButton.extend`
   display: block;
   width: 200px;
   overflow: hidden;
-  transition: width ${getTheme('transition')};
+  transition: box-shadow ${getTheme('transition')}, color ${getTheme('transition')},
+    border-color ${getTheme('transition')}, width ${getTheme('transition')};
+
+  box-shadow: inset 0 0 0 ${getColor('brand')};
 
   ${props => props.collapsed && css`width: 72px;`};
+
+  :focus {
+    box-shadow: inset 0 0 0 3px ${getColor('brand')};
+    background: transparent;
+  }
+
+  :hover {
+    box-shadow: inset -200px 0 0 ${getColor('brand')};
+    background: transparent;
+  }
+
+  ${modifier('active')(css`
+    box-shadow: inset -5px 0 0 ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
+    :focus {
+      box-shadow: inset 0 0 0 3px ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
+    }
+  `)};
 `;
 
 const SideNavSectionItem = styled.div`
@@ -120,43 +148,16 @@ const SideNavSectionItemChevron = styled.div`
 const SideNavItemSubList = styled.ul`
   list-style: none;
   ${fontSize('medium')};
-  background-color: ${getColor('primary.90')};
   overflow: hidden;
   transition: height ${getTheme('transition')};
-
-
-  ${props => (props.collapsed ? css`
-    display: none;
-
-    ${props.open && css`
-      position: absolute;
-      left: 100%;
-      top: 0;
-      padding: 1rem 2rem;
-      display: block;
-    `}
-  ` : css`
-    height: ${props.open ? props.children.length * 2.5 + 1 : 0}rem;
-    padding-left: 3.25rem;
-    > li:first-child {
-      margin-top: 0.5rem;
-    }
-  `)};
-
+  height: ${props => props.open ? props.children.length * 2.5 + 1 : 0}rem;
 `;
 
-const SideNavSubItem = styled.div`
-  text-decoration: none;
-  color: white;
-  font-weight: 600;
+const styleLinkComponent = component => SideNavSectionButton.withComponent(component).extend`
   line-height: 2.5rem;
-
-  :hover,
-  :active {
-    color: white;
-  }
-
-  ${props => props.current && css`color: white;`};
+  height: 2.5rem;
+  padding-left: 3.25rem;
+  font-weight: 600;
 `;
 
 class SideNav extends React.PureComponent {
@@ -165,10 +166,11 @@ class SideNav extends React.PureComponent {
 
     this.state = {
       collapsed: false,
-      sectionOpen: null,
+      sectionsOpenState: {},
     };
 
     this.handleToggle = this.handleToggle.bind(this);
+    this.LinkComponent =  styleLinkComponent(this.props.linkComponent);
   }
 
   handleToggle() {
@@ -176,18 +178,36 @@ class SideNav extends React.PureComponent {
   }
 
   handleToggleSection(title) {
-    this.setState(({ sectionOpen }) => ({
-      sectionOpen: sectionOpen === title ? null : title,
-    }));
+    if (this.state.collapsed) {
+      this.setState(() => ({
+        collapsed: false,
+        sectionsOpenState: {
+          [title]: true,
+        },
+      }));
+    } else {
+      this.setState(({ sectionsOpenState }) => ({
+        sectionsOpenState: Object.assign({}, sectionsOpenState, {
+          [title]: !sectionsOpenState[title],
+        }),
+      }));
+    }
+
   }
 
   renderNavSubItems(items, open) {
+    // if (this.state.collapsed) return [];
+
     return items.map(item => (
       <li key={item.title}>
         {this.props.children(
-          { tabIndex: open ? 0 : -1 },
+          this.LinkComponent,
+          {
+            tabIndex: open ? 0 : -1,
+            children: item.title,
+            active: this.props.currentUrl === item.url,
+          },
           item,
-          <SideNavSubItem>{item.title}</SideNavSubItem>
         )}
       </li>
     ));
@@ -197,10 +217,15 @@ class SideNav extends React.PureComponent {
     const { collapsed } = this.state;
 
     return this.props.items.map(item => {
-      const open = this.state.sectionOpen === item.title;
+      const open = !this.state.collapsed && !!this.state.sectionsOpenState[item.title];
+      const active = !!item.items.find(({ url }) => url === this.props.currentUrl);
       return (
         <SideNavSection key={item.title}>
-          <SideNavSectionButton onClick={() => this.handleToggleSection(item.title)} collapsed={collapsed}>
+          <SideNavSectionButton
+            onClick={() => this.handleToggleSection(item.title)}
+            collapsed={collapsed}
+            active={active}
+          >
             <SideNavSectionItem>
               {item.icon && (
                 <SideNavSectionItemIcon collapsed={collapsed}>
@@ -240,11 +265,8 @@ class SideNav extends React.PureComponent {
 SideNav.displayName = 'SideNav';
 
 SideNav.defaultProps = {
-  children: (props, item, content) => (
-    <a {...props} href={item.url}>
-      {content}
-    </a>
-  ),
+  linkComponent: 'a',
+  children: (Component, props, item) => <Component {...props} href={item.url} />,
 };
 
 SideNav.propTypes = {
@@ -252,14 +274,23 @@ SideNav.propTypes = {
   logoSmall: PropTypes.any,
   logoUrl: PropTypes.string,
   children: PropTypes.func,
-  items: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-    icon: PropTypes.string.isRequired,
-    items: PropTypes.arrayOf(PropTypes.shape({
-      title: PropTypes.string,
-      url: PropTypes.string,
-    })).isRequired,
-  })).isRequired,
+  currentUrl: PropTypes.string,
+  linkComponent: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func,
+  ]),
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      icon: PropTypes.func.isRequired,
+      items: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string,
+          url: PropTypes.string,
+        })
+      ).isRequired,
+    })
+  ).isRequired,
 };
 
 export default SideNav;

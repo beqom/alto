@@ -13,6 +13,11 @@ const resetCssCode = `
     padding: 0;
     margin: 0
   }
+
+  a {
+    text-decoration: none;
+    outline: 0;
+  }
 `;
 
 const AltoUIRoot = ({ children, theme, resetCSS }) => (
@@ -26,10 +31,6 @@ const AltoUIRoot = ({ children, theme, resetCSS }) => (
           color: ${getColor('text')({ theme })};
           background: white;
           line-height: 1.2;
-        }
-
-        a {
-          text-decoration: none;
         }
       `}
     </style>
