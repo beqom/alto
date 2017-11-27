@@ -7,12 +7,9 @@ import { withInfo, setDefaults } from '@storybook/addon-info';
 import centered from '@storybook/addon-centered';
 import { checkA11y } from '@storybook/addon-a11y';
 
-import { ThemeProvider } from 'styled-components';
-
 import fixAddonInfo from './fixAddonInfo';
 
-import '../src/scss/index.scss';
-import theme from '../src/theme';
+import AltoUIRoot from '../src/AltoUIRoot';
 
 setAddon(JSXAddon);
 
@@ -57,9 +54,9 @@ addDecorator(centered);
 
 
 addDecorator(story => (
-  <ThemeProvider theme={theme}>
+  <AltoUIRoot resetCSS>
     {story()}
-  </ThemeProvider>
+  </AltoUIRoot>
 ));
 
 function loadStories() {

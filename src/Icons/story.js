@@ -57,9 +57,6 @@ icons.forEach(Icon => {
   storiesOf('Icons', module).add(Icon.displayName, () => (
     <Icon
       outline={boolean('outline', false)}
-      badge={boolean('badge', false) || text('badge (text)', '') || false}
-      badgeColor={text('badgeColor', '') || undefined}
-      borderColor={text('borderColor', '') || undefined}
       size={`${number('size', 14, { range: true, step: 1, min: 5, max: 600 })}px`}
       color={color('color', '#333C48')}
     />

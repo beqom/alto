@@ -181,9 +181,10 @@ export default {
   borderRadius: '3px',
   transition: '.15s ease-in-out',
   fontSize: {
-    small: '.875rem', // 14px
-    medium: '1rem',  // 16px
-    large: '1.125rem', // 18px
-    xlarge: '1.5rem', // 24px
+    root: '16px',      // --> only used in AltoUIRoot for html{} rout styles
+    small: '.875rem',   // 14px
+    medium: '1rem',     // 16px
+    large: '1.125rem',  // 18px
+    xlarge: '1.5rem',   // 24px
   },
 };
