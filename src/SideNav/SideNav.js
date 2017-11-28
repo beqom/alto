@@ -45,7 +45,7 @@ const SideNavButton = styled.button`
     color ${getTheme('transition')}, border-color ${getTheme('transition')};
 
   :focus {
-    box-shadow: inset 0 0 0 3px ${getColor('brand')};
+    box-shadow: inset 0 0 0 2px ${getColor('brand')};
   }
 
   :hover {
@@ -75,11 +75,12 @@ const SideNavIconButton = SideNavButton.extend`
   ${fontSize('xlarge')};
 `;
 
-const SideNavItemList = styled.ul`
+const SideNavSectionList = styled.ul`
   color: white;
   border-bottom: 1px solid ${getColor('coolGrey.80')};
   flex: 1;
   list-style: none;
+  overflow: auto;
 `;
 
 const SideNavSection = styled.li`position: relative;`;
@@ -88,27 +89,17 @@ const SideNavSectionButton = SideNavButton.extend`
   display: block;
   width: 200px;
   overflow: hidden;
-  transition: box-shadow ${getTheme('transition')}, color ${getTheme('transition')},
-    border-color ${getTheme('transition')}, width ${getTheme('transition')};
+  transition: all ${getTheme('transition')};
 
   box-shadow: inset 0 0 0 ${getColor('brand')};
 
   ${props => props.collapsed && css`width: 72px;`};
 
-  :focus {
-    box-shadow: inset 0 0 0 3px ${getColor('brand')};
-    background: transparent;
-  }
-
-  :hover {
-    box-shadow: inset -200px 0 0 ${getColor('brand')};
-    background: transparent;
-  }
-
   ${modifier('active')(css`
     box-shadow: inset -5px 0 0 ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
     :focus {
-      box-shadow: inset 0 0 0 3px ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
+      box-shadow: inset 0 0 0 2px ${getColor('brand')},
+        inset -200px 0 0 ${getColor('coolGrey.80')};
     }
   `)};
 `;
@@ -125,7 +116,9 @@ const SideNavSectionItemIcon = styled.div`
   display: flex;
   transition: width ${getTheme('transition')};
 
-  ${props => props.collapsed && css`width: 72px;`};
+  ${modifier('collapsed')(css`
+    width: 72px;
+  `)};
 
   i {
     margin: auto;
@@ -150,7 +143,7 @@ const SideNavItemSubList = styled.ul`
   ${fontSize('medium')};
   overflow: hidden;
   transition: height ${getTheme('transition')};
-  height: ${props => props.open ? props.children.length * 2.5 + 1 : 0}rem;
+  height: ${props => (props.open ? props.children.length * 2.5 + 1 : 0)}rem;
 `;
 
 const styleLinkComponent = component => SideNavSectionButton.withComponent(component).extend`
@@ -170,7 +163,7 @@ class SideNav extends React.PureComponent {
     };
 
     this.handleToggle = this.handleToggle.bind(this);
-    this.LinkComponent =  styleLinkComponent(this.props.linkComponent);
+    this.LinkComponent = styleLinkComponent(this.props.linkComponent);
   }
 
   handleToggle() {
@@ -192,7 +185,6 @@ class SideNav extends React.PureComponent {
         }),
       }));
     }
-
   }
 
   renderNavSubItems(items, open) {
@@ -207,7 +199,7 @@ class SideNav extends React.PureComponent {
             children: item.title,
             active: this.props.currentUrl === item.url,
           },
-          item,
+          item
         )}
       </li>
     ));
@@ -253,7 +245,7 @@ class SideNav extends React.PureComponent {
         <SideNavLogo href={this.props.logoUrl}>
           {collapsed ? this.props.logoSmall : this.props.logo}
         </SideNavLogo>
-        <SideNavItemList>{this.renderNavItems()}</SideNavItemList>
+        <SideNavSectionList>{this.renderNavItems()}</SideNavSectionList>
         <SideNavIconButton onClick={this.handleToggle} reverse={collapsed}>
           <ArrowLeftIcon />
         </SideNavIconButton>
@@ -275,10 +267,7 @@ SideNav.propTypes = {
   logoUrl: PropTypes.string,
   children: PropTypes.func,
   currentUrl: PropTypes.string,
-  linkComponent: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.func,
-  ]),
+  linkComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
