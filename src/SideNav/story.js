@@ -53,5 +53,7 @@ storiesOf('SideNav', module)
       logoUrl="#"
       currentUrl={select('currentUrl', ['none'].concat(urls), '#three')}
       items={items}
+      expandButtonLabel="click to expand side navigation"
+      collapseButtonLabel="click to collapse side navigation"
     />
   ));

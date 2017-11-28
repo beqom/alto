@@ -6,6 +6,7 @@ import { getColor, getTheme, fontSize } from '../helpers/theme';
 
 import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
+import VisuallyHidden from '../VisuallyHidden';
 import { resetButton } from '../Button';
 
 const modifier = (...ms) => val => props =>
@@ -98,8 +99,7 @@ const SideNavSectionButton = SideNavButton.extend`
   ${modifier('active')(css`
     box-shadow: inset -5px 0 0 ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
     :focus {
-      box-shadow: inset 0 0 0 2px ${getColor('brand')},
-        inset -200px 0 0 ${getColor('coolGrey.80')};
+      box-shadow: inset 0 0 0 2px ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
     }
   `)};
 `;
@@ -240,14 +240,18 @@ class SideNav extends React.PureComponent {
 
   render() {
     const { collapsed } = this.state;
+    const { expandButtonLabel, collapseButtonLabel, logoUrl, logoSmall, logo } = this.props;
     return (
       <SideNavContainer collapsed={collapsed}>
-        <SideNavLogo href={this.props.logoUrl}>
-          {collapsed ? this.props.logoSmall : this.props.logo}
-        </SideNavLogo>
+        <SideNavLogo href={logoUrl}>{collapsed ? logoSmall : logo}</SideNavLogo>
         <SideNavSectionList>{this.renderNavItems()}</SideNavSectionList>
-        <SideNavIconButton onClick={this.handleToggle} reverse={collapsed}>
+        <SideNavIconButton
+          onClick={this.handleToggle}
+          reverse={collapsed}
+          aria-expanded={collapsed}
+        >
           <ArrowLeftIcon />
+          <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
         </SideNavIconButton>
       </SideNavContainer>
     );
@@ -268,6 +272,8 @@ SideNav.propTypes = {
   children: PropTypes.func,
   currentUrl: PropTypes.string,
   linkComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  expandButtonLabel: PropTypes.string.isRequired,
+  collapseButtonLabel: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
