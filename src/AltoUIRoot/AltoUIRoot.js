@@ -5,8 +5,6 @@ import { ThemeProvider } from 'styled-components';
 import defaultTheme from '../theme';
 import { getColor } from '../helpers/theme';
 
-const RootWrapper = ({ children }) => children;
-
 const resetCssCode = `
   * {
     box-sizing: border-box;
@@ -20,25 +18,49 @@ const resetCssCode = `
   }
 `;
 
-const AltoUIRoot = ({ children, theme, resetCSS }) => (
-  <RootWrapper>
-    <style>
-      {resetCSS ? resetCssCode : ''}
-      {`
-        html {
-          font-size: ${theme.fontSize.root};
-          font-family: 'Source Sans Pro', sans-serif;
-          color: ${getColor('text')({ theme })};
-          background: white;
-          line-height: 1.2;
-        }
-      `}
-    </style>
-    <ThemeProvider theme={theme}>
-      {children}
-    </ThemeProvider>
-  </RootWrapper>
-);
+class AltoUIRoot extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.addStyles();
+  }
+
+  addStyles() {
+    const { theme, resetCSS } = this.props;
+    const css = `
+      ${resetCSS ? resetCssCode : ''}
+
+      html {
+        font-size: ${theme.fontSize.root};
+        font-family: 'Source Sans Pro', sans-serif;
+        color: ${getColor('text')({ theme })};
+        background: white;
+        line-height: 1.2;
+      }
+    `;
+    const id = 'alto-ui-root-styles';
+    const styleElt = document.getElementById(id);
+
+    if (styleElt) {
+      styleElt.innerHTML = css;
+    } else {
+      const styleNewElt = document.createElement('style');
+      styleNewElt.id = id;
+      styleNewElt.type = 'text/css';
+      styleNewElt.appendChild(document.createTextNode(css));
+      document.head.appendChild(styleNewElt);
+    }
+  }
+
+  render() {
+    const { children, theme } = this.props;
+    return (
+      <ThemeProvider theme={theme}>
+        {children}
+      </ThemeProvider>
+    );
+  }
+}
 
 
 AltoUIRoot.defaultProps = {
