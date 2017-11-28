@@ -4,7 +4,6 @@ import { withKnobs } from '@storybook/addon-knobs';
 import { setOptions } from '@storybook/addon-options';
 import JSXAddon from 'storybook-addon-jsx';
 import { withInfo, setDefaults } from '@storybook/addon-info';
-import centered from '@storybook/addon-centered';
 import { checkA11y } from '@storybook/addon-a11y';
 
 import fixAddonInfo from './fixAddonInfo';
@@ -49,9 +48,6 @@ addDecorator((story, context) => withInfo('')(story)(context));
 addDecorator(fixAddonInfo);
 
 addDecorator(withKnobs);
-
-addDecorator(centered);
-
 
 addDecorator(story => (
   <AltoUIRoot resetCSS>

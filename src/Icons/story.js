@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, color, boolean } from '@storybook/addon-knobs';
+import centered from '@storybook/addon-centered';
 
 import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
@@ -34,6 +35,7 @@ const icons = [
 ];
 
 storiesOf('Icons', module)
+  .addDecorator(centered)
   .add('all', () => {
     const outlineProps = boolean('outline', false) ? { outline: true } : {};
     const size = `${number('size', 30, { range: true, step: 1, min: 5, max: 600 })}px`;

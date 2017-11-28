@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
+import centered from '@storybook/addon-centered';
 import withReadme from 'storybook-readme/with-readme';
 import styled from 'styled-components';
 
@@ -44,6 +45,7 @@ const getModifiers = (...modifiersExcluded) =>
 
 storiesOf('Button', module)
   .addDecorator(withReadme(README))
+  .addDecorator(centered)
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
 

@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean, object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import withReadme from 'storybook-readme/with-readme';
+import centered from '@storybook/addon-centered';
 
 import Select from './Select';
 import README from './README.md';
@@ -45,6 +46,7 @@ const options = [
 
 storiesOf('Form/Select', module)
   .addDecorator(withReadme(README))
+  .addDecorator(centered)
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
 

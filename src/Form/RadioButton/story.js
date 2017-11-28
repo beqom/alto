@@ -2,12 +2,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withReadme from 'storybook-readme/with-readme';
+import centered from '@storybook/addon-centered';
 
 import RadioButton from './RadioButton';
 import README from './README.md';
 
 storiesOf('Form/RadioButton', module)
   .addDecorator(withReadme(README))
+  .addDecorator(centered)
   .addWithJSX('overview', () => (
     <div>
       <RadioButton id="inactive" label="Inactive" name="overview" />
