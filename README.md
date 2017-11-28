@@ -35,8 +35,8 @@ It will setup some basic styles and allow you to provide a custom theme.
 ### Usage
 
 ```js
-import Button from '@beqom/alto-ui/AltoUIRoot';
-import TextField from '@beqom/alto-ui/From/TextField';
+import Button from '@beqom/alto-ui/Button';
+import TextField from '@beqom/alto-ui/Form/TextField';
 
 const MyComponent = () => {
   <div>
