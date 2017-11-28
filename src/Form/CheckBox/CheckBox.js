@@ -94,7 +94,7 @@ const CheckBox = props => {
   const { checked, disabled } = props;
   return (
     <CheckBoxWrapper>
-      <CheckBoxInput {...props} type="radio" />
+      <CheckBoxInput {...props} type="checkbox" />
       <CheckBoxLabel htmlFor={props.id} {...{ checked, disabled }}>{props.label}</CheckBoxLabel>
     </CheckBoxWrapper>
   );
