@@ -153,6 +153,17 @@ const palette = {
     $20: '#D9D4D4',
     $10: '#F2EDED',
   },
+  whites: {
+    $90: 'rgba(255, 255, 255, .9)',
+    $80: 'rgba(255, 255, 255, .8)',
+    $70: 'rgba(255, 255, 255, .7)',
+    $60: 'rgba(255, 255, 255, .6)',
+    $50: 'rgba(255, 255, 255, .5)',
+    $40: 'rgba(255, 255, 255, .4)',
+    $30: 'rgba(255, 255, 255, .3)',
+    $20: 'rgba(255, 255, 255, .2)',
+    $10: 'rgba(255, 255, 255, .1)',
+  },
 };
 
 palette.red = palette.reds.$60;
@@ -169,6 +180,7 @@ palette.pink = palette.pinks.$60;
 palette.coolGrey = palette.coolGreys.$80;
 palette.neutralGrey = palette.neutralGreys.$50;
 palette.warmGrey = palette.warmGreys.$70;
+palette.white = 'white';
 
 export default {
   palette,
@@ -178,6 +190,7 @@ export default {
     success: 'green',
     text: 'coolGrey',
     brand: 'red',
+    inverse: 'white',
   },
   borderRadius: '3px',
   transition: '.15s ease-in-out',
@@ -187,5 +200,8 @@ export default {
     medium: '1rem',     // 16px
     large: '1.125rem',  // 18px
     xlarge: '1.5rem',   // 24px
+  },
+  breakpoints: {
+    narrow: 768,
   },
 };

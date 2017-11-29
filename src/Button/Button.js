@@ -9,6 +9,7 @@ const modifier = (...ms) => val => props =>
 const colorFocus = props => {
   if (props.success) return getColor('success.20')(props);
   if (props.error) return getColor('error.20')(props);
+  if (props.inverse) return getColor('inverse.40')(props);
   return getColor('primary.20')(props);
 };
 
@@ -131,14 +132,17 @@ const Button = styled.button`
   ${solidButton('primary', 'primary.80')};
   ${modifier('success')(solidButton('success', 'success.80'))};
   ${modifier('error')(solidButton('error', 'error.80'))};
+  ${modifier('inverse')(solidButton('inverse', 'inverse.80', 'text'))};
 
   ${modifier('outline')(outlineButton('primary', 'primary.10'))};
   ${modifier('outline', 'success')(outlineButton('success', 'success.10'))};
   ${modifier('outline', 'error')(outlineButton('error', 'error.10'))};
+  ${modifier('outline', 'inverse')(outlineButton('inverse', 'inverse.10'))};
 
   ${modifier('flat')(flatButton('primary', 'primary.80'))};
   ${modifier('flat', 'success')(flatButton('success', 'success.80'))};
   ${modifier('flat', 'error')(flatButton('error', 'error.80'))};
+  ${modifier('flat', 'inverse')(flatButton('inverse', 'inverse.80'))};
 
   ${modifier('large')(css`
     ${fontSize('large')};

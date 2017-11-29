@@ -3,10 +3,10 @@ import { configure, addDecorator, setAddon } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 import { setOptions } from '@storybook/addon-options';
 import JSXAddon from 'storybook-addon-jsx';
-import { withInfo, setDefaults } from '@storybook/addon-info';
+//import { withInfo, setDefaults } from '@storybook/addon-info';
 import { checkA11y } from '@storybook/addon-a11y';
 
-import fixAddonInfo from './fixAddonInfo';
+//import fixAddonInfo from './fixAddonInfo';
 
 import AltoUIRoot from '../src/AltoUIRoot';
 
@@ -19,7 +19,7 @@ setOptions({
   showLeftPanel: true,
 });
 
-
+/*
 setDefaults({
   header: false, // Toggles display of header with component name and description
   source: false, // Displays the source of story Component
@@ -39,13 +39,14 @@ setDefaults({
     propTableHead: {},
   })
 });
+*/
 
 
 addDecorator(checkA11y);
 
-addDecorator((story, context) => withInfo('')(story)(context));
+// addDecorator((story, context) => withInfo('')(story)(context));
 
-addDecorator(fixAddonInfo);
+// addDecorator(fixAddonInfo);
 
 addDecorator(withKnobs);
 
