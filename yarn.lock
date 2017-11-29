@@ -45,6 +45,16 @@
     react-addons-create-fragment "^15.5.3"
     util-deprecate "^1.0.2"
 
+"@storybook/addon-jest@^3.2.16":
+  version "3.2.16"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-jest/-/addon-jest-3.2.16.tgz#b02499b4d93cd87ca866f02c288344db0c04749f"
+  dependencies:
+    "@storybook/components" "^3.2.16"
+    glamor "^2.20.40"
+    glamorous "^4.11.0"
+    global "^4.3.2"
+    prop-types "^15.6.0"
+
 "@storybook/addon-knobs@3.2.16":
   version "3.2.16"
   resolved "https://registry.yarnpkg.com/@storybook/addon-knobs/-/addon-knobs-3.2.16.tgz#c19747656a969e5b960e4edeb54e5d5f4198609b"
@@ -6927,10 +6937,6 @@ stdout-stream@^1.4.0:
   resolved "https://registry.yarnpkg.com/stdout-stream/-/stdout-stream-1.4.0.tgz#a2c7c8587e54d9427ea9edb3ac3f2cd522df378b"
   dependencies:
     readable-stream "^2.0.1"
-
-storybook-addon-jest@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/storybook-addon-jest/-/storybook-addon-jest-0.0.1.tgz#8a8de3b354ed6a80099c0426d506065124a592a7"
 
 storybook-addon-jsx@^4.2.0:
   version "4.2.0"
