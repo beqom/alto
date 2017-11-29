@@ -6,6 +6,10 @@ import centered from '@storybook/addon-centered';
 import withReadme from 'storybook-readme/with-readme';
 import styled from 'styled-components';
 
+import ArrowRightIcon from '../Icons/ArrowRight';
+import ChevronDownIcon from '../Icons/ChevronDown';
+import BarsIcon from '../Icons/Bars';
+import ObjectsIcon from '../Icons/Objects';
 import Button from './Button';
 import README from './README.md';
 
@@ -19,9 +23,11 @@ const SimpleWrapper = styled.div`
     margin: 10px;
   }
 
-  ${props => props.inverse && `
+  ${props =>
+    props.inverse &&
+    `
     background-color: #192328;
-  `}
+  `};
 `;
 
 SimpleWrapper.displayName = 'Story';
@@ -68,8 +74,12 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper inverse={modifiers.inverse}>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} outline>outline</Button>
-        <Button {...modifiers} flat>flat</Button>
+        <Button {...modifiers} outline>
+          outline
+        </Button>
+        <Button {...modifiers} flat>
+          flat
+        </Button>
       </SimpleWrapper>
     );
   })
@@ -79,8 +89,12 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} success>success</Button>
-        <Button {...modifiers} error>error</Button>
+        <Button {...modifiers} success>
+          success
+        </Button>
+        <Button {...modifiers} error>
+          error
+        </Button>
       </SimpleWrapper>
     );
   })
@@ -89,9 +103,15 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper inverse>
-        <Button {...modifiers} inverse>default</Button>
-        <Button {...modifiers} inverse outline>outline</Button>
-        <Button {...modifiers} inverse flat>flat</Button>
+        <Button {...modifiers} inverse>
+          default
+        </Button>
+        <Button {...modifiers} inverse outline>
+          outline
+        </Button>
+        <Button {...modifiers} inverse flat>
+          flat
+        </Button>
       </SimpleWrapper>
     );
   })
@@ -100,9 +120,13 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper inverse={modifiers.inverse}>
-        <Button {...modifiers} small>small</Button>
+        <Button {...modifiers} small>
+          small
+        </Button>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} large>large</Button>
+        <Button {...modifiers} large>
+          large
+        </Button>
       </SimpleWrapper>
     );
   })
@@ -112,8 +136,29 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper inverse={modifiers.inverse}>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} active>active</Button>
-        <Button {...modifiers} disabled>disabled</Button>
+        <Button {...modifiers} active>
+          active
+        </Button>
+        <Button {...modifiers} disabled>
+          disabled
+        </Button>
+      </SimpleWrapper>
+    );
+  })
+  .addWithJSX('with icons', () => {
+    const modifiers = getModifiers();
+
+    return (
+      <SimpleWrapper inverse={modifiers.inverse}>
+        <Button {...modifiers}>
+          <BarsIcon left />Menu
+        </Button>
+        <Button {...modifiers}>
+          Next<ArrowRightIcon right />
+        </Button>
+        <Button {...modifiers}>
+          <ObjectsIcon left />Select Objects<ChevronDownIcon right size="12px" />
+        </Button>
       </SimpleWrapper>
     );
   });

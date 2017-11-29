@@ -115,6 +115,7 @@ const Button = styled.button`
   line-height: 2.375;
   padding: 0 2em;
   text-align: center;
+  vertical-align: middle;
   display: inline-block;
   transition:
     background ${getTheme('transition')},
