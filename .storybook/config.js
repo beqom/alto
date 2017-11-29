@@ -8,7 +8,7 @@ import { checkA11y } from '@storybook/addon-a11y';
 
 //import fixAddonInfo from './fixAddonInfo';
 
-import AltoUIRoot from '../src/AltoUIRoot';
+import AltoUIRoot from '../src/alto-ui/AltoUIRoot';
 
 setAddon(JSXAddon);
 
@@ -57,11 +57,11 @@ addDecorator(story => (
 ));
 
 function loadStories() {
-  require('../src/Button/story');
-  require('../src/Icons/story');
-  require('../src/Form/story');
-  require('../src/Pagination/story');
-  require('../src/SideNav/story');
+  require('../src/alto-ui/Button/story');
+  require('../src/alto-ui/Icons/story');
+  require('../src/alto-ui/Form/story');
+  require('../src/alto-ui/Pagination/story');
+  require('../src/alto-ui/SideNav/story');
 }
 
 configure(loadStories, module);

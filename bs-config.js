@@ -16,22 +16,22 @@ module.exports = {
     "ui": {
         "port": 3001,
         "weinre": {
-            "port": 8080
-        }
+            "port": 8080,
+        },
     },
     "files": [ "./build"],
     "watchEvents": [
-        "change"
+        "change",
     ],
     "watchOptions": {
-        "ignoreInitial": true
+        "ignoreInitial": true,
     },
     "server": true,
     "proxy": false,
     "port": 3000,
     "middleware": false,
     "serveStatic": [
-      './build'
+      './build',
     ],
     "ghostMode": {
         "clicks": true,
@@ -40,8 +40,8 @@ module.exports = {
         "forms": {
             "submit": true,
             "inputs": true,
-            "toggles": true
-        }
+            "toggles": true,
+        },
     },
     "logLevel": "info",
     "logPrefix": "Browsersync",
@@ -79,21 +79,21 @@ module.exports = {
         "input:toggles",
         "form:submit",
         "form:reset",
-        "click"
+        "click",
     ],
     "socket": {
         "socketIoOptions": {
-            "log": false
+            "log": false,
         },
         "socketIoClientConfig": {
-            "reconnectionAttempts": 50
+            "reconnectionAttempts": 50,
         },
         "path": "/browser-sync/socket.io",
         "clientPath": "/browser-sync",
         "namespace": "/browser-sync",
         "clients": {
-            "heartbeatTimeout": 5000
-        }
+            "heartbeatTimeout": 5000,
+        },
     },
     "tagNames": {
         "less": "link",
@@ -104,6 +104,6 @@ module.exports = {
         "png": "img",
         "svg": "img",
         "gif": "img",
-        "js": "script"
-    }
+        "js": "script",
+    },
 };
