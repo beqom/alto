@@ -85,7 +85,7 @@ storiesOf('Button', module)
     );
   })
   .addWithJSX('inverse', () => {
-    const modifiers = getModifiers('error', 'success', 'inverse');
+    const modifiers = getModifiers('error', 'success', 'inverse', 'flat', 'outline');
 
     return (
       <SimpleWrapper inverse>

@@ -8,6 +8,7 @@ import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
 import ArrowUp from './ArrowUp';
+import Bars from './Bars';
 import Bell from './Bell';
 import Bolt from './Bolt';
 import ChevronDown from './ChevronDown';
@@ -17,12 +18,14 @@ import ChevronUp from './ChevronUp';
 import Lightbulb from './Lightbulb';
 import Objects from './Objects';
 import Search from './Search';
+import Times from './Times';
 
 const icons = [
   ArrowDown,
   ArrowLeft,
   ArrowUp,
   ArrowRight,
+  Bars,
   Bell,
   Bolt,
   ChevronDown,
@@ -32,6 +35,7 @@ const icons = [
   Lightbulb,
   Objects,
   Search,
+  Times,
 ];
 
 storiesOf('Icons', module)
@@ -56,10 +60,10 @@ storiesOf('Icons', module)
   })
 
 icons.forEach(Icon => {
-  storiesOf('Icons', module).add(Icon.displayName, () => (
+  storiesOf('Icons', module).addDecorator(centered).add(Icon.displayName, () => (
     <Icon
       outline={boolean('outline', false)}
-      size={`${number('size', 14, { range: true, step: 1, min: 5, max: 600 })}px`}
+      size={`${number('size', 50, { range: true, step: 1, min: 5, max: 600 })}px`}
       color={color('color', '#333C48')}
     />
   ));
