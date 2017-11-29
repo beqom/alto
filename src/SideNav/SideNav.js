@@ -111,17 +111,29 @@ const SideNavSectionList = styled.ul`
   list-style: none;
   overflow: auto;
 
-  ${respondBelow('narrow')(css`
-    position: fixed;
-    background-color: ${getColor('coolGrey.90')};
-    top: 80px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transform: translateY(-100%);
-    transition: transform ${getTheme('transition')};
+  ${respondBelow('narrow')(`
+    display: none;
+  `)};
+`;
 
-    ${modifier('open')('transform: translateY(0);')};
+const SideNavSectionListNarrow = styled.ul`
+  list-style: none;
+  overflow: auto;
+  color: white;
+  position: fixed;
+  background-color: ${getColor('coolGrey.90')};
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(-100%);
+  transition: transform ${getTheme('transition')};
+  display: none;
+
+  ${modifier('open')('transform: translateY(0);')};
+
+  ${respondBelow('narrow')(`
+    display: block;
   `)};
 `;
 
@@ -303,7 +315,8 @@ class SideNav extends React.PureComponent {
             {open ? closeMenuButtonLabel : openMenuButtonLabel }
           </SideNavMenuButton>
         </SideNavHeader>
-        <SideNavSectionList open={open}>{this.renderNavItems()}</SideNavSectionList>
+        <SideNavSectionList>{this.renderNavItems()}</SideNavSectionList>
+        <SideNavSectionListNarrow aria-hidden={!open} open={open}>{this.renderNavItems()}</SideNavSectionListNarrow>
         <SideNavToggleButton
           onClick={this.handleToggle}
           reverse={collapsed}
