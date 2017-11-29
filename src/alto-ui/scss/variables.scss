@@ -1,3 +1,9 @@
+// --- breakpoints ---
+
+$breakpoint__narrow-medium: 768px;
+$breakpoint__medium-wide: 1024px;
+
+
 // ===========================
 // Alto
 $alto-version: '0.1.0' !default;
@@ -6,44 +12,177 @@ $deprecate-mode: 'sensible' !default;
 // ===================================
 // Palette
 
-// --- COLORS ---
+$red-90: #4D0008 !default;
+$red-80: #74000C !default;
+$red-70: #93000F !default;
+$red-60: #C30014 !default;
+$red-50: #DD4554 !default;
+$red-40: #EB6D7A !default;
+$red-30: #F79AA3 !default;
+$red-20: #FFCAD0 !default;
+$red-10: #FFF1F3 !default;
+$red:    $red-60 !default;
 
-$color__grey--ultra-light: #f5f7fa;
-$color__grey--light: #dee2e8;
-$color__grey: #92999f;
-$color__grey--dark: #343c47;
-$color__primary: #3185f7;
-$color__primary--light: #f3f9fe;
+$orange-90: #552B00 !default;
+$orange-80: #904900 !default;
+$orange-70: #C76400 !default;
+$orange-60: #E57D14 !default;
+$orange-50: #F3993E !default;
+$orange-40: #FDB973 !default;
+$orange-30: #FFCC98 !default;
+$orange-20: #FFE1C3 !default;
+$orange-10: #FFF5EC !default;
+$orange:    $orange-60 !default;
 
-$color__font--main: $color__grey--dark;
+$yellow-90: #524700 !default;
+$yellow-80: #938100 !default;
+$yellow-70: #BAA50A !default;
+$yellow-60: #E8CE16 !default;
+$yellow-50: #EDD73C !default;
+$yellow-40: #EEDE6E !default;
+$yellow-30: #F4E896 !default;
+$yellow-20: #F9F3C5 !default;
+$yellow-10: #FDFCF1 !default;
+$yellow:    $yellow-60 !default;
+
+$lime-90: #304D00 !default;
+$lime-80: #4A7305 !default;
+$lime-70: #60940A !default;
+$lime-60: #77AF1A !default;
+$lime-50: #8CC332 !default;
+$lime-40: #9FCE52 !default;
+$lime-30: #C1E683 !default;
+$lime-20: #DAF2B2 !default;
+$lime-10: #F6FFE8 !default;
+$lime:    $lime-60 !default;
+
+$green-90: #003909 !default;
+$green-80: #035410 !default;
+$green-70: #156A23 !default;
+$green-60: #208831 !default;
+$green-50: #43A953 !default;
+$green-40: #6FC77D !default;
+$green-30: #A3E5AD !default;
+$green-20: #C9F1CF !default;
+$green-10: #F4FFF6 !default;
+$green:    $green-60 !default;
+
+$pine-90: #003B2C !default;
+$pine-80: #005641 !default;
+$pine-70: #09795E !default;
+$pine-60: #189B7C !default;
+$pine-50: #2CAB8C !default;
+$pine-40: #50BEA4 !default;
+$pine-30: #93DCCA !default;
+$pine-20: #C5F4E9 !default;
+$pine-10: #F1FFFC !default;
+$pine:    $pine-60 !default;
+
+$teal-90: #003F4D !default;
+$teal-80: #04596D !default;
+$teal-70: #047792 !default;
+$teal-60: #078CAA !default;
+$teal-50: #17ABCD !default;
+$teal-40: #44C2DF !default;
+$teal-30: #85DAEE !default;
+$teal-20: #BEF0FB !default;
+$teal-10: #E8FBFF !default;
+$teal:    $teal-50 !default;
+
+$blue-90: #002C55 !default;
+$blue-80: #02417C !default;
+$blue-70: #005BB1 !default;
+$blue-60: #0074E0 !default;
+$blue-50: #2D91EE !default;
+$blue-40: #4DA5F6 !default;
+$blue-30: #82C1FA !default;
+$blue-20: #B1D9FF !default;
+$blue-10: #F3F9FF !default;
+$blue:    $blue-60 !default;
+
+$indigo-90: #14004D !default;
+$indigo-80: #22027E !default;
+$indigo-70: #3005AD !default;
+$indigo-60: #4311D2 !default;
+$indigo-50: #5D38E7 !default;
+$indigo-40: #7A6CF3 !default;
+$indigo-30: #A3A3FF !default;
+$indigo-20: #D2D2FC !default;
+$indigo-10: #F1F1FF !default;
+$indigo:    $indigo-60 !default;
+
+$purple-90: #2A0144 !default;
+$purple-80: #3C065F !default;
+$purple-70: #5A1885 !default;
+$purple-60: #732EA0 !default;
+$purple-50: #8B45B8 !default;
+$purple-40: #A969D3 !default;
+$purple-30: #CD9AEE !default;
+$purple-20: #EBCDFF !default;
+$purple-10: #F9F1FF !default;
+$purple:    $purple-50 !default;
+
+$pink-90: #5A0038 !default;
+$pink-80: #870756 !default;
+$pink-70: #981E6A !default;
+$pink-60: #AF3882 !default;
+$pink-50: #CA549D !default;
+$pink-40: #DF7AB9 !default;
+$pink-30: #F19BD0 !default;
+$pink-20: #FCBEE4 !default;
+$pink-10: #FEE5F4 !default;
+$pink:    $pink-60 !default;
+
+$coolgrey-90: #192328 !default;
+$coolgrey-80: #333C48 !default;
+$coolgrey-70: #3F4F5E !default;
+$coolgrey-60: #4F6376 !default;
+$coolgrey-50: #5F788C !default;
+$coolgrey-40: #8096AC !default;
+$coolgrey-30: #A2B8CE !default;
+$coolgrey-20: #C4D7EB !default;
+$coolgrey-10: #EBF2F9 !default;
+
+$grey-90: #242424 !default;
+$grey-80: #303030 !default;
+$grey-70: #4C4C4C !default;
+$grey-60: #606060 !default;
+$grey-50: #757575 !default;
+$grey-40: #979797 !default;
+$grey-30: #B8B8B8 !default;
+$grey-20: #D9D9D9 !default;
+$grey-10: #F2F2F2 !default;
+
+$warmgrey-90: #231919 !default;
+$warmgrey-80: #302929 !default;
+$warmgrey-70: #4C4343 !default;
+$warmgrey-60: #605757 !default;
+$warmgrey-50: #746B6B !default;
+$warmgrey-40: #978E8E !default;
+$warmgrey-30: #B6B0B0 !default;
+$warmgrey-20: #D9D4D4 !default;
+$warmgrey-10: #F2EDED !default;
 
 
-// --- FONT FAMILIES
-
-$font-family--main: 'Source Sans Pro', sans-serif;
-
-
-// --- SIZES ---
-
-$size__font--main: 16px;
-
-
-// --- LINEHEIGHT ---
-
-$lineheight--main: 1.2;
-
-
-// --- breakpoints ---
+$color-inverse-90: rgba(255, 255, 255, .9) !default;
+$color-inverse-80: rgba(255, 255, 255, .8) !default;
+$color-inverse-70: rgba(255, 255, 255, .7) !default;
+$color-inverse-60: rgba(255, 255, 255, .6) !default;
+$color-inverse-50: rgba(255, 255, 255, .5) !default;
+$color-inverse-40: rgba(255, 255, 255, .4) !default;
+$color-inverse-30: rgba(255, 255, 255, .3) !default;
+$color-inverse-20: rgba(255, 255, 255, .2) !default;
+$color-inverse-10: rgba(255, 255, 255, .1) !default;
+$color-inverse: white !default;
 
 
 $black: #000 !default;
 $white: #fff !default;
 
-$color-page-bkgd:       $blue-10 !default;
+$color-page-bkgd:       #F9F9FB !default;
 
 $color-text-default:    $coolgrey-80 !default;
 $color-text-heading:    $color-text-default !default;
-$color-text-muted:      $coolgrey-70 !default;
 
 $color-text-link:         $blue-60 !default;
 $color-text-link-hover:   $blue-70 !default;
@@ -56,8 +195,8 @@ $color-text-link-visited: $purple-60 !default;
 $font-size-root:                    16px !default;
 
 $font-size-xx-small:                0.5rem !default;   // 8px
-$font-size-x-small:                 0.75rem !default;// 12px
-$font-size-small:                   0.875rem !default;  // 14px
+$font-size-x-small:                 0.6875rem !default;// 11px
+$font-size-small:                   0.75rem !default;  // 12px
 $font-size-medium:                  1rem !default;     // 16px
 $font-size-large:                   1.125rem !default;  // 18px
 $font-size-x-large:                 1.5rem !default;  // 24px
@@ -140,7 +279,6 @@ $line-height-reset: 1 !default;
 $line-height-heading: 1.2 !default;
 $line-height-lead: 1.35 !default;
 $line-height-text: 1.625 !default;
-$line-height-input: 1.5 !default;
 $line-height-tab: 3rem !default;
 
 

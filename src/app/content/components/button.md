@@ -5,30 +5,37 @@ title: "Button"
 
 ## Base
 {{< example "markup" >}}
-<button class="button">Solid Button</button>
-<button class="button button--success">Success</button>
-<button class="button button--danger">Danger</button>
+<button class="Button">Solid Button</button>
+<button class="Button Button--success">Success</button>
+<button class="Button Button--danger">Danger</button>
+<button class="Button" disabled="disabled">disabled</button>
 {{< /example >}}
-
-## Small
-{{< example "markup" >}}
-<button class="button button--small">Small Button</button>
-<button class="button button--small button--success">Success</button>
-<button class="button button--small button--danger">Danger</button>
-{{< /example >}}
-
 
 ## Outline
 {{< example "markup" >}}
-<button class="button button--outline">Ouline Button</button>
-<button class="button button--outline button--success">Success</button>
-<button class="button button--outline button--danger">Danger</button>
+<button class="Button Button--outline">Ouline Button</button>
+<button class="Button Button--outline Button--success">Success</button>
+<button class="Button Button--outline Button--danger">Danger</button>
+<button class="Button Button--outline" disabled="disabled">disabled</button>
 {{< /example >}}
 
 
 ## Flat
 {{< example "markup" >}}
-<button class="button button--flat">Flat Button</button>
-<button class="button button--flat button--success">Success</button>
-<button class="button button--flat button--danger">Danger</button>
+<button class="Button Button--flat">Flat Button</button>
+<button class="Button Button--flat Button--success">Success</button>
+<button class="Button Button--flat Button--danger">Danger</button>
+<button class="Button Button--flat" disabled="disabled">disabled</button>
+{{< /example >}}
+
+## Sizes
+{{< example "markup" >}}
+<button class="Button Button--large">Large</button>
+<button class="Button">Default</button>
+<button class="Button Button--small">Small</button>
+{{< /example >}}
+
+## Block
+{{< example "markup" >}}
+<button class="Button Button--block">Default</button>
 {{< /example >}}

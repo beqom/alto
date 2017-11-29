@@ -1,14 +1,12 @@
-$color-button-base: $blue;
-$color-button-accent: $blue-80;
-
+@import "../scss/inc";
 $color-button-base: $blue;
 $color-button-accent: $blue-80;
 
 $line-height-button: 1.375 !default;
 $line-height-button-small: 1 !default;
 
-
-.button {
+/*
+.Button {
   font-weight: $font-weight-regular;
   font-size: $font-size-medium;
   font-family: $font-family;
@@ -37,7 +35,7 @@ $line-height-button-small: 1 !default;
         inset 0 2px 0 0 $blue-90;
   }
 
-  + .button {
+  + .Button {
     margin-left: .25rem;
   }
 }
@@ -204,5 +202,216 @@ $line-height-button-small: 1 !default;
       box-shadow:
         0 0 0 3px $red-30,
         inset 0 2px 0 0 $red-20;
+
+
+
+*/
+
+
+/* --------------------------------------------- *\
+  MIXIN BUTTON SOLID
+\* --------------------------------------------- */
+
+@mixin Button--solid($color-default, $color-hover, $color-focus, $color-font: white) {
+  background: $color-default;
+  color: $color-font;
+  border-color: $color-default;
+
+  &:focus {
+    box-shadow: 0 0 0 3px $color-focus;
+  }
+
+  &:hover,
+  &.Button--active {
+    background: $color-hover;
+    border-color: $color-hover;
+  }
+
+  &:active {
+    background: $color-default;
+    border-color: $color-default;
+    box-shadow: 0 0 0 3px $color-focus, inset 0 2px 0 $color-hover;
+  }
+
+  &:disabled {
+    background: $coolgrey-30;
+    border-color: $coolgrey-30;
   }
 }
+
+
+/* --------------------------------------------- *\
+  MIXIN BUTTON OUTLINE
+\* --------------------------------------------- */
+
+@mixin Button--outline($color-default, $color-hover, $color-focus) {
+  background: transparent;
+  color: $color-default;
+  border-color: $color-default;
+
+  &:focus {
+    box-shadow: 0 0 0 3px $color-focus;
+  }
+
+  &:hover,
+  &.Button--active {
+    background: $color-hover;
+    border-color: $color-default;
+  }
+
+  &:active {
+    background: transparent;
+    box-shadow: 0 0 0 3px $color-focus, inset 0 2px 0 $color-default;
+  }
+
+  &:disabled {
+    background: transparent;
+    color: $coolgrey-50;
+    border-color: $coolgrey-50;
+  }
+}
+
+
+/* --------------------------------------------- *\
+  MIXIN BUTTON FLAT
+\* --------------------------------------------- */
+
+@mixin Button--flat($color-default, $color-hover, $color-focus) {
+  color: $color-default;
+
+  &,
+  &:hover,
+  &:active,
+  &:disabled,
+  &.Button--active {
+    background: transparent;
+    border-color: transparent;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $color-focus;
+  }
+
+  &:hover,
+  &.Button--active {
+    color: $color-hover;
+  }
+
+  &:active {
+    color: $color-default;
+    box-shadow: 0 0 0 3px $color-focus;
+  }
+
+  &:disabled {
+    color: $coolgrey-50;
+  }
+}
+
+
+/* --------------------------------------------- *\
+  STYLES
+\* --------------------------------------------- */
+
+
+// --- DEFAULT (SOLID) ---
+
+.Button {
+  @extend %reset-button;
+
+  $font-size: 1rem;
+  border-radius: $border-radius-default;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-weight: 400;
+  line-height: 2.375;
+  padding: 0 2em;
+  text-align: center;
+  display: inline-block;
+  transition:
+    background $duration-quick  $timing-function,
+    box-shadow $duration-quick  $timing-function,
+    border-color $duration-quick  $timing-function;
+
+  &:focus {
+    box-shadow: 0 0 0 3px $blue-20;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  @include Button--solid($blue, $blue-80, $blue-20);
+}
+
+.Button--success {
+  @include Button--solid($green, $green-80, $green-20);
+}
+
+.Button--danger {
+  @include Button--solid($red, $red-80, $red-20);
+}
+
+.Button--inverse {
+  @include Button--solid($color-inverse, $color-inverse-80, $color-inverse-20, $color-text-default);
+}
+
+
+// --- OUTLINE ---
+
+.Button--outline {
+  @include Button--outline($blue, $blue-10, $blue-20);
+
+  &.Button--success {
+    @include Button--outline($green, $green-10, $green-20);
+  }
+
+  &.Button--danger {
+    @include Button--outline($red, $red-10, $red-20);
+  }
+
+  &.Button--inverse {
+    @include Button--outline($color-inverse, $color-inverse-10, $color-inverse-20);
+  }
+}
+
+// --- FLAT ---
+
+.Button--flat {
+  @include Button--flat($blue, $blue-80, $blue-20);
+
+  &.Button--success {
+    @include Button--flat($green, $green-80, $green-20);
+  }
+
+  &.Button--danger {
+    @include Button--flat($red, $red-80, $red-20);
+  }
+
+  &.Button--inverse {
+    @include Button--outline($color-inverse, $color-inverse-80, $color-inverse-20);
+  }
+}
+
+
+// --- SIZES ---
+
+.Button--large {
+  font-size: $font-size-large;
+  line-height: 2.67;
+  padding: 0 3em;
+}
+
+.Button--small {
+  font-size: $font-size-small;
+  line-height: 2;
+  padding: 0 1.5em;
+}
+
+
+// --- OTHERS ---
+
+.Button--block {
+  display: block;
+  width: 100%;
+}
+
