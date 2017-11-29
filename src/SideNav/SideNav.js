@@ -6,8 +6,6 @@ import { getColor, getTheme, fontSize, respondAbove, respondBelow } from '../hel
 
 import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
-import MenuIcon from '../Icons/Menu';
-import CloseIcon from '../Icons/Close';
 import VisuallyHidden from '../VisuallyHidden';
 import Button, { resetButton } from '../Button';
 
