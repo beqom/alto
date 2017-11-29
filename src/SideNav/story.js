@@ -12,13 +12,6 @@ import LightbulbIcon from '../Icons/Lightbulb';
 import BoltIcon from '../Icons/Bolt';
 import ObjectsIcon from '../Icons/Objects';
 
-const Container = styled.div`
-  height: 600px;
-  width: 200px;
-`;
-
-Container.displayName = 'div';
-
 const items = [
   { title: 'Numbers', icon: LightbulbIcon, items: [
     { title: 'One', url: '#one' },
@@ -43,6 +36,17 @@ const urls = items
   .map(item => item.items.map(({ url }) => url))
   .reduce((acc, val) => acc.concat(val));
 
+
+const Container = styled.div`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+`;
+
+Container.displayName = 'div';
+
 storiesOf('SideNav', module)
   .addDecorator(withReadme(README))
   .addDecorator(story => <Container>{story()}</Container>)
@@ -53,7 +57,9 @@ storiesOf('SideNav', module)
       logoUrl="#"
       currentUrl={select('currentUrl', ['none'].concat(urls), '#three')}
       items={items}
-      expandButtonLabel="click to expand side navigation"
-      collapseButtonLabel="click to collapse side navigation"
+      expandButtonA11yLabel="click to expand side navigation"
+      collapseButtonA11yLabel="click to collapse side navigation"
+      openMenuButtonLabel="Menu"
+      closeMenuButtonLabel="Close"
     />
   ));

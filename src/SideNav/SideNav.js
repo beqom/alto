@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
-import { getColor, getTheme, fontSize } from '../helpers/theme';
+import { getColor, getTheme, fontSize, respondAbove, respondBelow } from '../helpers/theme';
 
 import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
+import MenuIcon from '../Icons/Menu';
+import CloseIcon from '../Icons/Close';
 import VisuallyHidden from '../VisuallyHidden';
-import { resetButton } from '../Button';
+import Button, { resetButton } from '../Button';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
@@ -24,14 +26,16 @@ const sideNavIconContainerCSS = css`
 `;
 
 const SideNavContainer = styled.aside`
-  height: 100%;
-  width: 200px;
   background-color: ${getColor('coolGrey.90')};
   display: flex;
   flex-direction: column;
   transition: width ${getTheme('transition')};
 
-  ${props => props.collapsed && css`width: 72px;`};
+  ${respondAbove('narrow')(css`
+    width: 200px;
+    height: 100%;
+    ${modifier('collapsed')('width: 3.125rem;')};
+  `)};
 `;
 
 const SideNavButton = styled.button`
@@ -40,7 +44,7 @@ const SideNavButton = styled.button`
   color: ${getColor('primary.10')};
   width: 100%;
   display: flex;
-  height: 3.25rem;
+  height: 3.125rem;
   cursor: pointer;
   transition: background-color ${getTheme('transition')}, box-shadow ${getTheme('transition')},
     color ${getTheme('transition')}, border-color ${getTheme('transition')};
@@ -58,22 +62,48 @@ const SideNavButton = styled.button`
   `)};
 `;
 
-const SideNavLogo = SideNavButton.withComponent('a').extend`
+const SideNavHeader = styled.header`
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 5px 0 ${getColor('brand')};
+  border-bottom: 1px solid ${getColor('coolGrey.80')};
+
+  ${respondBelow('narrow')(css`
+    padding: 0 20px;
+    background-color: ${getColor('coolGrey.90')};
+    position: relative;
+    z-index: 1;
+  `)};
+`;
+
+const SideNavLogo = styled.a`
   ${fontSize('xlarge')};
   font-weight: 300;
   display: block;
   text-align: center;
   line-height: 3.125;
-  height: 3.125em;
+  height: 80px;
   overflow: hidden;
   color: white;
-  border-bottom: 1px solid ${getColor('coolGrey.80')};
-  box-shadow: inset 0 5px 0 ${getColor('brand')};
+  transition: color ${getTheme('transition')};
+  flex: 1;
+
+  :hover {
+    color: ${getColor('brand')};
+  }
+
+  ${respondBelow('narrow')(`
+    text-align: left;
+  `)};
 `;
 
-const SideNavIconButton = SideNavButton.extend`
+const SideNavMenuButton = Button.extend`${respondAbove('narrow')(css`display: none;`)};`;
+
+const SideNavToggleButton = SideNavButton.extend`
   ${sideNavIconContainerCSS};
   ${fontSize('xlarge')};
+
+  ${respondBelow('narrow')('display: none')};
 `;
 
 const SideNavSectionList = styled.ul`
@@ -82,24 +112,40 @@ const SideNavSectionList = styled.ul`
   flex: 1;
   list-style: none;
   overflow: auto;
+
+  ${respondBelow('narrow')(css`
+    position: fixed;
+    background-color: ${getColor('coolGrey.90')};
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(-100%);
+    transition: transform ${getTheme('transition')};
+
+    ${modifier('open')('transform: translateY(0);')};
+  `)};
 `;
 
 const SideNavSection = styled.li`position: relative;`;
 
 const SideNavSectionButton = SideNavButton.extend`
   display: block;
-  width: 200px;
   overflow: hidden;
   transition: all ${getTheme('transition')};
 
   box-shadow: inset 0 0 0 ${getColor('brand')};
 
-  ${props => props.collapsed && css`width: 72px;`};
+  ${respondAbove('narrow')(css`
+    width: 200px;
+    ${modifier('collapsed')('width: 3.125rem;')};
+  `)};
 
   ${modifier('active')(css`
-    box-shadow: inset -5px 0 0 ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
+    background-color: ${getColor('coolGrey.80')};
+    box-shadow: inset -5px 0 0 ${getColor('brand')};
     :focus {
-      box-shadow: inset 0 0 0 2px ${getColor('brand')}, inset -200px 0 0 ${getColor('coolGrey.80')};
+      box-shadow: inset 0 0 0 2px ${getColor('brand')};
     }
   `)};
 `;
@@ -107,7 +153,7 @@ const SideNavSectionButton = SideNavButton.extend`
 const SideNavSectionItem = styled.div`
   display: flex;
   align-items: center;
-  width: 200px;
+  ${respondAbove('narrow')('width: 200px;')};
 `;
 
 const SideNavSectionItemIcon = styled.div`
@@ -115,10 +161,6 @@ const SideNavSectionItemIcon = styled.div`
   width: 3.25rem;
   display: flex;
   transition: width ${getTheme('transition')};
-
-  ${modifier('collapsed')(css`
-    width: 72px;
-  `)};
 
   i {
     margin: auto;
@@ -159,10 +201,12 @@ class SideNav extends React.PureComponent {
 
     this.state = {
       collapsed: false,
+      open: false,
       sectionsOpenState: {},
     };
 
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleToggleOpen = this.handleToggleOpen.bind(this);
     this.LinkComponent = styleLinkComponent(this.props.linkComponent);
   }
 
@@ -185,6 +229,10 @@ class SideNav extends React.PureComponent {
         }),
       }));
     }
+  }
+
+  handleToggleOpen() {
+    this.setState(({ open }) => ({ open: !open }));
   }
 
   renderNavSubItems(items, open) {
@@ -239,20 +287,33 @@ class SideNav extends React.PureComponent {
   }
 
   render() {
-    const { collapsed } = this.state;
-    const { expandButtonLabel, collapseButtonLabel, logoUrl, logoSmall, logo } = this.props;
+    const { collapsed, open } = this.state;
+    const {
+      expandButtonLabel,
+      collapseButtonLabel,
+      logoUrl,
+      logoSmall,
+      logo,
+      openMenuButtonLabel,
+      closeMenuButtonLabel,
+    } = this.props;
     return (
       <SideNavContainer collapsed={collapsed}>
-        <SideNavLogo href={logoUrl}>{collapsed ? logoSmall : logo}</SideNavLogo>
-        <SideNavSectionList>{this.renderNavItems()}</SideNavSectionList>
-        <SideNavIconButton
+        <SideNavHeader>
+          <SideNavLogo href={logoUrl}>{collapsed ? logoSmall : logo}</SideNavLogo>
+          <SideNavMenuButton outline inverse onClick={this.handleToggleOpen}>
+            {open ? closeMenuButtonLabel : openMenuButtonLabel }
+          </SideNavMenuButton>
+        </SideNavHeader>
+        <SideNavSectionList open={open}>{this.renderNavItems()}</SideNavSectionList>
+        <SideNavToggleButton
           onClick={this.handleToggle}
           reverse={collapsed}
           aria-expanded={collapsed}
         >
           <ArrowLeftIcon />
           <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
-        </SideNavIconButton>
+        </SideNavToggleButton>
       </SideNavContainer>
     );
   }
@@ -274,6 +335,8 @@ SideNav.propTypes = {
   linkComponent: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   expandButtonLabel: PropTypes.string.isRequired,
   collapseButtonLabel: PropTypes.string.isRequired,
+  openMenuButtonLabel: PropTypes.string.isRequired,
+  closeMenuButtonLabel: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

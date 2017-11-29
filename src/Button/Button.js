@@ -113,7 +113,7 @@ const Button = styled.button`
   border: 1px solid transparent;
   font-weight: 400;
   line-height: 2.375;
-  padding: 0 2em;
+  padding: 0 1em;
   text-align: center;
   vertical-align: middle;
   display: inline-block;
