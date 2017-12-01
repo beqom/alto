@@ -112,6 +112,15 @@ const SideNavLogoNarrow = SideNavLogo.extend`
   `)};
 `;
 
+const SideNavLogoNarrow = SideNavLogo.extend`
+  text-align: left;
+  display: none;
+
+  ${respondBelow('narrow')(`
+    display: block;
+  `)};
+`;
+
 const SideNavMenuButton = styled.div`
   ${respondAbove('narrow')(
     css`
