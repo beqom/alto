@@ -4,14 +4,27 @@
 
 .navbar {
   width: 100%;
-  background: $blue;
+  background: $blue-90;
   color: $white;
-  padding: 1rem;
+  padding: 0 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
+.navbar__links {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
 .navbar__link {
   color: $white;
+  padding: 1rem;
+  text-decoration: none;
+  display: block;
+  transition: $duration-quick $timing-function background;
+  &:hover {
+    background: $blue-80;
+  }
 }
