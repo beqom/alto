@@ -17,11 +17,11 @@
 </head>
 <body>
 
-  <div class="flex-container">
+  <div class="main-container">
 
     {{ block "header" . }}{{ partial "site/header.html" . }}{{ end }}
 
-    <main class="main" role="main">
+    <main class="content-container" role="main">
 
       {{ block "main" . }}{{ end }}
 

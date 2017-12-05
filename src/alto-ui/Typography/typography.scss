@@ -6,7 +6,7 @@
 .text--h4,
 .text--h5,
 .text--h6 {
-  font-weight: $font-weight-bold;
+  font-weight: $font-weight-semibold;
   line-height: $line-height-heading;
   color: $coolgrey-80;
 }
@@ -34,4 +34,22 @@
 
 .text--h6 {
   font-size: $font-size-h6;
+}
+
+.link {
+  color: $blue-60;
+  text-decoration: none;
+  transition: $duration-quick $timing-function color;
+  &:hover,
+  &--hover {
+    color: $blue-70;
+    text-decoration: underline;
+  }
+  &:visited,
+  &--visited {
+    color: $purple-60;
+    &:hover {
+      color: $purple-70;
+    }
+  }
 }

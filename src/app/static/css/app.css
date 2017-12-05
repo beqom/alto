@@ -22,7 +22,7 @@ html {
 .text--h4,
 .text--h5,
 .text--h6 {
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.2;
   color: #333C48; }
 
@@ -44,6 +44,18 @@ html {
 
 .text--h6 {
   font-size: 1rem; }
+
+.link {
+  color: #0074E0;
+  text-decoration: none;
+  transition: 0.15s cubic-bezier(0.53, 0.14, 0.33, 0.97) color; }
+  .link:hover, .link--hover {
+    color: #005BB1;
+    text-decoration: underline; }
+  .link:visited, .link--visited {
+    color: #732EA0; }
+    .link:visited:hover, .link--visited:hover {
+      color: #5A1885; }
 
 html,
 body {
@@ -72,13 +84,18 @@ body {
   .navbar__link:hover {
     background: #02417C; }
 
-.flex-container {
+.footer {
+  width: 100%;
+  background: #EBF2F9;
+  padding: 3rem 2rem; }
+
+.main-container {
   display: flex;
   flex-direction: column;
   min-height: 100%;
   align-items: center; }
 
-.main {
+.content-container {
   flex: 1 0 auto;
   width: 100%;
   padding: 2rem 1rem;
