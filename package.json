@@ -20,6 +20,9 @@
     "clean:dist": "rimraf dist",
     "prebuild": "npm run lint && npm test && npm run clean:dist && copy ./package.json ./README.md ./dist",
     "build": "cross-env NODE_ENV=production babel ./src -d ./dist --ignore story.js,__tests__,",
+    "sass:app": "node-sass ./src/app/scss -o ./src/app/static/css",
+    "build:app": "hugo --source ./src/app --cleanDestinationDir -d ../../build",
+    "dev:app": "browser-sync start --server --files ./build --ss ./build | npm run sass:app -- -w | npm run build:app -- --watch",
     "prestart": "npm run test:output -- --watch",
     "start": "npm run storybook"
   },
@@ -34,8 +37,10 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-jest": "^21.2.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
+    "browser-sync": "^2.18.13",
     "copy": "^0.3.1",
     "cross-env": "^5.1.1",
     "enzyme": "^3.1.1",
@@ -63,6 +68,7 @@
     "stylelint": "^8.2.0",
     "stylelint-config-recommended": "^1.0.0",
     "stylelint-scss": "^2.1.0",
+    "webpack": "^3.10.0",
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {

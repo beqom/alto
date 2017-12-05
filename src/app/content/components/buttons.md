@@ -1,3 +1,3 @@
 # Buttons, yo
 
-I'm a button docs
+I'm a button
