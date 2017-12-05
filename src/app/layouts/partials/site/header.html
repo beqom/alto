@@ -3,6 +3,7 @@
     <a class="navbar__brand navbar__link" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
 
     <ul class="navbar__links">
+      
       {{- $currentPage := . -}}
       {{ range .Site.Menus.main -}}
       <li class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}">

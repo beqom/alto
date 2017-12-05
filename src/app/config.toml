@@ -1,6 +1,6 @@
 baseURL = "/"
-languageCode = "en-gb"
-title = "Alto Design System"
+languageCode = "en-us"
+title = "Alto"
 
 disableKinds = ["RSS"]
 enableRobotsTXT = true

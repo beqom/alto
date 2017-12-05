@@ -1,6 +1,10 @@
 // ...
 @import "../../alto-ui/scss/reset.scss";
 
+html,
+body {
+  height: 100%;
+}
 
 .navbar {
   width: 100%;
@@ -27,4 +31,43 @@
   &:hover {
     background: $blue-80;
   }
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  align-items: center;
+}
+
+.main {
+  flex: 1 0 auto;
+  width: 100%;
+  padding: 2rem 1rem;
+  max-width: 78rem;
+}
+
+.hero {
+  text-align: center;
+  @include MQ(Splus) {
+    text-align: left;
+  }
+}
+
+.hero__title {
+  font-weight: $font-weight-regular;
+  font-size: $font-size-xx-large;
+  line-height: 1;
+  margin-bottom: 2rem;
+
+  @include MQ(Mplus) {
+    font-size: $font-size-xxx-large;
+  }
+}
+
+.hero__lead {
+  font-size: $font-size-large;
+  font-weight: $font-weight-light;
+  max-width: 38rem;
+  line-height: $line-height-lead;
 }
