@@ -33,14 +33,20 @@ body {
   }
 }
 
-.flex-container {
+.footer {
+  width: 100%;
+  background: $coolgrey-10;
+  padding: $spacing-xx-large $spacing-x-large;
+}
+
+.main-container {
   display: flex;
   flex-direction: column;
   min-height: 100%;
   align-items: center;
 }
 
-.main {
+.content-container {
   flex: 1 0 auto;
   width: 100%;
   padding: 2rem 1rem;
