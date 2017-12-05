@@ -1,4 +1,4 @@
-import { getTheme, getColor, fontSize, respondBelow, respondAbove, respondBetween } from '../theme';
+import { getTheme, getColor } from '../theme';
 
 const theme = {
   palette: {
@@ -12,13 +12,6 @@ const theme = {
     primary: 'blue',
   },
   foo: 'bar',
-  fontSize: {
-    small: '10px',
-  },
-  breakpoints: {
-    narrow: 768,
-    wide: 990,
-  },
 };
 
 const props = { theme };
@@ -56,50 +49,5 @@ describe('getColor(color, [shade])', () => {
 
   it('should be able to split color to find shade', () => {
     expect(getColor('primary.10')(props)).toBe('cyan');
-  });
-});
-
-describe('fontSize(size)', () => {
-  it('should return the corresponding fontSize', () => {
-    expect(fontSize('small')(props)).toBe('font-size: 10px;');
-  });
-
-  it('should return size name if no corresponding fontSize is found', () => {
-    expect(fontSize('big')(props)).toBe('font-size: big;');
-  });
-});
-
-const processCSS = xs => p => xs.reduce((acc, x) => acc + (typeof x === 'function' ? x(p) : x), '');
-
-describe('respondBelow(breakpoint)', () => {
-  it('should return the good media query', () => {
-    const result = processCSS(respondBelow('narrow')('font-size: 10px;'))(props);
-    expect(result).toBe(`
-  @media screen and (max-width: 767px) {
-    font-size: 10px;
-  }
-`);
-  });
-});
-
-describe('respondAbove(breakpoint)', () => {
-  it('should return the good media query', () => {
-    const result = processCSS(respondAbove('wide')('font-size: 24px;'))(props);
-    expect(result).toBe(`
-  @media screen and (min-width: 990px) {
-    font-size: 24px;
-  }
-`);
-  });
-});
-
-describe('respondBetween(breakpointMin, breakpointMax)', () => {
-  it('should return the good media query', () => {
-    const result = processCSS(respondBetween('narrow', 'wide')('font-size: 16px;'))(props);
-    expect(result).toBe(`
-  @media screen and (min-width: 768px) and (max-width: 989px) {
-    font-size: 16px;
-  }
-`);
   });
 });
