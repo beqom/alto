@@ -2,32 +2,20 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
-import centered from '@storybook/addon-centered';
 import withReadme from 'storybook-readme/with-readme';
 import styled from 'styled-components';
 
-import ArrowRightIcon from '../Icons/ArrowRight';
-import ChevronDownIcon from '../Icons/ChevronDown';
-import BarsIcon from '../Icons/Bars';
-import ObjectsIcon from '../Icons/Objects';
 import Button from './Button';
 import README from './README.md';
 
 const SimpleWrapper = styled.div`
   text-align: center;
   width: 600px;
-  padding: 40px 0;
   ${p => (p.width ? `width: ${p.width}` : '')};
 
   > * {
     margin: 10px;
   }
-
-  ${props =>
-    props.inverse &&
-    `
-    background-color: #192328;
-  `};
 `;
 
 SimpleWrapper.displayName = 'Story';
@@ -37,7 +25,6 @@ const modifierNames = [
   'flat',
   'error',
   'success',
-  'inverse',
   'large',
   'small',
   'active',
@@ -57,12 +44,11 @@ const getModifiers = (...modifiersExcluded) =>
 
 storiesOf('Button', module)
   .addDecorator(withReadme(README))
-  .addDecorator(centered)
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
 
     return (
-      <SimpleWrapper inverse={modifiers.inverse}>
+      <SimpleWrapper>
         <Button>default</Button>
         <Button {...modifiers}>{text('children', 'customizable')}</Button>
       </SimpleWrapper>
@@ -72,46 +58,21 @@ storiesOf('Button', module)
     const modifiers = getModifiers('outline', 'flat');
 
     return (
-      <SimpleWrapper inverse={modifiers.inverse}>
+      <SimpleWrapper>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} outline>
-          outline
-        </Button>
-        <Button {...modifiers} flat>
-          flat
-        </Button>
+        <Button {...modifiers} outline>outline</Button>
+        <Button {...modifiers} flat>flat</Button>
       </SimpleWrapper>
     );
   })
   .addWithJSX('colors', () => {
-    const modifiers = getModifiers('error', 'success', 'inverse');
+    const modifiers = getModifiers('error', 'success');
 
     return (
       <SimpleWrapper>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} success>
-          success
-        </Button>
-        <Button {...modifiers} error>
-          error
-        </Button>
-      </SimpleWrapper>
-    );
-  })
-  .addWithJSX('inverse', () => {
-    const modifiers = getModifiers('error', 'success', 'inverse', 'flat', 'outline');
-
-    return (
-      <SimpleWrapper inverse>
-        <Button {...modifiers} inverse>
-          default
-        </Button>
-        <Button {...modifiers} inverse outline>
-          outline
-        </Button>
-        <Button {...modifiers} inverse flat>
-          flat
-        </Button>
+        <Button {...modifiers} success>success</Button>
+        <Button {...modifiers} error>error</Button>
       </SimpleWrapper>
     );
   })
@@ -119,14 +80,10 @@ storiesOf('Button', module)
     const modifiers = getModifiers('small', 'large');
 
     return (
-      <SimpleWrapper inverse={modifiers.inverse}>
-        <Button {...modifiers} small>
-          small
-        </Button>
+      <SimpleWrapper>
+        <Button {...modifiers} small>small</Button>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} large>
-          large
-        </Button>
+        <Button {...modifiers} large>large</Button>
       </SimpleWrapper>
     );
   })
@@ -134,31 +91,10 @@ storiesOf('Button', module)
     const modifiers = getModifiers('active', 'disabled');
 
     return (
-      <SimpleWrapper inverse={modifiers.inverse}>
+      <SimpleWrapper>
         <Button {...modifiers}>default</Button>
-        <Button {...modifiers} active>
-          active
-        </Button>
-        <Button {...modifiers} disabled>
-          disabled
-        </Button>
-      </SimpleWrapper>
-    );
-  })
-  .addWithJSX('with icons', () => {
-    const modifiers = getModifiers();
-
-    return (
-      <SimpleWrapper inverse={modifiers.inverse}>
-        <Button {...modifiers}>
-          <BarsIcon left />Menu
-        </Button>
-        <Button {...modifiers}>
-          Next<ArrowRightIcon right />
-        </Button>
-        <Button {...modifiers}>
-          <ObjectsIcon left />Select Objects<ChevronDownIcon right size="12px" />
-        </Button>
+        <Button {...modifiers} active>active</Button>
+        <Button {...modifiers} disabled>disabled</Button>
       </SimpleWrapper>
     );
   });

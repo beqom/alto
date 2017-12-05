@@ -1,10 +1,9 @@
-import get from 'lodash.get';
-import { css } from 'styled-components';
+import get from 'lodash/fp/get';
 
-export const getTheme = (...path) => props => get(props, ['theme', ...path]);
+export const getTheme = (...path) => get(['theme', ...path]);
 
 export const getColor = (colorArg, shadeArg) => props => {
-  const [color, shade = shadeArg] = colorArg.split('.');
+  const [ color, shade = shadeArg ] = colorArg.split('.');
   const paletteColorName = getTheme('colors', color)(props) || color;
 
   const paletteColor = shade
@@ -12,25 +11,9 @@ export const getColor = (colorArg, shadeArg) => props => {
     : getTheme('palette', paletteColorName)(props);
 
   return paletteColor || color;
-};
+}
+
+export const pxToRem = px => props => px / getTheme('fontSize')(props);
 
 export const fontSize = size => props => `font-size: ${getTheme('fontSize', size)(props) || size};`;
 
-export const respondBelow = breakpoint => content => css`
-  @media screen and (max-width: ${p => getTheme('breakpoints', breakpoint)(p) - 1}px) {
-    ${content}
-  }
-`;
-
-export const respondAbove = breakpoint => content => css`
-  @media screen and (min-width: ${getTheme('breakpoints', breakpoint)}px) {
-    ${content}
-  }
-`;
-
-export const respondBetween = (bkMin, bkMax) => content => css`
-  @media screen and (min-width: ${getTheme('breakpoints', bkMin)}px) and (max-width: ${p =>
-      getTheme('breakpoints', bkMax)(p) - 1}px) {
-    ${content}
-  }
-`;
