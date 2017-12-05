@@ -1,3 +1,31 @@
+
+// ===================================
+// Media Queries
+
+@mixin MQ($canvas) {
+  @if $canvas == XSplus {
+    @media only screen and (min-width: $mq-x-small) { @content; }
+  }
+  @else if $canvas == Splus {
+    @media only screen and (min-width: $mq-small) { @content; }
+  }
+  @else if $canvas == Mplus {
+    @media only screen and (min-width: $mq-medium) { @content; }
+  }
+  @else if $canvas == Lplus {
+    @media only screen and (min-width: $mq-large) { @content; }
+  }
+  @else if $canvas == XLplus {
+    @media only screen and (min-width: $mq-x-large) { @content; }
+  }
+  @else if $canvas == XXLplus {
+    @media only screen and (min-width: $mq-xx-large) { @content; }
+  }
+  @else if $canvas == 2x {
+    @media only screen and (min-resolution: 2dppx) { @content; }
+  }
+}
+
 @mixin on-narrow {
   @media screen and (max-width: $breakpoint__narrow-medium - 1) {
     @content;
@@ -25,5 +53,82 @@
 @mixin on-medium-and-wide {
   @media screen and (min-width: $breakpoint__narrow-medium) {
     @content;
+  }
+}
+
+
+// ===================================
+// Deprecate
+//
+// Output code only until $alto-version reaches $version
+// and signal its deprecation to developers
+//
+// @require $alto-version
+// @require $deprecate-mode
+// @param {String} $version - SemVer-like version (e.g. '2.0.0')
+// @param {String} $message - Reason about why the code will be deprecated or possible workaround (e.g. 'Use .new-thing instead')
+
+@mixin deprecate($version, $message: null) {
+  @if (type-of($version) != 'string') {
+    @error 'The parameter passed to deprecate() must be a String. Good: deprecate(\'0.1.0\') / Bad: deprecate(0.1.0).';
+  }
+
+  // Plugin is disabled. Output anyway.
+  @if ('disabled' == $deprecate-mode) {
+    @content;
+  } @else {
+    @if not ('silent' == $deprecate-mode) {
+      // Assume we found code that is (or is about to be) deprecated
+      $deprecation-found: true;
+
+      @if ('verbose' == $deprecate-mode) {
+        @if (&) {
+          $parent: &;
+          @warn '#{$parent} will be deprecated in #{$version}. Current version: #{$alto-version}.';
+        } @else {
+          @warn 'Some code will be deprecated in #{$version}. Current version: #{$alto-version}.';
+        }
+      }
+
+      // Define if the code is actually deprecated
+      @if (function-exists('deprecate-version-greater-than')) {
+        // A custom version comparison engine was found:
+        // rely on it to check if $version is greater than $alto-version,
+        @if (deprecate-version-greater-than($version, $alto-version)) {
+          @content;
+          $deprecation-found: false;
+        }
+      } @else {
+        // No custom version comparison engine was found:
+        // fall back to simple version comparison tests.
+        @if (_d-version-major($version) > _d-version-major($alto-version)) {
+          @content;
+          $deprecation-found: false;
+        } @else {
+          @if (_d-version-major($version) == _d-version-major($alto-version)) {
+            @if (_d-version-minor($version) > _d-version-minor($alto-version)) {
+              @content;
+              $deprecation-found: false;
+            } @else {
+              @if (_d-version-minor($version) == _d-version-minor($alto-version)) {
+                @if (_d-version-patch($version) > _d-version-patch($alto-version)) {
+                  @content;
+                  $deprecation-found: false;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      @if ($deprecation-found) {
+        $message: if($message, '\AREASON:  #{$message}', '');
+        @if ('fail' == $deprecate-mode) {
+          @error 'Deprecated code was found. Remove it to continue.#{$message}';
+        } @else {
+          @warn 'Deprecated code was found, it should be removed before its release.#{$message}';
+        }
+      }
+    }
   }
 }
