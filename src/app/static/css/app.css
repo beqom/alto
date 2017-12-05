@@ -9,12 +9,45 @@ html {
   font-family: "Source Sans Pro", sans-serif;
   color: #333C48;
   background: #fff;
-  line-height: 1.625; }
+  line-height: 1; }
 
 .button {
   padding: 1rem;
   background: #0074E0;
   color: #fff; }
+
+.text--h1,
+.text--h2,
+.text--h3,
+.text--h4,
+.text--h5,
+.text--h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: #333C48; }
+
+.text--h1 {
+  font-size: 2.5rem;
+  line-height: 1; }
+
+.text--h2 {
+  font-size: 2rem; }
+
+.text--h3 {
+  font-size: 1.75rem; }
+
+.text--h4 {
+  font-size: 1.5rem; }
+
+.text--h5 {
+  font-size: 1.25rem; }
+
+.text--h6 {
+  font-size: 1rem; }
+
+html,
+body {
+  height: 100%; }
 
 .navbar {
   width: 100%;
@@ -38,3 +71,36 @@ html {
   transition: 0.15s cubic-bezier(0.53, 0.14, 0.33, 0.97) background; }
   .navbar__link:hover {
     background: #02417C; }
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  align-items: center; }
+
+.main {
+  flex: 1 0 auto;
+  width: 100%;
+  padding: 2rem 1rem;
+  max-width: 78rem; }
+
+.hero {
+  text-align: center; }
+  @media only screen and (min-width: 560px) {
+    .hero {
+      text-align: left; } }
+
+.hero__title {
+  font-weight: 400;
+  font-size: 2.25rem;
+  line-height: 1;
+  margin-bottom: 2rem; }
+  @media only screen and (min-width: 768px) {
+    .hero__title {
+      font-size: 3.25rem; } }
+
+.hero__lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  max-width: 38rem;
+  line-height: 1.35; }
