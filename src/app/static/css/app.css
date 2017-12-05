@@ -18,12 +18,23 @@ html {
 
 .navbar {
   width: 100%;
-  background: #0074E0;
+  background: #002C55;
   color: #fff;
-  padding: 1rem;
+  padding: 0 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between; }
 
+.navbar__links {
+  display: flex;
+  flex-direction: row;
+  list-style: none; }
+
 .navbar__link {
-  color: #fff; }
+  color: #fff;
+  padding: 1rem;
+  text-decoration: none;
+  display: block;
+  transition: 0.15s cubic-bezier(0.53, 0.14, 0.33, 0.97) background; }
+  .navbar__link:hover {
+    background: #02417C; }

@@ -1,5 +1,15 @@
-<header class="site-header" role="banner">
-    Header
-    <strong><a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a></strong>
+<header class="navbar" role="banner">
+
+    <a class="navbar__brand navbar__link" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+
+    <ul class="navbar__links">
+      {{- $currentPage := . -}}
+      {{ range .Site.Menus.main -}}
+      <li class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}">
+          <a class="navbar__link" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
+      </li>
+      {{- end }}
+
+    </ul>
 
 </header>
