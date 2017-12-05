@@ -15,15 +15,3 @@ html {
   padding: 1rem;
   background: #0074E0;
   color: #fff; }
-
-.navbar {
-  width: 100%;
-  background: #0074E0;
-  color: #fff;
-  padding: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between; }
-
-.navbar__link {
-  color: #fff; }
