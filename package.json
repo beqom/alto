@@ -1,8 +1,8 @@
 {
-  "name": "@beqom/alto-ui",
+  "name": "@beqom/alto",
   "version": "0.3.2",
   "main": "index.js",
-  "repository": "https://github.com/beqom/alto-ui",
+  "repository": "https://github.com/beqom/alto",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com>",
   "license": "MIT",
   "scripts": {

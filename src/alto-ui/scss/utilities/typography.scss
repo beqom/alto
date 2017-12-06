@@ -48,6 +48,7 @@
 .link:visited {
   color: $color-text-link;
   text-decoration: none;
+  font-weight: $font-weight-semibold;
   transition: $duration-quick $timing-function color;
   &:hover,
   &--hover {
