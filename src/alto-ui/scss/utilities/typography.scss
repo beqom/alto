@@ -44,14 +44,11 @@
 }
 
 
-.link,
-.link:visited {
+.link {
   color: $color-text-link;
   text-decoration: none;
-  font-weight: $font-weight-semibold;
   transition: $duration-quick $timing-function color;
-  &:hover,
-  &--hover {
+  &:hover {
     color: $color-text-link-hover;
     text-decoration: underline;
   }
