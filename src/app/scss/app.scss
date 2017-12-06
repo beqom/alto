@@ -37,7 +37,7 @@ body {
 .footer {
   width: 100%;
   background: $coolgrey-10;
-  padding: $spacing-xx-large $spacing-x-large;
+  padding: $spacing-large $spacing-x-large;
 }
 
 .main-container {
@@ -95,4 +95,21 @@ body {
   font-size: $font-size-large;
   display: block;
   padding: .25rem .5rem;
+}
+
+
+// Example
+
+.alto-example {
+  border-radius: $border-radius-default;
+  border: 1px solid $coolgrey-50;
+}
+
+.alto-example__demo,
+.alto-example__code {
+  padding: 1rem;
+}
+.alto-example__demo {
+  padding: 1rem;
+  border-bottom: 1px solid $coolgrey-50;
 }
