@@ -1,5 +1,208 @@
+$color-button-base: $blue;
+$color-button-accent: $blue-80;
+
+$color-button-base: $blue;
+$color-button-accent: $blue-80;
+
+$line-height-button: 1.375 !default;
+$line-height-button-small: 1 !default;
+
+
 .button {
-  padding: 1rem;
-  background: $blue;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-medium;
+  font-family: $font-family;
+  padding: .5rem 1rem;
+  line-height: 1.375;
+  background: $color-button-base;
+  border: 1px solid $color-button-base;
+  cursor: pointer;
   color: $white;
+  transition: $duration-quick $timing-function all;
+  &:hover,
+  &.active {
+    background: $color-button-accent;
+    border-color: $color-button-accent;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px $blue-30;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $blue-90;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $blue-30,
+        inset 0 2px 0 0 $blue-90;
+  }
+
+  + .button {
+    margin-left: .25rem;
+  }
+}
+
+.button--success {
+  background: $green;
+  border-color: $green;
+  &:hover,
+  &.active {
+    background: $green-80;
+    border-color: $green-80;
+  }
+  &:focus {
+    box-shadow: 0 0 0 3px $green-30;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $green-90;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $green-30,
+        inset 0 2px 0 0 $green-90;
+  }
+}
+
+.button--danger {
+  background: $red;
+  border-color: $red;
+  &:hover,
+  &.active {
+    background: $red-80;
+    border-color: $red-80;
+  }
+  &:focus {
+    box-shadow: 0 0 0 3px $red-30;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $red-90;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $red-30,
+        inset 0 2px 0 0 $red-90;
+  }
+}
+
+.button--small {
+  font-size: $font-size-small;
+  line-height: $line-height-button-small;
+  padding: .125rem .75rem;
+}
+
+
+// Outline
+
+.button--outline {
+  background: $white;
+  border-color: $blue;
+  color: $blue;
+  &:hover,
+  &.active {
+    background: $blue-10;
+    border-color: $blue-70;
+    color: $blue-70;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $blue-20;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $blue-30,
+        inset 0 2px 0 0 $blue-20;
+  }
+}
+
+.button--outline.button--success {
+  background: $white;
+  border-color: $green;
+  color: $green;
+  &:hover,
+  &.active {
+    background: $green-10;
+    border-color: $green-70;
+    color: $green-70;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $green-20;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $green-30,
+        inset 0 2px 0 0 $green-20;
+  }
+}
+
+.button--outline.button--danger {
+  background: $white;
+  border-color: $red;
+  color: $red;
+  &:hover,
+  &.active {
+    background: $red-10;
+    border-color: $red-70;
+    color: $red-70;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $red-20;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $red-30,
+        inset 0 2px 0 0 $red-20;
+  }
+}
+
+// Flat
+
+.button--flat {
+  background: transparent;
+  border-color: transparent;
+  color: $blue;
+  &:hover,
+  &.active {
+    background: transparent;
+    border-color: transparent;
+    color: $blue-70;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $blue-20;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $blue-30,
+        inset 0 2px 0 0 $blue-20;
+  }
+}
+
+.button--flat.button--success {
+  color: $green;
+  &:hover,
+  &.active {
+    color: $green-70;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $green-20;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $green-30,
+        inset 0 2px 0 0 $green-20;
+  }
+}
+
+.button--flat.button--danger {
+  color: $red;
+  &:hover,
+  &.active {
+    color: $red-70;
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 $red-20;
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px $red-30,
+        inset 0 2px 0 0 $red-20;
+  }
 }

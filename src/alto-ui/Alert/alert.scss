@@ -1,0 +1,62 @@
+$color-alert-bkgd:     $blue;
+$color-alert-text:     $white;
+$color-alert-brdr:     $blue;
+
+$color-alert-bkgd-success:     $green;
+$color-alert-text-success:     $white;
+$color-alert-brdr-success:     $green;
+
+$color-alert-bkgd-danger:     $red;
+$color-alert-text-danger:     $white;
+$color-alert-brdr-danger:     $red;
+
+@mixin alert-color(
+  $bkgd: $color-alert-bkgd,
+  $text: $color-alert-text,
+  $brdr: $color-alert-brdr
+) {
+  background: $bkgd;
+  border: 1px solid $brdr;
+  color: $text;
+}
+
+.alert {
+  display: flex;
+  flex-direction: row;
+  padding: 1rem;
+  border-radius: $border-radius-default;
+  @include alert-color();
+
+  + .alert {
+    margin-top: 1rem;
+  }
+}
+
+.alert--success {
+  @include alert-color(
+    $color-alert-bkgd-success,
+    $color-alert-text-success,
+    $color-alert-brdr-success
+  )
+}
+
+.alert--danger {
+  @include alert-color(
+    $color-alert-bkgd-danger,
+    $color-alert-text-danger,
+    $color-alert-brdr-danger
+  )
+}
+
+.alert__icon {
+  flex: 0 1 auto;
+}
+
+.alert__message {
+  flex: 1 0 auto;
+  padding: 0 .5rem;
+}
+
+.alert__close {
+  flex: 0 1 auto;
+}
