@@ -23,7 +23,7 @@ Interactive list
       </div>
     </a>
   </li>
-  <li>
+  <li class="list-item--active">
     <a href="#" class="list--interactive__link">
       <div class="flex--shrink">
         <div class="avatar m-right--medium">
