@@ -45,17 +45,22 @@ html {
 .text--h6 {
   font-size: 1rem; }
 
-.link {
+.text--muted {
+  color: #3F4F5E; }
+
+.text--font-weight-regular {
+  font-weight: 400; }
+
+.link,
+.link:visited {
   color: #0074E0;
   text-decoration: none;
   transition: 0.15s cubic-bezier(0.53, 0.14, 0.33, 0.97) color; }
-  .link:hover, .link--hover {
+  .link:hover, .link--hover,
+  .link:visited:hover,
+  .link:visited--hover {
     color: #005BB1;
     text-decoration: underline; }
-  .link:visited, .link--visited {
-    color: #0074E0; }
-    .link:visited:hover, .link--visited:hover {
-      color: #005BB1; }
 
 .list--interactive {
   border-radius: 3px;

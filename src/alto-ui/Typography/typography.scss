@@ -36,21 +36,22 @@
   font-size: $font-size-h6;
 }
 
+.text--muted {
+  color: $color-text-muted;
+}
+.text--font-weight-regular {
+  font-weight: $font-weight-regular;
+}
 
-.link {
-  color: $blue-60;
+
+.link,
+.link:visited {
+  color: $color-text-link;
   text-decoration: none;
   transition: $duration-quick $timing-function color;
   &:hover,
   &--hover {
-    color: $blue-70;
+    color: $color-text-link-hover;
     text-decoration: underline;
-  }
-  &:visited,
-  &--visited {
-    color: $blue-60;
-    &:hover {
-      color: $blue-70;
-    }
   }
 }
