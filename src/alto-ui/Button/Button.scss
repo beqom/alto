@@ -1,12 +1,14 @@
-@import "../scss/inc";
+$color-button-base: $blue;
+$color-button-accent: $blue-80;
+
 $color-button-base: $blue;
 $color-button-accent: $blue-80;
 
 $line-height-button: 1.375 !default;
 $line-height-button-small: 1 !default;
 
-/*
-.Button {
+
+.button {
   font-weight: $font-weight-regular;
   font-size: $font-size-medium;
   font-family: $font-family;
@@ -35,7 +37,7 @@ $line-height-button-small: 1 !default;
         inset 0 2px 0 0 $blue-90;
   }
 
-  + .Button {
+  + .button {
     margin-left: .25rem;
   }
 }
@@ -203,9 +205,6 @@ $line-height-button-small: 1 !default;
         0 0 0 3px $red-30,
         inset 0 2px 0 0 $red-20;
 
-
-
-*/
 
 
 /* --------------------------------------------- *\
