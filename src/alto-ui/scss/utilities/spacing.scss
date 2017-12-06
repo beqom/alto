@@ -1,0 +1,48 @@
+// Spacing
+
+// Mixin
+@mixin spacing($property) {
+  $prop-prefix: null;
+  $positions: top right bottom left;
+  @if $property == 'margin' {
+    $prop-prefix: 'm';
+  }
+
+  @else if $property == 'padding' {
+    $prop-prefix: 'p';
+  }
+
+  @each $token, $size in $spacing-map {
+    $token-string: inspect($token);
+
+    @if str-index($token-string, spacing) {
+      $spacing: unquote(str-replace($token, 'spacing-', ''));
+
+      @each $position in $positions {
+
+        .#{$prop-prefix}-#{$position}--#{$spacing} {
+          #{$property}-#{$position}: $size;
+        }
+      }
+
+      .#{$prop-prefix}-vertical--#{$spacing} {
+        #{$property}-top:    $size;
+        #{$property}-bottom: $size;
+      }
+
+      .#{$prop-prefix}-horizontal--#{$spacing} {
+        #{$property}-right: $size;
+        #{$property}-left:  $size;
+      }
+
+      .#{$prop-prefix}-around--#{$spacing} {
+        #{$property}: $size;
+      }
+    }
+  }
+}
+
+// Usage
+
+@include spacing('margin');
+@include spacing('padding');
