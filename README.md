@@ -52,8 +52,8 @@ const MyComponent = () => {
 
 1. Clone or download project
 2. `yarn install` or (`npm install`)
-4. `yarn test:output` or `npm run test:output`
-3. `yarn start` or `npm start`
+3. `yarn test:output` or `npm run test:output`
+4. `yarn start:app` or `npm run start:app`
 
 
 ### Deploying on Github

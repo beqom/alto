@@ -4,6 +4,7 @@
 html,
 body {
   height: 100%;
+  background: $color-page-bkgd;
 }
 
 .navbar {
@@ -76,4 +77,22 @@ body {
   font-weight: $font-weight-light;
   max-width: 38rem;
   line-height: $line-height-lead;
+}
+
+
+.pages-list {
+  margin: 2rem 0;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.pages-list__item {
+
+}
+
+.pages-list__link {
+  font-size: $font-size-large;
+  display: block;
+  padding: .25rem .5rem;
 }

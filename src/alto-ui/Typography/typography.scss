@@ -36,6 +36,7 @@
   font-size: $font-size-h6;
 }
 
+
 .link {
   color: $blue-60;
   text-decoration: none;
@@ -47,9 +48,9 @@
   }
   &:visited,
   &--visited {
-    color: $purple-60;
+    color: $blue-60;
     &:hover {
-      color: $purple-70;
+      color: $blue-70;
     }
   }
 }

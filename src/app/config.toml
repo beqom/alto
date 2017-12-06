@@ -10,21 +10,15 @@ disableAliases = true
 [outputs]
 home = ["HTML", "RSS", "REDIRECTS", "HEADERS"]
 
-# remove .{ext} from text/netlify
-[mediaTypes."text/netlify"]
-suffix = ""
-delimiter = ""
+[[menu.main]]
+  name = "Components"
+  weight = 5
+  identifier = "components"
+  url = "/components/"
 
-# add output format for netlify _redirects
-[outputFormats.REDIRECTS]
-mediatype = "text/netlify"
-baseName = "_redirects"
-isPlainText = true
-notAlternative = true
 
-# add output format for netlify _headers
-[outputFormats.HEADERS]
-mediatype = "text/netlify"
-baseName = "_headers"
-isPlainText = true
-notAlternative = true
+[[menu.main]]
+  name = "Utilities"
+  weight = 10
+  identifier = "utilities"
+  url = "/utilities/"
