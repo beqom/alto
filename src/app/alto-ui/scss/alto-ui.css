@@ -67,6 +67,10 @@ html {
   .list--interactive li:not(:last-child) {
     border-bottom: 1px solid #C4D7EB; }
 
+.list-item--active a,
+.list-item--active a:hover {
+  background: #B1D9FF; }
+
 .list--interactive__link {
   padding: .75rem 1.25rem;
   display: flex;
