@@ -1,5 +1,7 @@
 // ...
-@import "../../alto-ui/scss/reset.scss";
+@import "../../alto-ui/scss/alto-ui";
+@import "_prism";
+@import url('https://fonts.googleapis.com/css?family=Inconsolata');
 
 html,
 body {
@@ -36,8 +38,15 @@ body {
 
 .footer {
   width: 100%;
-  background: $coolgrey-10;
-  padding: $spacing-large $spacing-x-large;
+  background: transparent;
+  padding: $spacing-x-large $spacing-x-large;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footer__inner {
+
 }
 
 .main-container {
@@ -102,14 +111,16 @@ body {
 
 .alto-example {
   border-radius: $border-radius-default;
-  border: 1px solid $coolgrey-50;
+  border: 1px solid $coolgrey-20;
+  margin: 1rem 0;
+  box-shadow: 0 2px .25rem rgba($coolgrey-80, .125);
 }
 
 .alto-example__demo,
 .alto-example__code {
-  padding: 1rem;
+  background: $white;
 }
 .alto-example__demo {
   padding: 1rem;
-  border-bottom: 1px solid $coolgrey-50;
+  border-bottom: 1px solid $coolgrey-20;
 }
