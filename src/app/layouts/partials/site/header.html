@@ -1,9 +1,9 @@
 <header class="navbar" role="banner">
 
-    <a class="navbar__brand navbar__link" href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a>
+    <a class="navbar__brand navbar__link" href="{{ .Site.BaseURL }}">ALTO</a>
 
     <ul class="navbar__links">
-      
+
       {{- $currentPage := . -}}
       {{ range .Site.Menus.main -}}
       <li class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}">

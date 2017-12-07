@@ -25,6 +25,11 @@ body {
   list-style: none;
 }
 
+.navbar__brand {
+  font-size: $font-size-large;
+  font-weight: $font-weight-semibold;
+}
+
 .navbar__link {
   color: $white;
   padding: 1rem;
@@ -109,18 +114,20 @@ body {
 
 // Example
 
-.alto-example {
+.alto-example,
+.alto-code {
   border-radius: $border-radius-default;
   border: 1px solid $coolgrey-20;
   margin: 1rem 0;
   box-shadow: 0 2px .25rem rgba($coolgrey-80, .125);
 }
 
-.alto-example__demo,
-.alto-example__code {
-  background: $white;
+.alto-example__code pre {
+  border-radius: 0 0 $border-radius-default $border-radius-default;
 }
 .alto-example__demo {
+  background: $white;
   padding: 1rem;
   border-bottom: 1px solid $coolgrey-20;
+  border-radius: $border-radius-default $border-radius-default 0 0;
 }
