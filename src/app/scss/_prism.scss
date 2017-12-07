@@ -5,11 +5,15 @@
  * @author Lea Verou
  */
 
+$prism-bkgd:   $coolgrey-90;
+$prism-text:   $coolgrey-20;
+$prism-property:   $blue-50;
+$prism-attr: $purple-30;
+$prism-attr-value:  $lime-50;
+
 code[class*="language-"],
 pre[class*="language-"] {
-	color: $coolgrey-80;
-	// color: $white;
-	// text-shadow: 0 1px $color-base-80;
+	color: $prism-text;
 	font-family: $font-family-monospaced;
 	direction: ltr;
 	text-align: left;
@@ -60,7 +64,7 @@ pre[class*="language-"] {
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
 	// background: $coolgrey-80;
-	background: $white;
+	background: $prism-bkgd;
 }
 
 /* Inline code */
@@ -91,7 +95,7 @@ pre[class*="language-"] {
 .token.constant,
 .token.symbol,
 .token.deleted {
-	color: $blue;
+	color: $prism-property;
 }
 
 .token.selector,
@@ -100,7 +104,7 @@ pre[class*="language-"] {
 .token.char,
 .token.builtin,
 .token.inserted {
-	color: $purple-40;
+	color: $prism-attr;
 }
 
 .token.operator,
@@ -115,17 +119,17 @@ pre[class*="language-"] {
 .token.atrule,
 .token.attr-value,
 .token.keyword {
-	color: $lime-60;
+	color: $prism-attr-value;
 }
 
 .token.function {
-	color: #DD4A68;
+	color: $red-40;
 }
 
 .token.regex,
 .token.important,
 .token.variable {
-	color: #e90;
+	color: $orange;
 }
 
 .token.important,
