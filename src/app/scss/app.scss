@@ -109,16 +109,22 @@ body {
 
 // Example
 
-.alto-example {
+.alto-example,
+.alto-code,
+.alto-demo {
   border-radius: $border-radius-default;
   border: 1px solid $coolgrey-20;
   margin: 1rem 0;
   box-shadow: 0 2px .25rem rgba($coolgrey-80, .125);
 }
 
-.alto-example__demo,
-.alto-example__code {
+.alto-demo {
+  padding: 1rem;
   background: $white;
+}
+
+.alto-example__code pre {
+  border-radius: 0 0 $border-radius-default $border-radius-default;
 }
 .alto-example__demo {
   padding: 1rem;
