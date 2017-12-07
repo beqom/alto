@@ -3,8 +3,16 @@ title: "Button"
 ---
 # Buttons, yo
 
+{{< demo >}}
+<button class="button">Primary Action</button>
+<button class="button button--outline">Secondary Action</button>
+<button class="button button--flat">Tertiary Action</button>
+
+{{< /demo >}}
+
+
 ## Base
-{{< example "markup" >}}
+{{< example lang="markup" >}}
 <button class="button">Solid Button</button>
 <button class="button button--success">Success</button>
 <button class="button button--danger">Danger</button>
@@ -12,7 +20,7 @@ title: "Button"
 {{< /example >}}
 
 ## Sizes
-{{< example "markup" >}}
+{{< example lang="markup" >}}
 <button class="button button--small">Small Button</button>
 <button class="button">Default Button</button>
 <button class="button button--large">Large Button</button>
@@ -20,8 +28,8 @@ title: "Button"
 
 
 ## Outline
-{{< example "markup" >}}
-<button class="button button--outline">Solid Button</button>
+{{< example lang="markup" >}}
+<button class="button button--outline">Ouline Button</button>
 <button class="button button--outline button--success">Success</button>
 <button class="button button--outline button--danger">Danger</button>
 <button class="button button--outline" disabled>Disabled</button>
@@ -32,15 +40,15 @@ title: "Button"
 
 Flat buttons have less horizontal padding than other buttons, so they do not feel so far apart when placed inline.
 
-{{< example "markup" >}}
-<button class="button button--flat">Solid Button</button>
+{{< example lang="markup" >}}
+<button class="button button--flat">Flat Button</button>
 <button class="button button--flat button--success">Success</button>
 <button class="button button--flat button--danger">Danger</button>
 <button class="button button--flat" disabled>Disabled</button>
 {{< /example >}}
 
 ## White
-{{< example "markup" "dark-background" >}}
+{{< example lang="markup" class="dark-background" >}}
 <button class="button button--white">White Button</button>
 <button class="button button--white button--outline">White Outline Button</button>
 <button class="button button--white button--flat">White Flat Button</button>

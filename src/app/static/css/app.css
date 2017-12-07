@@ -963,11 +963,16 @@ body {
   padding: .25rem .5rem; }
 
 .alto-example,
-.alto-code {
+.alto-code,
+.alto-demo {
   border-radius: 3px;
   border: 1px solid #C4D7EB;
   margin: 1rem 0;
   box-shadow: 0 2px 0.25rem rgba(51, 60, 72, 0.125); }
+
+.alto-demo {
+  padding: 1rem;
+  background: #fff; }
 
 .alto-example__code pre {
   border-radius: 0 0 3px 3px; }

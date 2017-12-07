@@ -3,7 +3,7 @@ title: "Form"
 ---
 # Form, yo
 
-{{< example "markup" >}}
+{{< example lang="markup" >}}
 <form class="form">
   <div class="form-group">
     <label for="input1">Label</label>

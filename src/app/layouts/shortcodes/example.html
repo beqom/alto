@@ -1,8 +1,8 @@
 <div class="alto-example">
-  <div class="alto-example__demo alto-demo--{{ .Get 1 }}">
+  <div class="alto-example__demo {{ if .Get "class" }}alto-demo--{{ .Get "class" }}{{end}}">
     {{ .Inner }}
   </div>
   <div class="alto-example__code">
-<pre class="language-{{ .Get 0 }}"><code class="language-{{ .Get 0 }}">{{- .Inner | string -}}</code></pre>
+<pre class="language-{{ .Get "lang" }}"><code class="language-{{ .Get "lang" }}">{{- .Inner | string -}}</code></pre>
   </div>
 </div>
