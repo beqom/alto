@@ -1,19 +1,11 @@
-$color-button-base: $blue;
-$color-button-accent: $blue-80;
-
-$color-button-base: $blue;
-$color-button-accent: $blue-80;
-
-$line-height-button: 1.375 !default;
-$line-height-button-small: 1 !default;
-
+@import "../scss/variables";
 
 .button {
-  font-weight: $font-weight-regular;
+  font-weight: $font-weight-semibold;
   font-size: $font-size-medium;
   font-family: $font-family;
-  padding: .5rem 1rem;
-  line-height: 1.375;
+  padding: .6875rem 1.25rem;
+  line-height: $line-height-button;
   background: $color-button-base;
   border: 1px solid $color-button-base;
   cursor: pointer;
@@ -39,6 +31,14 @@ $line-height-button-small: 1 !default;
 
   + .button {
     margin-left: .25rem;
+  }
+
+  &:disabled,
+  &:disabled:hover,
+  &.disabled {
+    background: $coolgrey-30;
+    border-color: $coolgrey-30;
+    cursor: not-allowed;
   }
 }
 
@@ -84,10 +84,43 @@ $line-height-button-small: 1 !default;
   }
 }
 
+.button--white {
+  background: $white;
+  border-color: $white;
+  color: $color-text-default;
+  &:hover,
+  &.active {
+    background: rgba($white, .80);
+    border-color: rgba($white, .80);
+  }
+  &:focus {
+    box-shadow: 0 0 0 3px rgba($white, .6);
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 rgba($white, .9);
+  }
+  &:focus:active {
+    box-shadow:
+      0 0 0 3px rgba($white, .6),
+      inset 0 2px 0 0 rgba($white, .9);
+  }
+  &:disabled,
+  &:disabled:hover,
+  &.disabled {
+    background: rgba($white, .5);
+    border-color: transparent;
+    cursor: not-allowed;
+  }
+}
+
 .button--small {
   font-size: $font-size-small;
-  line-height: $line-height-button-small;
-  padding: .125rem .75rem;
+  padding: .375rem .6875rem;
+}
+
+.button--large {
+  font-size: $font-size-large;
+  padding: 1rem 1.8125rem;
 }
 
 
@@ -110,6 +143,13 @@ $line-height-button-small: 1 !default;
       box-shadow:
         0 0 0 3px $blue-30,
         inset 0 2px 0 0 $blue-20;
+  }
+  &:disabled,
+  &:disabled:hover,
+  &.disabled {
+    color: $coolgrey-30;
+    border-color: $coolgrey-30;
+    background-color: $white;
   }
 }
 
@@ -153,12 +193,42 @@ $line-height-button-small: 1 !default;
   }
 }
 
+.button--outline.button--white {
+  background: transparent;
+  border-color: $white;
+  color: $white;
+  &:hover,
+  &.active {
+    background: rgba($white, .10);
+    border-color: $white;
+    color: $white;
+  }
+
+  &:active {
+    box-shadow: inset 0 2px 0 0 rgba($white, .20);
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px rgba($white, .60),
+        inset 0 2px 0 0 rgba($white, .20);
+  }
+  &:disabled,
+  &:disabled:hover,
+  &.disabled {
+    background: transparent;
+    border-color: rgba($white, .5);
+    color: rgba($white, .5);
+  }
+}
+
 // Flat
 
 .button--flat {
   background: transparent;
   border-color: transparent;
   color: $blue;
+  padding-left: .5rem;
+  padding-right: .5rem;
   &:hover,
   &.active {
     background: transparent;
@@ -172,6 +242,13 @@ $line-height-button-small: 1 !default;
       box-shadow:
         0 0 0 3px $blue-30,
         inset 0 2px 0 0 $blue-20;
+  }
+  &:disabled,
+  &:disabled:hover,
+  &.disabled {
+    color: $coolgrey-30;
+    border-color: transparent;
+    background-color: transparent;
   }
 }
 
@@ -412,4 +489,28 @@ $line-height-button-small: 1 !default;
 .Button--block {
   display: block;
   width: 100%;
+}
+
+.button--flat.button--white {
+  color: $white;
+  &:hover,
+  &.active {
+    color: rgba($white, .70);
+  }
+  &:active {
+    box-shadow: inset 0 2px 0 0 rgba($white, .20);
+  }
+  &:focus:active {
+      box-shadow:
+        0 0 0 3px rgba($white, .60),
+        inset 0 2px 0 0 rgba($white, .20);
+  }
+
+  &:disabled,
+  &:disabled:hover,
+  &.disabled {
+    background: transparent;
+    border-color: transparent;
+    color: rgba($white, .5);
+  }
 }
