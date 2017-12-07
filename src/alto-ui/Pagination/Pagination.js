@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import range from 'lodash/range';
+import range from 'lodash.range';
 import styled from 'styled-components';
 
-import { resetButton } from '../Button';
 import ChevronLeftIcon from '../Icons/ChevronLeft';
 import ChevronRightIcon from '../Icons/ChevronRight';
 import { getTheme, getColor, fontSize } from '../helpers/theme';
@@ -15,7 +14,11 @@ export const Container = styled.div`
 `;
 
 export const PageButton = styled.button`
-  ${resetButton};
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
   ${fontSize('small')};
   cursor: pointer;
   font-weight: 600;

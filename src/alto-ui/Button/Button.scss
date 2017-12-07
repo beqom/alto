@@ -388,7 +388,7 @@ $line-height-button-small: 1 !default;
   }
 
   &.Button--inverse {
-    @include Button--outline($color-inverse, $color-inverse-80, $color-inverse-20);
+    @include Button--flat($color-inverse, $color-inverse-80, $color-inverse-20);
   }
 }
 
