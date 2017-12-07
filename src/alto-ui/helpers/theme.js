@@ -1,7 +1,7 @@
-import get from 'lodash/fp/get';
+import get from 'lodash.get';
 import { css } from 'styled-components';
 
-export const getTheme = (...path) => get(['theme', ...path]);
+export const getTheme = (...path) => props => get(props, ['theme', ...path]);
 
 export const getColor = (colorArg, shadeArg) => props => {
   const [color, shade = shadeArg] = colorArg.split('.');

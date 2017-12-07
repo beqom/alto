@@ -2,13 +2,13 @@ baseURL = "/"
 languageCode = "en-us"
 title = "Alto"
 
-disableKinds = ["RSS"]
-enableRobotsTXT = true
-disableAliases = true
+# High level items
 
-# add redirects/headers
-[outputs]
-home = ["HTML", "RSS", "REDIRECTS", "HEADERS"]
+[[menu.main]]
+  name = "Home"
+  weight = 1
+  identifier = "home"
+  url = "/"
 
 [[menu.main]]
   name = "Components"

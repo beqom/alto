@@ -1,14 +1,8 @@
 import React from 'react';
-
-const omit = keys => obj =>
-  Object.entries(obj)
-    .filter(([ key ]) => !keys.includes(key))
-    .reduce((acc, [key, value]) => Object.assign({}, acc, {
-      [key]: value,
-    }), {});
+import omit from 'lodash.omit';
 
 const bem = (Component, block, modifiers = []) => p => {
-  const safeProps = omit(modifiers)(p);
+  const safeProps = omit(p, modifiers);
   const className = modifiers
     .filter(modifier => !!p[modifier])
     .map(modifier => `${block}--${modifier}`)
@@ -22,6 +16,7 @@ const Button = bem('button', 'Button', [
   'flat',
   'error',
   'success',
+  'inverse',
   'large',
   'small',
   'active',
@@ -29,3 +24,5 @@ const Button = bem('button', 'Button', [
 ]);
 
 Button.displayName = 'Button';
+
+export default Button;

@@ -1,3 +1,3 @@
 import './Button.scss';
 
-export { default, resetButton } from './Button';
+export { default } from './Button';

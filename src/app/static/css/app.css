@@ -299,6 +299,23 @@ html {
     background: #A2B8CE;
     border-color: #A2B8CE; }
 
+.Button--inverse {
+  background: white;
+  color: #333C48;
+  border-color: white; }
+  .Button--inverse:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2); }
+  .Button--inverse:hover, .Button--inverse.Button--active {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(255, 255, 255, 0.8); }
+  .Button--inverse:active {
+    background: white;
+    border-color: white;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2), inset 0 2px 0 rgba(255, 255, 255, 0.8); }
+  .Button--inverse:disabled {
+    background: #A2B8CE;
+    border-color: #A2B8CE; }
+
 .Button--outline {
   background: transparent;
   color: #0074E0;
@@ -347,6 +364,22 @@ html {
       background: transparent;
       color: #5F788C;
       border-color: #5F788C; }
+  .Button--outline.Button--inverse {
+    background: transparent;
+    color: white;
+    border-color: white; }
+    .Button--outline.Button--inverse:focus {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2); }
+    .Button--outline.Button--inverse:hover, .Button--outline.Button--inverse.Button--active {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: white; }
+    .Button--outline.Button--inverse:active {
+      background: transparent;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2), inset 0 2px 0 white; }
+    .Button--outline.Button--inverse:disabled {
+      background: transparent;
+      color: #5F788C;
+      border-color: #5F788C; }
 
 .Button--flat {
   color: #0074E0; }
@@ -390,6 +423,20 @@ html {
       box-shadow: 0 0 0 3px #FFCAD0; }
     .Button--flat.Button--danger:disabled {
       color: #5F788C; }
+  .Button--flat.Button--inverse {
+    color: white; }
+    .Button--flat.Button--inverse, .Button--flat.Button--inverse:hover, .Button--flat.Button--inverse:active, .Button--flat.Button--inverse:disabled, .Button--flat.Button--inverse.Button--active {
+      background: transparent;
+      border-color: transparent; }
+    .Button--flat.Button--inverse:focus {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2); }
+    .Button--flat.Button--inverse:hover, .Button--flat.Button--inverse.Button--active {
+      color: rgba(255, 255, 255, 0.8); }
+    .Button--flat.Button--inverse:active {
+      color: white;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2); }
+    .Button--flat.Button--inverse:disabled {
+      color: #5F788C; }
 
 .Button--large {
   font-size: 1.125rem;
@@ -397,7 +444,7 @@ html {
   padding: 0 3em; }
 
 .Button--small {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   line-height: 2;
   padding: 0 1.5em; }
 
@@ -467,40 +514,6 @@ html {
 
 .alert__close {
   flex: 0 1 auto; }
-
-.form-group {
-  margin-bottom: 1rem; }
-
-label {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 0; }
-
-.form-control {
-  display: inline-block;
-  width: auto;
-  vertical-align: middle; }
-
-.form-control {
-  display: block;
-  width: 100%;
-  padding: 0.5rem 0.5rem;
-  font-size: 1rem;
-  line-height: 1.5;
-  background-color: #fff;
-  background-clip: padding-box;
-  border: 1px solid #C4D7EB;
-  border-radius: 3px; }
-  .form-control::-ms-expand {
-    background-color: transparent;
-    border: 0; }
-  .form-control::placeholder {
-    color: #4F6376;
-    opacity: 1; }
-  .form-control:disabled, .form-control[readonly] {
-    background-color: #C4D7EB;
-    opacity: 1; }
 
 .m-top--none {
   margin-top: 0; }
@@ -952,7 +965,7 @@ label {
   font-size: 1rem; }
 
 .text--muted {
-  color: #3F4F5E; }
+  color: #5F788C; }
 
 .text--font-weight-regular {
   font-weight: 400; }
@@ -1084,7 +1097,7 @@ pre[class*="language-"] {
 html,
 body {
   height: 100%;
-  background: #F3F9FF; }
+  background: #F9F9FB; }
 
 .navbar {
   width: 100%;

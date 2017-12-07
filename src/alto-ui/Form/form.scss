@@ -1,65 +1,65 @@
-$color-input-placeholder:  $coolgrey-60;
-$color-input-brdr:         $coolgrey-20;
+// $color-input-placeholder:  $coolgrey-60;
+// $color-input-brdr:         $coolgrey-20;
 
-$color-input-disabled-bkgd:         $coolgrey-20;
+// $color-input-disabled-bkgd:         $coolgrey-20;
 
-$input-padding-y:      $spacing-x-small;
-$input-padding-x:      $spacing-x-small;
-
-
-.form-group {
-  margin-bottom: $spacing-medium;
-}
-
-label {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 0;
-}
-
-.form-control {
-  display: inline-block;
-  width: auto;
-  vertical-align: middle;
-}
-
-.form-control {
-  display: block;
-  width: 100%;
-  padding: $input-padding-y $input-padding-x;
-  font-size: $font-size-medium;
-  line-height: $line-height-input;
-  background-color: $white;
-  background-clip: padding-box;
-  border: 1px solid $color-input-brdr;
-
-  border-radius: $border-radius-default;
+// $input-padding-y:      $spacing-x-small;
+// $input-padding-x:      $spacing-x-small;
 
 
-  // Unstyle the caret on `<select>`s in IE10+.
-  &::-ms-expand {
-    background-color: transparent;
-    border: 0;
-  }
+// .form-group {
+//   margin-bottom: $spacing-medium;
+// }
+
+// label {
+//   display: flex;
+//   align-items: center;
+//   justify-content: flex-start;
+//   margin-bottom: 0;
+// }
+
+// .form-control {
+//   display: inline-block;
+//   width: auto;
+//   vertical-align: middle;
+// }
+
+// .form-control {
+//   display: block;
+//   width: 100%;
+//   padding: $input-padding-y $input-padding-x;
+//   font-size: $font-size-medium;
+//   line-height: $line-height-input;
+//   background-color: $white;
+//   background-clip: padding-box;
+//   border: 1px solid $color-input-brdr;
+
+//   border-radius: $border-radius-default;
 
 
-  // Placeholder
-  &::placeholder {
-    color: $color-input-placeholder;
-    // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
-    opacity: 1;
-  }
+//   // Unstyle the caret on `<select>`s in IE10+.
+//   &::-ms-expand {
+//     background-color: transparent;
+//     border: 0;
+//   }
 
-  // Disabled and read-only inputs
-  //
-  // HTML5 says that controls under a fieldset > legend:first-child won't be
-  // disabled if the fieldset is disabled. Due to implementation difficulty, we
-  // don't honor that edge case; we style them as disabled anyway.
-  &:disabled,
-  &[readonly] {
-    background-color: $color-input-disabled-bkgd;
-    // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
-    opacity: 1;
-  }
-}
+
+//   // Placeholder
+//   &::placeholder {
+//     color: $color-input-placeholder;
+//     // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526.
+//     opacity: 1;
+//   }
+
+//   // Disabled and read-only inputs
+//   //
+//   // HTML5 says that controls under a fieldset > legend:first-child won't be
+//   // disabled if the fieldset is disabled. Due to implementation difficulty, we
+//   // don't honor that edge case; we style them as disabled anyway.
+//   &:disabled,
+//   &[readonly] {
+//     background-color: $color-input-disabled-bkgd;
+//     // iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655.
+//     opacity: 1;
+//   }
+// }

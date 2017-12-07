@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import isArray from 'lodash/isArray';
+import isArray from 'lodash.isarray';
 
 import { getColor, getTheme, fontSize } from '../../helpers/theme';
 import FormElement from '../FormElement';

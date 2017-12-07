@@ -7,7 +7,7 @@ import { getColor, getTheme, fontSize, respondAbove, respondBelow } from '../hel
 import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import VisuallyHidden from '../VisuallyHidden';
-import Button, { resetButton } from '../Button';
+import Button from '../Button';
 
 const modifier = (...ms) => val => props =>
   ms.reduce((acc, m) => acc && props[m], true) ? val : '';
@@ -19,7 +19,11 @@ const sideNavIconContainerCSS = css`
     margin: auto;
     transition: transform ${getTheme('transition')};
 
-    ${props => props.reverse && css`transform: rotate(-180deg);`};
+    ${props =>
+      props.reverse &&
+      css`
+        transform: rotate(-180deg);
+      `};
   }
 `;
 
@@ -37,7 +41,11 @@ const SideNavContainer = styled.aside`
 `;
 
 const SideNavButton = styled.button`
-  ${resetButton};
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  border-radius: 0;
   line-height: 2;
   color: ${getColor('primary.10')};
   width: 100%;
@@ -91,11 +99,26 @@ const SideNavLogo = styled.a`
   }
 
   ${respondBelow('narrow')(`
-    text-align: left;
+    display: none;
   `)};
 `;
 
-const SideNavMenuButton = Button.extend`${respondAbove('narrow')(css`display: none;`)};`;
+const SideNavLogoNarrow = SideNavLogo.extend`
+  text-align: left;
+  display: none;
+
+  ${respondBelow('narrow')(`
+    display: block;
+  `)};
+`;
+
+const SideNavMenuButton = styled.div`
+  ${respondAbove('narrow')(
+    css`
+      display: none;
+    `
+  )};
+`;
 
 const SideNavToggleButton = SideNavButton.extend`
   ${sideNavIconContainerCSS};
@@ -137,7 +160,9 @@ const SideNavSectionListNarrow = styled.ul`
   `)};
 `;
 
-const SideNavSection = styled.li`position: relative;`;
+const SideNavSection = styled.li`
+  position: relative;
+`;
 
 const SideNavSectionButton = SideNavButton.extend`
   display: block;
@@ -311,12 +336,17 @@ class SideNav extends React.PureComponent {
       <SideNavContainer collapsed={collapsed}>
         <SideNavHeader>
           <SideNavLogo href={logoUrl}>{collapsed ? logoSmall : logo}</SideNavLogo>
-          <SideNavMenuButton outline inverse onClick={this.handleToggleOpen}>
-            {open ? closeMenuButtonLabel : openMenuButtonLabel }
+          <SideNavLogoNarrow href={logoUrl}>{logo}</SideNavLogoNarrow>
+          <SideNavMenuButton>
+            <Button outline inverse onClick={this.handleToggleOpen}>
+              {open ? closeMenuButtonLabel : openMenuButtonLabel}
+            </Button>
           </SideNavMenuButton>
         </SideNavHeader>
         <SideNavSectionList>{this.renderNavItems()}</SideNavSectionList>
-        <SideNavSectionListNarrow aria-hidden={!open} open={open}>{this.renderNavItems()}</SideNavSectionListNarrow>
+        <SideNavSectionListNarrow aria-hidden={!open} open={open}>
+          {this.renderNavItems()}
+        </SideNavSectionListNarrow>
         <SideNavToggleButton
           onClick={this.handleToggle}
           reverse={collapsed}

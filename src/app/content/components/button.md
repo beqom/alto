@@ -28,6 +28,16 @@ title: "Button"
 <button class="Button Button--flat" disabled="disabled">disabled</button>
 {{< /example >}}
 
+## Inverse
+{{< example "markup" >}}
+<div style="background: #333C48; padding: 20px;">
+  <button class="Button Button--inverse">Inverse</button>
+  <button class="Button Button--outline Button--inverse">Outline</button>
+  <button class="Button Button--flat Button--inverse">Flat</button>
+  <button class="Button Button--inverse" disabled="disabled">disabled</button>
+</div>
+{{< /example >}}
+
 ## Sizes
 {{< example "markup" >}}
 <button class="Button Button--large">Large</button>
