@@ -1,27 +1,19 @@
-import React from 'react';
-import omit from 'lodash.omit';
+import bem from '../helpers/bem';
+import './Button.scss';
 
-const bem = (Component, block, modifiers = []) => p => {
-  const safeProps = omit(p, modifiers);
-  const className = modifiers
-    .filter(modifier => !!p[modifier])
-    .map(modifier => `${block}--${modifier}`)
-    .reduce((acc, value) => `${acc} ${value}`, block);
-
-  return <Component {...safeProps} className={`${className} ${p.className || ''}`} />;
-};
-
-const Button = bem('button', 'button', [
+const modifiers = [
   'outline',
   'flat',
   'error',
   'success',
-  'inverse',
+  'white',
   'large',
   'small',
   'active',
   'block',
-]);
+];
+
+const Button = bem('button', 'button', modifiers);
 
 Button.displayName = 'Button';
 

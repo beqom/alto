@@ -73,3 +73,7 @@ $ npm run deploy
 
 $ yarn deploy
 ```
+
+## React component Sass theming:
+
+https://github.com/webpack-contrib/sass-loader/issues/49#issuecomment-90648288

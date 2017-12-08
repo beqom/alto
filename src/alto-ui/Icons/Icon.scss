@@ -1,0 +1,29 @@
+@import "../scss/inc";
+
+.icon {
+  display: inline-flex;
+  align-self: center;
+  position: relative;
+  font-size: 1em;
+  width: 1em;
+  height: 1em;
+}
+
+.icon--baseline,
+.icon--left,
+.icon--right {
+  font-size: 1.2em;
+
+  svg {
+    bottom: -.2em;
+    position: absolute;
+  }
+}
+
+.icon--left {
+  margin-right: 10px;
+}
+
+.icon--right {
+  margin-left: 10px;
+}
