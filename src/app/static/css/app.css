@@ -10,7 +10,7 @@ html {
   font-family: "Source Sans Pro", sans-serif;
   color: #333C48;
   background: #fff;
-  line-height: 1; }
+  line-height: 1.5; }
 
 .button {
   font-weight: 600;
@@ -282,7 +282,7 @@ label {
 .form-control {
   display: block;
   width: 100%;
-  padding: 0.5rem 0.5rem;
+  padding: 0.25rem 0.25rem;
   font-size: 1rem;
   line-height: 1.5;
   background-color: #fff;
@@ -726,12 +726,12 @@ label {
 .text--h5,
 .text--h6 {
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.5;
   color: #333C48; }
 
 .text--h1 {
   font-size: 2.5rem;
-  line-height: 1; }
+  line-height: 1.5; }
 
 .text--h2 {
   font-size: 2rem; }
@@ -881,13 +881,14 @@ pre[class*="language-"] {
 html,
 body {
   height: 100%;
-  background: #F3F9FF; }
+  background: #F3F9FF;
+  background-image: url(//basehold.it/i/16); }
 
 .navbar {
   width: 100%;
   background: #002C55;
   color: #fff;
-  height: 3.75rem;
+  height: 3rem;
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
@@ -958,7 +959,7 @@ body {
   font-size: 1.125rem;
   font-weight: 300;
   max-width: 38rem;
-  line-height: 1.35; }
+  line-height: 1.25; }
 
 .pages-list {
   margin: 2rem 0;
