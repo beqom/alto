@@ -7,7 +7,7 @@ html,
 body {
   height: 100%;
   background: $color-page-bkgd;
-  background-image: url(//basehold.it/i/16); // 24px baseline
+  //background-image: url(//basehold.it/i/16); // 24px baseline
 }
 
 .navbar {
@@ -72,6 +72,12 @@ body {
   align-items: center;
 }
 
+.content-container {
+  width: 100%;
+  padding: 1rem;
+  max-width: 52rem;
+}
+
 .main {
   flex: 1 0 auto;
   width: 100%;
@@ -130,6 +136,7 @@ body {
 .alto-demo {
   border-radius: $border-radius-default;
   border: 1px solid $coolgrey-20;
+  background: $white;
   margin: 1rem 0;
   box-shadow: 0 2px .25rem rgba($coolgrey-80, .125);
 }

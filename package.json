@@ -17,7 +17,7 @@
     "start:storybook": "start-storybook -p 9006 -c .storybook",
     "prebuild:alto-ui": "npm run lint && npm test && npm run clean:dist && copy ./package.json ./README.md ./dist",
     "build:alto-ui": "cross-env NODE_ENV=production babel ./src -d ./dist --ignore story.js,__tests__,",
-    "sass:app": "node-sass --include-path scss ./src/app/scss/app.scss ./src/app/static/css/app.css",
+    "sass:app": "node-sass ./src/app/scss/app.scss ./src/app/static/css/app.css",
     "hugo:app": "hugo --source ./src/app -d ../../build",
     "serve:app": "browser-sync start --config ./bs-config.js",
     "build:app": "npm run sass:app && npm run hugo:app",
