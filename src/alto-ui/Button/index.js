@@ -1,1 +1,2 @@
-export { default, resetButton } from './Button';
+import './Button.scss';
+export { default } from './Button';
