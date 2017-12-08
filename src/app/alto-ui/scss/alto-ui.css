@@ -9,7 +9,7 @@ html {
   font-family: "Source Sans Pro", sans-serif;
   color: #333C48;
   background: #fff;
-  line-height: 1; }
+  line-height: 1.5; }
 
 .button {
   font-weight: 600;
@@ -281,7 +281,7 @@ label {
 .form-control {
   display: block;
   width: 100%;
-  padding: 0.5rem 0.5rem;
+  padding: 0.25rem 0.25rem;
   font-size: 1rem;
   line-height: 1.5;
   background-color: #fff;
@@ -725,12 +725,12 @@ label {
 .text--h5,
 .text--h6 {
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1.5;
   color: #333C48; }
 
 .text--h1 {
   font-size: 2.5rem;
-  line-height: 1; }
+  line-height: 1.5; }
 
 .text--h2 {
   font-size: 2rem; }

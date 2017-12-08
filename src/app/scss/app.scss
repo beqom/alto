@@ -7,13 +7,14 @@ html,
 body {
   height: 100%;
   background: $color-page-bkgd;
+  background-image: url(//basehold.it/i/16); // 24px baseline
 }
 
 .navbar {
   width: 100%;
   background: $blue-90;
   color: $white;
-  height: 3.75rem;
+  height: 3rem;
   padding: 0 1rem;
   display: flex;
   flex-direction: row;

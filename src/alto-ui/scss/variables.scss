@@ -223,10 +223,10 @@ $font-weight-heavy:                 900 !default;
 
 $border-width-thin:         1px !default;
 $border-width-thick:        2px !default;
-$spacing-xxx-small:         0.125rem !default;
-$spacing-xx-small:          0.25rem !default;
-$spacing-x-small:           0.5rem !default;
-$spacing-small:             0.75rem !default;
+$spacing-xxx-small:         0.0625rem !default;
+$spacing-xx-small:          0.125rem !default;
+$spacing-x-small:           0.25rem !default;
+$spacing-small:             0.5rem !default;
 $spacing-medium:            1rem !default;
 $spacing-large:             1.5rem !default;
 $spacing-x-large:           2rem !default;
@@ -237,13 +237,13 @@ $spacing-xx-large:          3rem !default;
 // ===================================
 // Sizing
 
-$size-xx-small: 6rem !default;
-$size-x-small: 12rem !default;
-$size-small: 15rem !default;
-$size-medium: 20rem !default;
-$size-large: 25rem !default;
-$size-x-large: 40rem !default;
-$size-xx-large: 60rem !default;
+$size-xx-small:            6rem  !default;
+$size-x-small:             12rem !default;
+$size-small:               15rem !default;
+$size-medium:              20rem !default;
+$size-large:               25rem !default;
+$size-x-large:             40rem !default;
+$size-xx-large:            60rem !default;
 
 // ===================================
 // Z-index
@@ -268,11 +268,11 @@ $z-index-deepdive:      -99999 !default;
 // ===================================
 // Line height
 
-$line-height-base: 1 !default;
-$line-height-reset: 1 !default;
-$line-height-heading: 1.2 !default;
-$line-height-lead: 1.35 !default;
-$line-height-text: 1.625 !default;
+$line-height-base: 1.5 !default;
+$line-height-reset: 1.5 !default;
+$line-height-heading: 1.5 !default;
+$line-height-lead: 1.25 !default;
+$line-height-text: 1.25 !default;
 $line-height-input: 1.5 !default;
 $line-height-tab: 3rem !default;
 
