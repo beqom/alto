@@ -887,6 +887,7 @@ body {
   width: 100%;
   background: #002C55;
   color: #fff;
+  height: 3.75rem;
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
@@ -899,13 +900,21 @@ body {
 
 .navbar__brand {
   font-size: 1.125rem;
-  font-weight: 600; }
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem; }
+  .navbar__brand svg {
+    height: 1.5rem; }
 
 .navbar__link {
   color: #fff;
-  padding: 1rem;
+  padding: 0 1rem;
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
   transition: 0.15s cubic-bezier(0.53, 0.14, 0.33, 0.97) background; }
   .navbar__link:hover {
     background: #02417C; }
@@ -985,3 +994,10 @@ body {
 
 .alto-demo--dark-background {
   background: #192328; }
+
+.alto-logo path {
+  fill: rgba(255, 255, 255, 0.8);
+  transition: 0.15s cubic-bezier(0.53, 0.14, 0.33, 0.97) fill; }
+
+.navbar__brand:hover .alto-logo path {
+  fill: #fff; }

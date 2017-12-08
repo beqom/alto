@@ -13,6 +13,7 @@ body {
   width: 100%;
   background: $blue-90;
   color: $white;
+  height: 3.75rem;
   padding: 0 1rem;
   display: flex;
   flex-direction: row;
@@ -25,11 +26,25 @@ body {
   list-style: none;
 }
 
+.navbar__brand {
+  font-size: $font-size-large;
+  font-weight: $font-weight-semibold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+  svg {
+    height: 1.5rem;
+  }
+}
+
 .navbar__link {
   color: $white;
-  padding: 1rem;
+  padding: 0 1rem;
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  height: 100%;
   transition: $duration-quick $timing-function background;
   &:hover {
     background: $blue-80;
@@ -133,4 +148,13 @@ body {
 
 .alto-demo--dark-background {
   background: $coolgrey-90;
+}
+
+.alto-logo path {
+  fill: rgba($white, .8);
+  transition: $duration-quick $timing-function fill;
+
+}
+.navbar__brand:hover .alto-logo path {
+  fill: $white;
 }
