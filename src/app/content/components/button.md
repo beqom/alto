@@ -26,6 +26,13 @@ title: "Button"
 <button class="button button--large">Large Button</button>
 {{< /example >}}
 
+## Wrapping
+{{< example lang="markup" >}}
+<button style="width:200px" class="button button--small">Small Button with really long thext that should wrap</button>
+<button style="width:200px" class="button">Default Button with really long thext that should wrap</button>
+<button style="width:200px" class="button button--large">Large Button with really long thext that should wrap</button>
+{{< /example >}}
+
 
 ## Outline
 {{< example lang="markup" >}}
