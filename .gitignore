@@ -5,4 +5,4 @@ build
 coverage/**
 dist
 yarn-error.log
-src/app/**/*.css
+src/app/static/css/*.css

@@ -239,8 +239,6 @@ html {
   .button--flat.button--white:disabled {
     color: #A2B8CE; }
 
-/* --------------------------------------------- *  STYLES
-\* --------------------------------------------- */
 .list--interactive {
   border-radius: 3px;
   background: #fff;
