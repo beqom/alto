@@ -1,5 +1,8 @@
 ---
 title: "Lists"
+menu:
+  main:
+    parent: "components"
 ---
 
 Hello.

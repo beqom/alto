@@ -189,16 +189,16 @@ $color-text-link-visited: $purple-60 !default;
 $font-size-root:                    16px !default;
 
 $font-size-xx-small:                0.5rem !default;   // 8px
-$font-size-x-small:                 0.75rem !default;// 12px
-$font-size-small:                   0.875rem !default;  // 14px
+$font-size-x-small:                 0.75rem !default;  // 12px
+$font-size-small:                   0.875rem !default; // 14px
 $font-size-medium:                  1rem !default;     // 16px
-$font-size-large:                   1.125rem !default;  // 18px
-$font-size-x-large:                 1.5rem !default;  // 24px
+$font-size-large:                   1.125rem !default; // 18px
+$font-size-x-large:                 1.5rem !default;   // 24px
 $font-size-xx-large:                2.25rem !default;  // 36px
 $font-size-xxx-large:               3.25rem !default;  // 52px
 
 $font-size-h1:                      2.5rem !default;   //40px
-$font-size-h2:                      2rem !default;     //32px
+$font-size-h2:                      2.25rem !default;  //32px
 $font-size-h3:                      1.75rem !default;  //28px
 $font-size-h4:                      1.5rem !default;   //24px
 $font-size-h5:                      1.25rem !default;  //20px
@@ -272,9 +272,9 @@ $z-index-deepdive:      -99999 !default;
 
 $line-height-base: 1.5 !default;
 $line-height-reset: 1.5 !default;
-$line-height-heading: 1.5 !default;
-$line-height-lead: 1.25 !default;
-$line-height-text: 1.25 !default;
+$line-height-heading: 1 !default;
+$line-height-lead: 1.5 !default;
+$line-height-text: 1.5 !default;
 $line-height-input: 1.5 !default;
 $line-height-tab: 3rem !default;
 

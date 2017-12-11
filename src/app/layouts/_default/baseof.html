@@ -21,13 +21,17 @@
 
     {{ block "header" . }}{{ partial "site/header.html" . }}{{ end }}
 
-    <main class="content-container" role="main">
+    <div class="flex--row">
 
-      {{ block "main" . }}{{ end }}
+      {{ block "sidenav" . }}{{ partial "site/sidenav.html" . }}{{ end }}
 
-    </main>
+      <main class="content-container" role="main">
 
-    {{ block "footer" . }}{{ partial "site/footer.html" . }}{{ end }}
+        {{ block "main" . }}{{ end }}
+
+      </main>
+    </div>
+
 
   </div>
 

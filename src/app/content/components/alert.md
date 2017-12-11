@@ -1,5 +1,8 @@
 ---
 title: "Alert"
+menu:
+  main:
+    parent: "components"
 ---
 # Alert
 

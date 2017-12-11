@@ -2,6 +2,8 @@ baseURL = "/alto/"
 languageCode = "en-us"
 title = "Alto"
 
+sectionPagesMenu = "components"
+
 # High level items
 
 [[menu.main]]
@@ -16,9 +18,14 @@ title = "Alto"
   identifier = "components"
   url = "/components/"
 
-
 [[menu.main]]
   name = "Utilities"
   weight = 10
   identifier = "utilities"
   url = "/utilities/"
+
+[[menu.components]]
+  name = "Components"
+  weight = 10
+  identifier = "components"
+  url = "/components/"

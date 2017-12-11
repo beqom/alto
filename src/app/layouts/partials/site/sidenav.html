@@ -1,0 +1,25 @@
+<nav class="sidenav--page">
+
+  <ul class="sidenav--list">
+    {{ $currentPage := . }}
+      {{ range .Site.Menus.main }}
+        {{ if .HasChildren }}
+
+         <li class="sub-menu{{if $currentPage.HasMenuCurrent "main" . }} active{{end}}">
+         <a href="javascript:;" class="sidenav__link">
+             {{ .Pre }}
+             <span>{{ .Name }}</span>
+             <span class="menu-arrow arrow_carrot-right"></span>
+         </a>
+         <ul class="sidenav__subnav">
+             {{ range .Children }}
+             <li><a href="{{.URL}}" class="sidenav__link{{if $currentPage.IsMenuCurrent "main" . }} active{{end}}"> {{ .Name }} </a> </li>
+             {{ end }}
+         </ul>
+       {{end}}
+       </li>
+       {{end}}
+
+  </ul>
+
+</nav>
