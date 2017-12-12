@@ -1,7 +1,7 @@
 ---
 title: "Alert"
 menu:
-  main:
+  docs:
     parent: "components"
 ---
 # Alert

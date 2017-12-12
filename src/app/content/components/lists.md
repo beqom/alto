@@ -1,7 +1,7 @@
 ---
 title: "Lists"
 menu:
-  main:
+  docs:
     parent: "components"
 ---
 

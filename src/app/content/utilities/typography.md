@@ -1,6 +1,9 @@
 ---
 title: "Typography"
-layout: "component"
+layout: "docs"
+menu:
+  docs:
+    parent: "utilities"
 ---
 
 # Typography

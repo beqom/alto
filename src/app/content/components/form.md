@@ -1,7 +1,7 @@
 ---
 title: "Form"
 menu:
-  main:
+  docs:
     parent: "components"
 ---
 # Form, yo

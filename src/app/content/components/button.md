@@ -1,15 +1,15 @@
 ---
 title: "Button"
-layout: "component"
+layout: "docs"
 menu:
-  main:
+  docs:
     parent: "components"
 ---
 
 ## Design Guidelines
 
 These are design guidelines
-
+dff
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.

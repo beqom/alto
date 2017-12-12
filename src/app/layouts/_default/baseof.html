@@ -21,14 +21,14 @@
 
     {{ block "header" . }}{{ partial "site/header.html" . }}{{ end }}
 
-    <div class="flex--row">
+    <div class="flex--row{{ if ne .Section "components" | and (ne .Section "utilities")  }} flex--col page--single{{end}}">
 
-      {{ block "sidenav" . }}{{ partial "site/sidenav.html" . }}{{ end }}
+      {{ if eq .Section "components" | or (eq .Section "utilities")  }}
+        {{ block "sidenav" . }}{{ partial "site/sidenav.html" . }}{{ end }}
+      {{ end }}
 
       <main class="content-container" role="main">
-
         {{ block "main" . }}{{ end }}
-
       </main>
     </div>
 
