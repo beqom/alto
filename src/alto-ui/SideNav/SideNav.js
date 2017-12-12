@@ -78,7 +78,7 @@ const SideNavHeader = styled.header`
     padding: 0 20px;
     background-color: ${getColor('coolGrey.90')};
     position: relative;
-    z-index: 1;
+    z-index: 1001;
   `)};
 `;
 
@@ -152,6 +152,7 @@ const SideNavSectionListNarrow = styled.ul`
   transform: translateY(-100%);
   transition: transform ${getTheme('transition')};
   display: none;
+  z-index: 1000;
 
   ${modifier('open')('transform: translateY(0);')};
 
@@ -338,7 +339,7 @@ class SideNav extends React.PureComponent {
           <SideNavLogo href={logoUrl}>{collapsed ? logoSmall : logo}</SideNavLogo>
           <SideNavLogoNarrow href={logoUrl}>{logo}</SideNavLogoNarrow>
           <SideNavMenuButton>
-            <Button outline inverse onClick={this.handleToggleOpen}>
+            <Button outline white onClick={this.handleToggleOpen}>
               {open ? closeMenuButtonLabel : openMenuButtonLabel}
             </Button>
           </SideNavMenuButton>
