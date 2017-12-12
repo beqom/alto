@@ -1,7 +1,10 @@
 ---
 title: "Alert"
+layout: "docs"
+menu:
+  docs:
+    parent: "components"
 ---
-# Alert
 
 {{< example "html" >}}
 <div class="alert">

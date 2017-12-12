@@ -21,13 +21,17 @@
 
     {{ block "header" . }}{{ partial "site/header.html" . }}{{ end }}
 
-    <main class="content-container" role="main">
+    <div class="flex--row{{ if ne .Section "components" | and (ne .Section "patterns")  }} flex--col page--single{{end}}">
 
-      {{ block "main" . }}{{ end }}
+      {{ if eq .Section "components" | or (eq .Section "patterns")  }}
+        {{ block "sidenav" . }}{{ partial "site/sidenav.html" . }}{{ end }}
+      {{ end }}
 
-    </main>
+      <main class="content-container" role="main">
+        {{ block "main" . }}{{ end }}
+      </main>
+    </div>
 
-    {{ block "footer" . }}{{ partial "site/footer.html" . }}{{ end }}
 
   </div>
 

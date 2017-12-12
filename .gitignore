@@ -6,3 +6,4 @@ coverage/**
 dist
 yarn-error.log
 src/app/static/css/*.css
+src/app/public

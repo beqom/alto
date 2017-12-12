@@ -1,5 +1,9 @@
 ---
 title: "Lists"
+layout: "docs"
+menu:
+  docs:
+    parent: "components"
 ---
 
 Hello.
