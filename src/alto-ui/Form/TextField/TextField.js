@@ -81,7 +81,7 @@ TextFieldTag.defaultProps = {
   type: 'text',
 };
 
-TextFieldTag.PropTypes = {
+TextFieldTag.propTypes = {
   type: PropTypes.string,
 };
 
