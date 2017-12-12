@@ -23,6 +23,12 @@ title = "Alto"
   identifier = "releases"
   url = "/releases/"
 
+[[menu.main]]
+  name = "Storybook"
+  weight = 20
+  identifier = "storybook"
+  url = "/storybook/"
+
 
 [[menu.docs]]
   name = "Components"
