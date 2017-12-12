@@ -5,22 +5,51 @@ menu:
   docs:
     parent: "components"
 ---
+{{< lead >}}
+Buttons allow an application to communicate action and direct user intent.
+{{< /lead >}}
 
-## Design Guidelines
+{{< hr-dg >}}
 
-These are design guidelines
-dff
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.
+## Three different types
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.
+{{< button-three-types >}}
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.
+## Placement
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus iste repellat fuga asperiores ea nemo possimus. Recusandae minima fuga in, nulla nemo consequatur, porro cumque libero. Temporibus aliquam, sed debitis.
+There are two distinct patterns when it comes to the placement of a button.
+
+Z-PATTERN and F-PATTERN
 
 
-## Code & Examples
+## Visual Style
+
+### Border Radius
+
+Alto buttons have a border radius of 3px;
+
+### Size
+
+Alto offers three button sizes:
+
+- Small height of 24px
+- Default height of 36px
+- Large height of 48px
+
+Small buttons are used in content areas where smaller buttons are needed to de-emphasize calls to action. This is especially true when multiple actions of equal importance are available.
+
+Large buttons are reserved for use in websites and should not be used in application development.
+
+
+### Primary Color
+
+A primary color provides consistency across an application. It trains the user to look for that color when trying to find an action. Alto defaults to blue. This “action blue” can be found across all types of buttons, tabs, and other action-related components.
+
+### Action-based Color
+
+Different colors may be used based on the severity of an action’s result. For example, using a red button when “deleting” files indicates high severity.
+
+{{< hr-ec >}}
 
 Alto defines three button styles:
 
@@ -84,4 +113,3 @@ Flat buttons have less horizontal padding than other buttons, so they do not fee
 <button class="button button--white button--outline">White Outline Button</button>
 <button class="button button--white button--flat">White Flat Button</button>
 {{< /example >}}
-{{end}}

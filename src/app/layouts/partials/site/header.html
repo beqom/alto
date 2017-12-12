@@ -1,16 +1,15 @@
 <header class="navbar" role="banner">
+  <a class="navbar__brand" href="{{ .Site.BaseURL }}">{{ partial "svgs/alto.html" . }}</a>
 
-    <a class="navbar__brand" href="{{ .Site.BaseURL }}">{{ partial "svgs/alto.html" . }}</a>
+  <ul class="navbar__links">
+    {{- $currentPage := . -}}
+    {{ range .Site.Menus.main -}}
+    <li>
+      
+        <a class="navbar__link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
+    </li>
+    {{- end }}
 
-    <ul class="navbar__links">
-
-      {{- $currentPage := . -}}
-      {{ range .Site.Menus.main -}}
-      <li class="{{ if $currentPage.IsMenuCurrent "main" . }}active{{ end }}">
-          <a class="navbar__link" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
-      </li>
-      {{- end }}
-
-    </ul>
+  </ul>
 
 </header>

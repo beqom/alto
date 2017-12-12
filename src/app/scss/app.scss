@@ -53,6 +53,9 @@ body {
   &:hover {
     background: $blue-80;
   }
+  &.active {
+    background: $blue-80;
+  }
 }
 
 .footer {
@@ -107,7 +110,10 @@ body {
   }
 }
 
-
+.alto-hr {
+  margin: 1rem 0 .9375rem;
+  border: .5px solid transparent;
+}
 
 .sidenav--list{
   list-style-type: none;
@@ -132,6 +138,28 @@ body {
   overflow: hidden;
   width: 100%;
 
+}
+
+.flex-grid {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  @include MQ(Mplus) {
+    flex-direction: row;
+  }
+}
+
+.flex-item {
+  width: 100%;
+
+  @include MQ(Mplus) {
+    flex: 0 1 auto;
+    margin-right: 1rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .single-col {
@@ -161,9 +189,26 @@ body {
 
 .content__header {
   flex: 0 0 auto;
-  padding: $spacing-large 2rem;
+  padding: .75rem 2rem;
   box-shadow: 0 1px 0 0 $layout-border-color;
 
+}
+
+.page-header__title {
+  margin-bottom: 1rem;
+}
+
+.page-header__link,
+.page-header__link:visited {
+  color: $color-text-default;
+  font-size: $font-size-large;
+  line-height: 1.5rem;
+  padding: 0 1rem;
+  height: 2rem;
+  &:first-of-type {
+    border-right: 1px solid $grey-20;
+    padding-left: 0;
+  }
 }
 
 .content__body {
@@ -175,6 +220,17 @@ body {
 .content {
   max-width: 52rem;
   padding: $spacing-large 2rem;
+
+  > p {
+    margin: 1rem 0;
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  > ul {
+    margin: 1rem 0;
+  }
 }
 
 
@@ -226,6 +282,8 @@ body {
 }
 
 
+
+
 // Example
 
 .alto-example,
@@ -242,6 +300,20 @@ body {
   padding: 1rem;
   background: $white;
 }
+
+.alto-demo--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.alto-demo--tall {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+
 
 .alto-example__code pre {
   border-radius: 0 0 $border-radius-default $border-radius-default;

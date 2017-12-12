@@ -100,10 +100,12 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
   font-weight: $font-weight-semibold;
   font-size: $font-size-medium;
   font-family: $font-family;
-  padding: .6875rem 1.25rem;
+  padding: .5625rem 1.25rem;
   line-height: $line-height-button;
   border: 1px solid transparent;
   border-radius: $border-radius-default;
+  text-transform: uppercase;
+  letter-spacing: .06em;
   cursor: pointer;
   transition: $duration-quick $timing-function all;
   &:focus {
@@ -129,27 +131,27 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
 
 .button--small {
   font-size: $font-size-small;
-  padding: .375rem .6875rem;
+  padding: .1875rem .6875rem;
 }
 
 .button--large {
   font-size: $font-size-large;
-  padding: 1rem 1.8125rem;
+  padding: .9375rem 1.8125rem;
 }
 
 
 // Outline
 
 .button--outline {
-  @include button--outline($blue, $blue-10, $blue-70, $blue-30, $blue-20);
+  @include button--outline($blue, $blue-20, $blue-70, $blue-30, $blue-20);
 }
 
 .button--outline.button--success {
-  @include button--outline($green, $green-10, $green-70, $green-30, $green-20);
+  @include button--outline($green, $green-20, $green-70, $green-30, $green-20);
 }
 
 .button--outline.button--danger {
-  @include button--outline($red, $red-10, $red-70, $red-30, $red-20);
+  @include button--outline($red, $red-20, $red-70, $red-30, $red-20);
 }
 
 .button--outline.button--white {
