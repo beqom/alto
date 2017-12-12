@@ -48,6 +48,11 @@ h6,
   line-height: 1.5;         // 24px
 }
 
+.text--lead {
+  font-size: $font-size-large;
+  line-height: 1.7777778;
+}
+
 p {
   font-size: 1rem;
   line-height: $line-height-text;
