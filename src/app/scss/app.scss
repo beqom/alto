@@ -150,7 +150,6 @@ body {
   .content-container {
     max-width: 1200px;
     padding: 0 2rem;
-    background: $pink-30;
   }
 }
 
@@ -188,6 +187,7 @@ body {
 
 .hero {
   text-align: center;
+  padding: 1rem 0;
   @include MQ(Splus) {
     text-align: left;
   }

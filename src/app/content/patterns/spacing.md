@@ -3,7 +3,7 @@ title: "Spacing"
 layout: "docs"
 menu:
   docs:
-    parent: "utilities"
+    parent: "patterns"
 ---
 # Spacing!
 

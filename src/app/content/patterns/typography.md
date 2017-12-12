@@ -3,12 +3,10 @@ title: "Typography"
 layout: "docs"
 menu:
   docs:
-    parent: "utilities"
+    parent: "patterns"
 ---
 
-# Typography
-
-I'm typography
+Alto uses the sans serif typeface [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro).
 
 {{< example lang="markup">}}
 <h1 class="text--h1">Heading 1</h1>

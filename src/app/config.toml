@@ -2,7 +2,6 @@ baseURL = "/alto/"
 languageCode = "en-us"
 title = "Alto"
 
-sectionPagesMenu = "docs"
 
 # High level items
 

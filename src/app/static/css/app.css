@@ -1010,8 +1010,7 @@ body {
 
 .page--single .content-container {
   max-width: 1200px;
-  padding: 0 2rem;
-  background: #F19BD0; }
+  padding: 0 2rem; }
 
 .flex--col {
   flex-direction: column;
@@ -1038,7 +1037,8 @@ body {
   max-width: 78rem; }
 
 .hero {
-  text-align: center; }
+  text-align: center;
+  padding: 1rem 0; }
   @media only screen and (min-width: 560px) {
     .hero {
       text-align: left; } }

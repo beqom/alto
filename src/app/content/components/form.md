@@ -1,5 +1,6 @@
 ---
 title: "Form"
+layout: "docs"
 menu:
   docs:
     parent: "components"
