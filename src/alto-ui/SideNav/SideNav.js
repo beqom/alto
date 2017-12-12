@@ -291,10 +291,9 @@ class SideNav extends React.PureComponent {
 
   renderNavItems() {
     const { collapsed } = this.state;
-
     return this.props.items.map(item => {
       const open = !this.state.collapsed && !!this.state.sectionsOpenState[item.title];
-      const active = !!item.items.find(({ url }) => url === this.props.currentUrl);
+      const active = !!item.items.find(({ url }) => this.props.currentUrl.indexOf(url) === 0);
       return (
         <SideNavSection key={item.title}>
           <SideNavSectionButton

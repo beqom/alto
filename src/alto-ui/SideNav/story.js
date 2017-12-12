@@ -21,7 +21,7 @@ const items = [
     { title: 'Five', url: '#five' },
   ]},
   { title: 'Fruits', icon: BoltIcon, items: [
-    { title: 'Apple', url: '#apple' },
+    { title: 'Apple', url: '#apple/foo' },
     { title: 'Banana', url: '#banana' },
     { title: 'Orange', url: '#orange' },
   ]},
