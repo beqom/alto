@@ -1,0 +1,39 @@
+@import "../scss/inc";
+
+.Tabs {
+  list-style: none;
+  display: flex;
+  border-bottom: 1px solid $coolgrey-20;
+}
+
+.Tabs__link {
+  display: block;
+  padding: 1rem 2rem;
+  transition: $duration-quick $timing-function all;
+  color: $color-text-muted;
+  font-weight: $font-weight-semibold;
+
+  &:hover,
+  &:active {
+    color: $blue;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $blue-30;
+    border-radius: $border-radius-default;
+  }
+}
+
+.Tabs__link--active {
+  color: $blue;
+  box-shadow:
+    inset 0 -1px 0 $blue,
+    0 1px 0 $blue;
+
+  &:focus {
+    box-shadow:
+      inset 0 -1px 0 $blue,
+      0 1px 0 $blue,
+      0 0 0 3px $blue-30;
+  }
+}
