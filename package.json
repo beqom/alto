@@ -74,6 +74,8 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@webcomponents/custom-elements": "^1.0.0",
+    "clarity-icons": "^0.10.17",
     "classnames": "^2.2.5",
     "lodash.get": "^4.4.2",
     "lodash.isarray": "^4.0.0",

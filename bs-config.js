@@ -27,6 +27,7 @@ module.exports = {
     baseDir: './build',
     routes: {
         '/alto': './build',
+        '/vendor': './node_modules'
     },
   },
   proxy: false,
