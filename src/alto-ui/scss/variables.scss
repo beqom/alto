@@ -305,6 +305,7 @@ $duration-forever:         3s !default;
 
 $timing-function:          cubic-bezier(.53,.14,.33,.97) !default;
 $timing-in-out-back:       cubic-bezier(0.68, -0.55, 0.27, 1.55) !default;
+$transition:               $duration-quick $timing-function;
 
 // ===================================
 // Media Query Breakpoints

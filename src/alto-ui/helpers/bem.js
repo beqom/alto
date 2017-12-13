@@ -27,13 +27,14 @@ const bem = (ComponentToRender, block, modifiers = [], extraProps = []) => {
   return Component;
 };
 
-export const bemClass = (block, modifiers) =>
+export const bemClass = (block, modifiers, ...others) =>
   classnames(
     block,
     Object.entries(modifiers).reduce(
       (acc, [modifier, value]) => Object.assign({}, acc, { [`${block}--${modifier}`]: value }),
       {}
-    )
+    ),
+    ...others
   );
 
 export default bem;
