@@ -27,31 +27,31 @@
 }
 
 @mixin on-narrow {
-  @media screen and (max-width: $breakpoint__narrow-medium - 1) {
+  @media screen and (max-width: $mq-medium - 1) {
     @content;
   }
 }
 
 @mixin on-medium {
-  @media screen and (min-width: $breakpoint__narrow-medium) and (max-width: $breakpoint__medium-wide - 1) {
+  @media screen and (min-width: $mq-medium) and (max-width: $mq-x-large - 1) {
     @content;
   }
 }
 
 @mixin on-wide {
-  @media screen and (min-width: $breakpoint__medium-wide) {
+  @media screen and (min-width: $mq-x-large) {
     @content;
   }
 }
 
 @mixin on-narrow-and-medium {
-  @media screen and (max-width: $breakpoint__medium-wide - 1) {
+  @media screen and (max-width: $mq-x-large - 1) {
     @content;
   }
 }
 
 @mixin on-medium-and-wide {
-  @media screen and (min-width: $breakpoint__narrow-medium) {
+  @media screen and (min-width: $mq-medium) {
     @content;
   }
 }
