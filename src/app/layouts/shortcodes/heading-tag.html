@@ -1,0 +1,9 @@
+<h{{ .Get "level" }}
+id="{{ urlize .Inner }}"
+class="
+  text--h{{ with .Get "class" }}{{ . }}{{else}}{{.Get "level"}}{{ end }}
+  m-top--x-large
+"
+>
+{{ .Inner }}
+</h{{ .Get "level" }}>

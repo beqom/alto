@@ -230,7 +230,35 @@ body {
 
   > ul {
     margin: 1rem 0;
+    padding: 0 0 0 1rem;
   }
+
+  > h1,
+  > h2,
+  > h3,
+  > h4,
+  > h5,
+  > h6 {
+    margin-top: 1rem;
+  }
+
+  > h2 {
+    font-size: $font-size-h5;
+    font-weight: $font-weight-regular;
+    margin-top: 4rem;
+
+    + h3 {
+      margin-top: 2rem;
+    }
+
+  }
+
+  > h3 {
+    font-size: $font-size-h6;
+    font-weight: $font-weight-semibold;
+    margin-top: 3rem;
+  }
+
 }
 
 
@@ -287,13 +315,17 @@ body {
 // Example
 
 .alto-example,
-.alto-code,
+.alto-code pre,
 .alto-demo {
   border-radius: $border-radius-default;
-  background: $white;
   margin: 1rem 0;
   box-shadow: 0 2px .25rem rgba($coolgrey-80, .125),
   inset 0 0 0 1px $coolgrey-20;
+}
+
+.alto-example,
+.alto-demo {
+  background: $white;
 }
 
 .alto-demo {
@@ -334,4 +366,13 @@ body {
 }
 .navbar__brand:hover .alto-logo path {
   fill: $white;
+}
+
+.example-tabbed-content {
+  background: $white;
+  border-radius: 0 0 $border-radius-default $border-radius-default;
+  box-shadow:
+    inset 0 -1px 0 0 $coolgrey-20,
+    inset 1px 0 0 0 $coolgrey-20,
+    inset -1px 0 0 0 $coolgrey-20
 }
