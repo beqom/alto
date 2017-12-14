@@ -103,10 +103,7 @@ body {
 .main-container--home {
   height: auto;
   min-height: 100%;
-  background-image: url(../images/Hero-Mock-Up@2x.jpg);
-  background-position: top center;
-  background-size: cover;
-  background:-color $white;
+  background: url("../images/Hero-Mock-Up@2x.jpg") top center / cover no-repeat $white;
 }
 
 .sidenav--page {
@@ -328,10 +325,6 @@ body {
   @include MQ(Mplus) {
     font-size: $font-size-xxx-large;
   }
-}
-
-.hero__actions {
-
 }
 
 .hero__lead {
