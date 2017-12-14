@@ -5,7 +5,6 @@
     {{- $currentPage := . -}}
     {{ range .Site.Menus.main -}}
     <li>
-
         <a class="navbar__link{{ if $currentPage.IsMenuCurrent "main" . }} active{{ end }}" href="{{ .URL | absLangURL }}">{{ .Name }}</a>
     </li>
     {{- end }}
