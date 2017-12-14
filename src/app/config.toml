@@ -32,12 +32,12 @@ title = "Alto"
 
 [[menu.docs]]
   name = "Components"
-  weight = 10
+  weight = 30
   identifier = "components"
   url = "/components/"
 
 [[menu.docs]]
-  name = "Utilities"
+  name = "Patterns"
   weight = 20
-  identifier = "utilities"
-  url = "/utilities/"
+  identifier = "patterns"
+  url = "/patterns/"

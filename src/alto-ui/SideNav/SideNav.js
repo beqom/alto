@@ -119,27 +119,27 @@ class SideNav extends React.PureComponent {
       closeMenuButtonLabel,
     } = this.props;
     return (
-      <aside className={bemClass('SideNav', { collapsed })}>
-        <header className="SideNav__header">
-          <a className="SideNav__logo" href={logoUrl}>
+      <aside className={bemClass('sidenav', { collapsed })}>
+        <header className="sidenav__header">
+          <a className="sidenav__logo" href={logoUrl}>
             {collapsed ? logoSmall : logo}
           </a>
-          <a className="SideNav__logo SideNav__logo--narrow" href={logoUrl}>
+          <a className="sidenav__logo sidenav__logo--narrow" href={logoUrl}>
             {logo}
           </a>
-          <Button outline white onClick={this.handleToggleOpen} className="SideNav__menu-button">
+          <Button outline white onClick={this.handleToggleOpen} className="sidenav__menu-button">
             {open ? closeMenuButtonLabel : openMenuButtonLabel}
           </Button>
         </header>
-        <ul className="SideNav__sections-list">{this.renderNavItems()}</ul>
-        <ul className={bemClass('SideNav__sections-list-narrow', { open })} aria-hidden={!open}>
+        <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
+        <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
           {this.renderNavItems()}
         </ul>
         <button
           className={bemClass(
-            'SideNav__icon-container',
+            'sidenav__icon-container',
             { reverse: collapsed },
-            'SideNav__toggle-button'
+            'sidenav__toggle-button'
           )}
           onClick={this.handleToggle}
           aria-expanded={collapsed}

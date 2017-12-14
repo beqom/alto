@@ -244,6 +244,10 @@
   version "16.0.22"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.0.22.tgz#19ad106e124aceebd2b4d430a278d55413ee8759"
 
+"@webcomponents/custom-elements@^1.0.0":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@webcomponents/custom-elements/-/custom-elements-1.0.6.tgz#79944e0d7dcb830063308df65560a6fd2bd20a9a"
+
 abab@^1.0.3:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.4.tgz#5faad9c2c07f60dd76770f71cf025b62a63cfd4e"
@@ -2040,6 +2044,10 @@ clap@^1.0.9:
   resolved "https://registry.yarnpkg.com/clap/-/clap-1.2.3.tgz#4f36745b32008492557f46412d66d50cb99bce51"
   dependencies:
     chalk "^1.1.3"
+
+clarity-icons@^0.10.17:
+  version "0.10.17"
+  resolved "https://registry.yarnpkg.com/clarity-icons/-/clarity-icons-0.10.17.tgz#9ed7bd112c3f1ad2323c64c5c23060711cd4ffca"
 
 classnames@^2.2.5:
   version "2.2.5"

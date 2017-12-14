@@ -6,10 +6,10 @@ import { bemClass } from '../helpers/bem';
 import './Tabs.scss';
 
 const Tabs = ({ items, children, className, currentUrl }) => (
-  <ul className={classnames('Tabs', className)}>
+  <ul className={classnames('tabs', className)}>
     {items.map(item => (
-      <li key={item.url} className="Tabs__tab">
-        <a className={bemClass('Tabs__link', { active: item.url === currentUrl })} href={item.url}>
+      <li key={item.url} className="tabs__tab">
+        <a className={bemClass('tabs__link', { active: item.url === currentUrl })} href={item.url}>
           {children(item)}
         </a>
       </li>

@@ -27,6 +27,7 @@ module.exports = {
     baseDir: './build',
     routes: {
         '/alto': './build',
+        '/vendor': './node_modules'
     },
   },
   proxy: false,
@@ -58,7 +59,7 @@ module.exports = {
   scrollProportionally: true,
   scrollThrottle: 0,
   scrollRestoreTechnique: 'window.name',
-  scrollElements: [],
+  scrollElements: ['.content__body'],
   scrollElementMapping: [],
   reloadDelay: 0,
   reloadDebounce: 0,
