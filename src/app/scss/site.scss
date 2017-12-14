@@ -24,6 +24,32 @@ body {
   justify-content: space-between;
 }
 
+.navbar--home {
+  background: transparent;
+  color: $color-text-default;
+
+  .alto-logo g {
+    fill: $color-text-default;
+    transition: $duration-quick $timing-function fill;
+
+  }
+  .navbar__brand:hover .alto-logo g {
+    fill: rgba($color-text-default, .7);
+  }
+
+  .navbar__link {
+    color: $color-text-default;
+    &:hover {
+      background: transparent;
+      box-shadow: inset 0 -4px 0 -1px $blue;
+    }
+    &.active {
+      background: transparent;
+      box-shadow: inset 0 -4px 0 -1px $blue;
+    }
+  }
+}
+
 .navbar__links {
   display: flex;
   flex-direction: row;
@@ -49,7 +75,7 @@ body {
   display: flex;
   align-items: center;
   height: 100%;
-  transition: $duration-quick $timing-function background;
+  transition: $duration-quick $timing-function all;
   &:hover {
     background: $blue-80;
   }
@@ -72,6 +98,15 @@ body {
   flex-direction: column;
   align-items: flex-start;
   height: 100%;
+}
+
+.main-container--home {
+  height: auto;
+  min-height: 100%;
+  background-image: url(../images/Hero-Mock-Up@2x.jpg);
+  background-position: top center;
+  background-size: cover;
+  background:-color $white;
 }
 
 .sidenav--page {
@@ -270,10 +305,16 @@ body {
 }
 
 .hero {
-  text-align: center;
-  padding: 1rem 0;
+  text-align: left;
+  padding: 20rem 0 1rem;
   @include MQ(Splus) {
     text-align: left;
+  }
+  @include MQ(Mplus) {
+    padding-top: 10vw;
+  }
+  @include MQ(Lplus) {
+    padding-top: 6.25rem;
   }
 }
 
@@ -282,17 +323,24 @@ body {
   font-size: $font-size-xx-large;
   line-height: 1;
   margin-bottom: 2rem;
+  color: $coolgrey-70;
 
   @include MQ(Mplus) {
     font-size: $font-size-xxx-large;
   }
 }
 
+.hero__actions {
+
+}
+
 .hero__lead {
   font-size: $font-size-large;
   font-weight: $font-weight-light;
-  max-width: 38rem;
+  max-width: 24rem;
   line-height: $line-height-lead;
+  color: $coolgrey-70;
+
 }
 
 
@@ -359,12 +407,12 @@ body {
   background: $coolgrey-90;
 }
 
-.alto-logo path {
+.alto-logo g {
   fill: rgba($white, .8);
   transition: $duration-quick $timing-function fill;
 
 }
-.navbar__brand:hover .alto-logo path {
+.navbar__brand:hover .alto-logo g {
   fill: $white;
 }
 
