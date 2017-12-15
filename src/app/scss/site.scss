@@ -2,7 +2,6 @@
 @import "../../alto-ui/scss/alto-ui";
 @import "_prism";
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
-
 $layout-border-color: $coolgrey-20;
 
 html,
@@ -118,9 +117,10 @@ body {
 .sidenav__group-title {
   line-height: 1em;
   padding: .5rem 2rem;
-  text-transform: uppercase;
   color: $coolgrey-60;
-  font-weight: $font-weight-semibold;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-large;
+  //font-family: $font-family-heading;
 }
 
 .sidenav__link {
@@ -228,6 +228,8 @@ body {
 
 .page-header__title {
   margin-bottom: 1rem;
+  font-family: $font-family-heading;
+  font-weight: $font-weight-regular;
 }
 
 .page-header__link,
@@ -272,6 +274,8 @@ body {
   > h5,
   > h6 {
     margin-top: 1rem;
+    font-family: $font-family-heading;
+    font-weight: $font-weight-regular;
   }
 
   > h2 {
@@ -304,6 +308,7 @@ body {
 .hero {
   text-align: left;
   padding: 20rem 0 1rem;
+  font-weight: $font-weight-light;
   @include MQ(Splus) {
     text-align: left;
   }
@@ -316,6 +321,7 @@ body {
 }
 
 .hero__title {
+  font-family: $font-family-alt;
   font-weight: $font-weight-regular;
   font-size: $font-size-xx-large;
   line-height: 1;
@@ -348,7 +354,6 @@ body {
 
 .hero__lead {
   font-size: $font-size-large;
-  font-weight: $font-weight-light;
   max-width: 24rem;
   line-height: $line-height-lead;
   color: $coolgrey-70;
