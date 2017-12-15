@@ -2,6 +2,8 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
+import centered from '@storybook/addon-centered';
+
 // import { text, boolean, select } from '@storybook/addon-knobs';
 
 import Checkbox from './CheckBox';
@@ -15,7 +17,7 @@ const Form = styled.form`width: 600px;`;
 
 Form.displayName = 'form';
 
-storiesOf('Form/Overview', module).addWithJSX('Static example', () => (
+storiesOf('Form/Overview', module).addDecorator(centered).addWithJSX('Static example', () => (
   <Form>
     <TextField id="firtsname" label="First name" placeholder="First name" />
     <TextField id="lastname" label="Last name" placeholder="Last name" />
@@ -54,6 +56,7 @@ storiesOf('Form/Overview', module).addWithJSX('Static example', () => (
 ));
 
 require('./CheckBox/story');
+require('./Label/story');
 require('./RadioButton/story');
 require('./Select/story');
 require('./TextArea/story');
