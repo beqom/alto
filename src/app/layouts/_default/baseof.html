@@ -21,8 +21,6 @@
 
     {{ block "header" . }}{{ partial "site/header.html" . }}{{ end }}
 
-    {{ partial "site/hero-home.html" . }}
-
     <div class="flex--row{{ if ne .Section "components" | and (ne .Section "patterns")  }} flex--col page--single{{end}}">
 
       {{ if eq .Section "components" | or (eq .Section "patterns")  }}
