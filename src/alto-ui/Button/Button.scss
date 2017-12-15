@@ -106,6 +106,7 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
   border-radius: $border-radius-default;
   text-transform: uppercase;
   text-decoration: none;
+  text-align: center;
   letter-spacing: .06em;
   cursor: pointer;
   transition: $duration-quick $timing-function all;
