@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { select } from '@storybook/addon-knobs';
+import { select, boolean } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 import withReadme from 'storybook-readme/with-readme';
 
@@ -22,6 +22,7 @@ storiesOf('Tabs', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <Tabs
+      panel={boolean('panel', false)}
       currentUrl={select('currentUrl', ['none'].concat(urls), '#one')}
       items={items}
     />
