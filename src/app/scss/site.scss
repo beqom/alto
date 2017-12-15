@@ -364,6 +364,7 @@ body {
 }
 
 .hero__actions {
+  margin: 1rem 0;
   .button {
     display: block;
     &:not(:last-child) {
@@ -378,6 +379,18 @@ body {
       margin-right: 1rem;
       margin-bottom: 0;
     }
+  }
+
+}
+
+.hero__link,
+.hero__link:visited {
+  color: $white;
+  box-shadow: 0 1px 0 0 $white;
+  &:hover {
+    color: $white;
+    text-decoration: none;
+    box-shadow: 0 0px 0 0 $white;
   }
 
 }
