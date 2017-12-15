@@ -18,6 +18,13 @@ module.exports = {
     "react/require-default-props": 0,
     "import/no-extraneous-dependencies": 2,
     "react/jsx-filename-extension": 0,
+    "jsx-a11y/label-has-for": [ 2, {
+      "components": [ "Label" ],
+      "required": {
+          "every": [ "id" ]
+      },
+      "allowChildren": false,
+  }],
     // TODO: activate this one when it is ready
     // waiting for this: https://github.com/airbnb/javascript/pull/1482
     "jsx-a11y/href-no-hash": 0,
