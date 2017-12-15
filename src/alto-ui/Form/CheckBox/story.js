@@ -2,12 +2,14 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import withReadme from 'storybook-readme/with-readme';
+import centered from '@storybook/addon-centered';
 
 import CheckBox from './CheckBox';
 import README from './README.md';
 
 storiesOf('Form/CheckBox', module)
 .addDecorator(withReadme(README))
+.addDecorator(centered)
 .addWithJSX('overview', () => (
   <div>
     <CheckBox id="unchecked" label="Unchecked" />
