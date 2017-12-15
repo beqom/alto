@@ -7,7 +7,7 @@
   <title>{{ block "title" . }}
     {{- with .Title }}{{ . }} | {{ end }}{{ .Site.Title -}}
   {{ end }}</title>
-    <link rel="shortcut icon" href="{{ "favicon.ico" | absURL }}" />
+  <link rel="shortcut icon" href="{{ "favicon.ico" | absURL }}" />
   {{ if .RSSLink }}
     <link href="{{ .RSSLink }}" title="{{ .Site.Title }}" type="application/rss+xml" rel="alternate">
   {{ end }}
