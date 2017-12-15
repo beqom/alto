@@ -16,12 +16,16 @@ const buttonProps = bemProps('button', [
 ]);
 
 const Button = props => (
-  <button {...buttonProps(props)} />
+  props.href
+  ? <a {...buttonProps(props)} href={props.href}>{props.children}</a>
+  : <button {...buttonProps(props)} />
 );
 
 Button.displayName = 'Button';
 
 Button.propTypes = {
+  children: PropTypes.any,
+  href: PropTypes.string,
   outline: PropTypes.bool,
   flat: PropTypes.bool,
   error: PropTypes.bool,

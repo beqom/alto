@@ -159,4 +159,13 @@ storiesOf('Button', module)
         </Button>
       </SimpleWrapper>
     );
-  });
+  })
+  .addWithJSX('link', () => {
+    const modifiers = getModifiers();
+
+    return (
+      <SimpleWrapper white={modifiers.white}>
+        <Button href={text('href', '#some-url')} {...modifiers}>{text('children', 'I am a <a /> tag!')}</Button>
+      </SimpleWrapper>
+    );
+  })
