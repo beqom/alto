@@ -1,0 +1,26 @@
+@import "../../scss/inc";
+
+.form-element {
+  margin-bottom: 20px;
+}
+
+.form-element__help-text {
+  font-size: $font-size-small;
+  text-align: left;
+  font-weight: $font-weight-semibold;
+  padding: 10px 0;
+  color: $coolgrey-50;
+}
+
+
+.form-element__help-text--success {
+  color: $green;
+}
+
+.form-element__help-text--error {
+  color: $red;
+}
+
+.form-element__help-text--disabled {
+  color: $coolgrey-20;
+}

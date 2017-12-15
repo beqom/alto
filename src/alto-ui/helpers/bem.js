@@ -36,6 +36,12 @@ export const bemClass = (block, modifiers, ...others) =>
     ...others
   );
 
+const toDashCase = s => s
+  .trim()
+  .replace(/[A-Z]/g, ' $&')
+  .replace(/( |_|-)+/g,'-')
+  .toLowerCase();
+
 export const bemProps = (block, modifiers, ...others) => (props, extraProps) => {
   const propsToExclude = modifiers.concat(extraProps);
   return Object.assign(
@@ -48,7 +54,7 @@ export const bemProps = (block, modifiers, ...others) => (props, extraProps) => 
     {
       className: classnames(
         block,
-        modifiers.filter(modifier => !!props[modifier]).map(modifier => `${block}--${modifier}`),
+        modifiers.filter(modifier => !!props[modifier]).map(modifier => `${block}--${toDashCase(modifier)}`),
         props.className,
         ...others
       ),

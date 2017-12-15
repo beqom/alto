@@ -1,56 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled, { css } from 'styled-components';
 
-import { getColor, fontSize } from '../../helpers/theme';
-
-const modifier = (...ms) => val => props =>
-  ms.reduce((acc, m) => acc && props[m], true) ? val : '';
-
-
-const FormElementWrapper = styled.div`
-  margin-bottom: 20px;
-`;
-
-const FormElementHelpText = styled.div`
-  ${fontSize('small')};
-  text-align: left;
-  font-weight: 600;
-  padding: 10px 0;
-  color: ${getColor('coolGrey.50')};
-
-  ${modifier('success')(css`
-    color: ${getColor('success')};
-  `)} ${modifier('error')(css`
-      color: ${getColor('error')};
-    `)} ${modifier('disabled')(css`
-      color: ${getColor('coolGrey.20')};
-    `)};
-`;
-
-const FormElementLabel = styled.label`
-  ${fontSize('small')};
-  font-weight: 700;
-  color: ${getColor('coolGrey.50')};
-  text-align: left;
-  padding-bottom: 10px;
-  display: block;
-`;
+import { bemClass } from '../../helpers/bem';
+import Label from '../Label';
+import './FormElement.scss';
 
 const FormElement = props => {
-  const { error, disabled, success, id, children } = props;
+  const { error, disabled, success, id, children, readOnly } = props;
   return (
-    <FormElementWrapper>
-      <FormElementLabel htmlFor={id} id={`${id}__label`} {...{ error, disabled, success }}>
+    <div className="form-element">
+      <Label htmlFor={id} id={`${id}__label`} readOnly={readOnly}>
         {props.label}
-      </FormElementLabel>
+      </Label>
       {children}
       {props.helpText && (
-        <FormElementHelpText id={`${id}__help-text`} {...{ error, disabled, success }}>
+        <div className={bemClass('form-element__help-text', { error, disabled, success })} id={`${id}__help-text`}>
           {props.helpText}
-        </FormElementHelpText>
+        </div>
       )}
-    </FormElementWrapper>
+    </div>
   );
 };
 
@@ -61,6 +29,7 @@ FormElement.propTypes = {
   error: PropTypes.bool,
   disabled: PropTypes.bool,
   success: PropTypes.bool,
+  readOnly: PropTypes.bool,
   children: PropTypes.element.isRequired,
 };
 
