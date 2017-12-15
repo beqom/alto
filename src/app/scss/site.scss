@@ -363,6 +363,25 @@ body {
 
 }
 
+.hero__actions {
+  .button {
+    display: block;
+    &:not(:last-child) {
+      margin-bottom: 1rem;
+    }
+    @include MQ(Splus) {
+      display: inline-block;
+    }
+  }
+  @include MQ(Splus) {
+    .button:not(:last-child) {
+      margin-right: 1rem;
+      margin-bottom: 0;
+    }
+  }
+
+}
+
 .hero__lead {
   font-size: $font-size-large;
   max-width: 24rem;
