@@ -21,6 +21,7 @@ class SideNav extends React.PureComponent {
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleToggleOpen = this.handleToggleOpen.bind(this);
+    this.handleCloseMenu = this.handleCloseMenu.bind(this);
   }
 
   handleToggle() {
@@ -48,6 +49,10 @@ class SideNav extends React.PureComponent {
     this.setState(({ open }) => ({ open: !open }));
   }
 
+  handleCloseMenu() {
+    this.setState(() => ({ open: false }));
+  }
+
   renderNavSubItems(items, open) {
     // if (this.state.collapsed) return [];
 
@@ -55,7 +60,8 @@ class SideNav extends React.PureComponent {
       <li key={item.title}>
         <a
           href={item.url}
-          className={bemClass('SideNav__route-link', {
+          onClick={this.handleCloseMenu}
+          className={bemClass('sidenav__route-link', {
             active: this.props.currentUrl.indexOf(item.url) === 0,
           })}
           tabIndex={open ? 0 : -1}
@@ -72,23 +78,23 @@ class SideNav extends React.PureComponent {
       const open = !this.state.collapsed && !!this.state.sectionsOpenState[item.title];
       const active = !!item.items.find(({ url }) => this.props.currentUrl.indexOf(url) === 0);
       return (
-        <li className="Sidebar__section" key={item.title}>
+        <li className="sidenav__section" key={item.title}>
           <button
-            className={bemClass('SideNav__section-button', { collapsed, active })}
+            className={bemClass('sidenav__section-button', { collapsed, active })}
             onClick={() => this.handleToggleSection(item.title)}
           >
-            <div className="SideNav__section-item">
+            <div className="sidenav__section-item">
               {item.icon && (
-                <div className="SideNav__section-item-icon">
+                <div className="sidenav__section-item-icon">
                   <item.icon outline />
                 </div>
               )}
-              <div className="SideNav__section-item-title">{item.title}</div>
+              <div className="sidenav__section-item-title">{item.title}</div>
               <div
                 className={bemClass(
-                  'SideNav__icon-container',
+                  'sidenav__icon-container',
                   { reverse: open },
-                  'SideNav__section-item-chevron'
+                  'sidenav__section-item-chevron'
                 )}
               >
                 <ChevronDownIcon />
@@ -96,7 +102,7 @@ class SideNav extends React.PureComponent {
             </div>
           </button>
           <ul
-            className="SideNav__sub-list"
+            className="sidenav__sub-list"
             style={{ height: `${open ? item.items.length * 2.5 + 1 : 0}rem` }}
             aria-hidden={!open}
           >
