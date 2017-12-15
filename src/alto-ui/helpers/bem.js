@@ -30,11 +30,30 @@ const bem = (ComponentToRender, block, modifiers = [], extraProps = []) => {
 export const bemClass = (block, modifiers, ...others) =>
   classnames(
     block,
-    Object.entries(modifiers).reduce(
-      (acc, [modifier, value]) => Object.assign({}, acc, { [`${block}--${modifier}`]: value }),
-      {}
-    ),
+    Object.keys(modifiers)
+      .filter(modifier => !!modifiers[modifier])
+      .map(modifier => `${block}--${modifier}`),
     ...others
   );
+
+export const bemProps = (block, modifiers, ...others) => (props, extraProps) => {
+  const propsToExclude = modifiers.concat(extraProps);
+  return Object.assign(
+    {},
+    Object.entries(props).reduce(
+      (acc, [prop, value]) =>
+        propsToExclude.includes(prop) ? acc : Object.assign({}, acc, { [prop]: value }),
+      {}
+    ),
+    {
+      className: classnames(
+        block,
+        modifiers.filter(modifier => !!props[modifier]).map(modifier => `${block}--${modifier}`),
+        props.className,
+        ...others
+      ),
+    }
+  );
+};
 
 export default bem;

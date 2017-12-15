@@ -1,0 +1,75 @@
+@import "../../scss/inc";
+
+.textfield {
+  font: inherit;
+  background: transparent;
+  outline: 0;
+
+  font-size: $font-size-medium;
+  background-color: $white;
+  color: $color-text-default;
+  border-radius: $border-radius-default;
+  border: 1px solid $coolgrey-20;
+  font-weight: 400;
+  line-height: 2.375;
+  height: 2.375em;
+  padding: 0 10px;
+  display: block;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  transition: all $transition;
+
+  &::placeholder {
+    color: $coolgrey-20;
+  }
+
+  &:hover {
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    border-color: $blue;
+    box-shadow: 0 0 0 3px $blue-20;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: $coolgrey-40;
+    background: $coolgrey-10;
+    border-color: $coolgrey-20;
+    box-shadow: none;
+  }
+}
+
+.textfield--success {
+  border-color: $green;
+  &:focus {
+    border-color: $green;
+    box-shadow: 0 0 0 3px $green-20;
+  }
+}
+
+.textfield--error {
+  border-color: $red;
+  &:focus {
+    border-color: $red;
+    box-shadow: 0 0 0 3px $red-20;
+  }
+}
+
+.textfield--large {
+  font-size: $font-size-large;
+  padding: 0 20px;
+  line-height: 2.67;
+  height: 2.67em;
+}
+
+.textfield--small {
+  font-size: $font-size-small;
+  line-height: 2;
+  height: 2em;
+}
+
+.textfield--area {
+  height: 8em;
+}
