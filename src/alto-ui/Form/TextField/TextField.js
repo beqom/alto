@@ -4,13 +4,17 @@ import PropTypes from 'prop-types';
 import { bemProps } from '../../helpers/bem';
 import FormElement from '../FormElement';
 
-import './Textfield.scss';
+import './TextField.scss';
 
 const texfieldProps = bemProps('textfield', ['large', 'small', 'success', 'error', 'area']);
 
 const TextField = props => (
   <FormElement {...props}>
-    {props.area ? <textarea {...texfieldProps(props, 'helpText', 'type')} type={null} /> : <input {...texfieldProps(props, 'helpText')} />}
+    {props.area ? (
+      <textarea {...texfieldProps(props, 'helpText', 'type')} type={null} />
+    ) : (
+      <input {...texfieldProps(props, 'helpText')} />
+    )}
   </FormElement>
 );
 

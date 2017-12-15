@@ -39,6 +39,14 @@
     border-color: $coolgrey-20;
     box-shadow: none;
   }
+
+  &[readonly] {
+    border: 0;
+    padding-left: 0;
+    padding-right: 0;
+    box-shadow: none;
+    background: transparent;
+  }
 }
 
 .textfield--success {
