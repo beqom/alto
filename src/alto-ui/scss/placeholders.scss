@@ -12,3 +12,24 @@
   border: 0;
   outline: 0;
 }
+
+%link {
+  color: $color-text-link;
+  text-decoration: none;
+  transition: $duration-quick $timing-function color;
+  &:hover {
+    color: $color-text-link-hover;
+    text-decoration: underline;
+  }
+  &:visited {
+    color: $blue-60;
+    &:hover {
+      color: $blue-70;
+    }
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $blue-30;
+    border-radius: $border-radius-default;
+  }
+}
