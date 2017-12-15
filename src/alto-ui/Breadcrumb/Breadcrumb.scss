@@ -1,0 +1,23 @@
+@import "../scss/inc";
+
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.breadcrumb__item {
+  display: flex;
+  align-items: center;
+}
+
+
+.breadcrumb__link {
+  @extend %link;
+  padding: .5rem;
+}
+
+.breadcrumb__chevron {
+  margin: 0 .2rem;
+}
