@@ -102,7 +102,6 @@ body {
 .main-container--home {
   height: auto;
   min-height: 100%;
-  background: url("../images/Hero-Mock-Up@2x.jpg") top center / cover no-repeat $white;
 }
 
 .sidenav--page {
@@ -307,17 +306,11 @@ body {
 
 .hero {
   text-align: left;
-  padding: 20rem 0 1rem;
+  padding: 5rem 0 1rem;
   font-weight: $font-weight-light;
-  @include MQ(Splus) {
-    text-align: left;
-  }
-  @include MQ(Mplus) {
-    padding-top: 10vw;
-  }
-  @include MQ(Lplus) {
-    padding-top: 6.25rem;
-  }
+
+  background-image: linear-gradient(-1deg, #FDC9C7 0%, #C2A2C0 31%, #8E80BA 63%, #6D6AB6 87%, #6162B5 100%);
+
 }
 
 .hero__title {
@@ -327,10 +320,6 @@ body {
   line-height: 1;
   margin-bottom: 2rem;
   color: $coolgrey-70;
-
-  @include MQ(Mplus) {
-    font-size: $font-size-xxx-large;
-  }
 }
 
 .hero__actions {
