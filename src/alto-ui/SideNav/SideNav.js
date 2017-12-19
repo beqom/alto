@@ -5,6 +5,7 @@ import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import VisuallyHidden from '../VisuallyHidden';
 import Button from '../Button';
+import Link from '../Link';
 import { bemClass } from '../helpers/bem';
 
 import './SideNav.scss';
@@ -58,7 +59,7 @@ class SideNav extends React.PureComponent {
 
     return items.map(item => (
       <li key={item.title}>
-        <a
+        <Link
           href={item.url}
           onClick={this.handleCloseMenu}
           className={bemClass('sidenav__route-link', {
@@ -67,7 +68,7 @@ class SideNav extends React.PureComponent {
           tabIndex={open ? 0 : -1}
         >
           {item.title}
-        </a>
+        </Link>
       </li>
     ));
   }

@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Link from '../Link';
 import { bemProps } from '../helpers/bem';
 import './Button.scss';
 
@@ -17,7 +19,7 @@ const buttonProps = bemProps('button', [
 
 const Button = props => (
   props.href
-  ? <a {...buttonProps(props)} href={props.href}>{props.children}</a>
+  ? <Link {...buttonProps(props)} href={props.href}>{props.children}</Link>
   : <button {...buttonProps(props)} />
 );
 
