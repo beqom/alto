@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import Link from '../Link';
 import { bemClass } from '../helpers/bem';
 
 import './Tabs.scss';
@@ -8,9 +10,9 @@ const Tabs = ({ items, children, className, currentUrl, panel }) => (
   <ul className={bemClass('tabs', { panel }, className)} role="tablist">
     {items.map(item => (
       <li key={item.url} className="tabs__tab">
-        <a className={bemClass('tabs__link', { active: item.url === currentUrl, panel })} href={item.url}>
+        <Link className={bemClass('tabs__link', { active: item.url === currentUrl, panel })} href={item.url}>
           {children(item)}
-        </a>
+        </Link>
       </li>
     ))}
   </ul>

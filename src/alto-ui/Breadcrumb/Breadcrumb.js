@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
+import Link from '../Link';
 import ChevronLeft from '../Icons/ChevronLeft';
 import ChevronRight from '../Icons/ChevronRight';
 import './Breadcrumb.scss';
@@ -12,9 +13,9 @@ const renderItems = items => {
     return (
       <li className="breadcrumb__item">
         <ChevronLeft className="breadcrumb__chevron" />
-        <a className="breadcrumb__link" href={url}>
+        <Link className="breadcrumb__link" href={url}>
           Back to {title}
-        </a>
+        </Link>
       </li>
     );
   }
