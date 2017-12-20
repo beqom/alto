@@ -54,7 +54,7 @@ Link.contextTypes = {
       replace: PropTypes.func.isRequired,
       createHref: PropTypes.func.isRequired,
     }).isRequired,
-  }).isRequired,
+  }),
 };
 
 export default Link;
