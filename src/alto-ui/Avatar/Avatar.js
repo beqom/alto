@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
@@ -28,7 +27,10 @@ Avatar.defaultProps = {
 
 Avatar.propTypes = {
   className: PropTypes.string,
-  children: PropTypes.any,
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
+  large: PropTypes.bool,
+  small: PropTypes.bool,
 };
 
 export default Avatar;
