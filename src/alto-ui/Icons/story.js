@@ -35,6 +35,7 @@ import Remove from './Remove';
 import Search from './Search';
 import Times from './Times';
 import Trash from './Trash';
+import User from './User';
 import ViewCards from './ViewCards';
 import ViewList from './ViewList';
 
@@ -70,6 +71,7 @@ const icons = Object.entries({
   Search,
   Times,
   Trash,
+  User,
   ViewCards,
   ViewList,
 }).map(([name, Icon]) => ({ name, Icon }));
