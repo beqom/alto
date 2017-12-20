@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, object, array, number } from '@storybook/addon-knobs';
+import { text, object, array } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
 import List from './List';
