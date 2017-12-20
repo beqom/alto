@@ -1,0 +1,49 @@
+@import "../scss/inc";
+
+.avatar {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  overflow: hidden;
+  font-size: 3.5rem;
+}
+
+.avatar--small {
+  font-size: 2rem;
+}
+
+.avatar--large {
+  font-size: 5rem;
+}
+
+.avatar__image {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.avatar__placeholder {
+  background-color: $coolgrey-20;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.avatar__placeholder-icon-container {
+  position: absolute;
+  top: .1em;
+  bottom: .1em;
+  left: .1em;
+  right: .1em;
+  border-radius: 50%;
+  overflow: hidden;
+  // oveflow issue on chrome: https://stackoverflow.com/a/25206004
+  z-index: 1;
+}
+
+.avatar__placeholder-icon {
+  position: absolute;
+  bottom: -.2em;
+  left: 50%;
+  transform: translateX(-50%);
+  color: $coolgrey-40;
+}

@@ -57,6 +57,7 @@ addDecorator(story => (
 ));
 
 function loadStories() {
+  require('../src/alto-ui/Avatar/story');
   require('../src/alto-ui/Breadcrumb/story');
   require('../src/alto-ui/Button/story');
   require('../src/alto-ui/Icons/story');
