@@ -1,24 +1,28 @@
-// Lists
+@import "../scss/inc";
 
-
-.list--interactive {
-  border-radius: $border-radius-default;
+.list {
   background: $white;
-  display: flex;
-  flex-direction: column;
   list-style: none;
+  overflow: auto;
+}
+
+.list__item {
   border: 1px solid $coolgrey-20;
-  li:not(:last-child) {
-    border-bottom: 1px solid $coolgrey-20;
+  border-top: 0;
+  overflow: hidden;
+
+  &:first-child {
+    border-top: 1px solid $coolgrey-20;
+    border-radius: $border-radius-default $border-radius-default 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 $border-radius-default $border-radius-default;
   }
 }
 
-.list-item--active a,
-.list-item--active a:hover {
-  background: $blue-20;
-}
 
-.list--interactive__link {
+.list__item-content {
   padding: .75rem 1.25rem;
   display: flex;
   flex-direction: row;
@@ -26,10 +30,30 @@
   align-items: center;
   font-weight: $font-weight-semibold;
   color: $color-text-default;
+}
+
+.list__item-content--link {
   transition: $duration-quick $timing-function background;
+
   &:hover {
     background: $blue-10;
     color: $color-text-default;
     text-decoration: none;
+  }
+
+  &:focus {
+    box-shadow: inset 0 0 0 3px $blue-20;
+  }
+}
+
+.list__item-content--active {
+  &,
+  &:hover {
+    background: $blue;
+    color: $white;
+    * {
+      color: $white;
+      border-color: $white;
+    }
   }
 }
