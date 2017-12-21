@@ -120,6 +120,10 @@
   @include on-narrow {
     display: none;
   }
+
+  .sidenav--collapsed & {
+    overflow: visible;
+  }
 }
 
 .sidenav__sections-list-narrow-container {
@@ -154,7 +158,13 @@
 }
 
 .sidenav__section {
-  position: relative;
+  @include on-medium-and-wide {
+    position: relative;
+    width: 200px;
+    &--collapsed {
+      width: 3.125rem;
+    }
+  }
 }
 
 
@@ -230,6 +240,24 @@
   font-size: $font-size-medium;
   overflow: hidden;
   transition: height $transition;
+
+  &--collapsed {
+    @include on-medium-and-wide {
+      // overide dynamic js inline
+      height: initial !important;
+      background-color: $coolgrey-90;
+      transition: transform $transition;
+      position: absolute;
+      z-index: $z-index-modal;
+      left: 100%;
+      top: 0;
+      display: none;
+
+      &.sidenav__sub-list--open {
+        display: block;
+      }
+    }
+  }
 }
 
 .sidenav__route-link {
@@ -237,6 +265,12 @@
   height: 2.5rem;
   padding-left: 3.25rem;
   font-weight: 600;
+
+  .sidenav__sub-list--collapsed.sidenav__sub-list--open  & {
+    @include on-medium-and-wide {
+      padding-left: 1rem;
+    }
+  }
 }
 
 .sidenav__content {

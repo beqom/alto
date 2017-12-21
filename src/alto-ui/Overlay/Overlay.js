@@ -10,9 +10,9 @@ class Overlay extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.open !== this.props.open) {
-      if(nextProps.open) {
+  componentDidUpdate(prevProps) {
+    if(prevProps.open !== this.props.open) {
+      if(this.props.open) {
         this.open();
       } else {
         this.close();

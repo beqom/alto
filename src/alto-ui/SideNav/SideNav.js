@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Overlay from '../Overlay';
 import ArrowLeftIcon from '../Icons/ArrowLeft';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import VisuallyHidden from '../VisuallyHidden';
@@ -43,18 +44,19 @@ class SideNav extends React.PureComponent {
     this.setState(() => ({ open: false }));
   }
 
-  renderNavSubItems(items, open) {
+  renderNavSubItems(items, open, parentId) {
     // if (this.state.collapsed) return [];
 
     return items.map(item => (
       <li key={item.title}>
         <Link
+          id={`sidenav__${parentId}__${item.id}`}
           href={item.url}
           onClick={this.handleCloseMenu}
           className={bemClass('sidenav__route-link', {
             active: this.props.currentUrl.indexOf(item.url) === 0,
           })}
-          tabIndex={open ? 0 : -1}
+
         >
           {item.title}
         </Link>
@@ -65,13 +67,24 @@ class SideNav extends React.PureComponent {
   renderNavItems() {
     const { collapsed } = this.state;
     return this.props.items.map(item => {
-      const open = !this.state.collapsed && this.state.sectionOpen === item.title;
+      const open = this.state.sectionOpen === item.title;
       const active = !!item.items.find(({ url }) => this.props.currentUrl.indexOf(url) === 0);
+
+      const subList = (
+        <ul
+          className={bemClass('sidenav__sub-list', { collapsed, open })}
+          style={{ height: `${open ? item.items.length * 2.5 + 1 : 0}rem` }}
+          aria-hidden={!open}
+        >
+          {this.renderNavSubItems(item.items, open, item.id)}
+        </ul>
+      );
       return (
-        <li className="sidenav__section" key={item.title}>
+        <li className={bemClass('sidenav__section', { collapsed })} key={item.title}>
           <button
             className={bemClass('sidenav__section-button', { collapsed, active })}
             onClick={() => this.handleToggleSection(item.title)}
+            id={`sidenav__${item.id}`}
           >
             <div className="sidenav__section-item">
               {item.icon && (
@@ -91,13 +104,18 @@ class SideNav extends React.PureComponent {
               </div>
             </div>
           </button>
-          <ul
-            className="sidenav__sub-list"
-            style={{ height: `${open ? item.items.length * 2.5 + 1 : 0}rem` }}
-            aria-hidden={!open}
-          >
-            {this.renderNavSubItems(item.items, open)}
-          </ul>
+          {collapsed ? (
+            <Overlay
+              open={open}
+              onClose={() => this.handleToggleSection(item.title)}
+              openFocusTargetId={`sidenav__${item.id}__${item.items[0].id}`}
+              closeFocusTargetId={`sidenav__${item.id}`}
+            >
+              {subList}
+            </Overlay>
+          ) : (
+            subList
+          )}
         </li>
       );
     });
@@ -126,7 +144,10 @@ class SideNav extends React.PureComponent {
           </a>
         </header>
         <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
-        <div className={bemClass('sidenav__sections-list-narrow-container', { open })} aria-hidden={!open}>
+        <div
+          className={bemClass('sidenav__sections-list-narrow-container', { open })}
+          aria-hidden={!open}
+        >
           <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
             {this.renderNavItems()}
           </ul>
@@ -161,10 +182,7 @@ SideNav.displayName = 'SideNav';
 SideNav.defaultProps = {};
 
 SideNav.propTypes = {
-  children: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.any,
-  ]),
+  children: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
   logo: PropTypes.any,
   logoSmall: PropTypes.any,
   logoUrl: PropTypes.string,
@@ -175,12 +193,20 @@ SideNav.propTypes = {
   closeMenuButtonLabel: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
+      id: PropTypes.oneOfType([
+        PropTypes.string.isRequired,
+        PropTypes.number.isRequired,
+      ]).isRequired,
       title: PropTypes.string.isRequired,
       icon: PropTypes.func.isRequired,
       items: PropTypes.arrayOf(
         PropTypes.shape({
           title: PropTypes.string,
           url: PropTypes.string,
+          id: PropTypes.oneOfType([
+            PropTypes.string.isRequired,
+            PropTypes.number.isRequired,
+          ]).isRequired,
         })
       ).isRequired,
     })
