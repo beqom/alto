@@ -17,32 +17,32 @@ import Avatar from '../Avatar';
 
 const items = [
   {
-    title: 'Numbers',
+    id: 1, title: 'Numbers',
     icon: LightbulbIcon,
     items: [
-      { title: 'One', url: '#one' },
-      { title: 'Two', url: '#two' },
-      { title: 'Three', url: '#three' },
-      { title: 'Foor', url: '#foor' },
-      { title: 'Five', url: '#five' },
+      { id: 12, title: 'One', url: '#one' },
+      { id: 13, title: 'Two', url: '#two' },
+      { id: 14, title: 'Three', url: '#three' },
+      { id: 15, title: 'Foor', url: '#foor' },
+      { id: 16, title: 'Five', url: '#five' },
     ],
   },
   {
-    title: 'Fruits',
+    id: 2, title: 'Fruits',
     icon: BoltIcon,
     items: [
-      { title: 'Apple', url: '#apple/foo' },
-      { title: 'Banana', url: '#banana' },
-      { title: 'Orange', url: '#orange' },
+      { id: 21, title: 'Apple', url: '#apple/foo' },
+      { id: 22, title: 'Banana', url: '#banana' },
+      { id: 23, title: 'Orange', url: '#orange' },
     ],
   },
   {
-    title: 'FBB',
+    id: 3, title: 'FBB',
     icon: ObjectsIcon,
     items: [
-      { title: 'Foo', url: '#foo' },
-      { title: 'Bar', url: '#bar' },
-      { title: 'Baz', url: '#baz' },
+      { id: 31, title: 'Foo', url: '#foo' },
+      { id: 32, title: 'Bar', url: '#bar' },
+      { id: 33, title: 'Baz', url: '#baz' },
     ],
   },
 ];
