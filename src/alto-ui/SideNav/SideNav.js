@@ -17,7 +17,7 @@ class SideNav extends React.PureComponent {
     this.state = {
       collapsed: false,
       open: false,
-      sectionsOpenState: {},
+      sectionOpen: null,
     };
 
     this.handleToggle = this.handleToggle.bind(this);
@@ -30,20 +30,9 @@ class SideNav extends React.PureComponent {
   }
 
   handleToggleSection(title) {
-    if (this.state.collapsed) {
-      this.setState(() => ({
-        collapsed: false,
-        sectionsOpenState: {
-          [title]: true,
-        },
-      }));
-    } else {
-      this.setState(({ sectionsOpenState }) => ({
-        sectionsOpenState: Object.assign({}, sectionsOpenState, {
-          [title]: !sectionsOpenState[title],
-        }),
-      }));
-    }
+    this.setState(({ sectionOpen }) => ({
+      sectionOpen: sectionOpen === title ? null : title,
+    }));
   }
 
   handleToggleOpen() {
@@ -76,7 +65,7 @@ class SideNav extends React.PureComponent {
   renderNavItems() {
     const { collapsed } = this.state;
     return this.props.items.map(item => {
-      const open = !this.state.collapsed && !!this.state.sectionsOpenState[item.title];
+      const open = !this.state.collapsed && this.state.sectionOpen === item.title;
       const active = !!item.items.find(({ url }) => this.props.currentUrl.indexOf(url) === 0);
       return (
         <li className="sidenav__section" key={item.title}>
