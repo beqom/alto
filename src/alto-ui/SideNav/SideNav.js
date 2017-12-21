@@ -124,6 +124,7 @@ class SideNav extends React.PureComponent {
       logo,
       openMenuButtonLabel,
       closeMenuButtonLabel,
+      children,
     } = this.props;
     return (
       <aside className={bemClass('sidenav', { collapsed })}>
@@ -134,14 +135,21 @@ class SideNav extends React.PureComponent {
           <a className="sidenav__logo sidenav__logo--narrow" href={logoUrl}>
             {logo}
           </a>
-          <Button outline white onClick={this.handleToggleOpen} className="sidenav__menu-button">
-            {open ? closeMenuButtonLabel : openMenuButtonLabel}
-          </Button>
         </header>
         <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
-        <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
-          {this.renderNavItems()}
-        </ul>
+        <div className={bemClass('sidenav__sections-list-narrow-container', { open })} aria-hidden={!open}>
+          <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
+            {this.renderNavItems()}
+          </ul>
+        </div>
+        {!!children && (
+          <div className="sidenav__content">
+            {typeof children === 'function' ? children({ collapsed, open }) : children}
+          </div>
+        )}
+        <Button outline white onClick={this.handleToggleOpen} className="sidenav__menu-button">
+          {open ? closeMenuButtonLabel : openMenuButtonLabel}
+        </Button>
         <button
           className={bemClass(
             'sidenav__icon-container',
@@ -164,6 +172,10 @@ SideNav.displayName = 'SideNav';
 SideNav.defaultProps = {};
 
 SideNav.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.any,
+  ]),
   logo: PropTypes.any,
   logoSmall: PropTypes.any,
   logoUrl: PropTypes.string,

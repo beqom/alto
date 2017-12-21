@@ -2,14 +2,21 @@
 
 
 .sidenav {
+  box-shadow: inset 0 5px 0 $red;
   background-color: $coolgrey-90;
   display: flex;
-  flex-direction: column;
   transition: width $transition;
+  position: relative;
 
   @include on-medium-and-wide {
+    flex-direction: column;
     width: 200px;
     height: 100%;
+  }
+
+  @include on-narrow {
+    align-items: center;
+    padding: 0 20px;
   }
 }
 
@@ -21,15 +28,14 @@
 
 .sidenav__header {
   display: flex;
-  align-items: center;
-  box-shadow: inset 0 5px 0 $red;
+  // align-items: center;
   border-bottom: 1px solid $coolgrey-80;
 
   @include on-narrow {
-    padding: 0 20px;
-    background-color: $coolgrey-90;
-    position: relative;
-    z-index: 1001;
+
+    // background-color: $coolgrey-90;
+    // position: relative;
+    // z-index: 1001;
   }
 }
 
@@ -39,7 +45,7 @@
   display: block;
   text-align: center;
   line-height: 3.125;
-  height: 80px;
+  height: $header-height;
   overflow: hidden;
   color: white;
   transition: color $transition;
@@ -116,28 +122,35 @@
   }
 }
 
-.sidenav__sections-list-narrow {
-  list-style: none;
-  overflow: auto;
-  color: white;
+.sidenav__sections-list-narrow-container {
+  display: none;
   position: fixed;
-  background-color: $coolgrey-90;
-  top: 80px;
-  bottom: 0;
+  top: $header-height;
+  height: 0;
   left: 0;
   right: 0;
-  transform: translateY(-100%);
-  transition: transform $transition;
-  display: none;
+  transition: height $transition;
   z-index: 1000;
+  overflow: hidden;
 
   @include on-narrow {
     display: block;
   }
 
   &--open {
-    transform: translateY(0);
+    height: calc(100vh - #{$header-height});
   }
+}
+
+.sidenav__sections-list-narrow {
+  list-style: none;
+  position: absolute;
+  height: calc(100vh - #{$header-height});
+  width: 100%;
+  bottom: 0;
+  overflow: auto;
+  color: white;
+  background-color: $coolgrey-90;
 }
 
 .sidenav__section {
@@ -149,6 +162,7 @@
 .sidenav__toggle-button {
   @extend .sidenav__button;
   font-size: $font-size-x-large;
+  height: $footer-height;
 
   @include on-narrow {
     display: none;
@@ -223,4 +237,91 @@
   height: 2.5rem;
   padding-left: 3.25rem;
   font-weight: 600;
+}
+
+.sidenav__content {
+  @include on-medium-and-wide {
+    border-bottom: 1px solid $coolgrey-80;
+  }
+
+  @include on-narrow{
+    flex: 1;
+    padding: 0 20px;
+  }
+}
+
+
+
+
+.sidenav__panel {
+  position: absolute;
+  background: $white;
+  transition: all $duration-prompt $timing-function;
+  box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+  overflow: hidden;
+  z-index: $z-index-modal;
+
+  @include on-medium-and-wide {
+    top: 0;
+    left: 100%;
+    bottom: 0;
+    width: 0;
+  }
+
+  @include on-narrow{
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 100%;
+    position: fixed;
+  }
+
+  &--open {
+    @include on-medium-and-wide {
+      box-shadow: 1px 0 0 $coolgrey-20;
+      width: 350px;
+    }
+
+    @include on-narrow{
+      box-shadow: 0 1px 0 $coolgrey-20;
+      bottom: 0;
+    }
+  }
+}
+
+.sidenav__panel-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  @include on-medium-and-wide {
+    width: 350px;
+  }
+
+  @include on-narrow{
+    left: 0;
+    bottom: 0;
+  }
+}
+
+.sidenav__panel-header {
+  border-bottom: 1px solid $coolgrey-20;
+  margin: 0 20px;
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  height: $header-height;
+}
+
+.sidenav__panel-title {
+  font-size: $font-size-x-large;
+  flex: 1;
+}
+
+.sidenav__panel-body {
+  overflow: auto;
+  flex: 1;
+  padding: 20px;
 }
