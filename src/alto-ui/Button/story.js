@@ -143,18 +143,18 @@ storiesOf('Button', module)
       </SimpleWrapper>
     );
   })
-  .addWithJSX('with icons', () => {
+  .addWithJSX('with icons (nowrap)', () => {
     const modifiers = getModifiers();
 
     return (
       <SimpleWrapper white={modifiers.white}>
-        <Button {...modifiers}>
+        <Button {...modifiers} nowrap>
           <BarsIcon left />Menu
         </Button>
-        <Button {...modifiers}>
+        <Button {...modifiers} nowrap>
           Next<ArrowRightIcon right />
         </Button>
-        <Button {...modifiers}>
+        <Button {...modifiers} nowrap>
           <ObjectsIcon left />Select Objects<ChevronDownIcon right size="12px" />
         </Button>
       </SimpleWrapper>

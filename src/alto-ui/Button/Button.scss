@@ -139,6 +139,24 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
   padding: .9375rem 1.8125rem;
 }
 
+.button--nowrap {
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 2.25rem;
+  height: 2.25rem;
+  white-space: nowrap;
+
+  &.button--small {
+    line-height: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.button--large {
+    line-height: 3rem;
+    height: 3rem;
+  }
+}
+
 .button--block {
   display: block;
   width: 100%;
