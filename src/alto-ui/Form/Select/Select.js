@@ -104,11 +104,11 @@ Select.defaultProps = {
 
 Select.propTypes = {
   children: PropTypes.any,
-  options: PropTypes.arrayOf(PropTypes.oneOf([
+  options: PropTypes.arrayOf(PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape({
       title: PropTypes.string,
-      value: PropTypes.oneOf([
+      value: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.array,
       ]),
