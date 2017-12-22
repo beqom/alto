@@ -7,8 +7,8 @@ import Image from '../Image';
 
 import './Avatar.scss';
 
-const Avatar = ({ className, src, alt, large, small }) => (
-  <div className={bemClass('avatar', { large, small }, className)}>
+const Avatar = ({ className, src, alt, large, small, big }) => (
+  <div className={bemClass('avatar', { big, large, small }, className)}>
     <Image className="avatar__image" {...{src, alt}}>
       <div className="avatar__placeholder">
         <div className="avatar__placeholder-icon-container">
@@ -29,6 +29,7 @@ Avatar.propTypes = {
   className: PropTypes.string,
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
+  big: PropTypes.bool,
   large: PropTypes.bool,
   small: PropTypes.bool,
 };

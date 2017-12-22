@@ -22,6 +22,7 @@ storiesOf('Avatar', module)
     const src = boolean('image 404', false) ? 'foo' : 'http://i.pravatar.cc/150';
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Avatar src={src} big /><br />
         <Avatar src={src} large /><br />
         <Avatar src={src} /><br />
         <Avatar src={src} small />
