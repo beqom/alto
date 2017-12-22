@@ -23,7 +23,7 @@ class SideNav extends React.PureComponent {
 
     this.handleToggle = this.handleToggle.bind(this);
     this.handleToggleOpen = this.handleToggleOpen.bind(this);
-    this.handleCloseMenu = this.handleCloseMenu.bind(this);
+    this.handleClickLink = this.handleClickLink.bind(this);
   }
 
   handleToggle() {
@@ -40,8 +40,11 @@ class SideNav extends React.PureComponent {
     this.setState(({ open }) => ({ open: !open }));
   }
 
-  handleCloseMenu() {
-    this.setState(() => ({ open: false }));
+  handleClickLink() {
+    this.setState(({ collapsed, sectionOpen }) => ({
+      open: false,
+      sectionOpen: collapsed ? null : sectionOpen,
+    }));
   }
 
   renderNavSubItems(items, open, parentId) {
@@ -52,11 +55,11 @@ class SideNav extends React.PureComponent {
         <Link
           id={`sidenav__${parentId}__${item.id}`}
           href={item.url}
-          onClick={this.handleCloseMenu}
+          onClick={this.handleClickLink}
           className={bemClass('sidenav__route-link', {
             active: this.props.currentUrl.indexOf(item.url) === 0,
           })}
-
+          tabIndex={open ? 0 : -1}
         >
           {item.title}
         </Link>
@@ -193,20 +196,16 @@ SideNav.propTypes = {
   closeMenuButtonLabel: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.oneOfType([
-        PropTypes.string.isRequired,
-        PropTypes.number.isRequired,
-      ]).isRequired,
+      id: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired])
+        .isRequired,
       title: PropTypes.string.isRequired,
       icon: PropTypes.func.isRequired,
       items: PropTypes.arrayOf(
         PropTypes.shape({
           title: PropTypes.string,
           url: PropTypes.string,
-          id: PropTypes.oneOfType([
-            PropTypes.string.isRequired,
-            PropTypes.number.isRequired,
-          ]).isRequired,
+          id: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired])
+            .isRequired,
         })
       ).isRequired,
     })

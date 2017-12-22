@@ -329,6 +329,7 @@
   position: absolute;
   top: 0;
   right: 0;
+  bottom: 0;
 
   @include on-medium-and-wide {
     width: 350px;
@@ -336,7 +337,6 @@
 
   @include on-narrow{
     left: 0;
-    bottom: 0;
   }
 }
 
@@ -357,5 +357,4 @@
 .sidenav__panel-body {
   overflow: auto;
   flex: 1;
-  padding: 20px;
 }
