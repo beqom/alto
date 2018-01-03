@@ -21,7 +21,7 @@
 
     {{ block "header" . }}{{ partial "site/header.html" . }}{{ end }}
 
-    <div class="flex--row{{ if ne .Section "components" | and (ne .Section "patterns")  }} flex--col page--single{{end}}">
+    <div class="flex--col-to-row{{ if ne .Section "components" | and (ne .Section "patterns")  }} flex--col page--single{{end}}">
 
       {{ if eq .Section "components" | or (eq .Section "patterns")  }}
         {{ block "sidenav" . }}{{ partial "site/sidenav.html" . }}{{ end }}

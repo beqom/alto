@@ -1,0 +1,40 @@
+@import "../scss/_inc";
+
+.button-group {
+  display: flex;
+  flex-direction: row;
+  > .button {
+    border-radius: 0;
+    background: transparent;
+    color: $blue-60;
+    border-color: $blue-60;
+    &:hover {
+      background-color: $blue-20;
+      color: $blue-80;
+    }
+    &.button--active {
+      background: $blue-60;
+      color: $white;
+      cursor: default;
+    }
+    &:first-child {
+      border-radius: $border-radius-default 0 0 $border-radius-default;
+    }
+    &:last-child {
+      border-radius: 0 $border-radius-default $border-radius-default 0;
+    }
+    &:not(:last-child) {
+      border-right: 0;
+    }
+    &:disabled,
+    &:disabled:hover {
+      color: $coolgrey-30;
+      background: transparent;
+      border-color: $coolgrey-30;
+      border-left-color: $blue-60;
+      + :disabled {
+        border-left-color: $coolgrey-30;
+      }
+    }
+  }
+}

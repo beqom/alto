@@ -1,6 +1,9 @@
-<header class="navbar {{ if eq .Title "Home" }} navbar--home{{end}}" role="banner">
+<header id="navbar" class="navbar {{ if eq .Title "Home" }} navbar--home{{end}}" role="banner">
+  <button class="navlinks-toggle button button--flat button--white" data-toggle="pagenav">Menu</button>
+
   <a class="navbar__brand" href="{{ .Site.BaseURL }}">{{ partial "svgs/alto.html" . }}</a>
 
+  <button class="navlinks-toggle button button--flat button--white" data-toggle="navlinks">Menu</button>
   <ul class="navbar__links">
     {{- $currentPage := . -}}
     {{ range .Site.Menus.main -}}
