@@ -60,6 +60,7 @@
     "github-markdown-css": "^2.9.0",
     "hugo-cli": "^0.5.4",
     "jest-cli": "^21.2.1",
+    "jquery": "^3.2.1",
     "node-sass": "^4.5.3",
     "prop-types": "^15.6.0",
     "raw-loader": "^0.5.1",

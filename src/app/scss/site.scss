@@ -11,6 +11,7 @@ body {
   //background-image: url(//basehold.it/i/16); // 24px baseline
 }
 
+
 .navbar {
   width: 100%;
   background: $blue-90;
@@ -21,7 +22,23 @@ body {
   flex: 0 0 auto;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: $z-index-navbar;
+  @include MQ(Mplus) {
+    align-items: stretch;
+  }
 }
+
+
+.navlinks-toggle {
+  @include MQ(Mplus) {
+    display: none;
+  }
+}
+
+
+
 
 .navbar--home {
   background: transparent;
@@ -50,9 +67,27 @@ body {
 }
 
 .navbar__links {
-  display: flex;
-  flex-direction: row;
   list-style: none;
+  position: absolute;
+  background: $blue-90;
+  right: 0;
+  padding: 1rem;
+  top: 3rem;
+  width: 100%;
+  z-index: $z-index-navbar - 1;
+  display: none;
+  .show-navlinks & {
+    display: block;
+  }
+  @include MQ(Mplus) {
+    background: transparent;
+    width: auto;
+    position: relative;
+    top: 0;
+    padding: 0;
+    display: flex !important;
+    flex-direction: row;
+  }
 }
 
 .navbar__brand {
@@ -68,8 +103,15 @@ body {
 }
 
 .navbar__link {
+  font-size: $font-size-large;
+  padding: .5rem 1rem;
+
+  @include MQ(Mplus) {
+    padding: 0 1rem;
+    font-size: $font-size-medium;
+  }
+
   color: $white;
-  padding: 0 1rem;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -120,6 +162,7 @@ body {
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
+  position: relative;
 
 }
 
@@ -178,6 +221,20 @@ body {
   align-items: stretch;
   overflow: hidden;
   width: 100%;
+
+}
+
+.flex--col-to-row {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
+  @include MQ(Mplus) {
+    flex-direction: row;
+    flex: 1 1 auto;
+    align-items: stretch;
+    overflow: hidden;
+  }
 
 }
 
