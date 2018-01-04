@@ -18,10 +18,12 @@ import ChevronRight from './ChevronRight';
 import ChevronUp from './ChevronUp';
 import Cog from './Cog';
 import Config from './Config';
+import Collapse from './Collapse';
 import Delete from './Delete';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
+import Expand from './Expand';
 import Lightbulb from './Lightbulb';
 import Minus from './Minus';
 import More from './More';
@@ -53,11 +55,13 @@ const icons = Object.entries({
   ChevronUp,
   ChevronRight,
   Cog,
+  Collapse,
   Config,
   Delete,
   Edit,
   EllipsisHorizontal,
   EllipsisVertical,
+  Expand,
   Lightbulb,
   Minus,
   MinusCircle,

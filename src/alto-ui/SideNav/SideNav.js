@@ -2,7 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Overlay from '../Overlay';
-import ArrowLeftIcon from '../Icons/ArrowLeft';
+import CollapseIcon from '../Icons/Collapse';
+import ExpandIcon from '../Icons/Expand';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import VisuallyHidden from '../VisuallyHidden';
 import Button from '../Button';
@@ -79,8 +80,7 @@ class SideNav extends React.PureComponent {
           style={{ height: `${open ? item.items.length * 2.5 : 0}rem` }}
           aria-hidden={!open}
         >
-          <li
-            className="sidenav__overlay-title"
+          <li className="sidenav__overlay-title"
           >
             {item.title}
           </li>
@@ -177,7 +177,7 @@ class SideNav extends React.PureComponent {
           onClick={this.handleToggle}
           aria-expanded={collapsed}
         >
-          <ArrowLeftIcon />
+          {collapsed ? <ExpandIcon /> : <CollapseIcon /> }
           <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
         </button>
       </aside>

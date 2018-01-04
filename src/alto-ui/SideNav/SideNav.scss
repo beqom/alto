@@ -181,7 +181,9 @@ $nav-btn-hover-text: $white;
   @extend .sidenav__button;
   font-size: $font-size-x-large;
   height: $footer-height;
-
+  i {
+    transform: rotate(45deg);
+  }
   @include on-narrow {
     display: none;
   }
