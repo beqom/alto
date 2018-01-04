@@ -1,9 +1,24 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { bemClass } from '../helpers/bem';
+
 import './Overlay.scss';
 
+const focusId = id => {
+  const domNode = document.getElementById(id);
+  if (domNode) {
+    domNode.focus();
+  }
+}
+
 class Overlay extends React.PureComponent {
+  constructor() {
+    super();
+
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+  }
+
   componentDidMount() {
     if (this.props.open) {
       this.open();
@@ -21,20 +36,26 @@ class Overlay extends React.PureComponent {
   }
 
   open() {
-    const { openFocusTargetId } = this.props;
-    document.getElementById(openFocusTargetId).focus();
+    document.addEventListener('keydown', this.handleKeyDown);
+    focusId(this.props.openFocusTargetId);
   }
 
   close() {
-    const { closeFocusTargetId } = this.props;
-    document.getElementById(closeFocusTargetId).focus();
+    document.removeEventListener('keydown', this.handleKeyDown);
+    focusId(this.props.closeFocusTargetId);
+  }
+
+  handleKeyDown(e) {
+    if(e.key === 'Escape') {
+      this.props.onClose();
+    }
   }
 
   render() {
-    const { open, onClose, children } = this.props;
+    const { open, onClose, children, darken } = this.props;
     return (
       <Fragment>
-        {open && <button className="Overlay" onClick={onClose} />}
+        {open && <button className={bemClass('Overlay', { darken })} onClick={onClose} />}
         {open && <div tabIndex="0" role="button" className="Overlay__focus-out" onFocus={onClose} />}
         {children}
         {open && <div tabIndex="0" role="button" className="Overlay__focus-out" onFocus={onClose} />}
@@ -54,6 +75,7 @@ Overlay.propTypes = {
   openFocusTargetId: PropTypes.string.isRequired,
   closeFocusTargetId: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
+  darken: PropTypes.bool,
 };
 
 export default Overlay;
