@@ -23,7 +23,7 @@ const items = [
       { id: 12, title: 'One', url: '#one' },
       { id: 13, title: 'Two', url: '#two' },
       { id: 14, title: 'Three', url: '#three' },
-      { id: 15, title: 'Foor', url: '#foor' },
+      { id: 15, title: 'Four', url: '#four' },
       { id: 16, title: 'Five', url: '#five' },
     ],
   },

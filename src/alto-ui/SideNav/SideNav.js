@@ -76,9 +76,14 @@ class SideNav extends React.PureComponent {
       const subList = (
         <ul
           className={bemClass('sidenav__sub-list', { collapsed, open })}
-          style={{ height: `${open ? item.items.length * 2.5 + 1 : 0}rem` }}
+          style={{ height: `${open ? item.items.length * 2.5 : 0}rem` }}
           aria-hidden={!open}
         >
+          <li
+            className="sidenav__overlay-title"
+          >
+            {item.title}
+          </li>
           {this.renderNavSubItems(item.items, open, item.id)}
         </ul>
       );
