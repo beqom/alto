@@ -1,5 +1,7 @@
 @import "../scss/inc";
 
+$nav-btn-hover-bkgd: rgba($red, .3);
+$nav-btn-hover-text: $white;
 
 .sidenav {
   box-shadow: inset 0 5px 0 $red;
@@ -47,12 +49,16 @@
   line-height: 3.125;
   height: $header-height;
   overflow: hidden;
-  color: white;
+  color: rgba($white, .8);
   transition: color $transition;
   flex: 1;
 
+  &:focus {
+    background: $nav-btn-hover-bkgd;
+  }
+
   &:hover {
-    color: $red;
+    color: $white;
   }
 
   @include on-narrow {
@@ -75,7 +81,7 @@
   outline: 0;
   border-radius: 0;
   line-height: 2;
-  color: $blue-10;
+  color: rgba($white, .8);
   width: 100%;
   display: flex;
   height: 3.125rem;
@@ -83,11 +89,13 @@
   transition: all $transition;
 
   &:focus {
-    box-shadow: inset 0 0 0 2px $red;
+    background-color: $nav-btn-hover-bkgd;
+    color: $nav-btn-hover-text;
   }
 
   &:hover {
-    background-color: $red;
+    color: $nav-btn-hover-text;
+    background: $nav-btn-hover-bkgd;
   }
 }
 
@@ -111,7 +119,7 @@
 }
 
 .sidenav__sections-list {
-  color: white;
+  color: rgba($white, .8);
   border-bottom: 1px solid $coolgrey-80;
   flex: 1;
   list-style: none;
@@ -187,11 +195,9 @@
   box-shadow: inset 0 0 0 $red;
 
   &--active {
-    background-color: $coolgrey-80;
-    box-shadow: inset -5px 0 0 $red;
 
     &:focus {
-      box-shadow: inset 0 0 0 2px $red;
+      // background-color: $coolgrey-70;
     }
   }
 
@@ -202,6 +208,24 @@
     }
   }
 }
+
+.sidenav__section-button {
+  &--active {
+    box-shadow: inset 5px 0 0 $red;
+  }
+}
+
+.sidenav__route-link {
+
+  &--active {
+    color: $nav-btn-hover-text;
+    background-color: $nav-btn-hover-bkgd;
+    font-weight: 600;
+    box-shadow: inset 5px 0 0 $red;
+  }
+}
+
+
 
 .sidenav__section-item {
   display: flex;
@@ -214,25 +238,43 @@
 
 .sidenav__section-item-icon {
   font-size: $font-size-x-large;
-  width: 3.25rem;
+  width: 2.25rem;
+  margin-left: .5rem;
   display: flex;
   transition: width $transition;
 
   i {
     margin: auto;
   }
+
+  .sidenav__section-button--collapsed & {
+    width: 3.25rem;
+    margin-left: 0;
+  }
 }
 
 .sidenav__section-item-title {
   font-size: $font-size-large;
   flex: 1;
-  font-weight: 600;
+  font-weight: 400;
   text-align: left;
 }
 
 .sidenav__section-item-chevron {
-  font-size: $font-size-small;
-  width: 3.25rem;
+  font-size: $font-size-x-small;
+  width: 2.5rem;
+}
+
+.sidenav__overlay-title {
+  display: none;
+  .sidenav__sub-list--collapsed & {
+    display: block;
+    padding: 1rem 1rem 1rem;
+    color: rgba($white, .6);
+    text-transform: uppercase;
+    font-weight: $font-weight-semibold;
+    font-size: $font-size-small;
+  }
 }
 
 .sidenav__sub-list {
@@ -264,7 +306,6 @@
   line-height: 2.5rem;
   height: 2.5rem;
   padding-left: 3.25rem;
-  font-weight: 600;
 
   .sidenav__sub-list--collapsed.sidenav__sub-list--open  & {
     @include on-medium-and-wide {
