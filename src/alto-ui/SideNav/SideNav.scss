@@ -1,6 +1,6 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
-$nav-btn-hover-bkgd: rgba($red, .3);
+$nav-btn-hover-bkgd: rgba($red, 0.3);
 $nav-btn-hover-text: $white;
 
 .sidenav {
@@ -34,7 +34,6 @@ $nav-btn-hover-text: $white;
   border-bottom: 1px solid $coolgrey-80;
 
   @include on-narrow {
-
     // background-color: $coolgrey-90;
     // position: relative;
     // z-index: 1001;
@@ -49,7 +48,7 @@ $nav-btn-hover-text: $white;
   line-height: 3.125;
   height: $header-height;
   overflow: hidden;
-  color: rgba($white, .8);
+  color: rgba($white, 0.8);
   transition: color $transition;
   flex: 1;
 
@@ -81,7 +80,7 @@ $nav-btn-hover-text: $white;
   outline: 0;
   border-radius: 0;
   line-height: 2;
-  color: rgba($white, .8);
+  color: rgba($white, 0.8);
   width: 100%;
   display: flex;
   height: 3.125rem;
@@ -119,7 +118,7 @@ $nav-btn-hover-text: $white;
 }
 
 .sidenav__sections-list {
-  color: rgba($white, .8);
+  color: rgba($white, 0.8);
   border-bottom: 1px solid $coolgrey-80;
   flex: 1;
   list-style: none;
@@ -175,8 +174,6 @@ $nav-btn-hover-text: $white;
   }
 }
 
-
-
 .sidenav__toggle-button {
   @extend .sidenav__button;
   font-size: $font-size-x-large;
@@ -197,7 +194,6 @@ $nav-btn-hover-text: $white;
   box-shadow: inset 0 0 0 $red;
 
   &--active {
-
     &:focus {
       // background-color: $coolgrey-70;
     }
@@ -218,7 +214,6 @@ $nav-btn-hover-text: $white;
 }
 
 .sidenav__route-link {
-
   &--active {
     color: $nav-btn-hover-text;
     background-color: $nav-btn-hover-bkgd;
@@ -226,8 +221,6 @@ $nav-btn-hover-text: $white;
     box-shadow: inset 5px 0 0 $red;
   }
 }
-
-
 
 .sidenav__section-item {
   display: flex;
@@ -241,7 +234,7 @@ $nav-btn-hover-text: $white;
 .sidenav__section-item-icon {
   font-size: $font-size-x-large;
   width: 2.25rem;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
   display: flex;
   transition: width $transition;
 
@@ -271,8 +264,8 @@ $nav-btn-hover-text: $white;
   display: none;
   .sidenav__sub-list--collapsed & {
     display: block;
-    padding: 1rem 1rem 1rem;
-    color: rgba($white, .6);
+    padding: 1rem;
+    color: rgba($white, 0.6);
     text-transform: uppercase;
     font-weight: $font-weight-semibold;
     font-size: $font-size-small;
@@ -309,7 +302,7 @@ $nav-btn-hover-text: $white;
   height: 2.5rem;
   padding-left: 3.25rem;
 
-  .sidenav__sub-list--collapsed.sidenav__sub-list--open  & {
+  .sidenav__sub-list--collapsed.sidenav__sub-list--open & {
     @include on-medium-and-wide {
       padding-left: 1rem;
     }
@@ -321,20 +314,17 @@ $nav-btn-hover-text: $white;
     border-bottom: 1px solid $coolgrey-80;
   }
 
-  @include on-narrow{
+  @include on-narrow {
     flex: 1;
     padding: 0 20px;
   }
 }
 
-
-
-
 .sidenav__panel {
   position: absolute;
   background: $white;
   transition: all $duration-prompt $timing-function;
-  box-shadow: 0 0 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.2);
   overflow: hidden;
   z-index: $z-index-modal;
 
@@ -345,7 +335,7 @@ $nav-btn-hover-text: $white;
     width: 0;
   }
 
-  @include on-narrow{
+  @include on-narrow {
     left: 0;
     right: 0;
     bottom: 100%;
@@ -359,7 +349,7 @@ $nav-btn-hover-text: $white;
       width: 350px;
     }
 
-    @include on-narrow{
+    @include on-narrow {
       box-shadow: 0 1px 0 $coolgrey-20;
       bottom: 0;
     }
@@ -378,7 +368,7 @@ $nav-btn-hover-text: $white;
     width: 350px;
   }
 
-  @include on-narrow{
+  @include on-narrow {
     left: 0;
   }
 }

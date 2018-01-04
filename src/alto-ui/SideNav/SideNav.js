@@ -80,17 +80,17 @@ class SideNav extends React.PureComponent {
           style={{ height: `${open ? item.items.length * 2.5 : 0}rem` }}
           aria-hidden={!open}
         >
-          <li className="sidenav__overlay-title"
-          >
-            {item.title}
-          </li>
+          <li className="sidenav__overlay-title">{item.title}</li>
           {this.renderNavSubItems(item.items, open, item.id)}
         </ul>
       );
       return (
         <li className={bemClass('sidenav__section', { collapsed })} key={item.title}>
           <button
-            className={bemClass('sidenav__section-button', { collapsed, active })}
+            className={bemClass('sidenav__section-button', {
+              collapsed,
+              active,
+            })}
             onClick={() => this.handleToggleSection(item.title)}
             id={`sidenav__${item.id}`}
           >
@@ -153,7 +153,9 @@ class SideNav extends React.PureComponent {
         </header>
         <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
         <div
-          className={bemClass('sidenav__sections-list-narrow-container', { open })}
+          className={bemClass('sidenav__sections-list-narrow-container', {
+            open,
+          })}
           aria-hidden={!open}
         >
           <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
@@ -177,7 +179,7 @@ class SideNav extends React.PureComponent {
           onClick={this.handleToggle}
           aria-expanded={collapsed}
         >
-          {collapsed ? <ExpandIcon /> : <CollapseIcon /> }
+          {collapsed ? <ExpandIcon /> : <CollapseIcon />}
           <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
         </button>
       </aside>
