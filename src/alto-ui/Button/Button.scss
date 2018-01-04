@@ -1,10 +1,9 @@
-@import "../scss/_inc";
-
+@import '../scss/_inc';
 
 $color-button-base: $blue-60;
 $color-button-accent: $blue-80;
 
-$color-white-button-focus: $blue-30;  // Focus ring for white buttons
+$color-white-button-focus: $blue-30; // Focus ring for white buttons
 
 // ===================================
 // Mixins
@@ -92,22 +91,19 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
   }
 }
 
-
-
-
 .button {
   @include button--solid($blue, $blue-80, $blue-30, $blue-90);
   font-weight: $font-weight-regular;
-  font-size: .875rem;
+  font-size: $font-size-small;
   font-family: $font-family-alt;
-  padding: .5625rem 1.25rem;
+  padding: 0.5625rem 1.25rem;
   line-height: $line-height-button;
   border: 1px solid transparent;
   border-radius: $border-radius-default;
   text-transform: uppercase;
   text-decoration: none;
   text-align: center;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
   cursor: pointer;
   transition: $duration-quick $timing-function all;
   &:focus {
@@ -128,17 +124,17 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
 }
 
 .button--white {
-  @include button--solid($white, rgba($white, .80), $color-white-button-focus, rgba($white, .90), $color-text-default);
+  @include button--solid($white, rgba($white, 0.8), $color-white-button-focus, rgba($white, 0.9), $color-text-default);
 }
 
 .button--small {
   font-size: $font-size-small;
-  padding: .1875rem .6875rem;
+  padding: 0.1875rem 0.6875rem;
 }
 
 .button--large {
   font-size: $font-size-large;
-  padding: .9375rem 1.8125rem;
+  padding: 0.9375rem 1.8125rem;
 }
 
 .button--nowrap {
@@ -164,7 +160,6 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
   width: 100%;
 }
 
-
 // Outline
 
 .button--outline {
@@ -180,7 +175,7 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
 }
 
 .button--outline.button--white {
-  @include button--outline($white, rgba($white, .10), $white, $color-white-button-focus, rgba($white, .3));
+  @include button--outline($white, rgba($white, 0.1), $white, $color-white-button-focus, rgba($white, 0.3));
 }
 
 // Flat
@@ -189,8 +184,8 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
   @include button--flat($blue, $blue-80, $blue-20);
   background: transparent;
   border-color: transparent;
-  padding-left: .5rem;
-  padding-right: .5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .button--flat.button--success {
@@ -202,5 +197,5 @@ $color-white-button-focus: $blue-30;  // Focus ring for white buttons
 }
 
 .button--flat.button--white {
-  @include button--flat($white, rgba($white, .8), $color-white-button-focus);
+  @include button--flat($white, rgba($white, 0.8), $color-white-button-focus);
 }
