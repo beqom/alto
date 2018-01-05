@@ -6,271 +6,263 @@ $deprecate-mode: 'sensible' !default;
 // ===================================
 // Palette
 
-$red-90: #4D0008 !default;
-$red-80: #74000C !default;
-$red-70: #93000F !default;
-$red-60: #C30014 !default;
-$red-50: #DD4554 !default;
-$red-40: #EB6D7A !default;
-$red-30: #F79AA3 !default;
-$red-20: #FFCAD0 !default;
-$red-10: #FFF1F3 !default;
-$red:    $red-60 !default;
+$red-90: #4d0008 !default;
+$red-80: #74000c !default;
+$red-70: #93000f !default;
+$red-60: #c30014 !default;
+$red-50: #dd4554 !default;
+$red-40: #eb6d7a !default;
+$red-30: #f79aa3 !default;
+$red-20: #ffcad0 !default;
+$red-10: #fff1f3 !default;
+$red: $red-60 !default;
 
-$orange-90: #552B00 !default;
+$orange-90: #552b00 !default;
 $orange-80: #904900 !default;
-$orange-70: #C76400 !default;
-$orange-60: #E57D14 !default;
-$orange-50: #F3993E !default;
-$orange-40: #FDB973 !default;
-$orange-30: #FFCC98 !default;
-$orange-20: #FFE1C3 !default;
-$orange-10: #FFF5EC !default;
-$orange:    $orange-60 !default;
+$orange-70: #c76400 !default;
+$orange-60: #e57d14 !default;
+$orange-50: #f3993e !default;
+$orange-40: #fdb973 !default;
+$orange-30: #ffcc98 !default;
+$orange-20: #ffe1c3 !default;
+$orange-10: #fff5ec !default;
+$orange: $orange-60 !default;
 
 $yellow-90: #524700 !default;
 $yellow-80: #938100 !default;
-$yellow-70: #BAA50A !default;
-$yellow-60: #E8CE16 !default;
-$yellow-50: #EDD73C !default;
-$yellow-40: #EEDE6E !default;
-$yellow-30: #F4E896 !default;
-$yellow-20: #F9F3C5 !default;
-$yellow-10: #FDFCF1 !default;
-$yellow:    $yellow-60 !default;
+$yellow-70: #baa50a !default;
+$yellow-60: #e8ce16 !default;
+$yellow-50: #edd73c !default;
+$yellow-40: #eede6e !default;
+$yellow-30: #f4e896 !default;
+$yellow-20: #f9f3c5 !default;
+$yellow-10: #fdfcf1 !default;
+$yellow: $yellow-60 !default;
 
-$lime-90: #304D00 !default;
-$lime-80: #4A7305 !default;
-$lime-70: #60940A !default;
-$lime-60: #77AF1A !default;
-$lime-50: #8CC332 !default;
-$lime-40: #9FCE52 !default;
-$lime-30: #C1E683 !default;
-$lime-20: #DAF2B2 !default;
-$lime-10: #F6FFE8 !default;
-$lime:    $lime-60 !default;
+$lime-90: #304d00 !default;
+$lime-80: #4a7305 !default;
+$lime-70: #60940a !default;
+$lime-60: #77af1a !default;
+$lime-50: #8cc332 !default;
+$lime-40: #9fce52 !default;
+$lime-30: #c1e683 !default;
+$lime-20: #daf2b2 !default;
+$lime-10: #f6ffe8 !default;
+$lime: $lime-60 !default;
 
 $green-90: #003909 !default;
 $green-80: #035410 !default;
-$green-70: #156A23 !default;
+$green-70: #156a23 !default;
 $green-60: #208831 !default;
-$green-50: #43A953 !default;
-$green-40: #6FC77D !default;
-$green-30: #A3E5AD !default;
-$green-20: #C9F1CF !default;
-$green-10: #F4FFF6 !default;
-$green:    $green-60 !default;
+$green-50: #43a953 !default;
+$green-40: #6fc77d !default;
+$green-30: #a3e5ad !default;
+$green-20: #c9f1cf !default;
+$green-10: #f4fff6 !default;
+$green: $green-60 !default;
 
-$pine-90: #003B2C !default;
+$pine-90: #003b2c !default;
 $pine-80: #005641 !default;
-$pine-70: #09795E !default;
-$pine-60: #189B7C !default;
-$pine-50: #2CAB8C !default;
-$pine-40: #50BEA4 !default;
-$pine-30: #93DCCA !default;
-$pine-20: #C5F4E9 !default;
-$pine-10: #F1FFFC !default;
-$pine:    $pine-60 !default;
+$pine-70: #09795e !default;
+$pine-60: #189b7c !default;
+$pine-50: #2cab8c !default;
+$pine-40: #50bea4 !default;
+$pine-30: #93dcca !default;
+$pine-20: #c5f4e9 !default;
+$pine-10: #f1fffc !default;
+$pine: $pine-60 !default;
 
-$teal-90: #003F4D !default;
-$teal-80: #04596D !default;
+$teal-90: #003f4d !default;
+$teal-80: #04596d !default;
 $teal-70: #047792 !default;
-$teal-60: #078CAA !default;
-$teal-50: #17ABCD !default;
-$teal-40: #44C2DF !default;
-$teal-30: #85DAEE !default;
-$teal-20: #BEF0FB !default;
-$teal-10: #E8FBFF !default;
-$teal:    $teal-50 !default;
+$teal-60: #078caa !default;
+$teal-50: #17abcd !default;
+$teal-40: #44c2df !default;
+$teal-30: #85daee !default;
+$teal-20: #bef0fb !default;
+$teal-10: #e8fbff !default;
+$teal: $teal-50 !default;
 
-$blue-90: #002C55 !default;
-$blue-80: #02417C !default;
-$blue-70: #005BB1 !default;
-$blue-60: #0074E0 !default;
-$blue-50: #2D91EE !default;
-$blue-40: #4DA5F6 !default;
-$blue-30: #82C1FA !default;
-$blue-20: #B1D9FF !default;
-$blue-10: #F3F9FF !default;
-$blue:    $blue-60 !default;
+$blue-90: #002c55 !default;
+$blue-80: #02417c !default;
+$blue-70: #005bb1 !default;
+$blue-60: #0074e0 !default;
+$blue-50: #2d91ee !default;
+$blue-40: #4da5f6 !default;
+$blue-30: #82c1fa !default;
+$blue-20: #b1d9ff !default;
+$blue-10: #f3f9ff !default;
+$blue: $blue-60 !default;
 
-$indigo-90: #14004D !default;
-$indigo-80: #22027E !default;
-$indigo-70: #3005AD !default;
-$indigo-60: #4311D2 !default;
-$indigo-50: #5D38E7 !default;
-$indigo-40: #7A6CF3 !default;
-$indigo-30: #A3A3FF !default;
-$indigo-20: #D2D2FC !default;
-$indigo-10: #F1F1FF !default;
-$indigo:    $indigo-60 !default;
+$indigo-90: #14004d !default;
+$indigo-80: #22027e !default;
+$indigo-70: #3005ad !default;
+$indigo-60: #4311d2 !default;
+$indigo-50: #5d38e7 !default;
+$indigo-40: #7a6cf3 !default;
+$indigo-30: #a3a3ff !default;
+$indigo-20: #d2d2fc !default;
+$indigo-10: #f1f1ff !default;
+$indigo: $indigo-60 !default;
 
-$purple-90: #2A0144 !default;
-$purple-80: #3C065F !default;
-$purple-70: #5A1885 !default;
-$purple-60: #732EA0 !default;
-$purple-50: #8B45B8 !default;
-$purple-40: #A969D3 !default;
-$purple-30: #CD9AEE !default;
-$purple-20: #EBCDFF !default;
-$purple-10: #F9F1FF !default;
-$purple:    $purple-50 !default;
+$purple-90: #2a0144 !default;
+$purple-80: #3c065f !default;
+$purple-70: #5a1885 !default;
+$purple-60: #732ea0 !default;
+$purple-50: #8b45b8 !default;
+$purple-40: #a969d3 !default;
+$purple-30: #cd9aee !default;
+$purple-20: #ebcdff !default;
+$purple-10: #f9f1ff !default;
+$purple: $purple-50 !default;
 
-$pink-90: #5A0038 !default;
+$pink-90: #5a0038 !default;
 $pink-80: #870756 !default;
-$pink-70: #981E6A !default;
-$pink-60: #AF3882 !default;
-$pink-50: #CA549D !default;
-$pink-40: #DF7AB9 !default;
-$pink-30: #F19BD0 !default;
-$pink-20: #FCBEE4 !default;
-$pink-10: #FEE5F4 !default;
-$pink:    $pink-60 !default;
+$pink-70: #981e6a !default;
+$pink-60: #af3882 !default;
+$pink-50: #ca549d !default;
+$pink-40: #df7ab9 !default;
+$pink-30: #f19bd0 !default;
+$pink-20: #fcbee4 !default;
+$pink-10: #fee5f4 !default;
+$pink: $pink-60 !default;
 
 $coolgrey-90: #192328 !default;
-$coolgrey-80: #333C48 !default;
-$coolgrey-70: #3F4F5E !default;
-$coolgrey-60: #4F6376 !default;
-$coolgrey-50: #5F788C !default;
-$coolgrey-40: #8096AC !default;
-$coolgrey-30: #A2B8CE !default;
-$coolgrey-20: #C4D7EB !default;
-$coolgrey-10: #EBF2F9 !default;
+$coolgrey-80: #333c48 !default;
+$coolgrey-70: #3f4f5e !default;
+$coolgrey-60: #4f6376 !default;
+$coolgrey-50: #5f788c !default;
+$coolgrey-40: #8096ac !default;
+$coolgrey-30: #a2b8ce !default;
+$coolgrey-20: #c4d7eb !default;
+$coolgrey-10: #ebf2f9 !default;
 
 $grey-90: #242424 !default;
 $grey-80: #303030 !default;
-$grey-70: #4C4C4C !default;
+$grey-70: #4c4c4c !default;
 $grey-60: #606060 !default;
 $grey-50: #757575 !default;
 $grey-40: #979797 !default;
-$grey-30: #B8B8B8 !default;
-$grey-20: #D9D9D9 !default;
-$grey-10: #F2F2F2 !default;
+$grey-30: #b8b8b8 !default;
+$grey-20: #d9d9d9 !default;
+$grey-10: #f2f2f2 !default;
 
 $warmgrey-90: #231919 !default;
 $warmgrey-80: #302929 !default;
-$warmgrey-70: #4C4343 !default;
+$warmgrey-70: #4c4343 !default;
 $warmgrey-60: #605757 !default;
-$warmgrey-50: #746B6B !default;
-$warmgrey-40: #978E8E !default;
-$warmgrey-30: #B6B0B0 !default;
-$warmgrey-20: #D9D4D4 !default;
-$warmgrey-10: #F2EDED !default;
+$warmgrey-50: #746b6b !default;
+$warmgrey-40: #978e8e !default;
+$warmgrey-30: #b6b0b0 !default;
+$warmgrey-20: #d9d4d4 !default;
+$warmgrey-10: #f2eded !default;
 
-
-$color-inverse-90: rgba(255, 255, 255, .9) !default;
-$color-inverse-80: rgba(255, 255, 255, .8) !default;
-$color-inverse-70: rgba(255, 255, 255, .7) !default;
-$color-inverse-60: rgba(255, 255, 255, .6) !default;
-$color-inverse-50: rgba(255, 255, 255, .5) !default;
-$color-inverse-40: rgba(255, 255, 255, .4) !default;
-$color-inverse-30: rgba(255, 255, 255, .3) !default;
-$color-inverse-20: rgba(255, 255, 255, .2) !default;
-$color-inverse-10: rgba(255, 255, 255, .1) !default;
+$color-inverse-90: rgba(255, 255, 255, 0.9) !default;
+$color-inverse-80: rgba(255, 255, 255, 0.8) !default;
+$color-inverse-70: rgba(255, 255, 255, 0.7) !default;
+$color-inverse-60: rgba(255, 255, 255, 0.6) !default;
+$color-inverse-50: rgba(255, 255, 255, 0.5) !default;
+$color-inverse-40: rgba(255, 255, 255, 0.4) !default;
+$color-inverse-30: rgba(255, 255, 255, 0.3) !default;
+$color-inverse-20: rgba(255, 255, 255, 0.2) !default;
+$color-inverse-10: rgba(255, 255, 255, 0.1) !default;
 $color-inverse: white !default;
-
 
 $black: #000 !default;
 $white: #fff !default;
 
-$color-page-bkgd:       $blue-10 !default;
+$color-page-bkgd: $blue-10 !default;
 
-$color-text-default:    $coolgrey-80 !default;
-$color-text-heading:    $color-text-default !default;
-$color-text-muted:      $coolgrey-50 !default;
+$color-text-default: $coolgrey-80 !default;
+$color-text-heading: $color-text-default !default;
+$color-text-muted: $coolgrey-50 !default;
 
-$color-text-link:         $blue-60 !default;
-$color-text-link-hover:   $blue-70 !default;
+$color-text-link: $blue-60 !default;
+$color-text-link-hover: $blue-70 !default;
 $color-text-link-visited: $purple-60 !default;
 
 // ===========================
 // Typography
 
-$font-size-root:                    16px !default;
+$font-size-root: 16px !default;
 
-$font-size-xx-small:                0.5rem !default;   // 8px
-$font-size-x-small:                 0.75rem !default;  // 12px
-$font-size-small:                   0.875rem !default; // 14px
-$font-size-medium:                  1rem !default;     // 16px
-$font-size-large:                   1.125rem !default; // 18px
-$font-size-x-large:                 1.5rem !default;   // 24px
-$font-size-xx-large:                2.25rem !default;  // 36px
-$font-size-xxx-large:               3.25rem !default;  // 52px
+$font-size-xx-small: 0.5rem !default; // 8px
+$font-size-x-small: 0.75rem !default; // 12px
+$font-size-small: 0.875rem !default; // 14px
+$font-size-medium: 1rem !default; // 16px
+$font-size-large: 1.125rem !default; // 18px
+$font-size-x-large: 1.5rem !default; // 24px
+$font-size-xx-large: 2rem !default; // 32x
+$font-size-xxx-large: 2.5rem !default; // 40px
 
-$font-size-h1:                      2.5rem !default;   //40px
-$font-size-h2:                      2.25rem !default;  //32px
-$font-size-h3:                      1.75rem !default;  //28px
-$font-size-h4:                      1.5rem !default;   //24px
-$font-size-h5:                      1.25rem !default;  //20px
-$font-size-h6:                      1rem !default;     //16px
+$font-size-h1: 2.5rem !default; //40px
+$font-size-h2: 2.25rem !default; //32px
+$font-size-h3: 1.75rem !default; //28px
+$font-size-h4: 1.5rem !default; //24px
+$font-size-h5: 1.25rem !default; //20px
+$font-size-h6: 1rem !default; //16px
 
+$font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
+$font-family-alt: 'Source Sans Pro', sans-serif !default;
 
+$font-family: $font-family-sans-serif !default;
+$font-family-monospaced: Inconsolata, Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
+  monospace !default;
 
-$font-family-sans-serif:            'Source Sans Pro', sans-serif !default;
-$font-family-alt:                   'Source Sans Pro', sans-serif !default;
+$font-family-body: $font-family !default;
+$font-family-button: $font-family-alt !default;
+$font-family-heading: $font-family-alt !default;
 
-$font-family:                       $font-family-sans-serif !default;
-$font-family-monospaced:            Inconsolata, Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !default;
-
-$font-family-body:                  $font-family !default;
-$font-family-button:                $font-family-alt !default;
-$font-family-heading:               $font-family-alt !default;
-
-
-$font-weight-light:                 300 !default;
-$font-weight-regular:               400 !default;
-$font-weight-semibold:              600 !default;
-$font-weight-bold:                  700 !default;
-$font-weight-heavy:                 900 !default;
+$font-weight-light: 300 !default;
+$font-weight-regular: 400 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold: 700 !default;
+$font-weight-heavy: 900 !default;
 
 // ===================================
 // Spacing
 
-$border-width-thin:         1px !default;
-$border-width-thick:        2px !default;
-$spacing-xxx-small:         0.0625rem !default;
-$spacing-xx-small:          0.125rem !default;
-$spacing-x-small:           0.25rem !default;
-$spacing-small:             0.5rem !default;
-$spacing-medium:            1rem !default;
-$spacing-large:             1.5rem !default;
-$spacing-x-large:           2rem !default;
-$spacing-xx-large:          3rem !default;
-
-
+$border-width-thin: 1px !default;
+$border-width-thick: 2px !default;
+$spacing-xxx-small: 0.0625rem !default;
+$spacing-xx-small: 0.125rem !default;
+$spacing-x-small: 0.25rem !default;
+$spacing-small: 0.5rem !default;
+$spacing-medium: 1rem !default;
+$spacing-large: 1.5rem !default;
+$spacing-x-large: 2rem !default;
+$spacing-xx-large: 3rem !default;
 
 // ===================================
 // Sizing
 
-$size-xx-small:            6rem  !default;
-$size-x-small:             12rem !default;
-$size-small:               15rem !default;
-$size-medium:              20rem !default;
-$size-large:               25rem !default;
-$size-x-large:             40rem !default;
-$size-xx-large:            60rem !default;
+$size-xx-small: 6rem !default;
+$size-x-small: 12rem !default;
+$size-small: 15rem !default;
+$size-medium: 20rem !default;
+$size-large: 25rem !default;
+$size-x-large: 40rem !default;
+$size-xx-large: 60rem !default;
 
-$size-touch:               3rem !default;
+$size-touch: 3rem !default;
 
 // ===================================
 // Z-index
 
-$z-index-toast:            11000 !default;
-$z-index-alert:            11000 !default;
-$z-index-modal:            10000 !default;
-$z-index-overlay:          9000 !default;
-$z-index-navbar:           7000 !default;
-$z-index-sidebar:          6000 !default;
-$z-index-dropdown:         5000 !default;
-$z-index-dialog:           4000 !default;
-$z-index-popup:            3000 !default;
-$z-index-content:          1000 !default;
-$z-index-default:          1 !default;
+$z-index-toast: 11000 !default;
+$z-index-alert: 11000 !default;
+$z-index-modal: 10000 !default;
+$z-index-overlay: 9000 !default;
+$z-index-navbar: 7000 !default;
+$z-index-sidebar: 6000 !default;
+$z-index-dropdown: 5000 !default;
+$z-index-dialog: 4000 !default;
+$z-index-popup: 3000 !default;
+$z-index-content: 1000 !default;
+$z-index-default: 1 !default;
 
-
-$z-index-nav-behind:    -1000 !default;
-$z-index-deepdive:      -99999 !default;
-
+$z-index-nav-behind: -1000 !default;
+$z-index-deepdive: -99999 !default;
 
 // ===================================
 // Line height
@@ -283,7 +275,6 @@ $line-height-text: 1.5 !default;
 $line-height-input: 1.5 !default;
 $line-height-tab: 3rem !default;
 
-
 $line-height-button-small: 1.5rem !default;
 $line-height-button: 1rem !default;
 $line-height-button-large: 2.875rem !default;
@@ -292,38 +283,38 @@ $line-height-button-large: 2.875rem !default;
 // Border Radius
 
 $border-radius-default: 3px !default;
-$border-radius-small:   .125rem !default;
-$border-radius-medium:  .25rem !default;
-$border-radius-large:   .5rem !default;
-$border-radius-circle:  50% !default;
-$border-radius-pill:    15rem !default;
+$border-radius-small: 0.125rem !default;
+$border-radius-medium: 0.25rem !default;
+$border-radius-large: 0.5rem !default;
+$border-radius-circle: 50% !default;
+$border-radius-pill: 15rem !default;
 
 // ===================================
 // Timing
 
-$duration-instant:         0s !default;
-$duration-immediate:       0.05s !default;
-$duration-quick:           0.15s !default;
-$duration-prompt:          0.3s !default;
-$duration-slow:            0.4s !default;
-$duration-forever:         3s !default;
+$duration-instant: 0s !default;
+$duration-immediate: 0.05s !default;
+$duration-quick: 0.15s !default;
+$duration-prompt: 0.3s !default;
+$duration-slow: 0.4s !default;
+$duration-forever: 3s !default;
 
-$timing-function:          cubic-bezier(.53,.14,.33,.97) !default;
-$timing-in-out-back:       cubic-bezier(0.68, -0.55, 0.27, 1.55) !default;
-$transition:               $duration-quick $timing-function;
+$timing-function: cubic-bezier(0.53, 0.14, 0.33, 0.97) !default;
+$timing-in-out-back: cubic-bezier(0.68, -0.55, 0.27, 1.55) !default;
+$transition: $duration-quick $timing-function;
 
 // ===================================
 // Media Query Breakpoints
 
-$mq-x-small:         300px !default;
-$mq-small:           560px !default;
-$mq-medium:          768px !default;
-$mq-large:           1008px !default;
-$mq-x-large:         1392px !default;
-$mq-xx-large:        1980px !default;
+$mq-x-small: 300px !default;
+$mq-small: 560px !default;
+$mq-medium: 768px !default;
+$mq-large: 1008px !default;
+$mq-x-large: 1392px !default;
+$mq-xx-large: 1980px !default;
 
 // ===================================
 // Layout
 
-$header-height:     5rem;
-$footer-height:     3rem;
+$header-height: 3.5rem;
+$footer-height: 3rem;
