@@ -17,7 +17,8 @@ import Avatar from '../Avatar';
 
 const items = [
   {
-    id: 1, title: 'Numbers',
+    id: 1,
+    title: 'Numbers',
     icon: LightbulbIcon,
     items: [
       { id: 12, title: 'One', url: '#one' },
@@ -28,7 +29,8 @@ const items = [
     ],
   },
   {
-    id: 2, title: 'Fruits',
+    id: 2,
+    title: 'Fruits',
     icon: BoltIcon,
     items: [
       { id: 21, title: 'Apple', url: '#apple/foo' },
@@ -37,7 +39,8 @@ const items = [
     ],
   },
   {
-    id: 3, title: 'FBB',
+    id: 3,
+    title: 'FBB',
     icon: ObjectsIcon,
     items: [
       { id: 31, title: 'Foo', url: '#foo' },
@@ -83,13 +86,18 @@ class SideNavContent extends React.Component {
 
   render() {
     return (
-      <div style={{ display: 'flex', padding: 10, justifyContent: 'space-around' }}>
+      <div>
         <button
           id="sidenav__profile-button"
+          class="sidenav__content-item"
           onClick={this.handleOpenProfile}
           style={{ background: 'transparent', border: 0 }}
         >
-          <Avatar src="http://i.pravatar.cc/150" alt="profil picture" small={this.props.sideNavCallapsed} />
+          <Avatar
+            src="http://i.pravatar.cc/150"
+            alt="profil picture"
+            small={this.props.sideNavCallapsed}
+          />
         </button>
         <SideNavPanel
           open={this.state.openProfile}
@@ -97,7 +105,7 @@ class SideNavContent extends React.Component {
           onClose={this.handleCloseProfile}
           closeFocusTargetId="sidenav__profile-button"
         >
-          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <div>
             <Avatar src="http://i.pravatar.cc/150" alt="profil picture" large />
           </div>
         </SideNavPanel>
@@ -108,7 +116,7 @@ class SideNavContent extends React.Component {
 
 SideNavContent.propTypes = {
   sideNavCallapsed: PropTypes.bool.isRequired,
-}
+};
 
 storiesOf('SideNav', module)
   .addDecorator(withReadme(README))

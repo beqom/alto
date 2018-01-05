@@ -43,14 +43,14 @@ $nav-btn-hover-text: $white;
 .sidenav__logo {
   font-size: $font-size-x-large;
   font-weight: $font-weight-light;
-  display: block;
   text-align: center;
-  line-height: 3.125;
+  line-height: $header-height;
   height: $header-height;
   overflow: hidden;
   color: rgba($white, 0.8);
   transition: color $transition;
   flex: 1;
+  display: none;
 
   &:focus {
     background: $nav-btn-hover-bkgd;
@@ -61,7 +61,12 @@ $nav-btn-hover-text: $white;
   }
 
   @include on-narrow {
-    display: none;
+  }
+
+  @include MQ(Mplus) {
+    display: block;
+    line-height: $header-height + 2;
+    height: $header-height + 2;
   }
 
   &--narrow {
@@ -112,6 +117,7 @@ $nav-btn-hover-text: $white;
 }
 
 .sidenav__menu-button {
+  min-width: 4rem;
   @include on-medium-and-wide {
     display: none;
   }
@@ -310,13 +316,27 @@ $nav-btn-hover-text: $white;
 }
 
 .sidenav__content {
-  @include on-medium-and-wide {
-    border-bottom: 1px solid $coolgrey-80;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 1;
+  padding: 0 1rem;
 
-  @include on-narrow {
-    flex: 1;
-    padding: 0 20px;
+  @include MQ(Mplus) {
+    border-bottom: 1px solid $coolgrey-80;
+    padding: 0 1.25rem;
+    flex: 0 0 auto;
+    justify-content: center;
+  }
+}
+
+.sidenav__content-item {
+  // RENAUD: I know you will hate me for this, but I have no other way of
+  // styling the avatar to size it to a size I want it to be.
+  // This is why I need these in the Component.
+  > .avatar {
+    font-size: 2.25rem;
   }
 }
 

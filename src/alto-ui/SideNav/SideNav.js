@@ -167,7 +167,7 @@ class SideNav extends React.PureComponent {
             {typeof children === 'function' ? children({ collapsed, open }) : children}
           </div>
         )}
-        <Button outline white onClick={this.handleToggleOpen} className="sidenav__menu-button">
+        <Button flat white onClick={this.handleToggleOpen} className="sidenav__menu-button">
           {open ? closeMenuButtonLabel : openMenuButtonLabel}
         </Button>
         <button
