@@ -89,7 +89,7 @@ class SideNavContent extends React.Component {
       <div>
         <button
           id="sidenav__profile-button"
-          class="sidenav__content-item"
+          className="sidenav__content-item"
           onClick={this.handleOpenProfile}
           style={{ background: 'transparent', border: 0 }}
         >

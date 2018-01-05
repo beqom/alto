@@ -336,7 +336,10 @@ $nav-btn-hover-text: $white;
   // styling the avatar to size it to a size I want it to be.
   // This is why I need these in the Component.
   > .avatar {
-    font-size: 2.25rem;
+    font-size: 2rem;
+    @include MQ(Mplus) {
+      font-size: 3rem;
+    }
   }
 }
 
