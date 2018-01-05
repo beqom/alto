@@ -60,9 +60,6 @@ $nav-btn-hover-text: $white;
     color: $white;
   }
 
-  @include on-narrow {
-  }
-
   @include MQ(Mplus) {
     display: block;
     line-height: $header-height + 2;
@@ -335,10 +332,18 @@ $nav-btn-hover-text: $white;
   // RENAUD: I know you will hate me for this, but I have no other way of
   // styling the avatar to size it to a size I want it to be.
   // This is why I need these in the Component.
+  @include MQ(Mplus) {
+    padding: 0.75rem 0;
+  }
   > .avatar {
     font-size: 2rem;
     @include MQ(Mplus) {
       font-size: 3rem;
+    }
+  }
+  .sidenav--collapsed & > .avatar {
+    @include MQ(Mplus) {
+      font-size: 2rem;
     }
   }
 }
