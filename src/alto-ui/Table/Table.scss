@@ -1,0 +1,41 @@
+@import "../scss/inc";
+
+.Table {
+  border: 1px solid $coolgrey-20;
+  border-radius: $border-radius-default;
+}
+
+.Table__table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  min-width: 100%;
+}
+
+.Table__cell {
+  border-bottom: 1px solid $coolgrey-20;
+  padding: .75em 1em;
+
+  .Table--compact & {
+    padding: .4em .75em;
+  }
+
+  .Table--wide & {
+    padding: 1em;
+  }
+
+  &--header {
+    color: $coolgrey-50;
+    font-weight: normal;
+  }
+
+  &--number {
+    text-align: right;
+  }
+
+  tbody tr:last-child > & {
+    border-bottom: 0;
+  }
+}
+
+
+
