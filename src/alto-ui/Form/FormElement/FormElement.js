@@ -23,7 +23,7 @@ const FormElement = props => {
 };
 
 FormElement.propTypes = {
-  helpText: PropTypes.string,
+  helpText: PropTypes.any,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   error: PropTypes.bool,
