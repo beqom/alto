@@ -24,6 +24,7 @@ import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
 import Expand from './Expand';
+import Eye from './Eye';
 import Lightbulb from './Lightbulb';
 import Minus from './Minus';
 import More from './More';
@@ -62,6 +63,7 @@ const icons = Object.entries({
   EllipsisHorizontal,
   EllipsisVertical,
   Expand,
+  Eye,
   Lightbulb,
   Minus,
   MinusCircle,
