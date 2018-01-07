@@ -92,7 +92,7 @@ Alto defines three button styles:
 ## Outline
 
 {{< example lang="markup" >}}
-<button class="button button--outline">Ouline Button</button>
+<button class="button button--outline">Outline Button</button>
 <button class="button button--outline button--success">Success</button>
 <button class="button button--outline button--danger">Danger</button>
 <button class="button button--outline" disabled>Disabled</button>
