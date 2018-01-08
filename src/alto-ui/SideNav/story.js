@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
-import { select, text } from '@storybook/addon-knobs';
+import { select, text, boolean } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import styled from 'styled-components';
 
@@ -132,6 +132,7 @@ storiesOf('SideNav', module)
       collapseButtonA11yLabel="click to collapse side navigation"
       openMenuButtonLabel="Menu"
       closeMenuButtonLabel="Close"
+      dark={boolean('dark', false)}
     >
       {({ collapsed }) => <SideNavContent sideNavCallapsed={collapsed} />}
     </SideNav>

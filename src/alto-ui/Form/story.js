@@ -59,5 +59,6 @@ require('./CheckBox/story');
 require('./Label/story');
 require('./RadioButton/story');
 require('./Select/story');
+require('./Switch/story');
 require('./TextArea/story');
 require('./TextField/story');

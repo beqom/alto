@@ -140,9 +140,10 @@ class SideNav extends React.PureComponent {
       openMenuButtonLabel,
       closeMenuButtonLabel,
       children,
+      dark,
     } = this.props;
     return (
-      <aside className={bemClass('sidenav', { collapsed })}>
+      <aside className={bemClass('sidenav', { collapsed, dark })}>
         <header className="sidenav__header">
           <a className="sidenav__logo" href={logoUrl}>
             {collapsed ? logoSmall : logo}
@@ -167,7 +168,7 @@ class SideNav extends React.PureComponent {
             {typeof children === 'function' ? children({ collapsed, open }) : children}
           </div>
         )}
-        <Button flat white onClick={this.handleToggleOpen} className="sidenav__menu-button">
+        <Button flat white={dark} onClick={this.handleToggleOpen} className="sidenav__menu-button">
           {open ? closeMenuButtonLabel : openMenuButtonLabel}
         </Button>
         <button
@@ -189,7 +190,9 @@ class SideNav extends React.PureComponent {
 
 SideNav.displayName = 'SideNav';
 
-SideNav.defaultProps = {};
+SideNav.defaultProps = {
+  dark: false,
+};
 
 SideNav.propTypes = {
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
@@ -197,6 +200,7 @@ SideNav.propTypes = {
   logoSmall: PropTypes.any,
   logoUrl: PropTypes.string,
   currentUrl: PropTypes.string,
+  dark: PropTypes.bool,
   expandButtonLabel: PropTypes.string.isRequired,
   collapseButtonLabel: PropTypes.string.isRequired,
   openMenuButtonLabel: PropTypes.string.isRequired,
