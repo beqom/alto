@@ -27,20 +27,21 @@ const bem = (ComponentToRender, block, modifiers = [], extraProps = []) => {
   return Component;
 };
 
-export const bemClass = (block, modifiers, ...others) =>
+export const bemClass = (block, modifiers = {}, ...others) =>
   classnames(
     block,
     Object.keys(modifiers)
       .filter(modifier => !!modifiers[modifier])
       .map(modifier => `${block}--${modifier}`),
     ...others
-  );
+  ).trim();
 
-const toDashCase = s => s
-  .trim()
-  .replace(/[A-Z]/g, ' $&')
-  .replace(/( |_|-)+/g,'-')
-  .toLowerCase();
+const toDashCase = s =>
+  s
+    .trim()
+    .replace(/[A-Z]/g, ' $&')
+    .replace(/( |_|-)+/g, '-')
+    .toLowerCase();
 
 export const bemProps = (block, modifiers, ...others) => (props, extraProps) => {
   const propsToExclude = modifiers.concat(extraProps);
@@ -52,12 +53,13 @@ export const bemProps = (block, modifiers, ...others) => (props, extraProps) => 
       {}
     ),
     {
-      className: classnames(
-        block,
-        modifiers.filter(modifier => !!props[modifier]).map(modifier => `${block}--${toDashCase(modifier)}`),
+      className: classnames(block, [
+        ...modifiers
+          .filter(modifier => !!props[modifier])
+          .map(modifier => `${block}--${toDashCase(modifier)}`),
         props.className,
-        ...others
-      ),
+        ...others,
+      ]),
     }
   );
 };
