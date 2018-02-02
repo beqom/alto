@@ -52,9 +52,9 @@ class SideNav extends React.PureComponent {
     // if (this.state.collapsed) return [];
 
     return items.map(item => (
-      <li key={item.title}>
+      <li id={`${this.props.id}__${parentId}__${item.id}`} key={item.title}>
         <Link
-          id={`sidenav__${parentId}__${item.id}`}
+          id={`${this.props.id}__${parentId}__${item.id}__link`}
           href={item.url}
           onClick={this.handleClickLink}
           className={bemClass('sidenav__route-link', {
@@ -85,14 +85,18 @@ class SideNav extends React.PureComponent {
         </ul>
       );
       return (
-        <li className={bemClass('sidenav__section', { collapsed })} key={item.title}>
+        <li
+          id={`${this.props.id}__${item.id}`}
+          className={bemClass('sidenav__section', { collapsed })}
+          key={item.title}
+        >
           <button
             className={bemClass('sidenav__section-button', {
               collapsed,
               active,
             })}
             onClick={() => this.handleToggleSection(item.title)}
-            id={`sidenav__${item.id}`}
+            id={`${this.props.id}__${item.id}__button`}
           >
             <div className="sidenav__section-item">
               {item.icon && (
@@ -116,8 +120,8 @@ class SideNav extends React.PureComponent {
             <Overlay
               open={open}
               onClose={() => this.handleToggleSection(item.title)}
-              openFocusTargetId={`sidenav__${item.id}__${item.items[0].id}`}
-              closeFocusTargetId={`sidenav__${item.id}`}
+              openFocusTargetId={`${this.props.id}__${item.id}__${item.items[0].id}__link`}
+              closeFocusTargetId={`${this.props.id}__${item.id}__button`}
             >
               {subList}
             </Overlay>
@@ -141,14 +145,19 @@ class SideNav extends React.PureComponent {
       closeMenuButtonLabel,
       children,
       dark,
+      id,
     } = this.props;
     return (
-      <aside className={bemClass('sidenav', { collapsed, dark })}>
+      <aside id={id} className={bemClass('sidenav', { collapsed, dark })}>
         <header className="sidenav__header">
-          <a className="sidenav__logo" href={logoUrl}>
+          <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl}>
             {collapsed ? logoSmall : logo}
           </a>
-          <a className="sidenav__logo sidenav__logo--narrow" href={logoUrl}>
+          <a
+            id={`${id}__logo--narrow`}
+            className="sidenav__logo sidenav__logo--narrow"
+            href={logoUrl}
+          >
             {logo}
           </a>
         </header>
@@ -168,10 +177,17 @@ class SideNav extends React.PureComponent {
             {typeof children === 'function' ? children({ collapsed, open }) : children}
           </div>
         )}
-        <Button flat white={dark} onClick={this.handleToggleOpen} className="sidenav__menu-button">
+        <Button
+          id={`${id}__menu-button`}
+          flat
+          white={dark}
+          onClick={this.handleToggleOpen}
+          className="sidenav__menu-button"
+        >
           {open ? closeMenuButtonLabel : openMenuButtonLabel}
         </Button>
         <button
+          id={`${id}__collapse-button`}
           className={bemClass(
             'sidenav__icon-container',
             { reverse: collapsed },
@@ -192,9 +208,11 @@ SideNav.displayName = 'SideNav';
 
 SideNav.defaultProps = {
   dark: false,
+  id: 'sidenav',
 };
 
 SideNav.propTypes = {
+  id: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
   logo: PropTypes.any,
   logoSmall: PropTypes.any,
