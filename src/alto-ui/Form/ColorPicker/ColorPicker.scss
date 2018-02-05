@@ -1,0 +1,60 @@
+@import '../../scss/inc';
+
+.ColorPicker {
+  margin-right: 10px;
+}
+
+.ColorPicker__input {
+  @extend %visually-hidden;
+}
+
+.ColorPicker__label {
+  cursor: pointer;
+  display: flex;
+  height: 2.4rem;
+  width: 2.4rem;
+  border-radius: 50%;
+  color: white;
+  transition: all $transition;
+  border-style: solid;
+  border-width: 0;
+
+  &:active,
+  &:hover {
+    transform: scale(1.2);
+  }
+
+  .ColorPicker__input:checked + & {
+    border-width: 3px;
+
+    &:active,
+    &:hover {
+      transform: scale(1);
+    }
+
+    .ColorPicker__dot {
+      width: calc(2.4rem - 12px);
+      height: calc(2.4rem - 12px);
+      border-radius: 50%;
+      margin-top: 3px;
+      margin-left: 3px;
+    }
+  }
+
+  .ColorPicker__input:disabled + & {
+    cursor: not-allowed;
+    opacity: 0.2;
+
+    &:active,
+    &:hover {
+      transform: scale(1);
+    }
+  }
+}
+
+.ColorPicker__dot {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  transition: all $transition;
+}
