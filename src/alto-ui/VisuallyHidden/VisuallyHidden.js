@@ -1,12 +1,13 @@
-import styled from 'styled-components';
+import React from 'react';
 
-const VisuallyHidden = styled.div`
-  opacity: 0;
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
-`;
+import './VisuallyHidden.scss';
+
+const VisuallyHidden = props => <div {...props} className="visually-hidden" />;
+
+VisuallyHidden.displayName = 'VisuallyHidden';
+
+VisuallyHidden.defaultProps = {};
+
+VisuallyHidden.propTypes = {};
 
 export default VisuallyHidden;
