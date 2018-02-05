@@ -33,3 +33,12 @@
     border-radius: $border-radius-default;
   }
 }
+
+%visually-hidden {
+  opacity: 0;
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
