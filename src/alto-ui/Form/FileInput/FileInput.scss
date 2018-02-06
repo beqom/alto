@@ -1,0 +1,5 @@
+@import '../../scss/inc';
+
+.FileInput__input {
+  @extend %visually-hidden;
+}

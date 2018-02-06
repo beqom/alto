@@ -61,6 +61,7 @@ storiesOf('Form/Overview', module)
 
 require('./CheckBox/story');
 require('./ColorPicker/story');
+require('./FileInput/story');
 require('./Label/story');
 require('./RadioButton/story');
 require('./Select/story');
