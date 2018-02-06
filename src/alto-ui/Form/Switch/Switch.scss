@@ -1,16 +1,11 @@
-@import "../../scss/inc";
+@import '../../scss/inc';
 
 .Switch {
   margin-bottom: 10px;
 }
 
 .Switch__input {
-  opacity: 0;
-  position: absolute;
-  height: 1px;
-  width: 1px;
-  overflow: hidden;
-  clip: rect(1px, 1px, 1px, 1px);
+  @extend %visually-hidden;
 }
 
 .Switch__label {
@@ -20,7 +15,6 @@
   align-items: center;
 }
 
-
 .Switch__element {
   cursor: pointer;
   width: 2rem;
@@ -28,22 +22,22 @@
   position: relative;
   overflow: hidden;
   background-color: $coolgrey-20;
-  border-radius: .5rem;
-  margin-right: .5em;
+  border-radius: 0.5rem;
+  margin-right: 0.5em;
 
   .Switch__input:focus + .Switch__label & {
     box-shadow: 0 0 0 3px $blue-20;
   }
 
   .Switch__input:disabled + .Switch__label & {
-    opacity: .5;
+    opacity: 0.5;
   }
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     position: absolute;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
   }
 
   &::before {
