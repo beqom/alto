@@ -28,7 +28,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     box-shadow: 0 0 0 3px $color-focus, inset 0 2px 0 $color-active;
   }
 
-  &:disabled {
+  &:disabled,
+  &.button--disabled {
     background: $coolgrey-30;
     border-color: $coolgrey-30;
   }
@@ -53,7 +54,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     border-color: $color-hover-dark;
     color: $color-hover-dark;
   }
-  &:disabled {
+  &:disabled,
+  &.button--disabled {
     background: transparent;
     color: $coolgrey-30;
     border-color: $coolgrey-30;
@@ -68,6 +70,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   &:hover,
   &:active,
   &:disabled,
+  &.button--disabled,
   &.button--active {
     background: transparent;
     border-color: transparent;
@@ -86,7 +89,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     color: $color-default;
   }
 
-  &:disabled {
+  &:disabled,
+  &.button--disabled {
     color: $coolgrey-30;
   }
 }
@@ -110,7 +114,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     outline: none;
   }
 
-  &:disabled {
+  &:disabled,
+  &.button--disabled {
     cursor: not-allowed;
   }
 }

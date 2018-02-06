@@ -16,19 +16,31 @@ const buttonProps = bemProps('button', [
   'active',
   'block',
   'nowrap',
+  'disabled',
 ]);
 
-const Button = props => (
-  props.href
-  ? <Link {...buttonProps(props)} href={props.href}>{props.children}</Link>
-  : <button {...buttonProps(props)} />
-);
+const Button = props => {
+  if (props.tag) {
+    return <props.tag {...buttonProps(props)} disabled={props.disabled} />;
+  }
+
+  if (props.href) {
+    return (
+      <Link {...buttonProps(props)} href={props.href} disabled={props.disabled}>
+        {props.children}
+      </Link>
+    );
+  }
+
+  return <button {...buttonProps(props)} disabled={props.disabled} />;
+};
 
 Button.displayName = 'Button';
 
 Button.propTypes = {
   children: PropTypes.any,
   href: PropTypes.string,
+  tag: PropTypes.string,
   outline: PropTypes.bool,
   flat: PropTypes.bool,
   error: PropTypes.bool,
@@ -38,6 +50,8 @@ Button.propTypes = {
   small: PropTypes.bool,
   active: PropTypes.bool,
   block: PropTypes.bool,
-}
+  nowrap: PropTypes.bool,
+  disabled: PropTypes.bool,
+};
 
 export default Button;

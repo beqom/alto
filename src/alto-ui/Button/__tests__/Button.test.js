@@ -15,6 +15,11 @@ describe('<Button />', () => {
     expect(wrapper.type()).toBe(Link);
   });
 
+  it('should render a custom conponent if props.tag is defined', () => {
+    const wrapper = shallow(<Button tag="div" />);
+    expect(wrapper.type()).toBe('div');
+  });
+
   it('should support severals modifiers', () => {
     [
       'outline',
