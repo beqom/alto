@@ -1,13 +1,13 @@
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { bemClass } from '../../helpers/bem';
 
 import VisuallyHidden from '../../VisuallyHidden';
 
 import './ColorPicker.scss';
 
 const ColorPicker = ({ id, name, label, checked, color, onChange, className, disabled }) => (
-  <div className={classnames('ColorPicker', className)}>
+  <div className={bemClass('ColorPicker', { [color]: true }, className)}>
     <input
       type="radio"
       name={name}
@@ -17,20 +17,9 @@ const ColorPicker = ({ id, name, label, checked, color, onChange, className, dis
       checked={checked}
       disabled={disabled}
     />
-    <label
-      htmlFor={id}
-      className="ColorPicker__label"
-      style={{
-        borderColor: color,
-      }}
-    >
-      <div
-        className="ColorPicker__dot"
-        style={{
-          backgroundColor: color,
-        }}
-      />
-      <VisuallyHidden>{label}</VisuallyHidden>
+    <label htmlFor={id} className="ColorPicker__label">
+      <div className="ColorPicker__dot" />
+      <VisuallyHidden>{label || color}</VisuallyHidden>
     </label>
   </div>
 );
@@ -44,7 +33,7 @@ ColorPicker.propTypes = {
   name: PropTypes.string.isRequired,
   className: PropTypes.string,
   color: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   checked: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
