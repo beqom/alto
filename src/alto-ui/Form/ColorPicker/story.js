@@ -37,41 +37,34 @@ storiesOf('Form/ColorPicker', module)
   .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('playground', () => (
-    <StateFullColorPicker value="dodgerblue">
+    <StateFullColorPicker value="blue">
       {(value, onChange) => (
         <div style={{ display: 'flex' }}>
-          <ColorPicker
-            name="alto-colorpicker"
-            id="tomato"
-            color="tomato"
-            label="Red"
-            onChange={() => onChange('tomato')}
-            checked={value === 'tomato'}
-          />
-          <ColorPicker
-            name="alto-colorpicker"
-            id="mediumseagreen"
-            color="mediumseagreen"
-            label="Green"
-            onChange={() => onChange('mediumseagreen')}
-            checked={value === 'mediumseagreen'}
-          />
-          <ColorPicker
-            name="alto-colorpicker"
-            id="dodgerblue"
-            color="dodgerblue"
-            label="Blue"
-            onChange={() => onChange('dodgerblue')}
-            checked={value === 'dodgerblue'}
-          />
-          <ColorPicker
-            name="alto-colorpicker"
-            id="darkviolet"
-            color="darkviolet"
-            label="Purple"
-            onChange={() => onChange('darkviolet')}
-            checked={value === 'darkviolet'}
-          />
+          {[
+            'red',
+            'orange',
+            'yellow',
+            'lime',
+            'green',
+            'pine',
+            'teal',
+            'blue',
+            'indigo',
+            'purple',
+            'pink',
+            'white',
+            'grey',
+            'black',
+          ].map(color => (
+            <ColorPicker
+              name="alto-colorpicker"
+              id={color}
+              key={color}
+              color={color}
+              onChange={() => onChange(color)}
+              checked={value === color}
+            />
+          ))}
         </div>
       )}
     </StateFullColorPicker>

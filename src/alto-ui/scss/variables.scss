@@ -171,6 +171,23 @@ $color-inverse: white !default;
 $black: #000 !default;
 $white: #fff !default;
 
+$colors: (
+  red: $red,
+  orange: $orange,
+  yellow: $yellow,
+  lime: $lime,
+  green: $green,
+  pine: $pine,
+  teal: $teal,
+  blue: $blue,
+  indigo: $indigo,
+  purple: $purple,
+  pink: $pink,
+  white: $white,
+  grey: $coolgrey-60,
+  black: $black
+);
+
 $color-page-bkgd: $blue-10 !default;
 
 $color-text-default: $coolgrey-80 !default;
