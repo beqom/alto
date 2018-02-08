@@ -146,9 +146,10 @@ class SideNav extends React.PureComponent {
       children,
       dark,
       id,
+      color,
     } = this.props;
     return (
-      <aside id={id} className={bemClass('sidenav', { collapsed, dark })}>
+      <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
         <header className="sidenav__header">
           <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl}>
             {collapsed ? logoSmall : logo}
@@ -215,6 +216,7 @@ SideNav.propTypes = {
   id: PropTypes.string,
   children: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
   logo: PropTypes.any,
+  color: PropTypes.string.isRequired,
   logoSmall: PropTypes.any,
   logoUrl: PropTypes.string,
   currentUrl: PropTypes.string,

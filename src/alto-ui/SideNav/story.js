@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable import/no-extraneous-dependencies, react/no-multi-comp */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
@@ -49,10 +49,6 @@ const items = [
     ],
   },
 ];
-
-const urls = items
-  .map(item => item.items.map(({ url }) => url))
-  .reduce((acc, val) => acc.concat(val));
 
 const Container = styled.div`
   position: fixed;
@@ -118,22 +114,78 @@ SideNavContent.propTypes = {
   sideNavCallapsed: PropTypes.bool.isRequired,
 };
 
+class SideNavRouterProvider extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { currentUrl: props.currentUrl };
+  }
+
+  getChildContext() {
+    return {
+      router: {
+        history: {
+          push: currentUrl => this.setState({ currentUrl }),
+        },
+      },
+    };
+  }
+
+  render() {
+    return this.props.children(this.state.currentUrl);
+  }
+}
+
+SideNavRouterProvider.propTypes = {
+  currentUrl: PropTypes.string.isRequired,
+  children: PropTypes.func.isRequired,
+};
+
+SideNavRouterProvider.childContextTypes = {
+  router: PropTypes.shape({
+    history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
+    }).isRequired,
+  }),
+};
+
 storiesOf('SideNav', module)
   .addDecorator(withReadme(README))
   .addDecorator(story => <Container>{story()}</Container>)
   .addWithJSX('overview', () => (
-    <SideNav
-      logo={text('logo', 'Brand')}
-      logoSmall={text('logoSmall', 'B.')}
-      logoUrl="#"
-      currentUrl={select('currentUrl', ['none'].concat(urls), '#three')}
-      items={items}
-      expandButtonA11yLabel="click to expand side navigation"
-      collapseButtonA11yLabel="click to collapse side navigation"
-      openMenuButtonLabel="Menu"
-      closeMenuButtonLabel="Close"
-      dark={boolean('dark', false)}
-    >
-      {({ collapsed }) => <SideNavContent sideNavCallapsed={collapsed} />}
-    </SideNav>
+    <SideNavRouterProvider currentUrl="#three">
+      {currentUrl => (
+        <SideNav
+          logo={text('logo', 'Brand')}
+          logoSmall={text('logoSmall', 'B.')}
+          logoUrl="#"
+          currentUrl={currentUrl}
+          items={items}
+          color={select(
+            'color',
+            [
+              'red',
+              'orange',
+              'yellow',
+              'lime',
+              'green',
+              'pine',
+              'teal',
+              'blue',
+              'indigo',
+              'purple',
+              'pink',
+            ],
+            'red'
+          )}
+          expandButtonA11yLabel="click to expand side navigation"
+          collapseButtonA11yLabel="click to collapse side navigation"
+          openMenuButtonLabel="Menu"
+          closeMenuButtonLabel="Close"
+          dark={boolean('dark', false)}
+        >
+          {({ collapsed }) => <SideNavContent sideNavCallapsed={collapsed} />}
+        </SideNav>
+      )}
+    </SideNavRouterProvider>
   ));

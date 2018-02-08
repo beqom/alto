@@ -29,7 +29,7 @@ $nav-btn-hover-text-dark: $white;
   @include on-narrow {
     box-shadow: inset 0 5px 0 $red;
     align-items: center;
-    padding: 5px .75rem 0;
+    padding: 5px 0.75rem 0;
     border-bottom: 1px solid $coolgrey-20;
 
     &--dark {
@@ -72,20 +72,7 @@ $nav-btn-hover-text-dark: $white;
   flex: 1;
   display: none;
   color: $red;
-
-  .sidenav--dark & {
-    color: rgba($white, 0.8);
-  }
-
-  &:focus {
-    background: $nav-btn-hover-bkgd;
-  }
-
-  &:hover {
-    .sidenav--dark & {
-      color: $white;
-    }
-  }
+  background-color: $white;
 
   @include MQ(Mplus) {
     display: block;
@@ -109,34 +96,11 @@ $nav-btn-hover-text-dark: $white;
   outline: 0;
   border-radius: 0;
   line-height: 2;
-  color: $coolgrey-50;
   width: 100%;
   display: flex;
   height: 3.125rem;
   cursor: pointer;
   transition: all $transition;
-
-  .sidenav--dark & {
-    color: rgba($white, 0.8);
-  }
-
-  &:focus {
-    background-color: $nav-btn-hover-bkgd;
-    color: $nav-btn-hover-text;
-
-    .sidenav--dark & {
-      color: $nav-btn-hover-text-dark;
-    }
-  }
-
-  &:hover {
-    background: $nav-btn-hover-bkgd;
-    color: $nav-btn-hover-text;
-
-    .sidenav--dark & {
-      color: $nav-btn-hover-text-dark;
-    }
-  }
 }
 
 .sidenav__icon-container {
@@ -244,7 +208,6 @@ $nav-btn-hover-text-dark: $white;
   @extend .sidenav__button;
   display: block;
   overflow: hidden;
-  box-shadow: inset 0 0 0 $red;
 
   &--active {
     &:focus {
@@ -260,22 +223,9 @@ $nav-btn-hover-text-dark: $white;
   }
 }
 
-.sidenav__section-button {
-  &--active {
-    box-shadow: inset 5px 0 0 $red;
-  }
-}
-
 .sidenav__route-link {
   &--active {
-    background-color: $nav-btn-hover-bkgd;
     font-weight: 600;
-    box-shadow: inset 5px 0 0 $red;
-    color: $nav-btn-hover-text;
-
-    .sidenav--dark & {
-      color: $nav-btn-hover-text-dark;
-    }
   }
 }
 
@@ -350,9 +300,12 @@ $nav-btn-hover-text-dark: $white;
       left: 100%;
       top: 0;
       display: none;
+      margin-top: -1px;
+      border: 1px solid $coolgrey-20;
 
       .sidenav--dark & {
         background-color: $coolgrey-90;
+        border: 1px solid $coolgrey-80;
       }
 
       &.sidenav__sub-list--open {
@@ -410,6 +363,79 @@ $nav-btn-hover-text-dark: $white;
   .sidenav--collapsed & > .avatar {
     @include MQ(Mplus) {
       font-size: 2rem;
+    }
+  }
+}
+
+@each $name, $color in $colors {
+  .sidenav--#{$name} {
+    @include on-medium-and-wide {
+      box-shadow: inset 0 5px 0 $color, 1px 0 0 $coolgrey-20;
+
+      &.sidenav--dark {
+        box-shadow: inset 0 5px 0 $color, 1px 0 0 $coolgrey-80;
+      }
+    }
+
+    @include on-narrow {
+      box-shadow: inset 0 5px 0 $color;
+    }
+    .sidenav__logo {
+      color: $color;
+    }
+
+    .sidenav__button,
+    .sidenav__toggle-button,
+    .sidenav__section-button,
+    .sidenav__route-link {
+      color: $coolgrey-50;
+
+      &:hover {
+        background-color: $color; //mix($white, $coolgrey-90, 92%);
+        color: $white; //$color;
+      }
+    }
+
+    .sidenav__section-button {
+      box-shadow: inset 0 0 0 $color;
+
+      &--active {
+        box-shadow: inset 5px 0 0 $color;
+        background-color: $grey-10;
+        color: $color;
+      }
+    }
+
+    .sidenav__route-link {
+      color: $coolgrey-40;
+      &--active {
+        background-color: $color;
+        color: $white;
+      }
+    }
+
+    &.sidenav--dark {
+      .sidenav__button,
+      .sidenav__toggle-button,
+      .sidenav__section-button,
+      .sidenav__route-link {
+        color: $coolgrey-40;
+
+        &:hover {
+          background-color: $color; //mix($white, $coolgrey-90, 92%);
+          color: $white; //$color;
+        }
+      }
+
+      .sidenav__section-button--active {
+        background: mix($coolgrey-90, black, 40%);
+        color: $white;
+      }
+
+      .sidenav__route-link--active {
+        background-color: $color;
+        color: $white;
+      }
     }
   }
 }
