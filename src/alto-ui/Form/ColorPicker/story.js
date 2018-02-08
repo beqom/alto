@@ -53,8 +53,7 @@ storiesOf('Form/ColorPicker', module)
             'purple',
             'pink',
             'white',
-            'grey',
-            'black',
+            'darkgrey',
           ].map(color => (
             <ColorPicker
               name="alto-colorpicker"
