@@ -23,13 +23,14 @@ const FileInput = ({
   accept,
   name,
   required,
+  value,
 }) => (
   <div className={classnames('FileInput', className)}>
     <input
       className="FileInput__input"
       id={id}
       type="file"
-      {...{ disabled, onChange, accept, name, required }}
+      {...{ disabled, onChange, accept, name, required, value }}
     />
     <Button
       tag="label"
@@ -73,6 +74,7 @@ FileInput.propTypes = {
   nowrap: PropTypes.bool,
   accept: PropTypes.string,
   name: PropTypes.string,
+  value: PropTypes.string,
   required: PropTypes.bool,
 };
 
