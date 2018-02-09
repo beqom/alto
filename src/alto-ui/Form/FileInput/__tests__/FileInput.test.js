@@ -11,6 +11,7 @@ const props = {
   accept: 'image/x-png,image/gif,image/jpeg',
   name: 'foo',
   required: false,
+  value: 'no file',
 };
 
 describe('<FileInput />', () => {
@@ -24,6 +25,7 @@ describe('<FileInput />', () => {
     expect(input.prop('accept')).toBe(props.accept);
     expect(input.prop('name')).toBe(props.name);
     expect(input.prop('required')).toBe(props.required);
+    expect(input.prop('value')).toBe(props.value);
   });
 
   it('should render a label with a Button component with the good props', () => {
