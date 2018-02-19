@@ -97,6 +97,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 
 .button {
   @include button--solid($blue, $blue-80, $blue-30, $blue-90);
+  display: inline-block;
   font-weight: $font-weight-regular;
   font-size: $font-size-medium;
   font-family: $font-family-alt;
