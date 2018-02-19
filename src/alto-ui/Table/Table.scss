@@ -1,8 +1,9 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
 .Table {
   border: 1px solid $coolgrey-20;
   border-radius: $border-radius-default;
+  overflow: auto;
 }
 
 .Table__table {
@@ -13,19 +14,15 @@
 
 .Table__cell {
   border-bottom: 1px solid $coolgrey-20;
-  padding: .75em 1em;
+  padding: 0.75rem 1rem;
+  white-space: nowrap;
 
   .Table--compact & {
-    padding: .4em .75em;
+    padding: 0.4rem 0.75rem;
   }
 
   .Table--wide & {
-    padding: 1em;
-  }
-
-  &--header {
-    color: $coolgrey-50;
-    font-weight: normal;
+    padding: 1rem;
   }
 
   &--number {
@@ -37,5 +34,25 @@
   }
 }
 
+.Table__cell--header {
+  color: $coolgrey-50;
+  font-weight: $font-weight-regular;
+  font-size: $font-size-small;
+  padding-top: 0.9rem;
+  padding-bottom: 0.9rem;
+  text-align: left;
 
+  &:not(:first-child) {
+    border-left: 1px solid $coolgrey-20;
+  }
 
+  .Table--compact & {
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .Table--wide & {
+    padding-top: 1.15rem;
+    padding-bottom: 1.15rem;
+  }
+}
