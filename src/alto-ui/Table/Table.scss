@@ -16,6 +16,8 @@
   border-bottom: 1px solid $coolgrey-20;
   padding: 0.75rem 1rem;
   white-space: nowrap;
+  text-align: left;
+  background-color: $white;
 
   .Table--compact & {
     padding: 0.4rem 0.75rem;
@@ -29,6 +31,31 @@
     text-align: right;
   }
 
+  &--boolean,
+  &--bit {
+    text-align: center;
+  }
+
+  &--image {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+    display: flex;
+
+    > * {
+      margin: auto;
+    }
+
+    .Table--compact & {
+      padding-top: 0.2rem;
+      padding-bottom: 0.2rem;
+    }
+
+    .Table--wide & {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+  }
+
   tbody tr:last-child > & {
     border-bottom: 0;
   }
@@ -40,7 +67,6 @@
   font-size: $font-size-small;
   padding-top: 0.9rem;
   padding-bottom: 0.9rem;
-  text-align: left;
 
   &:not(:first-child) {
     border-left: 1px solid $coolgrey-20;
