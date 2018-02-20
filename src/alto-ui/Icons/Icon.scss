@@ -1,9 +1,7 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
 .icon {
-  display: inline-flex;
-  align-self: center;
-  position: relative;
+  display: inline-block;
   font-size: 1em;
   width: 1em;
   height: 1em;
@@ -13,11 +11,8 @@
 .icon--left,
 .icon--right {
   font-size: 1.2em;
-
-  svg {
-    bottom: -.2em;
-    position: absolute;
-  }
+  line-height: 1;
+  transform: translateY(0.2em);
 }
 
 .icon--left {

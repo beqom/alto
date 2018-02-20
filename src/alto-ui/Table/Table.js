@@ -1,40 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { format } from 'date-fns';
+
+import CheckIcon from '../Icons/Check';
+import Avatar from '../Avatar';
 import { bemClass } from '../helpers/bem';
 
 import './Table.scss';
 
-const Table = ({ className, columns, rows, rowId, wide, compact }) => (
-  <div className={bemClass('Table', { wide, compact }, className)}>
-    <table className="Table__table">
-      <thead>
-        <tr>
-          {(columns || Object.keys(rows[0])).map(col => (
-            <th key={col.key || col} className="Table__cell Table__cell--header">
-              {col.title || col}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map(row => (
-          <tr key={row[rowId]}>
-            {(columns || Object.keys(rows[0])).map(col => (
-              <td
-                key={col.key || col}
-                className={bemClass('Table__cell', {
-                  number: typeof row[col.key || col] === 'number',
-                })}
-              >
-                {row[col.key || col]}
-              </td>
+const IDENTITY = x => x;
+
+const FORMATTERS = {
+  date: x => format(new Date(x), 'D MMM YYYY'),
+};
+
+const RENDERERS = {
+  boolean: x => (x ? <CheckIcon className="Table__cell-centered-content" /> : null),
+  bit: x => RENDERERS.boolean(x),
+  image: (x, col, { wide, compact }) => (
+    <Avatar small={compact} large={wide} src={x || ''} alt={col.title} />
+  ),
+};
+
+const renderCell = (row, props) => col => {
+  const key = col.key || col;
+  const value = row[key];
+  const type = col.type || typeof value;
+  const renderer = RENDERERS[type] || IDENTITY;
+  const formatter = FORMATTERS[type] || IDENTITY;
+  return (
+    <td
+      key={key}
+      className={bemClass('Table__cell', {
+        [type]: true,
+      })}
+    >
+      {renderer(formatter(value, col, props), col, props)}
+    </td>
+  );
+};
+
+const Table = props => {
+  const { className, rows, rowId, wide, compact } = props;
+  const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
+  return (
+    <div className={bemClass('Table', { wide, compact }, className)}>
+      <table className="Table__table">
+        <thead>
+          <tr>
+            {columns.map(col => (
+              <th key={col.key} className="Table__cell Table__cell--header">
+                {col.title}
+              </th>
             ))}
           </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+        </thead>
+        <tbody>
+          {rows.map(row => <tr key={row[rowId]}>{columns.map(renderCell(row, props))}</tr>)}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 Table.displayName = 'Table';
 
@@ -49,6 +76,8 @@ Table.propTypes = {
     PropTypes.shape({
       key: PropTypes.any.isRequired,
       title: PropTypes.any.isRequired,
+      description: PropTypes.string,
+      type: PropTypes.string,
     })
   ),
   rows: PropTypes.array.isRequired,
