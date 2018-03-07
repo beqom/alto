@@ -15,7 +15,7 @@ setAddon(JSXAddon);
 setOptions({
   name: 'Alto UI',
   url: 'https://github.com/beqom/alto-ui',
-  downPanelInRight: true ,
+  downPanelInRight: true,
   showLeftPanel: true,
 });
 
@@ -41,7 +41,6 @@ setDefaults({
 });
 */
 
-
 addDecorator(checkA11y);
 
 // addDecorator((story, context) => withInfo('')(story)(context));
@@ -52,7 +51,18 @@ addDecorator(withKnobs);
 
 addDecorator(story => (
   <AltoUIRoot resetCSS>
-    {story()}
+    <div
+      style={{
+        backgroundColor: '#f8f9fb',
+        position: 'fixed',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }}
+    >
+      {story()}
+    </div>
   </AltoUIRoot>
 ));
 
@@ -64,6 +74,7 @@ function loadStories() {
   require('../src/alto-ui/Form/story');
   require('../src/alto-ui/List/story');
   require('../src/alto-ui/Pagination/story');
+  require('../src/alto-ui/ShowMore/story');
   require('../src/alto-ui/SideNav/story');
   require('../src/alto-ui/Table/story');
   require('../src/alto-ui/Tabs/story');
