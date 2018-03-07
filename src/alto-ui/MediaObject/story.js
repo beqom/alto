@@ -1,13 +1,12 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, text, number, color, array, object, select, date } from '@storybook/addon-knobs';
+import { boolean, text, number } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 import styled from 'styled-components';
 
 import MediaObject from './MediaObject';
-import Button from '../Button';
 import README from './README.md';
 
 const CenteredDiv = styled.div`

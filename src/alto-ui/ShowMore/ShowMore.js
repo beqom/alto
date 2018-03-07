@@ -58,11 +58,16 @@ class ShowMore extends React.Component {
 
 ShowMore.displayName = 'ShowMore';
 
-ShowMore.defaultProps = {};
+ShowMore.defaultProps = {
+  open: false,
+};
 
 ShowMore.propTypes = {
+  labelToOpen: PropTypes.string.isRequired,
+  labelToClose: PropTypes.string.isRequired,
   className: PropTypes.string,
   children: PropTypes.any,
+  open: PropTypes.bool,
 };
 
 export default ShowMore;
