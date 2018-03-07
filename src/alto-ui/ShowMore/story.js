@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean, text, number, color, array, object, select, date } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 

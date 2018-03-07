@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
@@ -73,6 +72,19 @@ MediaObject.defaultProps = {};
 MediaObject.propTypes = {
   className: PropTypes.string,
   title: PropTypes.any.isRequired,
+  subtitle: PropTypes.string,
+  src: PropTypes.string,
+  alt: PropTypes.string,
+  small: PropTypes.bool,
+  large: PropTypes.bool,
+  white: PropTypes.bool,
+  danger: PropTypes.bool,
+  success: PropTypes.bool,
+  avatar: PropTypes.bool,
+  top: PropTypes.bool,
+  wrap: PropTypes.bool,
+  imageWidth: PropTypes.number,
+  imageHeight: PropTypes.number,
 };
 
 export default MediaObject;
