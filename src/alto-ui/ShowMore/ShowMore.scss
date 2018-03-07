@@ -1,0 +1,10 @@
+@import '../scss/inc';
+
+.ShowMore__content-wrapper {
+  overflow: hidden;
+  transition: all $duration-prompt $timing-function;
+}
+
+.ShowMore__content {
+  padding-bottom: $spacing-medium;
+}
