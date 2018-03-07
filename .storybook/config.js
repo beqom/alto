@@ -73,6 +73,7 @@ function loadStories() {
   require('../src/alto-ui/Icons/story');
   require('../src/alto-ui/Form/story');
   require('../src/alto-ui/List/story');
+  require('../src/alto-ui/MediaObject/story');
   require('../src/alto-ui/Pagination/story');
   require('../src/alto-ui/ShowMore/story');
   require('../src/alto-ui/SideNav/story');

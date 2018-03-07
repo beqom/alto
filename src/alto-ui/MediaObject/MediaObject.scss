@@ -1,0 +1,136 @@
+@import '../scss/inc';
+
+.MediaObject {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+
+  &--top {
+    align-items: flex-start;
+  }
+}
+
+.MediaObject__image {
+  max-height: 3.5rem;
+  max-width: 3.5rem;
+
+  .MediaObject--large & {
+    max-height: 5rem;
+    max-width: 5rem;
+  }
+
+  .MediaObject--small & {
+    max-height: 2rem;
+    max-width: 2rem;
+  }
+}
+
+.MediaObject__image,
+.MediaObject__image-placeholder {
+  margin-right: $spacing-medium;
+
+  .MediaObject--large & {
+    margin-right: $spacing-large;
+  }
+
+  .MediaObject--small & {
+    margin-right: $spacing-small;
+  }
+}
+
+.MediaObject__image-placeholder {
+  background-color: $coolgrey-20;
+  color: $coolgrey-40;
+  display: flex;
+  height: 3.5rem;
+  width: 3.5rem;
+
+  .MediaObject--large & {
+    height: 5rem;
+    width: 5rem;
+  }
+
+  .MediaObject--small & {
+    height: 2rem;
+    width: 2rem;
+  }
+}
+
+.MediaObject__image-placeholder-icon {
+  margin: auto;
+  font-size: 2rem;
+
+  .MediaObject--large & {
+    font-size: 3.5rem;
+  }
+
+  .MediaObject--small & {
+    font-size: 1rem;
+  }
+}
+
+.MediaObject__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.MediaObject__title {
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-large;
+  color: $color-text-default;
+
+  .MediaObject--large & {
+    font-size: $font-size-xx-large;
+    font-weight: $font-weight-regular;
+  }
+
+  .MediaObject--small & {
+    font-size: $font-size-small;
+  }
+
+  .MediaObject--danger & {
+    color: $red;
+  }
+
+  .MediaObject--success & {
+    color: $green;
+  }
+
+  .MediaObject--white & {
+    color: $white;
+  }
+}
+
+.MediaObject__title,
+.MediaObject__subtitle {
+  white-space: nowrap;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  .MediaObject--wrap & {
+    white-space: normal;
+  }
+}
+
+.MediaObject__subtitle {
+  margin-top: $spacing-x-small;
+  color: $coolgrey-50;
+  font-size: $font-size-small;
+
+  .MediaObject--large & {
+    margin-top: $spacing-small;
+    font-size: $font-size-large;
+  }
+
+  .MediaObject--small & {
+    margin-top: $spacing-xx-small;
+    font-size: $font-size-x-small;
+  }
+
+  .MediaObject--white & {
+    color: $white;
+    opacity: 0.6;
+  }
+}
