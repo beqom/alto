@@ -1,0 +1,22 @@
+@import '../scss/inc';
+
+.Card {
+  border: 1px solid $coolgrey-20;
+  background-color: $white;
+  border-radius: $border-radius-default;
+}
+
+.Card__header {
+  padding: $spacing-medium;
+  border-bottom: 1px solid $coolgrey-20;
+}
+
+.Card__title {
+  font-size: $font-size-large;
+  font-weight: $font-weight-semibold;
+  color: $coolgrey-50;
+}
+
+.Card__body {
+  padding: $spacing-medium;
+}
