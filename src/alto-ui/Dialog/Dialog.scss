@@ -1,0 +1,81 @@
+@import '../scss/inc';
+
+.Dialog {
+  width: 600px;
+  max-width: 90%;
+  background-color: $white;
+  padding: $spacing-x-large;
+  border-radius: $border-radius-default;
+  position: fixed;
+  z-index: $z-index-overlay;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.Dialog__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: $spacing-medium;
+}
+
+.Dialog__title {
+  font-size: $font-size-x-large;
+  font-weight: $font-weight-semibold;
+  flex: 1;
+}
+
+.Dialog__close-button {
+  @extend %reset-button;
+  font-size: $font-size-xx-large;
+  width: 3.2rem;
+  height: 3.2rem;
+  text-align: center;
+  border-radius: 50%;
+  background-color: $white;
+  transition: all $transition;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  &:hover {
+    background-color: $coolgrey-10;
+  }
+
+  &:active {
+    color: inherit;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $blue-20;
+  }
+}
+
+.Dialog__close-label {
+  font-size: $font-size-small;
+  margin-top: -0.3rem;
+}
+
+.Dialog__header-stroke {
+  border: 0;
+  border-bottom: 1px solid $coolgrey-20;
+  margin-bottom: $spacing-x-large;
+}
+
+.Dialog__footer {
+  border-top: 1px solid $coolgrey-20;
+  margin-top: $spacing-x-large;
+  padding-top: $spacing-large;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.Dialog__button {
+  margin-left: $spacing-small;
+}
