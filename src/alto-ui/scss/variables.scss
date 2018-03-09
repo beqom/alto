@@ -1,6 +1,6 @@
 // ===========================
 // Alto
-$alto-version: '0.6.5' !default;
+$alto-version: '0.7.0' !default;
 $deprecate-mode: 'sensible' !default;
 
 // ===================================
@@ -224,8 +224,7 @@ $font-family-sans-serif: 'Source Sans Pro', sans-serif !default;
 $font-family-alt: 'Source Sans Pro', sans-serif !default;
 
 $font-family: $font-family-sans-serif !default;
-$font-family-monospaced: Inconsolata, Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono',
-  monospace !default;
+$font-family-monospaced: Inconsolata, Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace !default;
 
 $font-family-body: $font-family !default;
 $font-family-button: $font-family-alt !default;
