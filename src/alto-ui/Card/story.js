@@ -9,7 +9,7 @@ import MediaObject from '../MediaObject';
 import ShowMore from '../ShowMore';
 import Table from '../Table';
 import Switch from '../Form/Switch';
-import ProvideState from '../ProvideState';
+import StateProvider from '../StateProvider';
 
 import Card from './Card';
 import README from './README.md';
@@ -65,7 +65,7 @@ storiesOf('Card', module)
     </Card>
   ))
   .addWithJSX('widget example', () => (
-    <ProvideState state={{ public: true, notification: false }}>
+    <StateProvider state={{ public: true, notification: false }}>
       {(state, setState) => (
         <div style={{ position: 'absolute', top: 200 }}>
           <Card title="My profile">
@@ -105,5 +105,5 @@ storiesOf('Card', module)
           </Card>
         </div>
       )}
-    </ProvideState>
+    </StateProvider>
   ));

@@ -71,6 +71,7 @@ function loadStories() {
   require('../src/alto-ui/Breadcrumb/story');
   require('../src/alto-ui/Button/story');
   require('../src/alto-ui/Card/story');
+  require('../src/alto-ui/Dialog/story');
   require('../src/alto-ui/Icons/story');
   require('../src/alto-ui/Form/story');
   require('../src/alto-ui/List/story');
