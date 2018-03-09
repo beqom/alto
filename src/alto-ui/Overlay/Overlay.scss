@@ -1,6 +1,6 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
-.Overlay {
+.Overlay__overlay {
   @extend %reset-button;
   position: fixed;
   z-index: $z-index-overlay;
@@ -9,10 +9,8 @@
   width: 100%;
   height: 100%;
   display: block;
-
-  &--darken {
-    background-color: rgba($coolgrey-90, .5);
-  }
+  background-color: rgba($coolgrey-90, 0.5);
+  cursor: pointer;
 }
 
 .Overlay__focus-out {
