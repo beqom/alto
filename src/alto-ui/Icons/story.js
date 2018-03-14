@@ -19,6 +19,7 @@ import ChevronUp from './ChevronUp';
 import Cog from './Cog';
 import Config from './Config';
 import Collapse from './Collapse';
+import Copy from './Copy';
 import Delete from './Delete';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
@@ -58,6 +59,7 @@ const icons = Object.entries({
   ChevronRight,
   Cog,
   Collapse,
+  Copy,
   Config,
   Delete,
   Edit,
@@ -107,7 +109,14 @@ storiesOf('Icons', module).add('all', () => {
   ));
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', margin: 20 }}>
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        flexWrap: 'wrap',
+        margin: 20,
+      }}
+    >
       {iconsElts}
     </div>
   );
