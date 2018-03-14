@@ -34,6 +34,14 @@ class Overlay extends React.PureComponent {
         this.close();
       }
     }
+
+    if (prevProps.inert !== this.props.inert) {
+      if (this.props.inert) {
+        this.removeCloseEventListener();
+      } else {
+        this.addCloseEventListener();
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -45,18 +53,25 @@ class Overlay extends React.PureComponent {
   }
 
   open() {
-    const { onClose, openFocusTargetId } = this.props;
-    if (onClose) {
-      document.addEventListener('keydown', this.handleKeyDown);
-      document.addEventListener('click', this.handleClickOutside);
-    }
-    focusId(openFocusTargetId);
+    this.addCloseEventListener();
+    focusId(this.props.openFocusTargetId);
   }
 
   close() {
+    this.removeCloseEventListener();
+    focusId(this.props.closeFocusTargetId);
+  }
+
+  addCloseEventListener() {
+    if (this.props.onClose && !this.props.inert) {
+      document.addEventListener('keydown', this.handleKeyDown);
+      document.addEventListener('click', this.handleClickOutside);
+    }
+  }
+
+  removeCloseEventListener() {
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('click', this.handleClickOutside);
-    focusId(this.props.closeFocusTargetId);
   }
 
   handleKeyDown(e) {
@@ -72,8 +87,8 @@ class Overlay extends React.PureComponent {
   }
 
   render() {
-    const { open, children, blocking, onClose } = this.props;
-    const focusOut = !!open && !blocking && !!onClose;
+    const { open, children, blocking, onClose, inert } = this.props;
+    const focusOut = !!open && !blocking && !!onClose && !inert;
     return (
       <Fragment>
         {open && blocking && <div className="Overlay__overlay" />}
@@ -86,9 +101,9 @@ class Overlay extends React.PureComponent {
             onFocus={onClose}
           />
         )}
-        <div ref={this.setContentNode} aria-hidden={!open} className="Overlay">
+        <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
           <FocusTrap
-            active={open && blocking}
+            active={open && blocking && !inert}
             className="Overlay__focus-trap"
             focusTrapOptions={{ clickOutsideDeactivates: true }}
           >
@@ -113,6 +128,7 @@ Overlay.displayName = 'Overlay';
 
 Overlay.defaultProps = {
   blocking: false,
+  inert: false,
 };
 
 Overlay.propTypes = {
@@ -122,6 +138,7 @@ Overlay.propTypes = {
   closeFocusTargetId: PropTypes.string.isRequired,
   open: PropTypes.bool.isRequired,
   blocking: PropTypes.bool,
+  inert: PropTypes.bool,
 };
 
 export default Overlay;

@@ -33,6 +33,7 @@ storiesOf('Dialog', module)
             openFocusTargetId="dialog-textfield"
             closeFocusTargetId="dialog-trigger-button"
             buttons={array('buttons', ['cancel', 'save']).filter(btn => !!btn)}
+            inert={boolean('inert', false)}
           >
             <StateProvider state={{ value: '' }}>
               {({ value }, setContentState) => (

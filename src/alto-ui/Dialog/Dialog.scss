@@ -53,6 +53,11 @@
   &:focus {
     box-shadow: 0 0 0 3px $blue-20;
   }
+
+  &:disabled {
+    color: $coolgrey-30;
+    background-color: transparent;
+  }
 }
 
 .Dialog__close-label {

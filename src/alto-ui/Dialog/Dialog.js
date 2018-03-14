@@ -10,7 +10,17 @@ import Overlay from '../Overlay';
 import './Dialog.scss';
 
 const Dialog = props => {
-  const { id, className, children, open, title, onClose, buttons, closeFocusTargetId } = props;
+  const {
+    id,
+    className,
+    children,
+    open,
+    title,
+    onClose,
+    buttons,
+    closeFocusTargetId,
+    inert,
+  } = props;
   const openFocusTargetId =
     props.openFocusTargetId ||
     `${id}__${buttons && buttons.length ? `button--${buttons.length}` : 'close-button'}`;
@@ -21,6 +31,7 @@ const Dialog = props => {
       closeFocusTargetId={closeFocusTargetId}
       open={open}
       blocking
+      inert={inert}
     >
       {open && (
         <div
@@ -41,6 +52,7 @@ const Dialog = props => {
                   id={`${id}__close-button`}
                   className="Dialog__close-button"
                   onClick={onClose}
+                  disabled={inert}
                 >
                   <CloseIcon />
                   <div className="Dialog__close-label">
@@ -66,6 +78,7 @@ const Dialog = props => {
                         outline={index < buttons.length - 1}
                         onClick={onClose}
                         {...btn}
+                        disabled={inert || btn.disabled}
                       />
                     </li>
                   ))}
@@ -81,6 +94,7 @@ Dialog.displayName = 'Dialog';
 
 Dialog.defaultProps = {
   open: false,
+  inert: false,
 };
 
 Dialog.propTypes = {
@@ -90,6 +104,7 @@ Dialog.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
   open: PropTypes.bool,
+  inert: PropTypes.bool,
   title: PropTypes.string,
   onClose: PropTypes.func,
   buttons: PropTypes.arrayOf(
