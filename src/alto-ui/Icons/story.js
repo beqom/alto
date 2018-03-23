@@ -12,6 +12,7 @@ import ArrowUp from './ArrowUp';
 import Bars from './Bars';
 import Bell from './Bell';
 import Bolt from './Bolt';
+import Building from './Building';
 import ChevronDown from './ChevronDown';
 import ChevronLeft from './ChevronLeft';
 import ChevronRight from './ChevronRight';
@@ -26,6 +27,7 @@ import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
 import Expand from './Expand';
 import Eye from './Eye';
+import Globe from './Globe';
 import Image from './Image';
 import Lightbulb from './Lightbulb';
 import Minus from './Minus';
@@ -36,6 +38,7 @@ import PlusCircle from './PlusCircle';
 import Plus from './Plus';
 import Objects from './Objects';
 import Options from './Options';
+import Organization from './Organization';
 import Remove from './Remove';
 import Search from './Search';
 import Times from './Times';
@@ -43,6 +46,7 @@ import Trash from './Trash';
 import User from './User';
 import ViewCards from './ViewCards';
 import ViewList from './ViewList';
+import World from './World';
 
 const icons = Object.entries({
   Add,
@@ -53,6 +57,7 @@ const icons = Object.entries({
   Bars,
   Bell,
   Bolt,
+  Building,
   ChevronDown,
   ChevronLeft,
   ChevronUp,
@@ -67,6 +72,7 @@ const icons = Object.entries({
   EllipsisVertical,
   Expand,
   Eye,
+  Globe,
   Image,
   Lightbulb,
   Minus,
@@ -77,6 +83,7 @@ const icons = Object.entries({
   PlusCircle,
   Objects,
   Options,
+  Organization,
   Remove,
   Search,
   Times,
@@ -84,6 +91,7 @@ const icons = Object.entries({
   User,
   ViewCards,
   ViewList,
+  World,
 }).map(([name, Icon]) => ({ name, Icon }));
 
 storiesOf('Icons', module).add('all', () => {
