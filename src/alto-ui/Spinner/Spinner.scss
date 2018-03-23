@@ -1,0 +1,48 @@
+@import '../scss/inc';
+
+@mixin Spinner--size($spinner-thickness) {
+  border-width: $spinner-thickness;
+  &::before {
+    top: -$spinner-thickness;
+    left: -$spinner-thickness;
+    border-width: $spinner-thickness;
+  }
+}
+
+.Spinner {
+  font-size: $font-size-xx-large;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  border-style: solid;
+  border-color: $coolgrey-20;
+  @include Spinner--size(2px);
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: $coolgrey-40;
+    animation: Spinner__animation 500ms infinite linear;
+  }
+
+  &--small {
+    font-size: $font-size-medium;
+  }
+
+  &--large {
+    font-size: $font-size-xxx-large * 2;
+    @include Spinner--size(3px);
+  }
+}
+
+@keyframes Spinner__animation {
+  100% {
+    transform: rotate(360deg);
+  }
+}
