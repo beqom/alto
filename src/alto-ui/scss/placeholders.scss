@@ -1,4 +1,6 @@
 %reset-button {
+  @extend %focusable;
+
   font: inherit;
   background: transparent;
   border: 0;
@@ -41,4 +43,10 @@
   width: 1px;
   overflow: hidden;
   clip: rect(1px, 1px, 1px, 1px);
+}
+
+%focusable {
+  .alto-focus-feedback &:focus {
+    box-shadow: 0 0 0 3px $blue-30;
+  }
 }
