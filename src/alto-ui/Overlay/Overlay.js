@@ -18,6 +18,7 @@ class Overlay extends React.PureComponent {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setContentNode = this.setContentNode.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   componentDidMount() {
@@ -54,12 +55,16 @@ class Overlay extends React.PureComponent {
 
   open() {
     this.addCloseEventListener();
-    focusId(this.props.openFocusTargetId);
+    if (this.props.openFocusTargetId) {
+      focusId(this.props.openFocusTargetId);
+    }
   }
 
   close() {
     this.removeCloseEventListener();
-    focusId(this.props.closeFocusTargetId);
+    if (this.props.closeFocusTargetId) {
+      focusId(this.props.closeFocusTargetId);
+    }
   }
 
   addCloseEventListener() {
@@ -72,6 +77,15 @@ class Overlay extends React.PureComponent {
   removeCloseEventListener() {
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('click', this.handleClickOutside);
+  }
+
+  handleBlur(e) {
+    const { open, blocking, onClose, inert } = this.props;
+    if (!!open && !blocking && !!onClose && !inert) {
+      if (!e.currentTarget.contains(e.target)) {
+        onClose();
+      }
+    }
   }
 
   handleKeyDown(e) {
@@ -87,21 +101,16 @@ class Overlay extends React.PureComponent {
   }
 
   render() {
-    const { open, children, blocking, onClose, inert } = this.props;
-    const focusOut = !!open && !blocking && !!onClose && !inert;
+    const { open, children, blocking, inert } = this.props;
     return (
       <Fragment>
         {open && blocking && <div className="Overlay__overlay" />}
-        {focusOut && (
-          <div
-            aria-hidden="true"
-            tabIndex="0"
-            role="button"
-            className="Overlay__focus-out"
-            onFocus={onClose}
-          />
-        )}
-        <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
+        <div
+          ref={this.setContentNode}
+          aria-hidden={!open || inert}
+          className="Overlay"
+          onBlur={this.handleBlur}
+        >
           <FocusTrap
             active={open && blocking && !inert}
             className="Overlay__focus-trap"
@@ -110,15 +119,6 @@ class Overlay extends React.PureComponent {
             {children}
           </FocusTrap>
         </div>
-        {focusOut && (
-          <div
-            aria-hidden="true"
-            tabIndex="0"
-            role="button"
-            className="Overlay__focus-out"
-            onFocus={onClose}
-          />
-        )}
       </Fragment>
     );
   }
@@ -134,8 +134,8 @@ Overlay.defaultProps = {
 Overlay.propTypes = {
   children: PropTypes.any,
   onClose: PropTypes.func,
-  openFocusTargetId: PropTypes.string.isRequired,
-  closeFocusTargetId: PropTypes.string.isRequired,
+  openFocusTargetId: PropTypes.string,
+  closeFocusTargetId: PropTypes.string,
   open: PropTypes.bool.isRequired,
   blocking: PropTypes.bool,
   inert: PropTypes.bool,
