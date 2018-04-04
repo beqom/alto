@@ -39,10 +39,19 @@
     font-size: $font-size-xxx-large * 2;
     @include Spinner--size(3px);
   }
+
+  &--centered {
+    margin: auto;
+  }
 }
 
 @keyframes Spinner__animation {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.Spinner--centered__wrapper {
+  height: 100%;
+  display: flex;
 }
