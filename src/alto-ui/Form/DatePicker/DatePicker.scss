@@ -1,0 +1,72 @@
+@import '../../scss/inc';
+
+.DatePicker {
+  position: relative;
+}
+
+.DayPicker__a11y-day-button {
+  @extend %reset-button;
+  color: inherit;
+  width: 2.2rem;
+}
+
+.DatePicker__day-picker {
+  display: none;
+  position: absolute;
+
+  &--open {
+    display: block;
+  }
+}
+
+.DatePicker__month-form {
+  display: flex;
+  flex: 1;
+}
+
+.DatePicker__month-select {
+  flex: 1;
+  margin-right: $spacing-small;
+}
+
+.DatePicker__year-input {
+  width: 4.5rem;
+  text-align: right;
+}
+
+.DatePicker__nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: $spacing-medium;
+  padding: $spacing-small 0;
+  border-top: 1px solid $coolgrey-20;
+  border-bottom: 1px solid $coolgrey-20;
+}
+
+// react-day-picker overrides
+
+.DayPicker-Month {
+  margin: 0;
+}
+
+.DayPicker-wrapper {
+  padding: 0;
+}
+
+.DayPicker-Day {
+  border-radius: 50%;
+  height: 2.2rem;
+  padding: 0;
+
+  &[aria-disabled='false']:hover {
+    background-color: $blue-20;
+  }
+
+  &--today {
+    color: $blue;
+  }
+
+  &--selected {
+    background-color: $blue;
+  }
+}
