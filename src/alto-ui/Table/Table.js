@@ -12,6 +12,7 @@ const IDENTITY = x => x;
 
 const FORMATTERS = {
   date: x => format(new Date(x), 'D MMM YYYY'),
+  datetime: x => FORMATTERS.date(x),
 };
 
 const RENDERERS = {
