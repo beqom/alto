@@ -11,29 +11,34 @@ class TreeItem extends React.Component {
   constructor(props) {
     super(props);
 
+    const open = typeof props.open === 'function' ? props.open(props.item) : props.open;
+
     this.state = {
-      open: props.open,
+      open,
       children: null,
       fetching: false,
-      haveBeenOpen: false,
     };
-
-    this.checkChildren(props.open);
 
     this.toggle = this.toggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
+  componentDidMount() {
+    this.checkChildren(this.state.open);
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.open !== this.props.open) {
-      this.setState({ open: nextProps.open });
-      this.checkChildren(nextProps.open);
+      const open =
+        typeof nextProps.open === 'function' ? nextProps.open(nextProps.item) : nextProps.open;
+      this.setState({ open });
+      this.checkChildren(open);
     }
   }
 
   checkChildren(open) {
-    if (open && !this.state.children && !this.state.fetching) {
-      const { item, items, index, getChildren } = this.props;
+    const { item, items, index, getChildren, hasChildren } = this.props;
+    if (open && !this.state.children && !this.state.fetching && hasChildren(item)) {
       if (this.state.children) return;
 
       const children = getChildren(item, index, items);
@@ -63,9 +68,9 @@ class TreeItem extends React.Component {
   }
 
   renderChildren() {
-    const { open, haveBeenOpen, children } = this.state;
+    const { open, children } = this.state;
 
-    if (!haveBeenOpen && !open) return null;
+    if (!open) return null;
     if (!children || !children.length) return null;
 
     return (
@@ -98,9 +103,11 @@ class TreeItem extends React.Component {
           )}
           <button
             onClick={this.handleClick}
-            className={bemClass('Tree__item-button', { active: selected })}
+            className={bemClass('Tree__item-button', {
+              active: selected,
+            })}
           >
-            {renderItem(item)}
+            {renderItem(item, selected)}
           </button>
         </div>
         {this.renderChildren()}
@@ -130,7 +137,7 @@ TreeItem.propTypes = {
     PropTypes.number,
     // promise
     PropTypes.object,
-  ]).isRequired,
+  ]),
 };
 
 const Tree = props => (
