@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash.omit';
 
 import { bemProps } from '../../helpers/bem';
 import FormElement from '../FormElement';
@@ -11,9 +12,12 @@ const texfieldProps = bemProps('textfield', ['large', 'small', 'success', 'error
 const TextField = props => (
   <FormElement {...props}>
     {props.area ? (
-      <textarea {...texfieldProps(props, 'helpText', 'type')} type={null} />
+      <textarea
+        {...texfieldProps(omit(props, ['className', 'hideLabel', 'label']), 'helpText', 'type')}
+        type={null}
+      />
     ) : (
-      <input {...texfieldProps(props, 'helpText')} />
+      <input {...texfieldProps(omit(props, ['className', 'hideLabel', 'label']), 'helpText')} />
     )}
   </FormElement>
 );

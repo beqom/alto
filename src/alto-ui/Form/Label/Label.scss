@@ -1,4 +1,4 @@
-@import "../../scss/inc";
+@import '../../scss/inc';
 
 .label {
   font-size: $font-size-small;
@@ -8,8 +8,12 @@
   padding-bottom: 10px;
   display: block;
   border-bottom: 1px solid transparent;
-}
 
-.label--read-only {
-  border-bottom-color:$coolgrey-20;
+  &--read-only {
+    border-bottom-color: $coolgrey-20;
+  }
+
+  &--hidden {
+    @extend %visually-hidden;
+  }
 }
