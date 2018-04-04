@@ -66,32 +66,35 @@ const SelectTag = styled.select`
 
 SelectTag.displayName = 'SelectTagSelect';
 
-const renderOptions = options => options.reduce((acc, option) => {
-  if (option) {
-    if (option.value) {
-      if (isArray(option.value)) {
+const renderOptions = options =>
+  options.reduce((acc, option) => {
+    if (option) {
+      if (option.value !== undefined) {
+        if (isArray(option.value)) {
+          return acc.concat([
+            <optgroup label={option.title} key={option.title}>
+              {renderOptions(option.value)}
+            </optgroup>,
+          ]);
+        }
         return acc.concat([
-          <optgroup label={option.title} key={option.title}>
-            {renderOptions(option.value)}
-          </optgroup>,
+          <option key={option.value} value={option.value}>
+            {option.title}
+          </option>,
         ]);
       }
       return acc.concat([
-        <option key={option.value} value={option.value}>{option.title}</option>,
+        <option key={option} value={option}>
+          {option}
+        </option>,
       ]);
     }
-    return acc.concat([
-      <option key={option} value={option}>{option}</option>,
-    ]);
-  }
-  return acc;
-}, []);
+    return acc;
+  }, []);
 
 const Select = props => (
   <FormElement {...props}>
-    <SelectTag {...props}>
-      {props.children || renderOptions(props.options)}
-    </SelectTag>
+    <SelectTag {...props}>{props.children || renderOptions(props.options)}</SelectTag>
   </FormElement>
 );
 
@@ -104,17 +107,15 @@ Select.defaultProps = {
 
 Select.propTypes = {
   children: PropTypes.any,
-  options: PropTypes.arrayOf(PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.shape({
-      title: PropTypes.string,
-      value: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.number,
-        PropTypes.array,
-      ]),
-    }),
-  ])),
+  options: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        title: PropTypes.string,
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+      }),
+    ])
+  ),
 };
 
 export default Select;
