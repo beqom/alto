@@ -17,6 +17,7 @@ import ChevronDown from './ChevronDown';
 import ChevronLeft from './ChevronLeft';
 import ChevronRight from './ChevronRight';
 import ChevronUp from './ChevronUp';
+import Close from './Close';
 import Cog from './Cog';
 import Config from './Config';
 import Collapse from './Collapse';
@@ -62,6 +63,7 @@ const icons = Object.entries({
   ChevronLeft,
   ChevronUp,
   ChevronRight,
+  Close,
   Cog,
   Collapse,
   Copy,
