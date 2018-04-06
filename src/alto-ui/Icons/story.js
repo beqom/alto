@@ -28,11 +28,18 @@ import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
 import Expand from './Expand';
 import Eye from './Eye';
+import File from './File';
+import FileSettings from './FileSettings';
+import Filter from './Filter';
+import Folder from './Folder';
+import FolderOpen from './FolderOpen';
 import Globe from './Globe';
 import Image from './Image';
 import Lightbulb from './Lightbulb';
+import List from './List';
 import Minus from './Minus';
 import More from './More';
+import Note from './Note';
 import MinusCircle from './MinusCircle';
 import Pencil from './Pencil';
 import PlusCircle from './PlusCircle';
@@ -74,12 +81,19 @@ const icons = Object.entries({
   EllipsisVertical,
   Expand,
   Eye,
+  File,
+  FileSettings,
+  Filter,
+  Folder,
+  FolderOpen,
   Globe,
   Image,
   Lightbulb,
+  List,
   Minus,
   MinusCircle,
   More,
+  Note,
   Pencil,
   Plus,
   PlusCircle,
