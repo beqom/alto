@@ -18,6 +18,7 @@ class Overlay extends React.PureComponent {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setContentNode = this.setContentNode.bind(this);
+    this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
   }
 
@@ -79,12 +80,14 @@ class Overlay extends React.PureComponent {
     document.removeEventListener('click', this.handleClickOutside);
   }
 
+  handleFocus() {
+    this.cancelClose();
+  }
+
   handleBlur(e) {
     const { open, blocking, onClose, inert } = this.props;
     if (!!open && !blocking && !!onClose && !inert) {
-      if (!e.currentTarget.contains(e.target)) {
-        onClose();
-      }
+      this.close();
     }
   }
 
@@ -95,9 +98,21 @@ class Overlay extends React.PureComponent {
   }
 
   handleClickOutside(e) {
-    if (this.contentNode && !this.contentNode.contains(e.target)) {
-      this.props.onClose();
+    if (this.contentNode) {
+      if (this.contentNode.contains(e.target)) {
+        this.cancelClose();
+      } else {
+        this.props.onClose();
+      }
     }
+  }
+
+  close() {
+    this.closeTimeout = setTimeout(this.props.onClose, 0);
+  }
+
+  cancelClose() {
+    clearTimeout(this.closeTimeout);
   }
 
   render() {
@@ -110,6 +125,7 @@ class Overlay extends React.PureComponent {
           aria-hidden={!open || inert}
           className="Overlay"
           onBlur={this.handleBlur}
+          onFocus={this.handleFocus}
         >
           <FocusTrap
             active={open && blocking && !inert}
