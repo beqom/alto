@@ -15,7 +15,7 @@ const DatePickerHeader = ({ id, date, onChange }) => {
     value: i + 1,
   }));
 
-  const handleChange = function handleChange(e) {
+  const handleChange = e => {
     const { year, month } = e.target.form;
     onChange({ year: parseInt(year.value, 10), month: parseInt(month.value, 10) });
   };

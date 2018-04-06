@@ -1,0 +1,68 @@
+@import '../../scss/inc';
+
+.CheckBox {
+  margin-bottom: 10px;
+}
+
+.CheckBox__input {
+  @extend %visually-hidden  
+}
+
+.CheckBox__label {
+  font-size: $font-size-medium;
+  padding-left: 1.6em;
+  position: relative;
+  outline: 0;
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: "";
+    display: inline-block;
+    transition: background-color, box-shadow, border-color $transition;
+  }
+  
+  &::before {
+    left: 0;
+    border: 1px solid $coolgrey-20;
+    background-color: white;
+    height: .875em;
+    width: .875em;
+    border-radius: $border-radius-default;
+
+    input:checked + & {
+      border-color: $blue;
+      background-color: $blue;
+    }
+
+    input:disabled + & {
+      background-color: $blue-10;
+    }
+    
+    input:checked:disabled + & {
+      border-color: $coolgrey-20;
+      background-color: $blue-10;
+    }
+
+    input:focus + & {
+      box-shadow: 0 0 0 3px $blue-20
+    }
+  }
+
+  &::after {
+    input:checked + & {
+      transform: rotate(-45deg);
+      left: .25em;
+      top: .32em;
+      height: .2em;
+      width: .4em;
+      border-left: 2px solid white;
+      border-bottom: 2px solid white;
+    }
+
+    input:checked:disabled + & {
+      border-left: 2px solid $coolgrey-30;
+      border-bottom: 2px solid $coolgrey-30;
+    }
+  }
+}
