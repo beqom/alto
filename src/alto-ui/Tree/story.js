@@ -56,4 +56,12 @@ storiesOf('Tree', module)
         />
       )}
     </StateProvider>
+  ))
+  .addWithJSX('using links', () => (
+    <Tree
+      href={item => `/item/${item.id}`}
+      items={items}
+      selected="5aabf8b8965960c3349c4c80"
+      renderIcon={item => (item.children.length ? ObjectsIcon : ImageIcon)}
+    />
   ));

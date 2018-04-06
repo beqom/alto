@@ -4,6 +4,7 @@ import { bemClass } from '../helpers/bem';
 
 import ChevronRightIcon from '../Icons/ChevronRight';
 import Spinner from '../Spinner';
+import Link from '../Link';
 
 import './Tree.scss';
 
@@ -80,8 +81,28 @@ class TreeItem extends React.Component {
     );
   }
 
+  renderItem(item, selected) {
+    const { renderItem, href, onClick } = this.props;
+    const ButtonOrLink = typeof href === 'function' ? Link : 'button';
+    const props = Object.assign(
+      {},
+      typeof href === 'function' ? { href: href(item, selected) } : {},
+      typeof onClick === 'function' ? { onClick: this.handleClick } : {}
+    );
+    return (
+      <ButtonOrLink
+        {...props}
+        className={bemClass('Tree__item-button', {
+          active: selected,
+        })}
+      >
+        {renderItem(item, selected)}
+      </ButtonOrLink>
+    );
+  }
+
   render() {
-    const { item, hasChildren, renderItem, keyField, renderIcon } = this.props;
+    const { item, hasChildren, keyField, renderIcon } = this.props;
     const { open, fetching } = this.state;
 
     const selected = this.props.selected === item || this.props.selected === item[keyField];
@@ -101,14 +122,7 @@ class TreeItem extends React.Component {
               <Icon outline={!selected} />
             </div>
           )}
-          <button
-            onClick={this.handleClick}
-            className={bemClass('Tree__item-button', {
-              active: selected,
-            })}
-          >
-            {renderItem(item, selected)}
-          </button>
+          {this.renderItem(item, selected)}
         </div>
         {this.renderChildren()}
       </li>
@@ -130,6 +144,7 @@ TreeItem.propTypes = {
   renderItem: PropTypes.func,
   renderIcon: PropTypes.func,
   onClick: PropTypes.func,
+  href: PropTypes.func,
   keyField: PropTypes.string,
   open: PropTypes.bool,
   selected: PropTypes.oneOfType([
