@@ -84,10 +84,10 @@ class Overlay extends React.PureComponent {
     this.cancelClose();
   }
 
-  handleBlur(e) {
+  handleBlur() {
     const { open, blocking, onClose, inert } = this.props;
     if (!!open && !blocking && !!onClose && !inert) {
-      this.close();
+      this.closing();
     }
   }
 
@@ -107,7 +107,7 @@ class Overlay extends React.PureComponent {
     }
   }
 
-  close() {
+  closing() {
     this.closeTimeout = setTimeout(this.props.onClose, 0);
   }
 
