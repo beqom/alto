@@ -25,7 +25,7 @@ const Dialog = props => {
     props.openFocusTargetId ||
     `${id}__${buttons && buttons.length ? `button--${buttons.length}` : 'close-button'}`;
   
-  const labels = Object.assign({}, { a11yClose: 'Close' }, props.labels);
+  const labels = { a11yClose: 'Close', ...props.labels };
   return (
     <Overlay
       onClose={onClose}
