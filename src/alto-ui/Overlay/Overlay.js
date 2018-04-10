@@ -18,8 +18,7 @@ class Overlay extends React.PureComponent {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.setContentNode = this.setContentNode.bind(this);
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
+    this.handleFocusOutside = this.handleFocusOutside.bind(this);
   }
 
   componentDidMount() {
@@ -69,25 +68,26 @@ class Overlay extends React.PureComponent {
   }
 
   addCloseEventListener() {
-    if (this.props.onClose && !this.props.inert) {
+    const { blocking, onClose, inert } = this.props;
+    if (onClose && !inert) {
       document.addEventListener('keydown', this.handleKeyDown);
       document.addEventListener('click', this.handleClickOutside);
+
+      if (!blocking) {
+        document.addEventListener('focusin', this.handleFocusOutside);
+      }
     }
   }
 
   removeCloseEventListener() {
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener('focusin', this.handleFocusOutside);
   }
 
-  handleFocus() {
-    this.cancelClose();
-  }
-
-  handleBlur() {
-    const { open, blocking, onClose, inert } = this.props;
-    if (!!open && !blocking && !!onClose && !inert) {
-      this.closing();
+  handleFocusOutside(e) {
+    if (this.contentNode && this.props.open && !this.contentNode.contains(e.target)) {
+      this.props.onClose();
     }
   }
 
@@ -98,21 +98,9 @@ class Overlay extends React.PureComponent {
   }
 
   handleClickOutside(e) {
-    if (this.contentNode) {
-      if (this.contentNode.contains(e.target)) {
-        this.cancelClose();
-      } else {
-        this.props.onClose();
-      }
+    if (this.contentNode && !this.contentNode.contains(e.target)) {
+      this.props.onClose();
     }
-  }
-
-  closing() {
-    this.closeTimeout = setTimeout(this.props.onClose, 0);
-  }
-
-  cancelClose() {
-    clearTimeout(this.closeTimeout);
   }
 
   render() {
@@ -120,13 +108,7 @@ class Overlay extends React.PureComponent {
     return (
       <Fragment>
         {open && blocking && <div className="Overlay__overlay" />}
-        <div
-          ref={this.setContentNode}
-          aria-hidden={!open || inert}
-          className="Overlay"
-          onBlur={this.handleBlur}
-          onFocus={this.handleFocus}
-        >
+        <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
           <FocusTrap
             active={open && blocking && !inert}
             className="Overlay__focus-trap"
