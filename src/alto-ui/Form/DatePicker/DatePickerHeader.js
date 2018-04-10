@@ -9,7 +9,7 @@ import Button from '../../Button';
 import ChevronLeftIcon from '../../Icons/ChevronLeft';
 import ChevronRightIcon from '../../Icons/ChevronRight';
 
-const DatePickerHeader = ({ id, date, onChange }) => {
+const DatePickerHeader = ({ id, date, onChange, labels }) => {
   const months = LocaleUtils.getMonths().map((month, i) => ({
     title: month,
     value: i + 1,
@@ -25,12 +25,14 @@ const DatePickerHeader = ({ id, date, onChange }) => {
   const nextMonth =
     date.month === 12 ? { year: date.year + 1, month: 1 } : { month: date.month + 1 };
 
+  const datePickerLabels = { month: 'Month', year: 'Year', ...labels };
+
   return (
     <div className="DatePicker__header">
       <form className="DatePicker__month-form">
         <Select
           id={`${id}__month-select`}
-          label="Month"
+          label={datePickerLabels.month}
           hideLabel
           className="DatePicker__month-select"
           value={date.month}
@@ -41,7 +43,7 @@ const DatePickerHeader = ({ id, date, onChange }) => {
 
         <TextField
           id={`${id}__year-input`}
-          label="Year"
+          label={datePickerLabels.year}
           hideLabel
           type="number"
           name="year"
@@ -74,6 +76,10 @@ DatePickerHeader.propTypes = {
   id: PropTypes.string.isRequired,
   date: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  labels: PropTypes.shape({
+    month: PropTypes.string.isRequired,
+    year: PropTypes.string.isRequired,
+  }),
 };
 
 export default DatePickerHeader;

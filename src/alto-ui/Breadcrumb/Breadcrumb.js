@@ -7,14 +7,14 @@ import ChevronLeft from '../Icons/ChevronLeft';
 import ChevronRight from '../Icons/ChevronRight';
 import './Breadcrumb.scss';
 
-const renderItems = items => {
+const renderItems = (items, backToLabel) => {
   if (items.length === 1) {
     const { title, url } = items[0];
     return (
       <li className="breadcrumb__item">
         <ChevronLeft className="breadcrumb__chevron breadcrumb__chevron--solo" />
         <Link className="breadcrumb__link" href={url}>
-          Back to {title}
+          `${backToLabel} ${title}`
         </Link>
       </li>
     );
@@ -30,10 +30,11 @@ const renderItems = items => {
   ));
 };
 
-const Breadcrumb = ({ items, className }) => {
+const Breadcrumb = ({ items, className, labels }) => {
   if (!items || !items.length) return null;
 
-  return <ul className={classnames('breadcrumb', className)}>{renderItems(items)}</ul>;
+  const breadcrumbLabels = { backToLabel: 'Back to', ...labels };
+  return <ul className={classnames('breadcrumb', className)}>{renderItems(items, breadcrumbLabels.backToLabel)}</ul>;
 };
 
 Breadcrumb.displayName = 'Breadcrumb';
@@ -48,6 +49,9 @@ Breadcrumb.propTypes = {
     })
   ),
   className: PropTypes.string,
+  labels: PropTypes.shape({
+    backToLabel: PropTypes.string.isRequired,
+  }),
 };
 
 export default Breadcrumb;
