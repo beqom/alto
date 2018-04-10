@@ -62,24 +62,24 @@ export const Ellipsis = styled.span`
   }
 `;
 
-const renderPageButton = (pages, onClick, current) =>
+const renderPageButton = (pages, onClick, current, { pageLabel, currentPageLabel, goToPageLabel }) =>
   pages.map(page => {
     if (current === page) {
       return (
-        <PageButtonCurrent key={page} aria-label={`Current Page, Page ${page}`} aria-current>
+        <PageButtonCurrent key={page} aria-label={`${currentPageLabel}, ${pageLabel} ${page}`} aria-current>
           {page}
         </PageButtonCurrent>
       );
     }
 
     return (
-      <PageButton key={page} onClick={() => onClick(page)} aria-label={`Goto Page ${page}`}>
+      <PageButton key={page} onClick={() => onClick(page)} aria-label={`${goToPageLabel} ${page}`}>
         {page}
       </PageButton>
     );
   });
 
-const Pagination = ({ className, max, current, onClick }) => {
+const Pagination = ({ className, max, current, onClick, labels }) => {
   const maxValue = Math.max(0, max);
   const currentValue = Math.min(max, Math.max(1, current));
   if (maxValue === 0) return null;
@@ -95,14 +95,20 @@ const Pagination = ({ className, max, current, onClick }) => {
   const afterPages = pages.slice(Math.min(maxValue - 1, currentValue + 1), maxValue - 1);
   const lastPage = pages.slice(1).slice(-1);
 
+  const paginationLabels = {
+    pageLabel: 'page',
+    currentPageLabel: 'Current page', 
+    goToPageLabel: 'Go to page', 
+    ...labels,
+  };
   return (
     <Container className={className}>
 
-      {renderPageButton(firstPage, onClick, currentValue)}
+      {renderPageButton(firstPage, onClick, currentValue, paginationLabels)}
       {!!beforePages.length && <Ellipsis />}
-      {renderPageButton(currentPages, onClick, currentValue)}
+      {renderPageButton(currentPages, onClick, currentValue, paginationLabels)}
       {!!afterPages.length && <Ellipsis />}
-      {renderPageButton(lastPage, onClick, currentValue)}
+      {renderPageButton(lastPage, onClick, currentValue, paginationLabels)}
 
       <PageButtonArrow onClick={() => onClick(currentValue - 1)} disabled={currentValue === 1}>
         <ChevronLeftIcon />
@@ -132,6 +138,11 @@ Pagination.propTypes = {
   max: PropTypes.number.isRequired,
   /** function that will be called each time the page change, first argument is the page number */
   onClick: PropTypes.func.isRequired,
+  labels: PropTypes.shape({
+    pageLabel: PropTypes.string.isRequired,
+    currentPageLabel: PropTypes.string.isRequired,
+    goToPageLabel: PropTypes.string.isRequired,
+  }),
 };
 
 export default Pagination;
