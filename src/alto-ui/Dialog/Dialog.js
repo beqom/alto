@@ -24,6 +24,8 @@ const Dialog = props => {
   const openFocusTargetId =
     props.openFocusTargetId ||
     `${id}__${buttons && buttons.length ? `button--${buttons.length}` : 'close-button'}`;
+  
+  const labels = Object.assign({}, { a11yClose: 'Close' }, props.labels);
   return (
     <Overlay
       onClose={onClose}
@@ -57,7 +59,7 @@ const Dialog = props => {
                   <CloseIcon />
                   <div className="Dialog__close-label">
                     <span aria-hidden="true">ESC</span>
-                    <VisuallyHidden>Close</VisuallyHidden>
+                    <VisuallyHidden>{labels.a11yClose}</VisuallyHidden>
                   </div>
                 </button>
               )}
@@ -105,6 +107,9 @@ Dialog.propTypes = {
   children: PropTypes.any,
   open: PropTypes.bool,
   inert: PropTypes.bool,
+  labels: PropTypes.shape({
+    a11yClose: PropTypes.string.isRequired,
+  }),
   title: PropTypes.string,
   onClose: PropTypes.func,
   buttons: PropTypes.arrayOf(
