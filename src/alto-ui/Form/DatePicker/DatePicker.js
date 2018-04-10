@@ -99,9 +99,7 @@ class DatePicker extends React.Component {
                 this.setDate(d);
                 this.setState({ open: false });
               }}
-              localeUtils={Object.assign({}, LocaleUtils, {
-                formatDay: () => '',
-              })}
+              localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
               selectedDays={date ? date.toJSDate() : null}
               renderDay={renderDay}
             />
