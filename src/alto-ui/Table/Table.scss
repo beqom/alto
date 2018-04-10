@@ -16,10 +16,22 @@
 
 .Table__cell {
   border-bottom: 1px solid $coolgrey-20;
-  padding: 0.75rem 1rem;
+  background-color: $white;
+  overflow: hidden;
+
+  tbody tr:last-child > & {
+    border-bottom: 0;
+  }
+}
+
+.Table__cell-content {
+  width: 100%;
+  height: 100%;
   white-space: nowrap;
   text-align: left;
-  background-color: $white;
+  text-overflow: ellipsis;
+  padding: 0.75rem 1rem;
+  overflow: hidden;
 
   .Table--compact & {
     padding: 0.4rem 0.75rem;
@@ -60,13 +72,15 @@
       padding-bottom: 0.5rem;
     }
   }
-
-  tbody tr:last-child > & {
-    border-bottom: 0;
-  }
 }
 
 .Table__cell--header {
+  &:not(:first-child) {
+    border-left: 1px solid $coolgrey-20;
+  }
+}
+
+.Table__cell-content--header {
   color: $coolgrey-50;
   font-weight: $font-weight-regular;
   font-size: $font-size-small;
@@ -85,5 +99,47 @@
   .Table--wide & {
     padding-top: 1.15rem;
     padding-bottom: 1.15rem;
+  }
+}
+
+.Table__cell--sortable {
+  padding: 0;
+}
+
+.Table__cell-button {
+  @extend %reset-button;
+  transition: all $transition;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blue-10;
+    box-shadow: inset 0 0 0 1px $blue;
+    color: $blue;
+    position: relative;
+  }
+}
+
+.Table__header-cell-title {
+  flex: 1;
+  .Table__cell--sorted & {
+    color: $blue;
+  }
+}
+
+.Table__header-cell-sortable-icons {
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-x-small;
+  margin-left: $spacing-small;
+  line-height: 0;
+}
+
+.Table__header-cell-sortable-icon {
+  color: $coolgrey-30;
+
+  &--active {
+    color: $blue;
   }
 }
