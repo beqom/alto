@@ -29,7 +29,7 @@ const getButtonProps = (...modifiersExcluded) =>
       value: boolean(name, false),
     }))
     .filter(({ value }) => value)
-    .reduce((acc, { name, value }) => Object.assign({}, acc, { [name]: value }), {});
+    .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
 
 storiesOf('Form/FileInput', module)
   .addDecorator(withReadme(README))

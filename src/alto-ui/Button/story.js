@@ -51,7 +51,7 @@ const getModifiers = (...modifiersExcluded) =>
       value: boolean(name, false),
     }))
     .filter(({ value }) => value)
-    .reduce((acc, { name, value }) => Object.assign({}, acc, { [name]: value }), {});
+    .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
 
 storiesOf('Button', module)
   .addDecorator(withReadme(README))
