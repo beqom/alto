@@ -51,15 +51,10 @@ storiesOf('Table', module)
   .addDecorator(centered)
   .addDecorator(withReadme(README))
   .addWithJSX('playground', () => (
-    <StateProvider
-      state={{
-        columnSorted: 'age',
-        sortDirection: 'DESC',
-      }}
-    >
+    <StateProvider state={{}}>
       {(state, setState) => (
         <Table
-          wide={boolean('wide', false)}
+          comfortable={boolean('comfortable', false)}
           compact={boolean('compact', false)}
           onSort={col => {
             if (col.key === state.columnSorted) {
@@ -77,7 +72,7 @@ storiesOf('Table', module)
           columns={[
             { key: 'picture', title: 'Picture', type: 'image' },
             { key: 'name', title: 'Name' },
-            { key: 'speak', title: 'Speak ?' },
+            { key: 'speak', title: 'Talks?' },
             { key: 'birth_date', title: 'Birth Date', type: 'date' },
             { key: 'age', title: 'Age' },
           ]}

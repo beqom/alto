@@ -37,7 +37,7 @@
     padding: 0.4rem 0.75rem;
   }
 
-  .Table--wide & {
+  .Table--comfortable & {
     padding: 1rem;
   }
 
@@ -67,9 +67,24 @@
       padding-bottom: 0.2rem;
     }
 
-    .Table--wide & {
+    .Table--comfortable & {
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
+    }
+  }
+  &--header {
+    color: $coolgrey-60;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+
+    .Table--compact & {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .Table--comfortable & {
+      padding-top: 0.875rem;
+      padding-bottom: 0.875rem;
     }
   }
 }
@@ -81,24 +96,11 @@
 }
 
 .Table__cell--header {
-  color: $coolgrey-60;
   font-weight: $font-weight-semibold;
   font-size: $font-size-small;
-  padding-top: 0.9rem;
-  padding-bottom: 0.9rem;
 
   &:not(:first-child) {
     border-left: 1px solid $coolgrey-20;
-  }
-
-  .Table--compact & {
-    padding-top: 0.55rem;
-    padding-bottom: 0.55rem;
-  }
-
-  .Table--wide & {
-    padding-top: 1.15rem;
-    padding-bottom: 1.15rem;
   }
 }
 
@@ -115,8 +117,6 @@
 
   &:hover {
     background-color: $blue-10;
-    box-shadow: inset 0 0 0 1px $blue;
-    color: $blue;
     position: relative;
   }
 }
