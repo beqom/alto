@@ -20,8 +20,8 @@ const FORMATTERS = {
 const RENDERERS = {
   boolean: x => (x ? <CheckIcon className="Table__cell-centered-content" /> : null),
   bit: x => RENDERERS.boolean(x),
-  image: (x, col, { wide, compact }) => (
-    <Avatar small={compact} large={wide} src={x || ''} alt={col.title} />
+  image: (x, col, { comfortable, compact }) => (
+    <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
   ),
 };
 
@@ -103,10 +103,10 @@ const renderHeaderCell = p => col => {
 };
 
 const Table = props => {
-  const { className, rows, rowId, wide, compact } = props;
+  const { className, rows, rowId, comfortable, compact } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   return (
-    <div className={bemClass('Table', { wide, compact }, className)}>
+    <div className={bemClass('Table', { comfortable, compact }, className)}>
       <table className="Table__table">
         <thead>
           <tr>{columns.map(renderHeaderCell(props))}</tr>
@@ -138,7 +138,7 @@ Table.propTypes = {
     })
   ),
   rows: PropTypes.array.isRequired,
-  wide: PropTypes.bool,
+  comfortable: PropTypes.bool,
   compact: PropTypes.bool,
 };
 
