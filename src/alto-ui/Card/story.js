@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text } from '@storybook/addon-knobs';
+import { text, boolean } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
@@ -46,7 +46,11 @@ storiesOf('Card', module)
   .addDecorator(story => <div style={{ width: 400 }}>{story()}</div>)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
-    <Card title={text('title', 'My Card')}>
+    <Card
+      title={text('title', 'My Card')}
+      small={boolean('small', false)}
+      large={boolean('large', false)}
+    >
       {text(
         'children',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae neque ac nisl sollicitudin fermentum. Sed fringilla, lacus sit amet ornare mollis, nunc ante tempor risus, nec pretium nibh magna efficitur metus.'
@@ -54,13 +58,15 @@ storiesOf('Card', module)
     </Card>
   ))
   .addWithJSX('with MediaObject', () => (
-    <Card>
+    <Card small={boolean('small', false)} large={boolean('large', false)}>
       <MediaObject
         title="Sherry Franklin"
         subtitle="Head of Group Accounting"
         src="http://i.pravatar.cc/150?img=49"
         alt="picture of Sherry Franklin"
         avatar
+        small={boolean('small', false)}
+        large={boolean('large', false)}
       />
     </Card>
   ))
