@@ -1,0 +1,56 @@
+@import '../../scss/inc';
+
+.Select {
+  font-size: $font-size-medium;
+  outline: 0;
+  background: $white;
+  color: currentColor;
+  border-radius: $border-radius-default;
+  border: 1px solid $coolgrey-20;
+  font-weight: 400;
+  height: 2.375em;
+  display: block;
+  width: 100%;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  transition: box-shadow $transition, border-color $transition;
+
+  &:hover {
+    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+  }
+
+  &:focus {
+    border-color: $blue;
+    box-shadow: 0 0 0 3px $blue-20;
+  }
+
+  &--success {
+    border-color: $green;
+    :focus {
+      border-color: $green;
+      box-shadow: 0 0 0 3px $green-20;
+    }
+  }
+  &--error {
+    border-color: $red;
+    &:focus {
+      border-color: $red;
+      box-shadow: 0 0 0 3px $red-20;
+    }
+  }
+  &--large {
+    font-size: $font-size-large;
+    padding: 0 20px;
+    line-height: 2.67;
+  }
+  &--small {
+    font-size: $font-size-small;
+    line-height: 2;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    color: $coolgrey-40;
+    background: $coolgrey-10;
+    border-color: $coolgrey-20;
+    box-shadow: none;
+  }
+}
