@@ -4,19 +4,47 @@
   border: 1px solid $coolgrey-20;
   background-color: $white;
   border-radius: $border-radius-default;
+
+  &--filled {
+    background-color: $coolgrey-10;
+  }
 }
 
 .Card__header {
   padding: $spacing-medium;
   border-bottom: 1px solid $coolgrey-20;
+
+  .Card--large & {
+    padding: $spacing-large;
+  }
+
+  .Card--small & {
+    padding: $spacing-small;
+  }
 }
 
 .Card__title {
   font-size: $font-size-large;
   font-weight: $font-weight-semibold;
   color: $coolgrey-50;
+
+  .Card--large & {
+    font-size: $font-size-x-large;
+  }
+
+  .Card--small & {
+    font-size: $font-size-medium;
+  }
 }
 
 .Card__body {
   padding: $spacing-medium;
+
+  .Card--large & {
+    padding: $spacing-large;
+  }
+
+  .Card--small & {
+    padding: $spacing-small;
+  }
 }

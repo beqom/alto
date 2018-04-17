@@ -1,11 +1,11 @@
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
+import { bemClass } from '../helpers/bem';
 
 import './Card.scss';
 
-const Card = ({ className, children, title }) => (
-  <div className={classnames('Card', className)}>
+const Card = ({ className, children, title, small, large, filled }) => (
+  <div className={bemClass('Card', { small, large, filled }, className)}>
     {title && (
       <div className="Card__header">
         <div className="Card__title">{title}</div>
@@ -23,6 +23,9 @@ Card.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
   title: PropTypes.any,
+  small: PropTypes.bool,
+  large: PropTypes.bool,
+  filled: PropTypes.bool,
 };
 
 export default Card;
