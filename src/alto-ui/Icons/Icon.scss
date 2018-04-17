@@ -22,3 +22,31 @@
 .icon--right {
   margin-left: 10px;
 }
+
+.icon--button {
+  @extend %reset-button;
+  width: initial;
+  height: initial;
+
+  cursor: pointer;
+  padding: 0.375em;
+  line-height: 0;
+  transition: all $transition;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  opacity: 0.5;
+
+  &:hover {
+    // background-color: $coolgrey-10;
+    // border-color: $coolgrey-20;
+    opacity: 1;
+  }
+
+  // &:active,
+  // &--active {
+  //   &,
+  //   &:hover {
+  //     background-color: $coolgrey-20;
+  //   }
+  // }
+}

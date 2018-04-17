@@ -1,43 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import bem from '../helpers/bem';
+import VisuallyHidden from '../VisuallyHidden';
+import { bemClass } from '../helpers/bem';
 import './Icon.scss';
 
-const modifiers = ['baseline', 'left', 'right'];
-
-const extraProps = ['outline', 'viewBox', 'color', 'size'];
-
-const IconContainer = bem('i', 'icon', modifiers, extraProps);
-
-IconContainer.displayName = 'IconContainer';
-
-const getStyle = ({ size }) => {
-  if(!size) return {};
+const getStyle = (isButton, size) => {
+  if (!size) return {};
+  if (isButton) return { fontSize: size };
 
   return {
     width: size,
     height: size,
     fontSize: size,
   };
-}
+};
 
-const Icon = props => (
-  <IconContainer {...props} style={getStyle(props)}>
-    <svg
-      version="1.1"
-      viewBox={props.viewBox}
-      width="1em"
-      height="1em"
-      xmlns="http://www.w3.org/2000/svg"
-      role="presentation"
+const Icon = props => {
+  const Container = props.onClick ? 'button' : 'i';
+  const {
+    baseline,
+    left,
+    right,
+    outline,
+    viewBox,
+    color,
+    size,
+    children,
+    a11yLabel,
+    ...otherProps
+  } = props;
+  return (
+    <Container
+      {...otherProps}
+      className={bemClass(
+        'icon',
+        { baseline, left, right, button: props.onClick },
+        props.className
+      )}
+      style={getStyle(!!props.onClick, size)}
     >
-      {props.children({
-        fill: props.color,
-      })}
-    </svg>
-  </IconContainer>
-);
+      <svg
+        version="1.1"
+        viewBox={viewBox}
+        width="1em"
+        height="1em"
+        xmlns="http://www.w3.org/2000/svg"
+        role="presentation"
+      >
+        {children({ fill: color })}
+      </svg>
+      {!!a11yLabel && <VisuallyHidden>{a11yLabel}</VisuallyHidden>}
+    </Container>
+  );
+};
 
 Icon.defaultProps = {
   size: null,
@@ -58,6 +74,9 @@ Icon.propTypes = {
   baseline: PropTypes.bool,
   left: PropTypes.bool,
   right: PropTypes.bool,
+  a11yLabel: PropTypes.string,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default Icon;
