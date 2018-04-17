@@ -126,7 +126,12 @@ storiesOf('Icons', module).add('all', () => {
       }}
     >
       <div style={{ padding: 10 }}>
-        <Icon {...outlineProps} size={size} color={col} />
+        <Icon
+          {...outlineProps}
+          size={size}
+          color={col}
+          onClick={boolean('onClick', false) ? () => {} : undefined}
+        />
       </div>
       <div style={{ marginLeft: 10 }}>{name}</div>
     </div>
@@ -154,6 +159,7 @@ icons.forEach(({ name, Icon }) => {
         outline={boolean('outline', false)}
         size={`${number('size', 50, { range: true, step: 1, min: 5, max: 600 })}px`}
         color={color('color', '#333C48')}
+        onClick={boolean('onClick', false) ? () => {} : undefined}
       />
     ));
 });
