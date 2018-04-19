@@ -14,7 +14,7 @@ const renderItems = (items, backToLabel) => {
       <li className="breadcrumb__item">
         <ChevronLeft className="breadcrumb__chevron breadcrumb__chevron--solo" />
         <Link className="breadcrumb__link" href={url}>
-          `${backToLabel} ${title}`
+          {`${backToLabel} ${title}`}
         </Link>
       </li>
     );
@@ -34,7 +34,11 @@ const Breadcrumb = ({ items, className, labels }) => {
   if (!items || !items.length) return null;
 
   const breadcrumbLabels = { backToLabel: 'Back to', ...labels };
-  return <ul className={classnames('breadcrumb', className)}>{renderItems(items, breadcrumbLabels.backToLabel)}</ul>;
+  return (
+    <ul className={classnames('breadcrumb', className)}>
+      {renderItems(items, breadcrumbLabels.backToLabel)}
+    </ul>
+  );
 };
 
 Breadcrumb.displayName = 'Breadcrumb';
