@@ -71,7 +71,7 @@ storiesOf('Table', module)
           sortDirection={state.sortDirection}
           columns={[
             { key: 'picture', title: 'Picture', type: 'image' },
-            { key: 'name', title: 'Name' },
+            { key: 'name', title: 'Name', filtered: true },
             { key: 'speak', title: 'Talks?' },
             { key: 'birth_date', title: 'Birth Date', type: 'date' },
             { key: 'age', title: 'Age' },

@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import CheckIcon from '../Icons/Check';
 import ChevronUpIcon from '../Icons/ChevronUp';
 import ChevronDownIcon from '../Icons/ChevronDown';
+import FilterIcon from '../Icons/Filter';
 import Avatar from '../Avatar';
 import { bemClass } from '../helpers/bem';
 
@@ -52,6 +53,7 @@ const renderHeaderCell = p => col => {
   const style = col.width || col.width === 0 ? { width: col.width, maxWidth: col.width } : {};
   if (p.onSort) {
     const sorted = col.key === p.columnSorted || [1, -1].includes(col.sortDirection);
+    const { filtered } = col;
     return (
       <th
         key={col.key}
@@ -59,6 +61,7 @@ const renderHeaderCell = p => col => {
           header: true,
           sortable: true,
           sorted,
+          filtered,
         })}
         style={style}
       >
@@ -67,6 +70,7 @@ const renderHeaderCell = p => col => {
           onClick={() => p.onSort(col)}
           style={style}
         >
+          {filtered ? <FilterIcon className="Table__filter-icon" /> : null}
           <span className="Table__header-cell-title">{col.title}</span>
           <div className="Table__header-cell-sortable-icons">
             <div

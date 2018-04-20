@@ -152,3 +152,11 @@
     color: $blue;
   }
 }
+
+.Table__filter-icon {
+  margin-right: $spacing-x-small;
+
+  .Table__cell--filtered & {
+    color: $blue;
+  }
+}
