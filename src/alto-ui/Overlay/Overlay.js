@@ -83,7 +83,7 @@ class Overlay extends React.PureComponent {
 
   removeCloseEventListener() {
     document.removeEventListener('keydown', this.handleKeyDown);
-    document.removeEventListener('click', this.handleClickOutside);
+    document.removeEventListener('click', this.handleClickOutside, true);
     document.removeEventListener('focusin', this.handleFocusOutside);
   }
 
