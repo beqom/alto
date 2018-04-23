@@ -14,15 +14,11 @@
     "lint": "npm run lint:script && npm run lint:style",
     "clean:build": "rimraf build",
     "clean:dist": "rimraf dist",
-    "build:storybook":
-      "cross-env NODE_ENV=development build-storybook -c .storybook -o build/storybook",
+    "build:storybook": "cross-env NODE_ENV=development build-storybook -c .storybook -o build/storybook",
     "start:storybook": "start-storybook -p 9006 -c .storybook",
-    "prebuild:alto-ui":
-      "npm run lint && npm run test && npm run clean:dist && copy ./package.json ./README.md ./dist",
-    "build:alto-ui":
-      "cross-env NODE_ENV=production babel ./src/alto-ui -d ./dist --copy-files --ignore story.js,__tests__,README.md",
-    "watch:alto-ui":
-      "cross-env NODE_ENV=production babel ./src/alto-ui -d ./dist -w --copy-files --ignore story.js,__tests__,README.md",
+    "prebuild:alto-ui": "npm run lint && npm run test && npm run clean:dist && copy ./package.json ./README.md ./dist",
+    "build:alto-ui": "cross-env NODE_ENV=production babel ./src/alto-ui -d ./dist --copy-files --ignore story.js,__tests__,README.md",
+    "watch:alto-ui": "cross-env NODE_ENV=production babel ./src/alto-ui -d ./dist -w --copy-files --ignore story.js,__tests__,README.md",
     "sass:app": "node-sass ./src/app/scss/site.scss ./src/app/static/css/site.css",
     "hugo:app": "hugo --source ./src/app -d ../../build",
     "serve:app": "browser-sync start --config ./bs-config.js",
@@ -92,6 +88,7 @@
     "lodash.omit": "^4.5.0",
     "lodash.range": "^3.2.0",
     "luxon": "^1.0.0",
+    "math-expression-evaluator": "^1.2.17",
     "react-day-picker": "^7.1.4",
     "styled-components": "^2.2.3"
   },
@@ -100,18 +97,23 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
-  "browserslist": ["last 3 versions", "IE >= 11"],
+  "browserslist": [
+    "last 3 versions",
+    "IE >= 11"
+  ],
   "jest": {
     "verbose": true,
     "coverageDirectory": "coverage/",
     "notify": true,
-    "setupFiles": ["<rootDir>/.jest-shim.js", "<rootDir>/.jest-setup.js"],
+    "setupFiles": [
+      "<rootDir>/.jest-shim.js",
+      "<rootDir>/.jest-setup.js"
+    ],
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
     },
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "<rootDir>/__mocks__/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.s?css$": "<rootDir>/__mocks__/styleMock.js"
     },
     "collectCoverage": false,

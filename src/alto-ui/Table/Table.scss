@@ -18,9 +18,32 @@
 .Table__cell {
   border-bottom: 1px solid $coolgrey-20;
   overflow: hidden;
+  text-align: left;
 
   tbody tr:last-child > & {
     border-bottom: 0;
+  }
+
+  &--number,
+  &--int,
+  &--float,
+  &--double {
+    text-align: right;
+  }
+
+  &--boolean,
+  &--bit,
+  &--error {
+    text-align: center;
+  }
+
+  &--error {
+    color: $red;
+    font-size: $font-size-large;
+  }
+
+  &--formula {
+    font-style: italic;
   }
 }
 
@@ -28,7 +51,6 @@
   width: 100%;
   height: 100%;
   white-space: nowrap;
-  text-align: left;
   text-overflow: ellipsis;
   padding: 0.75rem 1rem;
   overflow: hidden;
@@ -40,18 +62,6 @@
 
   .Table--comfortable & {
     padding: 1rem;
-  }
-
-  &--number,
-  &--int,
-  &--float,
-  &--double {
-    text-align: right;
-  }
-
-  &--boolean,
-  &--bit {
-    text-align: center;
   }
 
   &--image {

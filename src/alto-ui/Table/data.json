@@ -1,0 +1,92 @@
+{
+  "simpson": {
+    "columns": [
+      { "key": "picture", "title": "Picture", "type": "image" },
+      { "key": "name", "title": "Name", "filtered": true },
+      { "key": "speak", "title": "Talks?" },
+      { "key": "birth_date", "title": "Birth Date", "type": "date" },
+      { "key": "age", "title": "Age" }
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "name": "Bart Simpson",
+        "age": 12,
+        "birth_date": "2000-05-17",
+        "speak": true,
+        "picture":
+          "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Bart-Simpson-01-icon.png"
+      },
+      {
+        "id": 2,
+        "name": "Lisa Simpson",
+        "age": 10,
+        "birth_date": "2002-01-06",
+        "speak": true,
+        "picture":
+          "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Lisa-Simpson-icon.png"
+      },
+      {
+        "id": 3,
+        "name": "Maggie Simpson",
+        "age": 3,
+        "birth_date": "2009-09-27",
+        "speak": false,
+        "picture":
+          "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Maggie-Simpson-icon.png"
+      }
+    ]
+  },
+  "calculatedFields": {
+    "columns": [
+      { "key": "picture", "title": "Picture", "type": "image" },
+      { "key": "name", "title": "Name" },
+      { "key": "agility", "title": "Agility" },
+      { "key": "strength", "title": "Strength" },
+      { "key": "speed", "title": "Speed" },
+      { "key": "intelligence", "title": "Intelligence" }
+    ],
+    "rows": [
+      {
+        "picture": "https://imgur.com/m8lKShp.png",
+        "name": "Batman",
+        "agility": 0.7,
+        "strength": 50,
+        "speed": 260,
+        "intelligence": 148
+      },
+      {
+        "picture": "https://imgur.com/n58GL07.png",
+        "name": "Superman",
+        "agility": 0.4,
+        "strength": 350,
+        "speed": 1000,
+        "intelligence": 78
+      },
+      {
+        "picture": "https://imgur.com/rgLQdBq.png",
+        "name": "Iron-man",
+        "agility": 0.35,
+        "strength": 180,
+        "speed": 800,
+        "intelligence": 165
+      },
+      {
+        "picture": "https://imgur.com/k9tdnyc.png",
+        "name": "Spiderman",
+        "agility": 0.9,
+        "strength": 90,
+        "speed": 100,
+        "intelligence": 130
+      },
+      {
+        "picture": "https://imgur.com/Jl9rKEz.png",
+        "name": "Hulk",
+        "agility": 0.2,
+        "strength": 300,
+        "speed": 160,
+        "intelligence": null
+      }
+    ]
+  }
+}
