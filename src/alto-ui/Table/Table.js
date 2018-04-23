@@ -1,11 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import mathEvaluator from 'math-expression-evaluator';
 
 import CheckIcon from '../Icons/Check';
 import ChevronUpIcon from '../Icons/ChevronUp';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import FilterIcon from '../Icons/Filter';
+import ErrorIcon from '../Icons/Error';
+
 import Avatar from '../Avatar';
 import { bemClass } from '../helpers/bem';
 
@@ -16,6 +19,7 @@ const IDENTITY = x => x;
 const FORMATTERS = {
   date: x => format(new Date(x), 'D MMM YYYY'),
   datetime: x => FORMATTERS.date(x),
+  number: x => Math.round(x * 100) / 100,
 };
 
 const RENDERERS = {
@@ -24,21 +28,35 @@ const RENDERERS = {
   image: (x, col, { comfortable, compact }) => (
     <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
   ),
+  error: x => <ErrorIcon outline title={x.message} />,
+};
+
+const evaluateFormula = (formula, row) => {
+  const expression = Object.entries(row).reduce(
+    (acc, [key, value]) => acc.replace(new RegExp(`\\[${key}\\]`, 'g'), value),
+    formula
+  );
+
+  try {
+    return mathEvaluator.eval(expression);
+  } catch (e) {
+    return new Error(e.message);
+  }
 };
 
 const renderCell = (row, props) => col => {
   const key = col.key || col;
-  const value = row[key];
-  const type = col.type || typeof value;
+  const value = col.formula ? evaluateFormula(col.formula, row) : row[key];
+  const type = value instanceof Error ? 'error' : col.type || typeof value;
   const renderer = RENDERERS[type] || IDENTITY;
   const formatter = FORMATTERS[type] || IDENTITY;
   const style = col.width || col.width === 0 ? { width: col.width, maxWidth: col.width } : {};
-
   return (
     <td
       key={key}
       className={bemClass('Table__cell', {
         [type]: true,
+        formula: !!col.formula,
       })}
       style={style}
     >
@@ -69,6 +87,7 @@ const renderHeaderCell = p => col => {
           className="Table__cell-button Table__cell-content Table__cell-content--header"
           onClick={() => p.onSort(col)}
           style={style}
+          title={col.title}
         >
           {filtered ? <FilterIcon className="Table__filter-icon" /> : null}
           <span className="Table__header-cell-title">{col.title}</span>
@@ -101,7 +120,9 @@ const renderHeaderCell = p => col => {
         header: true,
       })}
     >
-      <div className="Table__cell-content Table__cell-content--header">{col.title}</div>
+      <div className="Table__cell-content Table__cell-content--header" title={col.title}>
+        {col.title}
+      </div>
     </th>
   );
 };
@@ -139,6 +160,8 @@ Table.propTypes = {
       title: PropTypes.any.isRequired,
       description: PropTypes.string,
       type: PropTypes.string,
+      width: PropTypes.number,
+      formula: PropTypes.string,
     })
   ),
   rows: PropTypes.array.isRequired,

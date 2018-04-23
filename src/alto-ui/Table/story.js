@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, text } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
@@ -10,33 +10,7 @@ import StateProvider from '../StateProvider';
 import Table from './Table';
 import README from './README.md';
 
-const rows = [
-  {
-    id: 1,
-    name: 'Bart Simpson',
-    age: 12,
-    birth_date: '2000-05-17',
-    speak: true,
-    picture:
-      'http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Bart-Simpson-01-icon.png',
-  },
-  {
-    id: 2,
-    name: 'Lisa Simpson',
-    age: 10,
-    birth_date: '2002-01-06',
-    speak: true,
-    picture: 'http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Lisa-Simpson-icon.png',
-  },
-  {
-    id: 3,
-    name: 'Maggie Simpson',
-    age: 3,
-    birth_date: '2009-09-27',
-    speak: false,
-    picture: 'http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Maggie-Simpson-icon.png',
-  },
-];
+import { simpson, calculatedFields } from './data.json';
 
 const sort = (arr, col, direction) => {
   if (!col) return arr;
@@ -69,15 +43,23 @@ storiesOf('Table', module)
           }}
           columnSorted={state.columnSorted}
           sortDirection={state.sortDirection}
-          columns={[
-            { key: 'picture', title: 'Picture', type: 'image' },
-            { key: 'name', title: 'Name', filtered: true },
-            { key: 'speak', title: 'Talks?' },
-            { key: 'birth_date', title: 'Birth Date', type: 'date' },
-            { key: 'age', title: 'Age' },
-          ]}
-          rows={sort(rows, state.columnSorted, state.sortDirection)}
+          columns={simpson.columns}
+          rows={sort(simpson.rows, state.columnSorted, state.sortDirection)}
         />
       )}
     </StateProvider>
-  ));
+  ))
+  .addWithJSX('Calculated fields', () => {
+    const calculatedField = {
+      key: 'power',
+      title: 'Power',
+      formula: text('Power formula', '(([strength] + [speed]) * [agility]) * [intelligence] / 100'),
+    };
+    return (
+      <Table
+        columns={calculatedFields.columns.concat([calculatedField])}
+        rows={calculatedFields.rows}
+        rowId="name"
+      />
+    );
+  });

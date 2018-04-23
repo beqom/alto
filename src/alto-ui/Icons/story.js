@@ -26,6 +26,7 @@ import Delete from './Delete';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
+import Error from './Error';
 import Expand from './Expand';
 import Eye from './Eye';
 import File from './File';
@@ -79,6 +80,7 @@ const icons = Object.entries({
   Edit,
   EllipsisHorizontal,
   EllipsisVertical,
+  Error,
   Expand,
   Eye,
   File,
