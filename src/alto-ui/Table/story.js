@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
+import Avatar from '../Avatar';
 
 import StateProvider from '../StateProvider';
 
@@ -60,6 +61,14 @@ storiesOf('Table', module)
         columns={calculatedFields.columns.concat([calculatedField])}
         rows={calculatedFields.rows}
         rowId="name"
+        renderers={{
+          avatar: (name, col, row) => (
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar src={row.picture} small alt="Picture" />
+              <span style={{ marginLeft: '0.5rem' }}>{name}</span>
+            </div>
+          ),
+        }}
       />
     );
   });

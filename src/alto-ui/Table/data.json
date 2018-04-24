@@ -39,8 +39,7 @@
   },
   "calculatedFields": {
     "columns": [
-      { "key": "picture", "title": "Picture", "type": "image" },
-      { "key": "name", "title": "Name" },
+      { "key": "name", "title": "Name", "type": "avatar" },
       { "key": "agility", "title": "Agility" },
       { "key": "strength", "title": "Strength" },
       { "key": "speed", "title": "Speed" },
