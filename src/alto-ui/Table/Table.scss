@@ -19,6 +19,7 @@
   border-bottom: 1px solid $coolgrey-20;
   overflow: hidden;
   text-align: left;
+  min-width: 6rem;
 
   tbody tr:last-child > & {
     border-bottom: 0;
