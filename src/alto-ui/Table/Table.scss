@@ -53,6 +53,7 @@
   height: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding: 0.5rem 1rem;
   overflow: hidden;
   min-width: 100%;
   padding: 0.75rem 1rem;
@@ -61,7 +62,7 @@
   align-items: flex-start;
 
   .Table--compact & {
-    padding: 0.4rem 0.75rem;
+    padding: 0.375rem 0.75rem;
   }
 
   .Table--comfortable & {
@@ -107,11 +108,12 @@
       }
     }
   }
+  }
 
   &--image,
   &--avatar {
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     display: flex;
 
     .Table--compact & {
@@ -133,19 +135,19 @@
 
   &--header {
     color: $coolgrey-60;
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
     padding-right: 0.75rem;
     text-align: left;
 
     .Table--compact & {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
+      padding-top: 0.375rem;
+      padding-bottom: 0.375rem;
     }
 
     .Table--comfortable & {
-      padding-top: 0.875rem;
-      padding-bottom: 0.875rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
     }
   }
 
