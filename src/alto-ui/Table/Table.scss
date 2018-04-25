@@ -179,8 +179,9 @@
 }
 
 .Table__cell--header {
-  font-weight: $font-weight-semibold;
+  font-weight: $font-weight-regular;
   font-size: $font-size-small;
+  box-shadow: 3px 0 0 $coolgrey-20;
 
   &:not(:first-child) {
     border-left: 1px solid $coolgrey-20;
