@@ -56,6 +56,9 @@
   overflow: hidden;
   min-width: 100%;
   padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 
   .Table--compact & {
     padding: 0.4rem 0.75rem;
@@ -132,6 +135,7 @@
     color: $coolgrey-60;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+    padding-right: 0.75rem;
     text-align: left;
 
     .Table--compact & {
@@ -185,6 +189,20 @@
 
 .Table__cell--sortable {
   padding: 0;
+  .Table__header-cell-sortable-icons {
+    opacity: 0;
+    transition: $duration-quick $timing-function opacity;
+  }
+
+  &:hover .Table__header-cell-sortable-icons {
+    opacity: 1;
+  }
+}
+
+.Table__cell--sorted {
+  .Table__header-cell-sortable-icons {
+    opacity: 1;
+  }
 }
 
 .Table__cell-button {
@@ -204,7 +222,7 @@
   max-width: calc(100% - calc(2rem - 12px));
   text-overflow: ellipsis;
   overflow: hidden;
-
+  flex: 1 1 auto;
   .Table--compact & {
     width: calc(100% - calc(1.5rem - 12px));
     max-width: calc(100% - calc(1.5rem - 12px));
@@ -219,8 +237,9 @@
   display: flex;
   flex-direction: column;
   font-size: $font-size-x-small;
-  margin-left: $spacing-small;
+  padding-left: 0.5rem;
   line-height: 0;
+  flex: 0 0 auto;
 }
 
 .Table__header-cell-sortable-icon {
