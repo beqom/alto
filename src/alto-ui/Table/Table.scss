@@ -64,14 +64,11 @@
     padding: 1rem;
   }
 
-  &--image {
+  &--image,
+  &--avatar {
     padding-top: 0.4rem;
     padding-bottom: 0.4rem;
     display: flex;
-
-    > * {
-      margin: auto;
-    }
 
     .Table--compact & {
       padding-top: 0.2rem;
@@ -83,10 +80,18 @@
       padding-bottom: 0.5rem;
     }
   }
+
+  &--image {
+    > * {
+      margin: auto;
+    }
+  }
+
   &--header {
     color: $coolgrey-60;
     padding-top: 0.75rem;
     padding-bottom: 0.75rem;
+    text-align: left;
 
     .Table--compact & {
       padding-top: 0.5rem;

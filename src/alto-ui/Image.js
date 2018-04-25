@@ -9,36 +9,43 @@ class Image extends React.Component {
     this.state = {
       src: props.srcAlt,
       loaded: false,
-    }
+    };
 
     this.loadImage(props.src);
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.src !== this.props.src) {
+    if (nextProps.src !== this.props.src) {
       this.setState({ src: nextProps.srcAlt, loaded: false });
       this.loadImage(nextProps.src);
     }
   }
 
   loadImage(src) {
+    if (!src) return;
     const img = document.createElement('IMG');
 
     img.src = src;
     img.onload = () => {
       this.setState(() => ({ src, loaded: true }));
-    }
+    };
   }
 
   render() {
     if (this.props.children && !this.state.loaded) {
       return this.props.children;
     }
-    return <img {...omit(this.props, ['srcAlt', 'children'])} alt={this.props.alt} src={this.state.src} />
+    return (
+      <img
+        {...omit(this.props, ['srcAlt', 'children'])}
+        alt={this.props.alt}
+        src={this.state.src}
+      />
+    );
   }
 }
 
-Image.propTypes={
+Image.propTypes = {
   /** @type {any} Default content to display - used if src failed to load */
   children: PropTypes.any,
   /** @type {string} Default image URL- used if src failed to load */
