@@ -1,11 +1,9 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import ShowMore from './ShowMore';
-import README from './README.md';
 
 const longText = `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -19,7 +17,6 @@ Maecenas purus nisi, vehicula in augue ac, euismod tincidunt nunc.
 `;
 
 storiesOf('ShowMore', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('playground', () => (
     <div style={{ width: 400 }}>

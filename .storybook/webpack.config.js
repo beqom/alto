@@ -2,7 +2,6 @@ const path = require('path');
 const merge = require('webpack-merge');
 
 module.exports = (storybookBaseConfig, configType) => {
-
   const config = merge(storybookBaseConfig, {
     resolve: {
       symlinks: false,
@@ -11,16 +10,15 @@ module.exports = (storybookBaseConfig, configType) => {
       rules: [
         {
           test: /\.s?css$/,
-          loaders: ["style-loader", "css-loader", "sass-loader"],
-        },{
-          test: /\.md$/,
-          use: "raw-loader"
-        }
-      ]
-    }
+          loaders: ['style-loader', 'css-loader', 'sass-loader'],
+        },
+      ],
+    },
   });
 
-  config.plugins = storybookBaseConfig.plugins.filter(plugin => plugin.constructor.name !== 'UglifyJsPlugin');
+  config.plugins = storybookBaseConfig.plugins.filter(
+    plugin => plugin.constructor.name !== 'UglifyJsPlugin'
+  );
 
   return config;
 };

@@ -2,12 +2,10 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text, number } from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 import styled from 'styled-components';
 
 import MediaObject from './MediaObject';
-import README from './README.md';
 
 const CenteredDiv = styled.div`
   margin: auto;
@@ -28,7 +26,6 @@ const DarkWrapper = styled.div`
 `;
 
 storiesOf('MediaObject', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('playground', () => {
     const white = boolean('white', false);

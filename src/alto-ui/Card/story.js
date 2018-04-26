@@ -2,7 +2,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import MediaObject from '../MediaObject';
@@ -12,7 +11,6 @@ import Switch from '../Form/Switch';
 import StateProvider from '../StateProvider';
 
 import Card from './Card';
-import README from './README.md';
 
 const people = [
   {
@@ -42,7 +40,6 @@ const people = [
 ];
 
 storiesOf('Card', module)
-  .addDecorator(withReadme(README))
   .addDecorator(story => <div style={{ width: 400 }}>{story()}</div>)
   .addDecorator(centered)
   .addWithJSX('overview', () => (

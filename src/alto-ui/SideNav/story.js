@@ -3,12 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
 import { select, text, boolean } from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
 import styled from 'styled-components';
 
 import SideNav from './SideNav';
 import SideNavPanel from './SideNavPanel';
-import README from './README.md';
 
 import LightbulbIcon from '../Icons/Lightbulb';
 import BoltIcon from '../Icons/Bolt';
@@ -150,7 +148,6 @@ SideNavRouterProvider.childContextTypes = {
 };
 
 storiesOf('SideNav', module)
-  .addDecorator(withReadme(README))
   .addDecorator(story => <Container>{story()}</Container>)
   .addWithJSX('overview', () => (
     <SideNavRouterProvider currentUrl="#three">

@@ -2,7 +2,6 @@
 import React, { Fragment } from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text, array } from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import StateProvider from '../StateProvider';
@@ -11,10 +10,8 @@ import TextField from '../Form/TextField';
 import IconLightbulb from '../Icons/Lightbulb';
 
 import Dialog from './Dialog';
-import README from './README.md';
 
 storiesOf('Dialog', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <StateProvider state={{ open: false, textfieldValue: '' }}>

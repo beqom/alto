@@ -2,14 +2,12 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 import Avatar from '../Avatar';
 
 import StateProvider from '../StateProvider';
 
 import Table from './Table';
-import README from './README.md';
 
 import { simpson, calculatedFields } from './data.json';
 
@@ -24,7 +22,6 @@ const sort = (arr, col, direction) => {
 
 storiesOf('Table', module)
   .addDecorator(centered)
-  .addDecorator(withReadme(README))
   .addWithJSX('playground', () => (
     <StateProvider state={{}}>
       {(state, setState) => (

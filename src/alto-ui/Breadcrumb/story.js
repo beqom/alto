@@ -1,12 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { number} from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
+import { number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
 import Breadcrumb from './Breadcrumb';
-import README from './README.md';
 
 const items = [
   { title: 'First page', url: '#1' },
@@ -18,7 +16,6 @@ const items = [
 ];
 
 storiesOf('Breadcrumb', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('playground', () => (
     <Breadcrumb

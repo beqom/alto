@@ -2,11 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import ColorPicker from './ColorPicker';
-import README from './README.md';
 
 class StateFullColorPicker extends React.Component {
   constructor(props) {
@@ -34,7 +32,6 @@ StateFullColorPicker.propTypes = {
 };
 
 storiesOf('Form/ColorPicker', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('playground', () => (
     <StateFullColorPicker value="blue">
