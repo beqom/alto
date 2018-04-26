@@ -2,7 +2,7 @@
   "simpson": {
     "columns": [
       { "key": "picture", "title": "Picture", "type": "image" },
-      { "key": "name", "title": "Name", "filtered": true },
+      { "key": "name", "title": "Name", "filtered": true, "editable": true },
       { "key": "speak", "title": "Talks?" },
       { "key": "birth_date", "title": "Birth Date", "type": "date" },
       { "key": "age", "title": "Age" }
@@ -40,10 +40,10 @@
   "calculatedFields": {
     "columns": [
       { "key": "name", "title": "Name", "type": "avatar" },
-      { "key": "agility", "title": "Agility" },
-      { "key": "strength", "title": "Strength" },
-      { "key": "speed", "title": "Speed" },
-      { "key": "intelligence", "title": "Intelligence" }
+      { "key": "agility", "title": "Agility", "type": "number", "editable": true },
+      { "key": "strength", "title": "Strength", "type": "number", "editable": true },
+      { "key": "speed", "title": "Speed", "type": "number", "editable": true },
+      { "key": "intelligence", "title": "Intelligence", "type": "number", "editable": true }
     ],
     "rows": [
       {

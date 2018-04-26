@@ -11,6 +11,14 @@ import Table from './Table';
 
 import { simpson, calculatedFields } from './data.json';
 
+const setInArray = (value, arr, keyField = 'id') => {
+  const index = arr.findIndex(item => item[keyField] === value[keyField]);
+  if (index > -1) {
+    return [...arr.slice(0, index), value, ...arr.slice(index + 1)];
+  }
+  return arr;
+};
+
 const sort = (arr, col, direction) => {
   if (!col) return arr;
   return arr.slice().sort((a, b) => {
@@ -23,9 +31,10 @@ const sort = (arr, col, direction) => {
 storiesOf('Table', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => (
-    <StateProvider state={{}}>
+    <StateProvider state={{ rows: simpson.rows }}>
       {(state, setState) => (
         <Table
+          id="simpson"
           comfortable={boolean('comfortable', false)}
           compact={boolean('compact', false)}
           onSort={col => {
@@ -39,10 +48,14 @@ storiesOf('Table', module)
               setState({ columnSorted: col.key, sortDirection: 1 });
             }
           }}
+          onChange={(value, col, row) => {
+            const rows = setInArray({ ...row, [col.key]: value }, state.rows);
+            setState({ rows });
+          }}
           columnSorted={state.columnSorted}
           sortDirection={state.sortDirection}
           columns={simpson.columns}
-          rows={sort(simpson.rows, state.columnSorted, state.sortDirection)}
+          rows={sort(state.rows, state.columnSorted, state.sortDirection)}
         />
       )}
     </StateProvider>
@@ -54,18 +67,29 @@ storiesOf('Table', module)
       formula: text('Power formula', '(([strength] + [speed]) * [agility]) * [intelligence] / 100'),
     };
     return (
-      <Table
-        columns={calculatedFields.columns.concat([calculatedField])}
-        rows={calculatedFields.rows}
-        rowId="name"
-        renderers={{
-          avatar: (name, col, row) => (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Avatar src={row.picture} small alt="Picture" />
-              <span style={{ marginLeft: '0.5rem' }}>{name}</span>
-            </div>
-          ),
-        }}
-      />
+      <StateProvider state={{ rows: calculatedFields.rows }}>
+        {(state, setState) => (
+          <Table
+            id="superheroes"
+            columns={calculatedFields.columns.concat([calculatedField])}
+            rows={state.rows}
+            rowId="name"
+            comfortable={boolean('comfortable', false)}
+            compact={boolean('compact', false)}
+            onChange={(value, col, row) => {
+              const rows = setInArray({ ...row, [col.key]: value }, state.rows, 'name');
+              setState({ rows });
+            }}
+            renderers={{
+              avatar: (name, col, row) => (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Avatar src={row.picture} small alt="Picture" />
+                  <span style={{ marginLeft: '0.5rem' }}>{name}</span>
+                </div>
+              ),
+            }}
+          />
+        )}
+      </StateProvider>
     );
   });
