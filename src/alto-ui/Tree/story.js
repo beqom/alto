@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
+import { action } from '@storybook/addon-actions';
 
 import StateProvider from '../StateProvider';
 import ObjectsIcon from '../Icons/Objects';
@@ -26,6 +27,7 @@ storiesOf('Tree', module)
           items={items}
           selected={state.selected}
           renderIcon={item => (item.children.length ? ObjectsIcon : ImageIcon)}
+          onToggle={action('onToggle')}
         />
       )}
     </StateProvider>
@@ -50,6 +52,7 @@ storiesOf('Tree', module)
                 )
           }
           renderIcon={item => (!item.last ? ObjectsIcon : ImageIcon)}
+          onToggle={action('onToggle')}
         />
       )}
     </StateProvider>
@@ -60,5 +63,6 @@ storiesOf('Tree', module)
       items={items}
       selected="5aabf8b8965960c3349c4c80"
       renderIcon={item => (item.children.length ? ObjectsIcon : ImageIcon)}
+      onToggle={action('onToggle')}
     />
   ));
