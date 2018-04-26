@@ -26,13 +26,12 @@
 
   &--number,
   &--int,
-  &--float,
-  &--double {
+  &--integer,
+  &--float {
     text-align: right;
   }
 
   &--boolean,
-  &--bit,
   &--error {
     text-align: center;
   }
