@@ -7,9 +7,9 @@ import Label from '../Label';
 import './FormElement.scss';
 
 const FormElement = props => {
-  const { error, disabled, success, id, children, readOnly } = props;
+  const { error, disabled, success, id, children, readOnly, style } = props;
   return (
-    <div className={classnames('form-element', props.className)}>
+    <div className={classnames('form-element', props.className)} style={style}>
       <Label hidden={props.hideLabel} htmlFor={id} id={`${id}__label`} readOnly={readOnly}>
         {props.label}
       </Label>
@@ -37,6 +37,7 @@ FormElement.propTypes = {
   readOnly: PropTypes.bool,
   hideLabel: PropTypes.bool,
   children: PropTypes.element.isRequired,
+  style: PropTypes.object,
 };
 
 export default FormElement;
