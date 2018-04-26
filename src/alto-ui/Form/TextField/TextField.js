@@ -9,18 +9,26 @@ import './TextField.scss';
 
 const texfieldProps = bemProps('textfield', ['large', 'small', 'success', 'error', 'area']);
 
-const TextField = props => (
+const TextField = React.forwardRef((props, ref) => (
   <FormElement {...props}>
     {props.area ? (
       <textarea
-        {...texfieldProps(omit(props, ['className', 'hideLabel', 'label']), 'helpText', 'type')}
+        ref={ref}
+        {...texfieldProps(
+          omit(props, ['className', 'hideLabel', 'label', 'style']),
+          'helpText',
+          'type'
+        )}
         type={null}
       />
     ) : (
-      <input {...texfieldProps(omit(props, ['className', 'hideLabel', 'label']), 'helpText')} />
+      <input
+        ref={ref}
+        {...texfieldProps(omit(props, ['className', 'hideLabel', 'label', 'style']), 'helpText')}
+      />
     )}
   </FormElement>
-);
+));
 
 TextField.defaultProps = {
   type: 'text',
