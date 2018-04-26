@@ -48,6 +48,7 @@ class DatePicker extends React.Component {
   }
 
   handleFocus(e) {
+    if (this.props.readOnly) return;
     if (this.props.inputProps.focus) {
       this.props.inputProps.focus(e);
     }
@@ -83,6 +84,7 @@ class DatePicker extends React.Component {
             placeholder={this.props.format}
             label={this.props.label}
             {...this.props.inputProps}
+            readOnly={this.props.readOnly}
             onFocus={this.handleFocus}
             onChange={() => {}}
             value={date ? date.toFormat(this.props.format) : ''}
@@ -123,6 +125,7 @@ DatePicker.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
   format: PropTypes.string,
+  readOnly: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.object,
   inputProps: PropTypes.shape({
