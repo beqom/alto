@@ -3,11 +3,9 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import TextField from './TextField';
-import README from './README.md';
 
 const SimpleWrapper = styled.div`
   text-align: center;
@@ -34,7 +32,6 @@ const getModifiers = (...modifiersExcluded) =>
     .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
 
 storiesOf('Form/TextField', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();

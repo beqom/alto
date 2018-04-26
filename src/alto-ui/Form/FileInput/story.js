@@ -2,11 +2,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import FileInput from './FileInput';
-import README from './README.md';
 
 const buttonProps = [
   'outline',
@@ -32,7 +30,6 @@ const getButtonProps = (...modifiersExcluded) =>
     .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
 
 storiesOf('Form/FileInput', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('playground', () => (
     <FileInput

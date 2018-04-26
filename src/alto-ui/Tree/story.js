@@ -1,7 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import withReadme from 'storybook-readme/with-readme';
 import centered from '@storybook/addon-centered';
 
 import StateProvider from '../StateProvider';
@@ -9,14 +8,12 @@ import ObjectsIcon from '../Icons/Objects';
 import ImageIcon from '../Icons/Image';
 
 import Tree from './Tree';
-import README from './README.md';
 
 import { items } from './data.json';
 
 const delay = (ms, cb) => new Promise(res => setTimeout(() => res(cb()), ms));
 
 storiesOf('Tree', module)
-  .addDecorator(withReadme(README))
   .addDecorator(story => (
     <div style={{ minHeight: 400, minWidth: 400, overflow: 'auto' }}>{story()}</div>
   ))

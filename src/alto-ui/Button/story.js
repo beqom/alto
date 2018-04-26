@@ -3,7 +3,6 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
-import withReadme from 'storybook-readme/with-readme';
 import styled from 'styled-components';
 
 import ArrowRightIcon from '../Icons/ArrowRight';
@@ -11,7 +10,6 @@ import ChevronDownIcon from '../Icons/ChevronDown';
 import BarsIcon from '../Icons/Bars';
 import ObjectsIcon from '../Icons/Objects';
 import Button from './Button';
-import README from './README.md';
 
 const SimpleWrapper = styled.div`
   text-align: center;
@@ -54,7 +52,6 @@ const getModifiers = (...modifiersExcluded) =>
     .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
 
 storiesOf('Button', module)
-  .addDecorator(withReadme(README))
   .addDecorator(centered)
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
@@ -165,7 +162,9 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper white={modifiers.white}>
-        <Button href={text('href', '#some-url')} {...modifiers}>{text('children', 'I am a <a /> tag!')}</Button>
+        <Button href={text('href', '#some-url')} {...modifiers}>
+          {text('children', 'I am a <a /> tag!')}
+        </Button>
       </SimpleWrapper>
     );
-  })
+  });
