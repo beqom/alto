@@ -66,6 +66,7 @@ class TreeItem extends React.Component {
     const open = !this.state.open;
     this.setState(() => ({ open }));
     this.checkChildren(open);
+    if (this.props.onToggle) this.props.onToggle(this.props.item, open);
   }
 
   renderChildren() {
@@ -153,6 +154,7 @@ TreeItem.propTypes = {
     // promise
     PropTypes.object,
   ]),
+  onToggle: PropTypes.func,
 };
 
 const Tree = props => (
