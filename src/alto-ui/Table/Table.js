@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { DateTime } from 'luxon';
 
 import { bemClass } from '../helpers/bem';
 import ChevronUpIcon from '../Icons/ChevronUp';
@@ -13,9 +13,13 @@ import Avatar from '../Avatar';
 import TableCell from './TableCell';
 import './Table.scss';
 
+const PARSERS = {};
+
 const FORMATTERS = {
-  date: x => format(new Date(x), 'D MMM YYYY'),
-  datetime: x => FORMATTERS.date(x),
+  date: (x, col, row, { locale }) =>
+    DateTime.fromJSDate(x)
+      .setLocale(locale)
+      .toLocaleString(DateTime.DATE_SHORT),
   number: x => Math.round(x * 100) / 100,
 };
 
@@ -92,6 +96,7 @@ const Table = props => {
   const { className, rows, rowId, comfortable, compact } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
+  const parsers = { ...PARSERS, ...props.parsers };
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
       <table className="Table__table">
@@ -107,6 +112,7 @@ const Table = props => {
                   row={row}
                   column={col}
                   tableProps={props}
+                  parsers={parsers}
                   renderers={renderers}
                   formatters={FORMATTERS}
                 />
@@ -145,6 +151,7 @@ Table.propTypes = {
   comfortable: PropTypes.bool,
   compact: PropTypes.bool,
   renderers: PropTypes.object,
+  parsers: PropTypes.object,
   // editable: PropTypes.func,
 };
 

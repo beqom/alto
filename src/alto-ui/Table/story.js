@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
+import { DateTime } from 'luxon';
 import centered from '@storybook/addon-centered';
 import Avatar from '../Avatar';
 
@@ -27,6 +28,9 @@ const sort = (arr, col, direction) => {
     return 0;
   });
 };
+
+const DEFAULT_DATE_FORMAT = 'd/L/yyyy hh:mm:ss a';
+const parsers = { date: x => DateTime.fromFormat(x, DEFAULT_DATE_FORMAT).toJSDate() };
 
 storiesOf('Table', module)
   .addDecorator(centered)
@@ -56,6 +60,8 @@ storiesOf('Table', module)
           sortDirection={state.sortDirection}
           columns={simpson.columns}
           rows={sort(state.rows, state.columnSorted, state.sortDirection)}
+          parsers={parsers}
+          locale="fr"
         />
       )}
     </StateProvider>

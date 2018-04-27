@@ -12,7 +12,7 @@
         "id": 1,
         "name": "Bart Simpson",
         "age": 12,
-        "birth_date": "2000-05-17",
+        "birth_date": "17/5/2000 12:00:00 AM",
         "speak": true,
         "picture":
           "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Bart-Simpson-01-icon.png"
@@ -21,7 +21,7 @@
         "id": 2,
         "name": "Lisa Simpson",
         "age": 10,
-        "birth_date": "2002-01-06",
+        "birth_date": "6/1/2002 12:00:00 AM",
         "speak": true,
         "picture":
           "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Lisa-Simpson-icon.png"
@@ -30,7 +30,7 @@
         "id": 3,
         "name": "Maggie Simpson",
         "age": 3,
-        "birth_date": "2009-09-27",
+        "birth_date": "27/9/2009 12:00:00 AM",
         "speak": false,
         "picture":
           "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Maggie-Simpson-icon.png"

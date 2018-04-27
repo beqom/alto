@@ -80,7 +80,6 @@
   "dependencies": {
     "@webcomponents/custom-elements": "^1.0.0",
     "classnames": "^2.2.5",
-    "date-fns": "^1.29.0",
     "focus-trap-react": "^3.1.2",
     "lodash.get": "^4.4.2",
     "lodash.isarray": "^4.0.0",

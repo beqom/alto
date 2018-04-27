@@ -78,7 +78,7 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { column, row, tableProps, renderers, formatters } = this.props;
+    const { column, row, tableProps, renderers, formatters, parsers } = this.props;
     const key = column.key || column;
     const value = column.formula ? evaluateFormula(column.formula, row) : row[key];
     const type = value instanceof Error ? 'error' : column.type || typeof value;
@@ -89,6 +89,7 @@ class TableCell extends React.Component {
     const { editing } = this.state;
     const Input = getCellInput(type);
     const renderer = renderers[type] || IDENTITY;
+    const parser = parsers[type] || IDENTITY;
     const formatter = formatters[type] || IDENTITY;
     const modifiers = {
       [type]: true,
@@ -96,14 +97,15 @@ class TableCell extends React.Component {
       editable,
       editing,
     };
+    const args = [column, row, tableProps];
     const contentProps = {
       ref: this.setContentNode,
       className: bemClass('Table__cell-content', modifiers),
       style,
-      children: renderer(formatter(value, column, row, tableProps), column, row, tableProps),
+      children: renderer(formatter(parser(value, ...args), ...args), ...args),
     };
     return (
-      <td className={bemClass('Table__cell', modifiers)} style={style} ref={this.cellRef}>
+      <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef}>
         {editable ? (
           <button {...contentProps} onClick={this.startEditing} />
         ) : (
@@ -146,6 +148,8 @@ TableCell.propTypes = {
   tableProps: PropTypes.object,
   renderers: PropTypes.object,
   formatters: PropTypes.object,
+  parsers: PropTypes.object,
+  locale: PropTypes.string,
 };
 
 export default TableCell;
