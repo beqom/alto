@@ -143,6 +143,10 @@
       padding-bottom: 0.875rem;
     }
   }
+
+  &--date {
+    min-width: 7rem;
+  }
 }
 
 .Table__cell-input {
