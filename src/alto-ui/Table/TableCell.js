@@ -90,7 +90,7 @@ class TableCell extends React.Component {
     const Input = getCellInput(type);
     const renderer = renderers[type] || IDENTITY;
     const parser = parsers[type] || IDENTITY;
-    const formatter = formatters[type] || IDENTITY;
+    const formatter = column.formatter || formatters[type] || IDENTITY;
     const modifiers = {
       [type]: true,
       formula: !!column.formula,
