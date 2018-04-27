@@ -11,8 +11,8 @@
       {
         "id": 1,
         "name": "Bart Simpson",
-        "age": 12,
-        "birth_date": "17/5/2000 12:00:00 AM",
+        "age": 10,
+        "birth_date": "23/2/1980 12:00:00 AM",
         "speak": true,
         "picture":
           "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Bart-Simpson-01-icon.png"
@@ -20,8 +20,8 @@
       {
         "id": 2,
         "name": "Lisa Simpson",
-        "age": 10,
-        "birth_date": "6/1/2002 12:00:00 AM",
+        "age": 8,
+        "birth_date": "9/5/1982 12:00:00 AM",
         "speak": true,
         "picture":
           "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Lisa-Simpson-icon.png"
@@ -30,10 +30,28 @@
         "id": 3,
         "name": "Maggie Simpson",
         "age": 3,
-        "birth_date": "27/9/2009 12:00:00 AM",
+        "birth_date": "19/4/1987 12:00:00 AM",
         "speak": false,
         "picture":
           "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Maggie-Simpson-icon.png"
+      },
+      {
+        "id": 4,
+        "name": "Marge Simpson",
+        "age": 36,
+        "birth_date": "1/10/1961 12:00:00 AM",
+        "speak": true,
+        "picture":
+          "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Marge-Simpson-icon.png"
+      },
+      {
+        "id": 5,
+        "name": "Homer Simpson",
+        "age": 39,
+        "birth_date": "12/5/1956 12:00:00 AM",
+        "speak": true,
+        "picture":
+          "http://icons.iconarchive.com/icons/jonathan-rey/simpsons/256/Homer-Simpson-02-Donut-icon.png"
       }
     ]
   },
