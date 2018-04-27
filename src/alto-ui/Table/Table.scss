@@ -188,20 +188,16 @@
   }
 }
 
-.Table__cell--sortable {
-  padding: 0;
-  &:hover .Table__header-cell-sortable-icons {
-    opacity: 1;
-  }
-}
-
 .Table__header-cell-sortable-icons {
   opacity: 0;
   transition: $duration-quick $timing-function opacity;
 }
+.Table__cell--sortable {
+  padding: 0;
 
-.Table__header-cell-sortable-icons {
-  opacity: 1;
+  &:hover .Table__header-cell-sortable-icons {
+    opacity: 1;
+  }
 }
 
 .Table__cell-button {
