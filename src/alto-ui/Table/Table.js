@@ -20,7 +20,26 @@ const FORMATTERS = {
     DateTime.fromJSDate(x)
       .setLocale(locale)
       .toLocaleString(DateTime.DATE_SHORT),
-  number: x => Math.round(x * 100) / 100,
+  float: x =>
+    typeof x === 'number'
+      ? x.toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })
+      : '',
+  number: x =>
+    typeof x === 'number'
+      ? x.toLocaleString(undefined, {
+          maximumFractionDigits: 2,
+        })
+      : '',
+  integer: x =>
+    typeof x === 'number'
+      ? x.toLocaleString(undefined, {
+          maximumFractionDigits: 0,
+        })
+      : '',
+  int: x => FORMATTERS.integer(x),
 };
 
 const RENDERERS = {
