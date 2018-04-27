@@ -116,6 +116,7 @@ const Table = props => {
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
   const parsers = { ...PARSERS, ...props.parsers };
+
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
       <table className="Table__table">
@@ -172,6 +173,7 @@ Table.propTypes = {
   renderers: PropTypes.object,
   parsers: PropTypes.object,
   // editable: PropTypes.func,
+  // onChangeDebounceTime: PropTypes.number,
 };
 
 export default Table;

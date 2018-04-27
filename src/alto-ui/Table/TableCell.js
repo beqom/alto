@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import mathEvaluator from 'math-expression-evaluator';
+import debounce from 'lodash.debounce';
 
 import TextField from '../Form/TextField';
 
@@ -25,19 +26,57 @@ const evaluateFormula = (formula, row) => {
 
 const getCellInput = () => TextField;
 
+const getInputProps = type => {
+  switch (type) {
+    case 'number':
+    case 'float':
+    case 'int':
+    case 'integer':
+      return {
+        type: 'number',
+      };
+    default:
+      return {};
+  }
+};
+
 class TableCell extends React.Component {
-  constructor() {
-    super();
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!nextProps.column.formula) {
+      const nextValue = nextProps.row[nextProps.column.key || nextProps.column];
+      if (nextValue !== prevState.originalValue) {
+        return {
+          value: nextValue,
+          originalValue: nextValue,
+        };
+      }
+    }
+    return null;
+  }
+
+  constructor(props) {
+    super(props);
+
+    const value = props.row[props.column.key || props.column];
 
     this.state = {
       editing: false,
       width: 150,
+      value,
+      // eslint-disable-next-line react/no-unused-state
+      originalValue: value,
     };
+
+    const { onChangeDebounceTime } = props.tableProps;
 
     this.startEditing = this.startEditing.bind(this);
     this.stopEditing = this.stopEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    const propagateChange = this.propagateChange.bind(this);
+    this.propagateChange = onChangeDebounceTime
+      ? debounce(propagateChange, onChangeDebounceTime)
+      : propagateChange;
     this.inputRef = React.createRef();
     this.cellRef = React.createRef();
   }
@@ -64,10 +103,15 @@ class TableCell extends React.Component {
   }
 
   handleChange(e) {
-    const { column, row, tableProps } = this.props;
+    const { value } = e.target;
+    this.setState({ value });
+    this.propagateChange(value);
+  }
 
+  propagateChange(value) {
+    const { column, row, tableProps } = this.props;
     if (tableProps.onChange) {
-      tableProps.onChange(e.target.value, column, row);
+      tableProps.onChange(value, column, row);
     }
   }
 
@@ -79,8 +123,8 @@ class TableCell extends React.Component {
 
   render() {
     const { column, row, tableProps, renderers, formatters, parsers } = this.props;
+    const value = column.formula ? evaluateFormula(column.formula, row) : this.state.value;
     const key = column.key || column;
-    const value = column.formula ? evaluateFormula(column.formula, row) : row[key];
     const type = value instanceof Error ? 'error' : column.type || typeof value;
 
     const style =
@@ -124,6 +168,7 @@ class TableCell extends React.Component {
             value={value || ''}
             onChange={this.handleChange}
             onKeyDown={this.handleKeyDown}
+            {...getInputProps(type)}
           />
         )}
       </td>
@@ -145,7 +190,10 @@ TableCell.propTypes = {
     formula: PropTypes.string,
   }),
   row: PropTypes.object,
-  tableProps: PropTypes.object,
+  tableProps: PropTypes.shape({
+    onChangeDebounceTime: PropTypes.number,
+    onChange: PropTypes.func,
+  }),
   renderers: PropTypes.object,
   formatters: PropTypes.object,
   parsers: PropTypes.object,
