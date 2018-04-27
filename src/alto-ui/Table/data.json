@@ -6,7 +6,7 @@
       { "key": "speak", "title": "Talks?" },
       { "key": "birth_date", "title": "Birth Date", "type": "date" },
       { "key": "age", "title": "Age" },
-      { "key": "damages_cost", "title": "$ damages", "type": "float" }
+      { "key": "damages_cost", "title": "Damages (in $)", "type": "float" }
     ],
     "rows": [
       {
