@@ -200,6 +200,10 @@
   }
 }
 
+.Table__cell--sorted .Table__header-cell-sortable-icons {
+  opacity: 1;
+}
+
 .Table__cell-button {
   @extend %reset-button;
   transition: all $transition;
