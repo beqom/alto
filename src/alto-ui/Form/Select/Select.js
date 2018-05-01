@@ -34,7 +34,7 @@ const renderOptions = options =>
   }, []);
 
 const Select = props => {
-  const { success, error, large, small, className, hideLabel, ...otherProps } = props;
+  const { success, error, large, small, className, hideLabel, options, ...otherProps } = props;
   return (
     <FormElement {...props} className={className} hideLabel={hideLabel}>
       <select
@@ -46,7 +46,7 @@ const Select = props => {
           small,
         })}
       >
-        {props.children || renderOptions(props.options)}
+        {props.children || renderOptions(options)}
       </select>
     </FormElement>
   );
