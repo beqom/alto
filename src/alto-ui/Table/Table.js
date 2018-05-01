@@ -17,9 +17,11 @@ const PARSERS = {};
 
 const FORMATTERS = {
   date: (x, col, row, { locale }) =>
-    DateTime.fromJSDate(x)
-      .setLocale(locale)
-      .toLocaleString(DateTime.DATE_SHORT),
+    x instanceof Date
+      ? DateTime.fromJSDate(x)
+          .setLocale(locale)
+          .toLocaleString(DateTime.DATE_SHORT)
+      : x,
   float: x =>
     typeof x === 'number'
       ? x.toLocaleString(undefined, {

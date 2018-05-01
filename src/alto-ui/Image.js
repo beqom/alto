@@ -14,11 +14,19 @@ class Image extends React.Component {
     this.loadImage(props.src);
   }
 
+  componentDidMount() {
+    this.mounted = true;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.src !== this.props.src) {
       this.setState({ src: nextProps.srcAlt, loaded: false });
       this.loadImage(nextProps.src);
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   loadImage(src) {
@@ -27,7 +35,9 @@ class Image extends React.Component {
 
     img.src = src;
     img.onload = () => {
-      this.setState(() => ({ src, loaded: true }));
+      if (this.mounted) {
+        this.setState(() => ({ src, loaded: true }));
+      }
     };
   }
 
