@@ -34,7 +34,17 @@ const renderOptions = options =>
   }, []);
 
 const Select = props => {
-  const { success, error, large, small, className, hideLabel, options, ...otherProps } = props;
+  const {
+    success,
+    error,
+    large,
+    small,
+    className,
+    hideLabel,
+    options,
+    label,
+    ...otherProps
+  } = props;
   return (
     <FormElement {...props} className={className} hideLabel={hideLabel}>
       <select
@@ -76,6 +86,7 @@ Select.propTypes = {
       }),
     ])
   ),
+  label: PropTypes.string,
 };
 
 export default Select;
