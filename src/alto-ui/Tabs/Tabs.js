@@ -10,7 +10,10 @@ const Tabs = ({ items, children, className, currentUrl, panel }) => (
   <ul className={bemClass('tabs', { panel }, className)} role="tablist">
     {items.map(item => (
       <li key={item.url} className="tabs__tab">
-        <Link className={bemClass('tabs__link', { active: item.url === currentUrl, panel })} href={item.url}>
+        <Link
+          className={bemClass('tabs__link', { active: item.url === currentUrl, panel })}
+          href={item.url}
+        >
           {children(item)}
         </Link>
       </li>
@@ -31,6 +34,7 @@ Tabs.propTypes = {
   currentUrl: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({
+      title: PropTypes.string,
       url: PropTypes.string.isRequired,
     })
   ).isRequired,
