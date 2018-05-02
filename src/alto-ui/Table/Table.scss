@@ -173,18 +173,16 @@
 }
 
 .Table__cell--header {
-  &:not(:first-child) {
-    border-left: 1px solid $coolgrey-20;
-  }
-}
-
-.Table__cell--header {
   font-weight: $font-weight-semibold;
   font-size: $font-size-small;
-  box-shadow: inset 0 -1px 0 0 $coolgrey-20;
+  box-shadow: inset 0 -1px 0 0 $coolgrey-20, 0 1px 0 0 $coolgrey-20;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: $white;
 
   &:not(:first-child) {
-    border-left: 1px solid $coolgrey-20;
+    box-shadow: inset 0 -1px 0 0 $coolgrey-20, 0 1px 0 0 $coolgrey-20, inset 1px 0 0 0 $coolgrey-20;
   }
 }
 
@@ -213,7 +211,11 @@
 
   &:hover {
     background-color: $blue-10;
-    box-shadow: inset 0 -1px 0 0 $coolgrey-20;
+    box-shadow: inset 0 -1px 0 0 $coolgrey-20, 0 1px 0 0 $coolgrey-20;
+  }
+
+  .Table__cell:not(:first-child) &:hover {
+    box-shadow: inset 0 -1px 0 0 $coolgrey-20, 0 1px 0 0 $coolgrey-20, inset 1px 0 0 0 $coolgrey-20;
   }
 }
 
