@@ -18,33 +18,37 @@ const items = [
     id: 1,
     title: 'Numbers',
     icon: LightbulbIcon,
-    items: [
-      { id: 12, title: 'One', url: '#one' },
-      { id: 13, title: 'Two', url: '#two' },
-      { id: 14, title: 'Three', url: '#three' },
-      { id: 15, title: 'Four', url: '#four' },
-      { id: 16, title: 'Five', url: '#five' },
-    ],
+    url: '#one',
   },
   {
     id: 2,
     title: 'Fruits',
     icon: BoltIcon,
-    items: [
-      { id: 21, title: 'Apple', url: '#apple/foo' },
-      { id: 22, title: 'Banana', url: '#banana' },
-      { id: 23, title: 'Orange', url: '#orange' },
-    ],
+    url: '#two',
   },
   {
     id: 3,
     title: 'FBB',
     icon: ObjectsIcon,
-    items: [
-      { id: 31, title: 'Foo', url: '#foo' },
-      { id: 32, title: 'Bar', url: '#bar' },
-      { id: 33, title: 'Baz', url: '#baz' },
-    ],
+    url: '#three',
+  },
+  {
+    id: 4,
+    title: 'Cars',
+    icon: LightbulbIcon,
+    url: '#four',
+  },
+  {
+    id: 5,
+    title: 'Home',
+    icon: BoltIcon,
+    url: '#five',
+  },
+  {
+    id: 6,
+    title: 'Files',
+    icon: ObjectsIcon,
+    url: '#six',
   },
 ];
 
@@ -87,11 +91,7 @@ class SideNavContent extends React.Component {
           onClick={this.handleOpenProfile}
           style={{ background: 'transparent', border: 0 }}
         >
-          <Avatar
-            src="http://i.pravatar.cc/150"
-            alt="profil picture"
-            small={this.props.sideNavCallapsed}
-          />
+          <Avatar src="http://i.pravatar.cc/150" alt="profil picture" />
         </button>
         <SideNavPanel
           open={this.state.openProfile}
@@ -107,10 +107,6 @@ class SideNavContent extends React.Component {
     );
   }
 }
-
-SideNavContent.propTypes = {
-  sideNavCallapsed: PropTypes.bool.isRequired,
-};
 
 class SideNavRouterProvider extends React.Component {
   constructor(props) {
