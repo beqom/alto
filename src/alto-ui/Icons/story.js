@@ -13,6 +13,7 @@ import Bars from './Bars';
 import Bell from './Bell';
 import Bolt from './Bolt';
 import Building from './Building';
+import Calculator from './Calculator';
 import ChevronDown from './ChevronDown';
 import ChevronLeft from './ChevronLeft';
 import ChevronRight from './ChevronRight';
@@ -30,11 +31,13 @@ import Error from './Error';
 import Expand from './Expand';
 import Eye from './Eye';
 import File from './File';
+import FileGroup from './FileGroup';
 import FileSettings from './FileSettings';
 import Filter from './Filter';
 import Folder from './Folder';
 import FolderOpen from './FolderOpen';
 import Globe from './Globe';
+import Home from './Home';
 import Image from './Image';
 import Lightbulb from './Lightbulb';
 import List from './List';
@@ -45,17 +48,20 @@ import MinusCircle from './MinusCircle';
 import Pencil from './Pencil';
 import PlusCircle from './PlusCircle';
 import Plus from './Plus';
+import Populations from './Populations';
 import Objects from './Objects';
 import Options from './Options';
 import Organization from './Organization';
 import Remove from './Remove';
 import Search from './Search';
+import Tasks from './Tasks';
 import Times from './Times';
 import Trash from './Trash';
 import User from './User';
 import ViewCards from './ViewCards';
 import ViewList from './ViewList';
 import World from './World';
+import Tool from './Tool';
 
 const icons = Object.entries({
   Add,
@@ -67,6 +73,7 @@ const icons = Object.entries({
   Bell,
   Bolt,
   Building,
+  Calculator,
   ChevronDown,
   ChevronLeft,
   ChevronUp,
@@ -84,11 +91,13 @@ const icons = Object.entries({
   Expand,
   Eye,
   File,
+  FileGroup,
   FileSettings,
   Filter,
   Folder,
   FolderOpen,
   Globe,
+  Home,
   Image,
   Lightbulb,
   List,
@@ -99,17 +108,20 @@ const icons = Object.entries({
   Pencil,
   Plus,
   PlusCircle,
+  Populations,
   Objects,
   Options,
   Organization,
   Remove,
   Search,
+  Tasks,
   Times,
   Trash,
   User,
   ViewCards,
   ViewList,
   World,
+  Tool,
 }).map(([name, Icon]) => ({ name, Icon }));
 
 storiesOf('Icons', module).add('all', () => {
