@@ -59,6 +59,7 @@ storiesOf('Table', module)
           columnSorted={state.columnSorted}
           sortDirection={state.sortDirection}
           columns={simpson.columns}
+          isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
           rows={sort(state.rows, state.columnSorted, state.sortDirection)}
           parsers={parsers}
           locale="fr"
@@ -82,6 +83,7 @@ storiesOf('Table', module)
             rowId="name"
             comfortable={boolean('comfortable', false)}
             compact={boolean('compact', false)}
+            isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
             onChange={(value, col, row) => {
               const rows = setInArray({ ...row, [col.key]: value }, state.rows, 'name');
               setState({ rows });
