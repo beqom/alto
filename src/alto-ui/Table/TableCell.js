@@ -122,7 +122,7 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { column, row, tableProps, renderers, formatters, parsers } = this.props;
+    const { column, row, tableProps, renderers, formatters, parsers, frozen } = this.props;
     const value = column.formula ? evaluateFormula(column.formula, row) : this.state.value;
     const key = column.key || column;
     const type = value instanceof Error ? 'error' : column.type || typeof value;
@@ -140,6 +140,7 @@ class TableCell extends React.Component {
       formula: !!column.formula,
       editable,
       editing,
+      frozen,
     };
     const args = [column, row, tableProps];
     const contentProps = {
@@ -198,6 +199,7 @@ TableCell.propTypes = {
   formatters: PropTypes.object,
   parsers: PropTypes.object,
   locale: PropTypes.string,
+  frozen: PropTypes.bool,
 };
 
 export default TableCell;

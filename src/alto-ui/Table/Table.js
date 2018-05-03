@@ -53,8 +53,9 @@ const RENDERERS = {
   error: x => <ErrorIcon outline title={x.message} />,
 };
 
-const renderHeaderCell = p => col => {
+const renderHeaderCell = p => (col, colIndex) => {
   const style = col.width || col.width === 0 ? { width: col.width, maxWidth: col.width } : {};
+  const frozen = colIndex === 0 && p.isFirstColumnFrozen;
   if (p.onSort) {
     const sorted = col.key === p.columnSorted || [1, -1].includes(col.sortDirection);
     const { filtered } = col;
@@ -66,6 +67,7 @@ const renderHeaderCell = p => col => {
           sortable: true,
           sorted,
           filtered,
+          frozen,
         })}
         style={style}
       >
@@ -104,6 +106,7 @@ const renderHeaderCell = p => col => {
       style={style}
       className={bemClass('Table__cell', {
         header: true,
+        frozen,
       })}
     >
       <div className="Table__cell-content Table__cell-content--header" title={col.title}>
@@ -114,7 +117,7 @@ const renderHeaderCell = p => col => {
 };
 
 const Table = props => {
-  const { className, rows, rowId, comfortable, compact } = props;
+  const { className, rows, rowId, comfortable, compact, isFirstColumnFrozen } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
   const parsers = { ...PARSERS, ...props.parsers };
@@ -128,7 +131,7 @@ const Table = props => {
         <tbody>
           {rows.map(row => (
             <tr key={row[rowId]}>
-              {columns.map(col => (
+              {columns.map((col, colIndex) => (
                 <TableCell
                   key={col.key || col}
                   row={row}
@@ -137,6 +140,7 @@ const Table = props => {
                   parsers={parsers}
                   renderers={renderers}
                   formatters={FORMATTERS}
+                  frozen={colIndex === 0 && isFirstColumnFrozen}
                 />
               ))}
             </tr>
@@ -174,6 +178,7 @@ Table.propTypes = {
   compact: PropTypes.bool,
   renderers: PropTypes.object,
   parsers: PropTypes.object,
+  isFirstColumnFrozen: PropTypes.bool,
   // editable: PropTypes.func,
   // onChangeDebounceTime: PropTypes.number,
 };
