@@ -171,8 +171,8 @@ storiesOf('SideNav', module)
             ],
             'red'
           )}
-          expandButtonA11yLabel="click to expand side navigation"
-          collapseButtonA11yLabel="click to collapse side navigation"
+          expandButtonLabel="click to expand side navigation"
+          collapseButtonLabel="click to collapse side navigation"
           openMenuButtonLabel="Menu"
           closeMenuButtonLabel="Close"
           dark={boolean('dark', false)}
