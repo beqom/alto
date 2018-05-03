@@ -335,7 +335,7 @@ $nav-btn-hover-text-dark: $white;
         color: $coolgrey-40;
 
         &:hover {
-          background-color: $color; //mix($white, $coolgrey-90, 92%);
+          background-color: transparent; //mix($white, $coolgrey-90, 92%);
           color: $white; //$color;
         }
       }
@@ -345,7 +345,8 @@ $nav-btn-hover-text-dark: $white;
         color: $white;
       }
 
-      .sidenav__route-link--active {
+      .sidenav__route-link--active,
+      .sidenav__route-link--active:hover {
         background-color: $color;
         color: $white;
       }
