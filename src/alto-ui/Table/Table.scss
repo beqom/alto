@@ -37,6 +37,7 @@
   overflow: hidden;
   text-align: left;
   min-width: 6rem;
+  max-width: 24rem; // TODO: remove this eventually
   border-bottom: 1px solid $coolgrey-20;
 
   tbody tr:last-child > & {
