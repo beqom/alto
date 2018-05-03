@@ -73,6 +73,22 @@ storiesOf('Table', module)
       title: 'Power',
       formula: text('Power formula', '(([strength] + [speed]) * [agility]) * [intelligence] / 100'),
     };
+    const renderSummaryCell = state => (col, format) => {
+      switch (col.key) {
+        case 'agility':
+          return format(
+            state.rows.reduce((acc, hero) => acc + hero.agility, 0) / state.rows.length
+          );
+        case 'strength':
+          return format(state.rows.reduce((acc, hero) => acc + hero.strength, 0));
+        case 'speed':
+          return format(state.rows.reduce((acc, hero) => acc + hero.speed, 0));
+        case 'intelligence':
+          return format(state.rows.reduce((acc, hero) => acc + hero.strength, 0));
+        default:
+          return null;
+      }
+    };
     return (
       <StateProvider state={{ rows: calculatedFields.rows }}>
         {(state, setState) => (
@@ -84,6 +100,9 @@ storiesOf('Table', module)
             comfortable={boolean('comfortable', false)}
             compact={boolean('compact', false)}
             isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
+            renderSummaryCell={
+              boolean('renderSummaryCell', true) ? renderSummaryCell(state) : undefined
+            }
             onChange={(value, col, row) => {
               const rows = setInArray({ ...row, [col.key]: value }, state.rows, 'name');
               setState({ rows });

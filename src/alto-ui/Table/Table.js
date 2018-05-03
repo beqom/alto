@@ -117,7 +117,15 @@ const renderHeaderCell = p => (col, colIndex) => {
 };
 
 const Table = props => {
-  const { className, rows, rowId, comfortable, compact, isFirstColumnFrozen } = props;
+  const {
+    className,
+    rows,
+    rowId,
+    comfortable,
+    compact,
+    isFirstColumnFrozen,
+    renderSummaryCell,
+  } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
   const parsers = { ...PARSERS, ...props.parsers };
@@ -129,6 +137,23 @@ const Table = props => {
           <tr>{columns.map(renderHeaderCell(props))}</tr>
         </thead>
         <tbody>
+          {renderSummaryCell && (
+            <tr>
+              {columns.map((col, colIndex) => (
+                <TableCell
+                  key={col.key || col}
+                  row={{}}
+                  column={col}
+                  tableProps={props}
+                  parsers={parsers}
+                  renderers={renderers}
+                  formatters={FORMATTERS}
+                  frozen={colIndex === 0 && isFirstColumnFrozen}
+                  render={renderSummaryCell}
+                />
+              ))}
+            </tr>
+          )}
           {rows.map(row => (
             <tr key={row[rowId]}>
               {columns.map((col, colIndex) => (
@@ -179,6 +204,7 @@ Table.propTypes = {
   renderers: PropTypes.object,
   parsers: PropTypes.object,
   isFirstColumnFrozen: PropTypes.bool,
+  renderSummaryCell: PropTypes.func,
   // editable: PropTypes.func,
   // onChangeDebounceTime: PropTypes.number,
 };
