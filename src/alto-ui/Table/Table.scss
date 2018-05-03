@@ -81,6 +81,10 @@
         inset -2px 0 0 0 $coolgrey-20;
     }
   }
+
+  &--first {
+    background: $coolgrey-10;
+  }
 }
 
 .Table__cell-content {

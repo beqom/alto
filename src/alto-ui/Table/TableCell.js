@@ -122,7 +122,7 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { column, row, tableProps, renderers, formatters, parsers, frozen } = this.props;
+    const { column, row, tableProps, renderers, formatters, parsers, frozen, render } = this.props;
     const value = column.formula ? evaluateFormula(column.formula, row) : this.state.value;
     const key = column.key || column;
     const type = value instanceof Error ? 'error' : column.type || typeof value;
@@ -135,6 +135,19 @@ class TableCell extends React.Component {
     const renderer = renderers[type] || IDENTITY;
     const parser = parsers[type] || IDENTITY;
     const formatter = column.formatter || formatters[type] || IDENTITY;
+    if (render) {
+      return (
+        <td className={bemClass('Table__cell', { first: true, [type]: true })} ref={this.cellRef}>
+          <div
+            className={bemClass('Table__cell-content', { first: true, [type]: true })}
+            ref={this.setContentNode}
+            style={style}
+          >
+            {render(column, formatter, parser)}
+          </div>
+        </td>
+      );
+    }
     const modifiers = {
       [type]: true,
       formula: !!column.formula,
@@ -142,6 +155,7 @@ class TableCell extends React.Component {
       editing,
       frozen,
     };
+
     const args = [column, row, tableProps];
     const contentProps = {
       ref: this.setContentNode,
@@ -149,6 +163,7 @@ class TableCell extends React.Component {
       style,
       children: renderer(formatter(parser(value, ...args), ...args), ...args),
     };
+
     return (
       <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef}>
         {editable ? (
@@ -200,6 +215,7 @@ TableCell.propTypes = {
   parsers: PropTypes.object,
   locale: PropTypes.string,
   frozen: PropTypes.bool,
+  render: PropTypes.func,
 };
 
 export default TableCell;
