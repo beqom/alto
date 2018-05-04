@@ -11,7 +11,7 @@ storiesOf('Alert', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <Alert
-      global={boolean('global', false)}
+      filled={boolean('filled', false)}
       success={boolean('success', false)}
       warning={boolean('warning', false)}
       error={boolean('error', false)}
@@ -25,28 +25,28 @@ storiesOf('Alert', module)
     <div>
       <Alert
         info
-        global={boolean('global', false)}
+        filled={boolean('filled', false)}
         onClose={boolean('onClose', true) ? action('onClose') : undefined}
       >
         info
       </Alert>
       <Alert
         success
-        global={boolean('global', false)}
+        filled={boolean('filled', false)}
         onClose={boolean('onClose', true) ? action('onClose') : undefined}
       >
         success
       </Alert>
       <Alert
         warning
-        global={boolean('global', false)}
+        filled={boolean('filled', false)}
         onClose={boolean('onClose', true) ? action('onClose') : undefined}
       >
         warning
       </Alert>
       <Alert
         error
-        global={boolean('global', false)}
+        filled={boolean('filled', false)}
         onClose={boolean('onClose', true) ? action('onClose') : undefined}
       >
         error
@@ -55,7 +55,7 @@ storiesOf('Alert', module)
   ))
   .addWithJSX('long text', () => (
     <Alert
-      global={boolean('global', false)}
+      filled={boolean('filled', false)}
       success={boolean('success', false)}
       warning={boolean('warning', false)}
       error={boolean('error', false)}
