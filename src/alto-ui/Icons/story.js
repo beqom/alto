@@ -14,6 +14,8 @@ import Bell from './Bell';
 import Bolt from './Bolt';
 import Building from './Building';
 import Calculator from './Calculator';
+import Check from './Check';
+import CheckCircle from './CheckCircle';
 import ChevronDown from './ChevronDown';
 import ChevronLeft from './ChevronLeft';
 import ChevronRight from './ChevronRight';
@@ -28,6 +30,8 @@ import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
 import Error from './Error';
+import ExclamationCircle from './ExclamationCircle';
+import ExclamationTriangle from './ExclamationTriangle';
 import Expand from './Expand';
 import Eye from './Eye';
 import File from './File';
@@ -39,19 +43,21 @@ import FolderOpen from './FolderOpen';
 import Globe from './Globe';
 import Home from './Home';
 import Image from './Image';
+import InfoCircle from './InfoCircle';
 import Lightbulb from './Lightbulb';
 import List from './List';
+import Menu from './Menu';
 import Minus from './Minus';
 import More from './More';
 import Note from './Note';
 import MinusCircle from './MinusCircle';
-import Pencil from './Pencil';
-import PlusCircle from './PlusCircle';
-import Plus from './Plus';
-import Populations from './Populations';
 import Objects from './Objects';
 import Options from './Options';
 import Organization from './Organization';
+import Pencil from './Pencil';
+import Plus from './Plus';
+import PlusCircle from './PlusCircle';
+import Populations from './Populations';
 import Remove from './Remove';
 import Search from './Search';
 import Tasks from './Tasks';
@@ -74,6 +80,8 @@ const icons = Object.entries({
   Bolt,
   Building,
   Calculator,
+  Check,
+  CheckCircle,
   ChevronDown,
   ChevronLeft,
   ChevronUp,
@@ -88,6 +96,8 @@ const icons = Object.entries({
   EllipsisHorizontal,
   EllipsisVertical,
   Error,
+  ExclamationCircle,
+  ExclamationTriangle,
   Expand,
   Eye,
   File,
@@ -99,19 +109,21 @@ const icons = Object.entries({
   Globe,
   Home,
   Image,
+  InfoCircle,
   Lightbulb,
   List,
+  Menu,
   Minus,
   MinusCircle,
   More,
   Note,
+  Objects,
+  Options,
+  Organization,
   Pencil,
   Plus,
   PlusCircle,
   Populations,
-  Objects,
-  Options,
-  Organization,
   Remove,
   Search,
   Tasks,
