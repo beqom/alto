@@ -112,9 +112,12 @@ storiesOf('Table', module)
               boolean('renderSummaryCell', true) ? renderSummaryCell(state) : undefined
             }
             onChange={(value, col, row) => {
-              const rows = setInArray({ ...row, [col.key]: value }, state.rows, 'name');
+              const rows = setInArray({ ...row, [col.key]: parseFloat(value) }, state.rows, 'name');
               setState({ rows });
             }}
+            edited={(col, row, colIndex, rowIndex) =>
+              state.rows[rowIndex][col.key] !== calculatedFields.rows[rowIndex][col.key]
+            }
             renderers={avatarRenderer}
           />
         )}

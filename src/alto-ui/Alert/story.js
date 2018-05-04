@@ -21,6 +21,38 @@ storiesOf('Alert', module)
       {text('children', 'Hello world!')}
     </Alert>
   ))
+  .addWithJSX('styles', () => (
+    <div>
+      <Alert
+        info
+        global={boolean('global', false)}
+        onClose={boolean('onClose', true) ? action('onClose') : undefined}
+      >
+        info
+      </Alert>
+      <Alert
+        success
+        global={boolean('global', false)}
+        onClose={boolean('onClose', true) ? action('onClose') : undefined}
+      >
+        success
+      </Alert>
+      <Alert
+        warning
+        global={boolean('global', false)}
+        onClose={boolean('onClose', true) ? action('onClose') : undefined}
+      >
+        warning
+      </Alert>
+      <Alert
+        error
+        global={boolean('global', false)}
+        onClose={boolean('onClose', true) ? action('onClose') : undefined}
+      >
+        error
+      </Alert>
+    </div>
+  ))
   .addWithJSX('long text', () => (
     <Alert
       global={boolean('global', false)}
