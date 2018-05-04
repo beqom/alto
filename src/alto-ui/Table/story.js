@@ -10,7 +10,7 @@ import StateProvider from '../StateProvider';
 
 import Table from './Table';
 
-import { simpson, calculatedFields } from './data.json';
+import { simpson, calculatedFields, groupedColumn } from './data.json';
 
 const setInArray = (value, arr, keyField = 'id') => {
   const index = arr.findIndex(item => item[keyField] === value[keyField]);
@@ -29,6 +29,14 @@ const sort = (arr, col, direction) => {
   });
 };
 
+const avatarRenderer = {
+  avatar: (name, col, row) => (
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      <Avatar src={row.picture} small alt="Picture" />
+      <span style={{ marginLeft: '0.5rem' }}>{name}</span>
+    </div>
+  ),
+};
 const DEFAULT_DATE_FORMAT = 'd/L/yyyy hh:mm:ss a';
 const parsers = { date: x => DateTime.fromFormat(x, DEFAULT_DATE_FORMAT).toJSDate() };
 
@@ -107,16 +115,31 @@ storiesOf('Table', module)
               const rows = setInArray({ ...row, [col.key]: value }, state.rows, 'name');
               setState({ rows });
             }}
-            renderers={{
-              avatar: (name, col, row) => (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Avatar src={row.picture} small alt="Picture" />
-                  <span style={{ marginLeft: '0.5rem' }}>{name}</span>
-                </div>
-              ),
-            }}
+            renderers={avatarRenderer}
           />
         )}
       </StateProvider>
     );
-  });
+  })
+  .addWithJSX('Grouped column', () => (
+    <StateProvider state={{ rows: groupedColumn.rows }}>
+      {(state, setState) => (
+        <Table
+          id="groupedColumn"
+          rowId="id"
+          comfortable={boolean('comfortable', false)}
+          groupedByColumnId="name"
+          onChange={(value, col, row) => {
+            const rows = setInArray({ ...row, [col.key]: value }, state.rows);
+            setState({ rows });
+          }}
+          columnSorted={state.columnSorted}
+          sortDirection={state.sortDirection}
+          columns={groupedColumn.columns}
+          isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
+          rows={sort(state.rows, state.columnSorted, state.sortDirection)}
+          renderers={avatarRenderer}
+        />
+      )}
+    </StateProvider>
+  ));

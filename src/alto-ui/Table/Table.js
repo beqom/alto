@@ -53,6 +53,15 @@ const RENDERERS = {
   error: x => <ErrorIcon outline title={x.message} />,
 };
 
+const renderGroupedRow = (text, colspan, key) => (
+  <tr key={`${key}-grouped`}>
+    <td className="Table__cell Table__cell--grouped Table__cell--frozen">
+      <div className="Table__cell-content">{text}</div>
+    </td>
+    <td className="Table__cell Table__cell--grouped" colSpan={colspan - 1} />
+  </tr>
+);
+
 const renderHeaderCell = p => (col, colIndex) => {
   const style = col.width || col.width === 0 ? { width: col.width, maxWidth: col.width } : {};
   const frozen = colIndex === 0 && p.isFirstColumnFrozen;
@@ -125,11 +134,11 @@ const Table = props => {
     compact,
     isFirstColumnFrozen,
     renderSummaryCell,
+    groupedByColumnId,
   } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
   const parsers = { ...PARSERS, ...props.parsers };
-
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
       <table className="Table__table">
@@ -154,22 +163,33 @@ const Table = props => {
               ))}
             </tr>
           )}
-          {rows.map(row => (
-            <tr key={row[rowId]}>
-              {columns.map((col, colIndex) => (
-                <TableCell
-                  key={col.key || col}
-                  row={row}
-                  column={col}
-                  tableProps={props}
-                  parsers={parsers}
-                  renderers={renderers}
-                  formatters={FORMATTERS}
-                  frozen={colIndex === 0 && isFirstColumnFrozen}
-                />
-              ))}
-            </tr>
-          ))}
+          {rows.reduce((acc, row, index, arr) => {
+            const groupedRow =
+              groupedByColumnId &&
+              (!index || row[groupedByColumnId] !== arr[index - 1][groupedByColumnId])
+                ? renderGroupedRow(row[groupedByColumnId], columns.length, row[rowId])
+                : [];
+
+            return acc.concat(
+              [groupedRow],
+              [
+                <tr key={row[rowId]}>
+                  {columns.map((col, colIndex) => (
+                    <TableCell
+                      key={col.key || col}
+                      row={row}
+                      column={col}
+                      tableProps={props}
+                      parsers={parsers}
+                      renderers={renderers}
+                      formatters={FORMATTERS}
+                      frozen={colIndex === 0 && isFirstColumnFrozen}
+                    />
+                  ))}
+                </tr>,
+              ]
+            );
+          }, [])}
         </tbody>
       </table>
     </div>
@@ -205,6 +225,7 @@ Table.propTypes = {
   parsers: PropTypes.object,
   isFirstColumnFrozen: PropTypes.bool,
   renderSummaryCell: PropTypes.func,
+  groupedByColumnId: PropTypes.string,
   // editable: PropTypes.func,
   // onChangeDebounceTime: PropTypes.number,
 };

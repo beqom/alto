@@ -85,6 +85,14 @@
   &--first {
     background: $coolgrey-10;
   }
+
+  &--grouped {
+    background-color: $coolgrey-10;
+
+    &.Table__cell--frozen {
+      box-shadow: unset;
+    }
+  }
 }
 
 .Table__cell-content {

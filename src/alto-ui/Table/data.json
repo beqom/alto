@@ -116,5 +116,107 @@
         "intelligence": null
       }
     ]
+  },
+  "groupedColumn": {
+    "columns": [
+      { "key": "name", "title": "Name", "type": "avatar" },
+      { "key": "agility", "title": "Agility", "type": "number" },
+      { "key": "strength", "title": "Strength", "type": "number" },
+      { "key": "speed", "title": "Speed", "type": "number" },
+      { "key": "intelligence", "title": "Intelligence", "type": "number" }
+    ],
+    "rows": [
+      {
+        "id": 1,
+        "picture": "https://imgur.com/m8lKShp.png",
+        "name": "Batman",
+        "agility": 0.7,
+        "strength": 50,
+        "speed": 260,
+        "intelligence": 148
+      },
+      {
+        "id": 2,
+        "picture": "https://imgur.com/m8lKShp.png",
+        "name": "Batman",
+        "agility": 0.7,
+        "strength": 50,
+        "speed": 260,
+        "intelligence": 148
+      },
+      {
+        "id": 3,
+        "picture": "https://imgur.com/m8lKShp.png",
+        "name": "Batman",
+        "agility": 0.7,
+        "strength": 50,
+        "speed": 260,
+        "intelligence": 148
+      },
+
+      {
+        "id": 4,
+        "picture": "https://imgur.com/n58GL07.png",
+        "name": "Superman",
+        "agility": 0.4,
+        "strength": 350,
+        "speed": 1000,
+        "intelligence": 78
+      },
+      {
+        "id": 5,
+        "picture": "https://imgur.com/rgLQdBq.png",
+        "name": "Iron-man",
+        "agility": 0.35,
+        "strength": 180,
+        "speed": 800,
+        "intelligence": 165
+      },
+      {
+        "id": 6,
+        "picture": "https://imgur.com/rgLQdBq.png",
+        "name": "Iron-man",
+        "agility": 0.35,
+        "strength": 180,
+        "speed": 800,
+        "intelligence": 165
+      },
+      {
+        "id": 7,
+        "picture": "https://imgur.com/rgLQdBq.png",
+        "name": "Iron-man",
+        "agility": 0.35,
+        "strength": 180,
+        "speed": 800,
+        "intelligence": 165
+      },
+      {
+        "id": 8,
+        "picture": "https://imgur.com/k9tdnyc.png",
+        "name": "Spiderman",
+        "agility": 0.9,
+        "strength": 90,
+        "speed": 100,
+        "intelligence": 130
+      },
+      {
+        "id": 9,
+        "picture": "https://imgur.com/k9tdnyc.png",
+        "name": "Spiderman",
+        "agility": 0.9,
+        "strength": 90,
+        "speed": 100,
+        "intelligence": 130
+      },
+      {
+        "id": 10,
+        "picture": "https://imgur.com/Jl9rKEz.png",
+        "name": "Hulk",
+        "agility": 0.2,
+        "strength": 300,
+        "speed": 160,
+        "intelligence": null
+      }
+    ]
   }
 }
