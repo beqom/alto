@@ -122,14 +122,24 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { column, row, tableProps, renderers, formatters, parsers, frozen, render } = this.props;
+    const {
+      column,
+      row,
+      tableProps,
+      renderers,
+      formatters,
+      parsers,
+      frozen,
+      render,
+      editable,
+      edited,
+    } = this.props;
     const value = column.formula ? evaluateFormula(column.formula, row) : this.state.value;
     const key = column.key || column;
     const type = value instanceof Error ? 'error' : column.type || typeof value;
 
     const style =
       column.width || column.width === 0 ? { width: column.width, maxWidth: column.width } : {};
-    const editable = tableProps.editable(column, row) && !column.formula;
     const { editing } = this.state;
     const Input = getCellInput(type);
     const renderer = renderers[type] || IDENTITY;
@@ -160,6 +170,7 @@ class TableCell extends React.Component {
       editable,
       editing,
       frozen,
+      edited,
     };
 
     const contentProps = {
@@ -221,6 +232,8 @@ TableCell.propTypes = {
   locale: PropTypes.string,
   frozen: PropTypes.bool,
   render: PropTypes.func,
+  editable: PropTypes.bool.isRequired,
+  edited: PropTypes.bool.isRequired,
 };
 
 export default TableCell;

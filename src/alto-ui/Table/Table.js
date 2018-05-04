@@ -135,6 +135,8 @@ const Table = props => {
     isFirstColumnFrozen,
     renderSummaryCell,
     groupedByColumnId,
+    edited,
+    editable,
   } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
@@ -184,6 +186,8 @@ const Table = props => {
                       renderers={renderers}
                       formatters={FORMATTERS}
                       frozen={colIndex === 0 && isFirstColumnFrozen}
+                      editable={editable(col, row) && !col.formula}
+                      edited={edited(col, row, colIndex, index)}
                     />
                   ))}
                 </tr>,
@@ -202,6 +206,7 @@ Table.defaultProps = {
   rowId: 'id',
   columnsSorted: [],
   editable: col => col.editable,
+  edited: () => false,
 };
 
 Table.propTypes = {
@@ -227,6 +232,8 @@ Table.propTypes = {
   renderSummaryCell: PropTypes.func,
   groupedByColumnId: PropTypes.string,
   // editable: PropTypes.func,
+  editable: PropTypes.func,
+  edited: PropTypes.func,
   // onChangeDebounceTime: PropTypes.number,
 };
 
