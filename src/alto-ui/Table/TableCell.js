@@ -135,15 +135,21 @@ class TableCell extends React.Component {
     const renderer = renderers[type] || IDENTITY;
     const parser = parsers[type] || IDENTITY;
     const formatter = column.formatter || formatters[type] || IDENTITY;
+    const args = [column, row, tableProps];
     if (render) {
+      const format = x => formatter(x, ...args);
+
       return (
-        <td className={bemClass('Table__cell', { first: true, [type]: true })} ref={this.cellRef}>
+        <td
+          className={bemClass('Table__cell', { first: true, [type]: true, frozen })}
+          ref={this.cellRef}
+        >
           <div
             className={bemClass('Table__cell-content', { first: true, [type]: true })}
             ref={this.setContentNode}
             style={style}
           >
-            {render(column, formatter, parser)}
+            {render(column, format, parser)}
           </div>
         </td>
       );
@@ -156,7 +162,6 @@ class TableCell extends React.Component {
       frozen,
     };
 
-    const args = [column, row, tableProps];
     const contentProps = {
       ref: this.setContentNode,
       className: bemClass('Table__cell-content', modifiers),
