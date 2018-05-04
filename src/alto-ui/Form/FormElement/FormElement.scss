@@ -1,7 +1,9 @@
 @import '../../scss/inc';
 
 .form-element {
-  margin-bottom: $spacing-medium;
+  & + & {
+    margin-top: $spacing-medium;
+  }
 }
 
 .form-element__help-text {
