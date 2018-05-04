@@ -8,7 +8,7 @@ import Avatar from '../Avatar';
 
 import StateProvider from '../StateProvider';
 
-import Table from './Table';
+import Table from './TableContainer';
 
 import { simpson, calculatedFields, groupedColumn } from './data.json';
 
@@ -130,6 +130,7 @@ storiesOf('Table', module)
         <Table
           id="groupedColumn"
           rowId="id"
+          compact={boolean('compact', false)}
           comfortable={boolean('comfortable', false)}
           groupedByColumnId="name"
           onChange={(value, col, row) => {

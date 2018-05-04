@@ -40,10 +40,6 @@
   max-width: 24rem; // TODO: remove this eventually
   border-bottom: 1px solid $coolgrey-20;
 
-  tbody tr:last-child > & {
-    border-bottom: 0;
-  }
-
   &--number,
   &--int,
   &--integer,
@@ -89,6 +85,7 @@
 
   &--grouped {
     background-color: $coolgrey-10;
+    font-weight: $font-weight-semibold;
 
     &.Table__cell--frozen {
       box-shadow: unset;
@@ -208,6 +205,20 @@
   &--date {
     min-width: 7rem;
   }
+
+  &--grouped {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.Table__cell-content-icon {
+  margin-right: 10px;
+  transition: all $transition;
+}
+
+.Table__cell-content-icon--collapsed {
+  transform: rotate(-90deg);
 }
 
 .Table__cell-input {
@@ -302,4 +313,8 @@
   .Table__cell--filtered & {
     color: $blue;
   }
+}
+
+.Table__row--collapsed {
+  display: none;
 }
