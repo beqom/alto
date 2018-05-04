@@ -156,6 +156,11 @@
     }
   }
 
+  &--edited {
+    color: $purple;
+    font-weight: bold;
+  }
+
   &--image,
   &--avatar {
     padding-top: 0.5rem;
