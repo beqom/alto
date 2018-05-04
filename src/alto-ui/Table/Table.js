@@ -53,10 +53,18 @@ const RENDERERS = {
   error: x => <ErrorIcon outline title={x.message} />,
 };
 
-const renderGroupedRow = (text, colspan, key) => (
+const renderGroupedRow = (text, colspan, key, handleClickOnGroup, isCollapsed) => (
   <tr key={`${key}-grouped`}>
     <td className="Table__cell Table__cell--grouped Table__cell--frozen">
-      <div className="Table__cell-content">{text}</div>
+      <button
+        className="Table__cell-content Table__cell-content--grouped"
+        onClick={() => handleClickOnGroup(text)}
+      >
+        <ChevronDownIcon
+          className={bemClass('Table__cell-content-icon', { collapsed: isCollapsed })}
+        />
+        {text}
+      </button>
     </td>
     <td className="Table__cell Table__cell--grouped" colSpan={colspan - 1} />
   </tr>
@@ -137,6 +145,8 @@ const Table = props => {
     groupedByColumnId,
     edited,
     editable,
+    collapsedGroups,
+    handleClickOnGroup,
   } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderers = { ...RENDERERS, ...props.renderers };
@@ -169,13 +179,24 @@ const Table = props => {
             const groupedRow =
               groupedByColumnId &&
               (!index || row[groupedByColumnId] !== arr[index - 1][groupedByColumnId])
-                ? renderGroupedRow(row[groupedByColumnId], columns.length, row[rowId])
+                ? renderGroupedRow(
+                    row[groupedByColumnId],
+                    columns.length,
+                    row[rowId],
+                    handleClickOnGroup,
+                    collapsedGroups[row[groupedByColumnId]]
+                  )
                 : [];
 
             return acc.concat(
               [groupedRow],
               [
-                <tr key={row[rowId]}>
+                <tr
+                  key={row[rowId]}
+                  className={bemClass('Table__row', {
+                    collapsed: collapsedGroups[row[groupedByColumnId]],
+                  })}
+                >
                   {columns.map((col, colIndex) => (
                     <TableCell
                       key={col.key || col}
@@ -231,6 +252,8 @@ Table.propTypes = {
   isFirstColumnFrozen: PropTypes.bool,
   renderSummaryCell: PropTypes.func,
   groupedByColumnId: PropTypes.string,
+  collapsedGroups: PropTypes.object,
+  handleClickOnGroup: PropTypes.func,
   // editable: PropTypes.func,
   editable: PropTypes.func,
   edited: PropTypes.func,
