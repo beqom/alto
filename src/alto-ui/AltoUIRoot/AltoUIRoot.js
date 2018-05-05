@@ -36,6 +36,7 @@ class AltoUIRoot extends React.PureComponent {
         color: ${getColor('text')({ theme })};
         background: white;
         line-height: 1.2;
+        overflow: hidden;
       }
     `;
     const id = 'alto-ui-root-styles';
@@ -54,14 +55,9 @@ class AltoUIRoot extends React.PureComponent {
 
   render() {
     const { children, theme } = this.props;
-    return (
-      <ThemeProvider theme={theme}>
-        {children}
-      </ThemeProvider>
-    );
+    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
   }
 }
-
 
 AltoUIRoot.defaultProps = {
   theme: defaultTheme,
@@ -72,6 +68,6 @@ AltoUIRoot.propTypes = {
   children: PropTypes.any.isRequired,
   theme: PropTypes.object,
   resetCSS: PropTypes.bool,
-}
+};
 
 export default AltoUIRoot;
