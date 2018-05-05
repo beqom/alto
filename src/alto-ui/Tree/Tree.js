@@ -147,7 +147,7 @@ TreeItem.propTypes = {
   onClick: PropTypes.func,
   href: PropTypes.func,
   keyField: PropTypes.string,
-  open: PropTypes.bool,
+  open: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   selected: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number,
