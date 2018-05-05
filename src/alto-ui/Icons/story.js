@@ -26,9 +26,11 @@ import Config from './Config';
 import Collapse from './Collapse';
 import Copy from './Copy';
 import Delete from './Delete';
+import Download from './Download';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
+import Envelope from './Envelope';
 import Error from './Error';
 import ExclamationCircle from './ExclamationCircle';
 import ExclamationTriangle from './ExclamationTriangle';
@@ -92,9 +94,11 @@ const icons = Object.entries({
   Copy,
   Config,
   Delete,
+  Download,
   Edit,
   EllipsisHorizontal,
   EllipsisVertical,
+  Envelope,
   Error,
   ExclamationCircle,
   ExclamationTriangle,
@@ -138,6 +142,7 @@ const icons = Object.entries({
 
 storiesOf('Icons', module).add('all', () => {
   const outlineProps = boolean('outline', false) ? { outline: true } : {};
+  const badged = boolean('badged', false);
   const size = `${number('size', 30, { range: true, step: 1, min: 5, max: 600 })}px`;
   const col = color('color', '#333C48');
   const iconsElts = icons.map(({ name, Icon }) => (
@@ -154,6 +159,7 @@ storiesOf('Icons', module).add('all', () => {
       <div style={{ padding: 10 }}>
         <Icon
           {...outlineProps}
+          badged={badged}
           size={size}
           color={col}
           onClick={boolean('onClick', false) ? () => {} : undefined}
@@ -183,6 +189,7 @@ icons.forEach(({ name, Icon }) => {
     .add(name, () => (
       <Icon
         outline={boolean('outline', false)}
+        badged={boolean('badged', false)}
         size={`${number('size', 50, { range: true, step: 1, min: 5, max: 600 })}px`}
         color={color('color', '#333C48')}
         onClick={boolean('onClick', false) ? () => {} : undefined}
