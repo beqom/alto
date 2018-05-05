@@ -90,6 +90,17 @@ class TableCell extends React.Component {
     }
   }
 
+  getStyle() {
+    const { column } = this.props;
+    if (this.state.editing) {
+      return { width: this.state.width, maxWidth: this.state.width };
+    }
+    if (column.width || column.width === 0) {
+      return { width: column.width, maxWidth: column.width };
+    }
+    return {};
+  }
+
   startEditing() {
     const width = this.cellRef.current.offsetWidth;
     this.setState({ editing: true, width });
@@ -138,8 +149,7 @@ class TableCell extends React.Component {
     const key = column.key || column;
     const type = value instanceof Error ? 'error' : column.type || typeof value;
 
-    const style =
-      column.width || column.width === 0 ? { width: column.width, maxWidth: column.width } : {};
+    const style = this.getStyle();
     const { editing } = this.state;
     const Input = getCellInput(type);
     const renderer = renderers[type] || IDENTITY;
@@ -153,11 +163,11 @@ class TableCell extends React.Component {
         <td
           className={bemClass('Table__cell', { first: true, [type]: true, frozen })}
           ref={this.cellRef}
+          style={style}
         >
           <div
             className={bemClass('Table__cell-content', { first: true, [type]: true })}
             ref={this.setContentNode}
-            style={style}
           >
             {render(column, format, parser)}
           </div>
@@ -176,12 +186,11 @@ class TableCell extends React.Component {
     const contentProps = {
       ref: this.setContentNode,
       className: bemClass('Table__cell-content', modifiers),
-      style,
       children: renderer(formatter(parser(value, ...args), ...args), ...args),
     };
 
     return (
-      <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef}>
+      <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef} style={style}>
         {editable ? (
           <button {...contentProps} onClick={this.startEditing} />
         ) : (
@@ -210,7 +219,10 @@ class TableCell extends React.Component {
 
 TableCell.displayName = 'TableCell';
 
-TableCell.defaultProps = {};
+TableCell.defaultProps = {
+  editable: false,
+  edited: false,
+};
 
 TableCell.propTypes = {
   column: PropTypes.shape({
@@ -232,8 +244,8 @@ TableCell.propTypes = {
   locale: PropTypes.string,
   frozen: PropTypes.bool,
   render: PropTypes.func,
-  editable: PropTypes.bool.isRequired,
-  edited: PropTypes.bool.isRequired,
+  editable: PropTypes.bool,
+  edited: PropTypes.bool,
 };
 
 export default TableCell;
