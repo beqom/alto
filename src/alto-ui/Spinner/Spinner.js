@@ -5,7 +5,7 @@ import { bemClass } from '../helpers/bem';
 import './Spinner.scss';
 
 const Spinner = ({ className, show, centered, children, small, large }) => {
-  if (!show) return children;
+  if (!show) return children || null;
   const spinner = <div className={bemClass('Spinner', { small, large, centered }, className)} />;
   if (centered) {
     return <div className="Spinner--centered__wrapper">{spinner}</div>;
