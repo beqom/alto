@@ -28,6 +28,7 @@ const Icon = props => {
     size,
     children,
     a11yLabel,
+    badged,
     ...otherProps
   } = props;
   return (
@@ -49,6 +50,7 @@ const Icon = props => {
         role="presentation"
       >
         {children({ fill: color })}
+        {badged && <circle className="icon__badge" cx="30" cy="6" r="5" />}
       </svg>
       {!!a11yLabel && <VisuallyHidden>{a11yLabel}</VisuallyHidden>}
     </Container>
@@ -68,6 +70,7 @@ Icon.defaultProps = {
 Icon.propTypes = {
   children: PropTypes.func.isRequired,
   outline: PropTypes.bool,
+  badged: PropTypes.bool,
   viewBox: PropTypes.string,
   color: PropTypes.string,
   size: PropTypes.string,
