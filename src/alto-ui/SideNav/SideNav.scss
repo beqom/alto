@@ -410,16 +410,57 @@ $nav-btn-hover-text-dark: $white;
 
 .sidenav__panel-header {
   border-bottom: 1px solid $coolgrey-20;
-  margin: 0 20px;
-  padding: 20px 0;
+  padding: $spacing-large $spacing-medium;
   display: flex;
   align-items: center;
   height: $header-height;
 }
 
 .sidenav__panel-title {
-  font-size: $font-size-x-large;
+  font-size: $font-size-large;
+  font-weight: $font-weight-semibold;
+  color: $coolgrey-60;
   flex: 1;
+}
+
+.sidenav__panel-close {
+  @extend %reset-button;
+  cursor: pointer;
+
+  font-size: $font-size-large;
+  height: 2em;
+  width: 2em;
+  text-align: center;
+  border-radius: 50%;
+  background-color: $white;
+  line-height: 0;
+  display: block;
+  padding-top: 0.7em;
+  transition: all $transition;
+  color: inherit;
+
+  &::before {
+    content: '';
+    display: block;
+    margin-top: -50%;
+  }
+
+  &:hover {
+    background-color: $coolgrey-10;
+  }
+
+  &:active {
+    color: inherit;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $blue-20;
+  }
+}
+
+.sidenav__panel-close-label {
+  font-size: 0.6em;
+  margin-top: 0.25em;
 }
 
 .sidenav__panel-body {
