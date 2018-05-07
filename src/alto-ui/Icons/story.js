@@ -67,6 +67,7 @@ import Times from './Times';
 import Trash from './Trash';
 import User from './User';
 import ViewCards from './ViewCards';
+import ViewColumns from './ViewColumns';
 import ViewList from './ViewList';
 import World from './World';
 import Tool from './Tool';
@@ -135,6 +136,7 @@ const icons = Object.entries({
   Trash,
   User,
   ViewCards,
+  ViewColumns,
   ViewList,
   World,
   Tool,
