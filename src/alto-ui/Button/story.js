@@ -58,8 +58,8 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper white={modifiers.white}>
-        <Button>default</Button>
-        <Button {...modifiers}>{text('children', 'customizable')}</Button>
+        <Button>Default</Button>
+        <Button {...modifiers}>{text('children', 'Customizable')}</Button>
       </SimpleWrapper>
     );
   })
@@ -68,12 +68,12 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper white={modifiers.white}>
-        <Button {...modifiers}>default</Button>
+        <Button {...modifiers}>Default</Button>
         <Button {...modifiers} outline>
-          outline
+          Outline
         </Button>
         <Button {...modifiers} flat>
-          flat
+          Flat
         </Button>
       </SimpleWrapper>
     );
@@ -83,12 +83,12 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper>
-        <Button {...modifiers}>default</Button>
+        <Button {...modifiers}>Default</Button>
         <Button {...modifiers} success>
-          success
+          Success
         </Button>
         <Button {...modifiers} danger>
-          danger
+          Danger
         </Button>
       </SimpleWrapper>
     );
@@ -99,7 +99,7 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper white>
         <Button {...modifiers} white>
-          default
+          Default
         </Button>
         <Button {...modifiers} white outline>
           outline
@@ -116,11 +116,11 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper white={modifiers.white}>
         <Button {...modifiers} small>
-          small
+          Small
         </Button>
-        <Button {...modifiers}>default</Button>
+        <Button {...modifiers}>Default</Button>
         <Button {...modifiers} large>
-          large
+          Large
         </Button>
       </SimpleWrapper>
     );
@@ -130,12 +130,12 @@ storiesOf('Button', module)
 
     return (
       <SimpleWrapper white={modifiers.white}>
-        <Button {...modifiers}>default</Button>
+        <Button {...modifiers}>Default</Button>
         <Button {...modifiers} active>
-          active
+          Active
         </Button>
         <Button {...modifiers} disabled>
-          disabled
+          Disabled
         </Button>
       </SimpleWrapper>
     );
