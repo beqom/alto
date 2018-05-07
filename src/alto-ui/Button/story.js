@@ -102,10 +102,10 @@ storiesOf('Button', module)
           Default
         </Button>
         <Button {...modifiers} white outline>
-          outline
+          Outline
         </Button>
         <Button {...modifiers} white flat>
-          flat
+          Flat
         </Button>
       </SimpleWrapper>
     );
@@ -152,7 +152,7 @@ storiesOf('Button', module)
           Next<ArrowRightIcon right />
         </Button>
         <Button {...modifiers} nowrap>
-          <ObjectsIcon left />Select Objects<ChevronDownIcon right size="12px" />
+          <ObjectsIcon left />Select Objects<ChevronDownIcon right />
         </Button>
       </SimpleWrapper>
     );
