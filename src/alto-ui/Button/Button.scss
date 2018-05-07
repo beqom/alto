@@ -105,22 +105,26 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   &:disabled,
   &.button--disabled {
     color: $coolgrey-30;
+    background: transparent;
   }
 }
 
 .button {
   @include button--solid($blue, $blue-80, $blue-30, $blue-90);
-  display: inline-block;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   font-weight: $font-weight-regular;
   font-size: $font-size-medium;
   font-family: $font-family-alt;
-  padding: 0.375rem 0.75rem;
+  padding: 0.4375rem 0.75rem; // Button height = 32px
   line-height: $line-height-button;
   border: 1px solid transparent;
   border-radius: $border-radius-default;
   text-decoration: none;
   text-align: center;
-  letter-spacing: 0.06em;
+  // letter-spacing: 0.04em;
   cursor: pointer;
   transition: $duration-quick $timing-function all;
   &:focus {
@@ -130,6 +134,14 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   &:disabled,
   &.button--disabled {
     cursor: not-allowed;
+  }
+  > .icon {
+    &:first-child {
+      margin-right: 0.25rem;
+    }
+    &:last-child {
+      margin-left: 0.25rem;
+    }
   }
 }
 
@@ -153,19 +165,23 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 
 .button--small {
   font-size: $font-size-small;
-  padding: 0.1875rem 0.6875rem;
+  padding: 0.25rem 0.5rem; // Button height = 26px
+  .icon {
+    font-size: 1rem; // Keeps icons in small buttons readable
+  }
 }
 
 .button--large {
   font-size: $font-size-large;
-  padding: 0.75rem 1rem;
+  padding: 0.375rem 0.75rem; // Button height = 36px
+  padding: 0.5rem 1rem;
 }
 
 .button--nowrap {
   padding-top: 0;
   padding-bottom: 0;
-  line-height: 2.25rem;
-  height: 2.25rem;
+  line-height: 1.875rem;
+  height: 1.875rem;
   white-space: nowrap;
 
   &.button--small {

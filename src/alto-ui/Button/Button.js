@@ -16,6 +16,7 @@ const buttonProps = bemProps('button', [
   'active',
   'block',
   'nowrap',
+  'icons',
   'disabled',
 ]);
 
@@ -51,6 +52,7 @@ Button.propTypes = {
   active: PropTypes.bool,
   block: PropTypes.bool,
   nowrap: PropTypes.bool,
+  icons: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 

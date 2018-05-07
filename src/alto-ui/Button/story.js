@@ -13,11 +13,16 @@ import Button from './Button';
 
 const SimpleWrapper = styled.div`
   text-align: center;
-  width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   padding: 40px 0;
   ${p => (p.width ? `width: ${p.width}` : '')};
   > * {
-    margin: 10px;
+    margin: 0.5rem;
   }
   ${props =>
     props.white &&
@@ -140,7 +145,7 @@ storiesOf('Button', module)
       </SimpleWrapper>
     );
   })
-  .addWithJSX('with icons (nowrap)', () => {
+  .addWithJSX('nowrap', () => {
     const modifiers = getModifiers();
 
     return (
@@ -153,6 +158,33 @@ storiesOf('Button', module)
         </Button>
         <Button {...modifiers} nowrap>
           <ObjectsIcon left />Select Objects<ChevronDownIcon right />
+        </Button>
+      </SimpleWrapper>
+    );
+  })
+
+  .addWithJSX('icons', () => {
+    const modifiers = getModifiers();
+
+    return (
+      <SimpleWrapper white={modifiers.white}>
+        <Button {...modifiers}>
+          <BarsIcon left />Menu
+        </Button>
+        <Button {...modifiers}>
+          Next<ArrowRightIcon right />
+        </Button>
+        <Button {...modifiers}>
+          <ObjectsIcon left />Select Objects<ChevronDownIcon right />
+        </Button>
+        <Button {...modifiers}>
+          <ObjectsIcon />
+        </Button>
+        <Button {...modifiers}>
+          <BarsIcon />
+        </Button>
+        <Button {...modifiers}>
+          <ArrowRightIcon />
         </Button>
       </SimpleWrapper>
     );
