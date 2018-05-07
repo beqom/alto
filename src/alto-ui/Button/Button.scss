@@ -135,14 +135,6 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   &.button--disabled {
     cursor: not-allowed;
   }
-  > .icon {
-    &:first-child {
-      margin-right: 0.25rem;
-    }
-    &:last-child {
-      margin-left: 0.25rem;
-    }
-  }
 }
 
 .button--success {

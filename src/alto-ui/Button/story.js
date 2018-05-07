@@ -151,7 +151,7 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper white={modifiers.white}>
         <Button {...modifiers} nowrap>
-          <BarsIcon left />Menu
+          <BarsIcon left />
         </Button>
         <Button {...modifiers} nowrap>
           Next<ArrowRightIcon right />
