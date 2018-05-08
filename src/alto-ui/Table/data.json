@@ -130,16 +130,16 @@
         "id": 1,
         "picture": "https://imgur.com/m8lKShp.png",
         "name": "Batman",
-        "agility": 0.7,
+        "agility": 0.8,
         "strength": 50,
-        "speed": 260,
+        "speed": 280,
         "intelligence": 148
       },
       {
         "id": 2,
         "picture": "https://imgur.com/m8lKShp.png",
         "name": "Batman",
-        "agility": 0.7,
+        "agility": 0.6,
         "strength": 50,
         "speed": 260,
         "intelligence": 148
@@ -150,7 +150,7 @@
         "name": "Batman",
         "agility": 0.7,
         "strength": 50,
-        "speed": 260,
+        "speed": 240,
         "intelligence": 148
       },
 

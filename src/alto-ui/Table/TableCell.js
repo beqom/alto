@@ -169,7 +169,7 @@ class TableCell extends React.Component {
             className={bemClass('Table__cell-content', { first: true, [type]: true })}
             ref={this.setContentNode}
           >
-            {render(column, format, parser)}
+            {render(column, row, format, parser)}
           </div>
         </td>
       );

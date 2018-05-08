@@ -81,7 +81,7 @@ storiesOf('Table', module)
       title: 'Power',
       formula: text('Power formula', '(([strength] + [speed]) * [agility]) * [intelligence] / 100'),
     };
-    const renderSummaryCell = state => (col, format) => {
+    const renderSummaryCell = state => (col, row, format) => {
       switch (col.key) {
         case 'agility':
           return format(
@@ -124,26 +124,44 @@ storiesOf('Table', module)
       </StateProvider>
     );
   })
-  .addWithJSX('Grouped column', () => (
-    <StateProvider state={{ rows: groupedColumn.rows }}>
-      {(state, setState) => (
-        <Table
-          id="groupedColumn"
-          rowId="id"
-          compact={boolean('compact', false)}
-          comfortable={boolean('comfortable', false)}
-          groupedByColumnId="name"
-          onChange={(value, col, row) => {
-            const rows = setInArray({ ...row, [col.key]: value }, state.rows);
-            setState({ rows });
-          }}
-          columnSorted={state.columnSorted}
-          sortDirection={state.sortDirection}
-          columns={groupedColumn.columns}
-          isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
-          rows={sort(state.rows, state.columnSorted, state.sortDirection)}
-          renderers={avatarRenderer}
-        />
-      )}
-    </StateProvider>
-  ));
+  .addWithJSX('Grouped column', () => {
+    const renderSummaryGroupCell = (state, groupedByColumnId) => (col, row, format) => {
+      const items = state.rows.filter(item => item[groupedByColumnId] === row[groupedByColumnId]);
+      switch (col.key) {
+        case 'agility':
+          return format(items.reduce((acc, hero) => acc + hero.agility, 0) / items.length);
+        case 'speed':
+          return format(items.reduce((acc, hero) => acc + hero.speed, 0));
+        default:
+          return null;
+      }
+    };
+    return (
+      <StateProvider state={{ rows: groupedColumn.rows }}>
+        {(state, setState) => (
+          <Table
+            id="groupedColumn"
+            rowId="id"
+            compact={boolean('compact', false)}
+            comfortable={boolean('comfortable', false)}
+            groupedByColumnId="name"
+            onChange={(value, col, row) => {
+              const rows = setInArray({ ...row, [col.key]: value }, state.rows);
+              setState({ rows });
+            }}
+            columnSorted={state.columnSorted}
+            sortDirection={state.sortDirection}
+            columns={groupedColumn.columns}
+            isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
+            rows={sort(state.rows, state.columnSorted, state.sortDirection)}
+            renderers={avatarRenderer}
+            renderSummaryGroupCell={
+              boolean('renderSummaryGroupCell', true)
+                ? renderSummaryGroupCell(state, 'name')
+                : undefined
+            }
+          />
+        )}
+      </StateProvider>
+    );
+  });
