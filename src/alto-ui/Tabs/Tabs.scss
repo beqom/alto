@@ -13,8 +13,7 @@
   font-weight: $font-weight-semibold;
   text-decoration: none;
   cursor: pointer;
-  transition: all $duration-quick $timing-function,
-    box-shadow $duration-quick ease-in-out $duration-quick;
+  transition: all $transition, box-shadow $transition;
 
   &:hover,
   &:active {

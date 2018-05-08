@@ -1,4 +1,4 @@
-@import "../../scss/inc";
+@import '../../scss/inc';
 
 .textfield {
   font: inherit;
@@ -11,9 +11,9 @@
   border-radius: $border-radius-default;
   border: 1px solid $coolgrey-20;
   font-weight: 400;
-  line-height: 2.375;
-  height: 2.375em;
-  padding: 0 10px;
+  line-height: $line-height-input;
+  height: $height-default;
+  padding: 0 0.625rem;
   display: block;
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -67,15 +67,15 @@
 
 .textfield--large {
   font-size: $font-size-large;
-  padding: 0 20px;
-  line-height: 2.67;
-  height: 2.67em;
+  //padding: 0 1rem/10;
+  line-height: $height-large;
+  height: $height-large;
 }
 
 .textfield--small {
   font-size: $font-size-small;
-  line-height: 2;
-  height: 2em;
+  line-height: $height-small;
+  height: $height-small;
 }
 
 .textfield--area {
