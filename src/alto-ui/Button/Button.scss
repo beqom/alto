@@ -124,7 +124,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   border-radius: $border-radius-default;
   text-decoration: none;
   text-align: center;
-  // letter-spacing: 0.04em;
+  letter-spacing: 0.04em;
   cursor: pointer;
   transition: $duration-quick $timing-function all;
   &:focus {
@@ -165,8 +165,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 
 .button--large {
   font-size: $font-size-large;
-  padding: 0.375rem 0.75rem; // Button height = 36px
-  padding: 0.5rem 1rem;
+  padding: 0.625rem 1.25rem; // Button height = 38px
 }
 
 .button--nowrap {
