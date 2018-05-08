@@ -1,18 +1,11 @@
 @import '../../scss/inc';
 
-.CheckBox {
-  & + & {
-    //margin-top: $spacing-small;
-  }
-}
-
 .CheckBox__input {
   @extend %visually-hidden;
 }
 
 .CheckBox__label {
   font-size: $font-size-medium;
-  // font-size: 3rem;
   line-height: 2em;
   height: 2em;
   padding-left: 1.5em;
