@@ -7,7 +7,7 @@ import centered from '@storybook/addon-centered';
 // import { text, boolean, select } from '@storybook/addon-knobs';
 
 import Checkbox from './CheckBox';
-import RadioButton from './RadioButton';
+import Radio from './Radio';
 import Select from './Select';
 import TextArea from './TextArea';
 import TextField from './TextField';
@@ -47,8 +47,8 @@ storiesOf('Form/Overview', module)
         ]}
       />
       <br />
-      <RadioButton id="male" label="Male" name="gender" checked />
-      <RadioButton id="female" label="Female" name="gender" />
+      <Radio id="male" label="Male" name="gender" checked />
+      <Radio id="female" label="Female" name="gender" />
       <br />
       <TextArea id="bio" label="Bio" placeholder="Write something about yourself..." />
       <br />
@@ -64,7 +64,7 @@ require('./ColorPicker/story');
 require('./DatePicker/story');
 require('./FileInput/story');
 require('./Label/story');
-require('./RadioButton/story');
+require('./Radio/story');
 require('./Select/story');
 require('./Switch/story');
 require('./TextArea/story');

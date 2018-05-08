@@ -1,18 +1,11 @@
 @import '../../scss/inc';
 
-.CheckBox {
-  & + & {
-    //margin-top: $spacing-small;
-  }
-}
-
-.CheckBox__input {
+.Radio__input {
   @extend %visually-hidden;
 }
 
-.CheckBox__label {
+.Radio__label {
   font-size: $font-size-medium;
-  // font-size: 3rem;
   line-height: 2em;
   height: 2em;
   padding-left: 1.5em;
@@ -34,9 +27,9 @@
     border: 1px solid $coolgrey-20;
     background-color: white;
     top: 0.5em;
-    height: 0.875em;
-    width: 0.875em;
-    border-radius: $border-radius-default;
+    height: 1em;
+    width: 1em;
+    border-radius: 10rem;
 
     input:checked + & {
       border-color: $blue;
@@ -59,18 +52,16 @@
 
   &::after {
     input:checked + & {
-      transform: rotate(-45deg);
-      left: 0.1875em;
-      top: 0.75em;
-      height: 0.25em;
+      left: 0.3125em;
+      top: 0.8125em;
+      height: 0.5em;
       width: 0.5em;
-      border-left: 2px solid white;
-      border-bottom: 2px solid white;
+      background: $white;
+      border-radius: 10rem;
     }
 
     input:checked:disabled + & {
-      border-left: 2px solid $coolgrey-30;
-      border-bottom: 2px solid $coolgrey-30;
+      background: $coolgrey-30;
     }
   }
 }
