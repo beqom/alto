@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
 import { bemClass } from '../helpers/bem';
-import ChevronUpIcon from '../Icons/ChevronUp';
 import ChevronDownIcon from '../Icons/ChevronDown';
-import FilterIcon from '../Icons/Filter';
 import CheckIcon from '../Icons/Check';
 import ErrorIcon from '../Icons/Error';
 import Avatar from '../Avatar';
-
 import TableCell from './TableCell';
+import TableHeader from './TableHeader';
+
 import './Table.scss';
 
 const PARSERS = {};
@@ -53,84 +52,61 @@ const RENDERERS = {
   error: x => <ErrorIcon outline title={x.message} />,
 };
 
-const renderGroupedRow = (text, colspan, key, handleClickOnGroup, isCollapsed) => (
-  <tr key={`${key}-grouped`}>
-    <td className="Table__cell Table__cell--grouped Table__cell--frozen">
-      <button
-        className="Table__cell-content Table__cell-content--grouped"
-        onClick={() => handleClickOnGroup(text)}
-      >
-        <ChevronDownIcon
-          className={bemClass('Table__cell-content-icon', { collapsed: isCollapsed })}
-        />
-        {text}
-      </button>
-    </td>
-    <td className="Table__cell Table__cell--grouped" colSpan={colspan - 1} />
-  </tr>
-);
-
-const renderHeaderCell = p => (col, colIndex) => {
-  const style = col.width || col.width === 0 ? { width: col.width, maxWidth: col.width } : {};
-  const frozen = colIndex === 0 && p.isFirstColumnFrozen;
-  if (p.onSort) {
-    const sorted = col.key === p.columnSorted || [1, -1].includes(col.sortDirection);
-    const { filtered } = col;
-    return (
-      <th
-        key={col.key}
-        className={bemClass('Table__cell', {
-          header: true,
-          sortable: true,
-          sorted,
-          filtered,
-          frozen,
-        })}
-        style={style}
-      >
-        <button
-          className="Table__cell-button Table__cell-content Table__cell-content--header"
-          onClick={() => p.onSort(col)}
-          style={style}
-          title={col.title}
-        >
-          {filtered ? <FilterIcon className="Table__filter-icon" /> : null}
-          <span className="Table__header-cell-title">{col.title}</span>
-          <div className="Table__header-cell-sortable-icons">
-            <div
-              className={bemClass('Table__header-cell-sortable-icon', {
-                active: (sorted && p.sortDirection === 1) || col.sortDirection === 1,
-              })}
-            >
-              <ChevronUpIcon />
-            </div>
-            <div
-              className={bemClass('Table__header-cell-sortable-icon', {
-                active: (sorted && p.sortDirection === -1) || col.sortDirection === -1,
-              })}
-            >
-              <ChevronDownIcon />
-            </div>
-          </div>
-        </button>
-      </th>
-    );
-  }
-
+const renderGroupedRow = (tableProps, columns, row, renderCells) => {
+  const {
+    rowId,
+    groupedByColumnId,
+    handleClickOnGroup,
+    collapsedGroups,
+    renderSummaryGroupCell,
+  } = tableProps;
+  const isCollapsed = collapsedGroups[row[groupedByColumnId]];
+  // const columnsFiltered = columns.filter(col => col.key !== groupedByColumnId);
   return (
-    <th
-      key={col.key}
-      style={style}
-      className={bemClass('Table__cell', {
-        header: true,
-        frozen,
-      })}
-    >
-      <div className="Table__cell-content Table__cell-content--header" title={col.title}>
-        {col.title}
-      </div>
-    </th>
+    <tr key={`${row[rowId]}-grouped`}>
+      <td className="Table__cell Table__cell--grouped Table__cell--frozen">
+        <button
+          className="Table__cell-content Table__cell-content--grouped"
+          onClick={() => handleClickOnGroup(row[groupedByColumnId])}
+        >
+          <ChevronDownIcon
+            className={bemClass('Table__cell-content-icon', { collapsed: isCollapsed })}
+          />
+          {row[groupedByColumnId]}
+        </button>
+      </td>
+      {renderCells(columns, row, null, renderSummaryGroupCell).slice(1)}
+    </tr>
   );
+};
+
+const renderTableCell = tableProps => {
+  const renderers = { ...RENDERERS, ...tableProps.renderers };
+  const parsers = { ...PARSERS, ...tableProps.parsers };
+  const formatters = { ...FORMATTERS, ...tableProps.formatters };
+
+  const { isFirstColumnFrozen, editable, edited } = tableProps;
+
+  return (columns, row, rowIndex, render) =>
+    columns.map((col, colIndex) => {
+      const isEditable = !render && editable(col, row) && !col.formula;
+      const editedFunc = render ? null : edited(col, row, colIndex, rowIndex);
+      return (
+        <TableCell
+          key={col.key || col}
+          row={row}
+          column={col}
+          tableProps={tableProps}
+          parsers={parsers}
+          renderers={renderers}
+          formatters={formatters}
+          frozen={colIndex === 0 && isFirstColumnFrozen}
+          render={render}
+          editable={isEditable}
+          edited={editedFunc}
+        />
+      );
+    });
 };
 
 const Table = props => {
@@ -143,49 +119,32 @@ const Table = props => {
     isFirstColumnFrozen,
     renderSummaryCell,
     groupedByColumnId,
-    edited,
-    editable,
     collapsedGroups,
-    handleClickOnGroup,
+    columnSorted,
+    sortDirection,
+    onSort,
   } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
-  const renderers = { ...RENDERERS, ...props.renderers };
-  const parsers = { ...PARSERS, ...props.parsers };
+  const renderCells = renderTableCell(props);
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
       <table className="Table__table">
-        <thead>
-          <tr>{columns.map(renderHeaderCell(props))}</tr>
-        </thead>
+        <TableHeader
+          isFirstColumnFrozen={isFirstColumnFrozen}
+          onSort={onSort}
+          columnSorted={columnSorted}
+          sortDirection={sortDirection}
+          columns={columns}
+        />
         <tbody>
-          {renderSummaryCell && (
-            <tr>
-              {columns.map((col, colIndex) => (
-                <TableCell
-                  key={col.key || col}
-                  row={{}}
-                  column={col}
-                  tableProps={props}
-                  parsers={parsers}
-                  renderers={renderers}
-                  formatters={FORMATTERS}
-                  frozen={colIndex === 0 && isFirstColumnFrozen}
-                  render={renderSummaryCell}
-                />
-              ))}
-            </tr>
-          )}
-          {rows.reduce((acc, row, index, arr) => {
+          {renderSummaryCell && <tr>{renderCells(columns, {}, null, renderSummaryCell)}</tr>}
+          {rows.reduce((acc, row, rowIndex, arr) => {
+            const isFirstRow = !rowIndex;
+            const isPrecededByDifferentGroup =
+              isFirstRow || row[groupedByColumnId] !== arr[rowIndex - 1][groupedByColumnId];
             const groupedRow =
-              groupedByColumnId &&
-              (!index || row[groupedByColumnId] !== arr[index - 1][groupedByColumnId])
-                ? renderGroupedRow(
-                    row[groupedByColumnId],
-                    columns.length,
-                    row[rowId],
-                    handleClickOnGroup,
-                    collapsedGroups[row[groupedByColumnId]]
-                  )
+              groupedByColumnId && isPrecededByDifferentGroup
+                ? renderGroupedRow(props, columns, row, renderCells)
                 : [];
 
             return acc.concat(
@@ -197,20 +156,7 @@ const Table = props => {
                     collapsed: collapsedGroups[row[groupedByColumnId]],
                   })}
                 >
-                  {columns.map((col, colIndex) => (
-                    <TableCell
-                      key={col.key || col}
-                      row={row}
-                      column={col}
-                      tableProps={props}
-                      parsers={parsers}
-                      renderers={renderers}
-                      formatters={FORMATTERS}
-                      frozen={colIndex === 0 && isFirstColumnFrozen}
-                      editable={editable(col, row) && !col.formula}
-                      edited={edited(col, row, colIndex, index)}
-                    />
-                  ))}
+                  {renderCells(columns, row, rowIndex)}
                 </tr>,
               ]
             );
@@ -247,17 +193,22 @@ Table.propTypes = {
   rows: PropTypes.array.isRequired,
   comfortable: PropTypes.bool,
   compact: PropTypes.bool,
-  renderers: PropTypes.object,
-  parsers: PropTypes.object,
   isFirstColumnFrozen: PropTypes.bool,
   renderSummaryCell: PropTypes.func,
   groupedByColumnId: PropTypes.string,
   collapsedGroups: PropTypes.object,
-  handleClickOnGroup: PropTypes.func,
-  // editable: PropTypes.func,
-  editable: PropTypes.func,
-  edited: PropTypes.func,
-  // onChangeDebounceTime: PropTypes.number,
+  columnSorted: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.any.isRequired,
+      title: PropTypes.any.isRequired,
+      description: PropTypes.string,
+      type: PropTypes.string,
+      width: PropTypes.number,
+      formula: PropTypes.string,
+    })
+  ),
+  sortDirection: PropTypes.number,
+  onSort: PropTypes.func,
 };
 
 export default Table;
