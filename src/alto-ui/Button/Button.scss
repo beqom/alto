@@ -159,7 +159,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   font-size: $font-size-small;
   padding: 0.25rem 0.5rem; // Button height = 26px
   .icon {
-    font-size: 1rem; // Keeps icons in small buttons readable
+    font-size: $font-size-medium; // Keeps icons in small buttons readable
   }
 }
 
