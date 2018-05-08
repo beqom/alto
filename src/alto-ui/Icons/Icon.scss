@@ -14,12 +14,16 @@
   font-size: 1em;
 }
 
+.icon--baseline {
+  transform: scale(1.25) translateY(0.125em);
+}
+
 .icon--left {
-  margin-right: 0.25em;
+  margin-right: 0.5em;
 }
 
 .icon--right {
-  margin-left: 0.25em;
+  margin-left: 0.5em;
 }
 
 .icon--button {
