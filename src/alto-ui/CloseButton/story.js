@@ -11,6 +11,6 @@ storiesOf('CloseButton', module)
   .addWithJSX('link', () => (
     <div style={{ display: 'flex', width: '100px', justifyContent: 'space-between' }}>
       <CloseButton a11yLabel="Close panel" />
-      <CloseButton href="#foo" a11yLabel="Close panel" />
+      <CloseButton href="#foo" a11yLabel="Close panel link" />
     </div>
   ));
