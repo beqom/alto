@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Overlay from '../Overlay';
-import VisuallyHidden from '../VisuallyHidden';
-import CloseIcon from '../Icons/Close';
+import CloseButton from '../CloseButton';
 import { bemClass } from '../helpers/bem';
 
 const SideNavPanel = ({
@@ -26,18 +25,12 @@ const SideNavPanel = ({
       <div className="sidenav__panel-container">
         <header className="sidenav__panel-header">
           <div className="sidenav__panel-title">{title}</div>
-          <button
+          <CloseButton
             id={`${closeFocusTargetId}__open`}
             onClick={onClose}
-            className="sidenav__panel-close"
             tabIndex={open ? 0 : -1}
-          >
-            <CloseIcon />
-            <div className="sidenav__panel-close-label">
-              <span aria-hidden="true">ESC</span>
-              <VisuallyHidden>Close {title} panel.</VisuallyHidden>
-            </div>
-          </button>
+            a11yLabel="Close Panel"
+          />
         </header>
         <div className={classnames('sidenav__panel-body', className)}>{children}</div>
       </div>

@@ -1,0 +1,44 @@
+@import '../scss/inc';
+
+.CloseButton {
+  @extend %reset-button;
+  cursor: pointer;
+
+  font-size: $font-size-large;
+  height: 2.75rem;
+  width: 2.75rem;
+  text-align: center;
+  border-radius: 50%;
+  background-color: $white;
+  line-height: 0;
+  padding: 0;
+  transition: all $transition;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: $coolgrey-20;
+  }
+
+  &:active {
+    color: inherit;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px $blue-20;
+  }
+}
+
+.CloseButton__icon {
+  font-size: 1.125rem;
+  transform: scale(1.375) translateY(-0.1em);
+}
+
+.CloseButton__label {
+  font-size: $font-size-small;
+  height: 0.625em;
+  line-height: 0.625em;
+}
