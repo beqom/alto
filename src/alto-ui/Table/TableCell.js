@@ -10,17 +10,20 @@ import { bemClass } from '../helpers/bem';
 import './Table.scss';
 
 const IDENTITY = x => x;
+const ERROR_MESSAGE = 'There is an error in formula';
 
-const evaluateFormula = (formula, row) => {
+const evaluateFormula = (formula, row, errorLabel) => {
   const expression = Object.entries(row).reduce(
     (acc, [key, value]) => acc.replace(new RegExp(`\\[${key}\\]`, 'g'), value),
     formula
   );
 
   try {
-    return mathEvaluator.eval(expression);
+    const res = mathEvaluator.eval(expression);
+    if (!Number.isFinite(res) || Number.isNaN(res)) return new Error(errorLabel);
+    return res;
   } catch (e) {
-    return new Error(e.message);
+    return new Error(errorLabel);
   }
 };
 
@@ -79,6 +82,7 @@ class TableCell extends React.Component {
       : propagateChange;
     this.inputRef = React.createRef();
     this.cellRef = React.createRef();
+    this.labels = { errorFormula: ERROR_MESSAGE, ...props.labels };
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -145,7 +149,9 @@ class TableCell extends React.Component {
       editable,
       edited,
     } = this.props;
-    const value = column.formula ? evaluateFormula(column.formula, row) : this.state.value;
+    const value = column.formula
+      ? evaluateFormula(column.formula, row, this.labels.errorFormula)
+      : this.state.value;
     const key = column.key || column;
     const type = value instanceof Error ? 'error' : column.type || typeof value;
 
@@ -246,6 +252,9 @@ TableCell.propTypes = {
   render: PropTypes.func,
   editable: PropTypes.bool,
   edited: PropTypes.bool,
+  labels: PropTypes.shape({
+    errorFormula: PropTypes.string,
+  }),
 };
 
 export default TableCell;
