@@ -7,4 +7,5 @@ import CloseButton from './CloseButton';
 
 storiesOf('CloseButton', module)
   .addDecorator(centered)
-  .addWithJSX('overview', () => <CloseButton a11yLabel="Close panel" />);
+  .addWithJSX('overview', () => <CloseButton a11yLabel="Close panel" />)
+  .addWithJSX('link', () => <CloseButton href="#foo" a11yLabel="Close panel" />);
