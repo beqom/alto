@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import ArrowRightIcon from '../Icons/ArrowRight';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import BarsIcon from '../Icons/Bars';
+import CloseIcon from '../Icons/Close';
+import VisuallyHidden from '../VisuallyHidden';
 import ObjectsIcon from '../Icons/Objects';
 import Button from './Button';
 
