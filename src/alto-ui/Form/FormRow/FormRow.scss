@@ -1,0 +1,12 @@
+@import '../../scss/inc';
+
+.FormRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.FormRow > .form-element + .form-element {
+  margin-top: 0;
+  margin-left: $spacing-xx-small;
+}
