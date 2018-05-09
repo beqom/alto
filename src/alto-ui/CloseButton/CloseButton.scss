@@ -5,12 +5,11 @@
   cursor: pointer;
 
   font-size: $font-size-large;
-  height: 2rem;
-  width: 2rem;
+  height: 2.75rem;
+  width: 2.75rem;
   text-align: center;
   border-radius: 50%;
   background-color: $white;
-
   line-height: 0;
   padding: 0;
   transition: all $transition;
@@ -34,12 +33,12 @@
 }
 
 .CloseButton__icon {
-  font-size: 0.875rem;
-  transform: scale(1.25) translateY(-0.1em);
+  font-size: 1.125rem;
+  transform: scale(1.375) translateY(-0.1em);
 }
 
 .CloseButton__label {
-  font-size: 0.625em;
+  font-size: $font-size-small;
   height: 0.625em;
   line-height: 0.625em;
 }

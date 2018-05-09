@@ -25,7 +25,12 @@ const SideNavPanel = ({
       <div className="sidenav__panel-container">
         <header className="sidenav__panel-header">
           <div className="sidenav__panel-title">{title}</div>
-          <CloseButton a11yLabel="Close Panel" />
+          <CloseButton
+            id={`${closeFocusTargetId}__open`}
+            onClick={onClose}
+            tabIndex={open ? 0 : -1}
+            a11yLabel="Close Panel"
+          />
         </header>
         <div className={classnames('sidenav__panel-body', className)}>{children}</div>
       </div>
