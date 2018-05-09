@@ -5,22 +5,20 @@
   cursor: pointer;
 
   font-size: $font-size-large;
-  height: 2em;
-  width: 2em;
+  height: 2rem;
+  width: 2rem;
   text-align: center;
   border-radius: 50%;
   background-color: $white;
+
   line-height: 0;
-  display: block;
-  padding-top: 0.7em;
+  padding: 0;
   transition: all $transition;
   color: inherit;
-
-  &::before {
-    content: '';
-    display: block;
-    margin-top: -50%;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: $coolgrey-20;
@@ -35,7 +33,13 @@
   }
 }
 
+.CloseButton__icon {
+  font-size: 0.875rem;
+  transform: scale(1.25) translateY(-0.1em);
+}
+
 .CloseButton__label {
-  font-size: 0.6em;
-  margin-top: 0.25em;
+  font-size: 0.625em;
+  height: 0.625em;
+  line-height: 0.625em;
 }

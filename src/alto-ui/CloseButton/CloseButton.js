@@ -13,7 +13,7 @@ const CloseButton = props => {
   const Component = props.href || props.to ? Link : 'button';
   return (
     <Component {...props} className={classnames('CloseButton', props.className)}>
-      <CloseIcon />
+      <CloseIcon className="CloseButton__icon" />
       <div className="CloseButton__label">
         <span aria-hidden="true">ESC</span>
         <VisuallyHidden>{props.a11yLabel}</VisuallyHidden>
