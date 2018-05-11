@@ -18,7 +18,7 @@
       "cross-env NODE_ENV=development build-storybook -c .storybook -o build/storybook",
     "start:storybook": "start-storybook -p 9006 -c .storybook",
     "prebuild:alto-ui":
-      "npm run lint && npm run test && npm run clean:dist && copy ./package.json ./README.md ./dist",
+      "npm run lint && npm run test && npm run clean:dist && copyfiles ./package.json ./README.md ./dist",
     "build:alto-ui":
       "cross-env NODE_ENV=production babel ./src/alto-ui -d ./dist --copy-files --ignore story.js,__tests__,README.md",
     "watch:alto-ui":
@@ -51,7 +51,7 @@
     "babel-preset-react": "^6.24.1",
     "browser-sync": "^2.18.13",
     "clarity-icons": "^0.10.17",
-    "copy": "^0.3.1",
+    "copyfiles": "^2.0.0",
     "cross-env": "^5.1.1",
     "enzyme": "^3.1.1",
     "enzyme-adapter-react-16": "^1.0.4",
@@ -105,6 +105,7 @@
     "verbose": true,
     "coverageDirectory": "coverage/",
     "notify": true,
+    "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/dist/"],
     "setupFiles": ["<rootDir>/.jest-shim.js", "<rootDir>/.jest-setup.js"],
     "transform": {
       ".*": "<rootDir>/node_modules/babel-jest"
