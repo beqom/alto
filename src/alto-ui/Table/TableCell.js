@@ -167,7 +167,12 @@ class TableCell extends React.Component {
 
       return (
         <td
-          className={bemClass('Table__cell', { first: true, [type]: true, frozen })}
+          className={bemClass('Table__cell', {
+            first: true,
+            [type]: true,
+            frozen,
+            ...tableProps.modifiers(value, column, row),
+          })}
           ref={this.cellRef}
           style={style}
         >
@@ -187,6 +192,7 @@ class TableCell extends React.Component {
       editing,
       frozen,
       edited,
+      ...tableProps.modifiers(value, column, row),
     };
 
     const contentProps = {
