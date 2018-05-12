@@ -174,6 +174,7 @@ Table.defaultProps = {
   columnsSorted: [],
   editable: col => col.editable,
   edited: () => false,
+  modifiers: () => {},
 };
 
 Table.propTypes = {

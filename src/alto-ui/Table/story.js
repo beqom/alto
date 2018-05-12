@@ -108,6 +108,14 @@ storiesOf('Table', module)
             comfortable={boolean('comfortable', false)}
             compact={boolean('compact', false)}
             isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
+            modifiers={(value, col) => {
+              if (col.key !== 'power') return {};
+              return {
+                success: value && value > 400,
+                warning: value && value < 400 && value > 200,
+                danger: !value || value < 200,
+              };
+            }}
             renderSummaryCell={
               boolean('renderSummaryCell', true) ? renderSummaryCell(state) : undefined
             }
