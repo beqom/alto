@@ -14,7 +14,7 @@ const ERROR_MESSAGE = 'There is an error in formula';
 
 const evaluateFormula = (formula, row, errorLabel) => {
   const expression = Object.entries(row).reduce(
-    (acc, [key, value]) => acc.replace(new RegExp(`\\[${key}\\]`, 'g'), value),
+    (acc, [key, value]) => acc.replace(new RegExp(`\\[${key}\\]`, 'g'), value || 0),
     formula
   );
 
