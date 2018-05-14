@@ -58,7 +58,7 @@
   }
 
   &--formula {
-    font-style: italic;
+    //font-style: italic;
   }
 
   &--frozen {
@@ -94,27 +94,12 @@
 }
 
 .Table__cell--success {
-  //box-shadow: inset 1px 1px 0 $green, inset -1px 0 0 $green;
-  border-bottom-color: $green;
-  background-color: $green-20;
-  font-weight: bold;
-  color: $green-70;
 }
 
 .Table__cell--warning {
-  //box-shadow: inset 1px 1px 0 $orange, inset -1px 0 0 $orange;
-  border-bottom-color: $orange;
-  background-color: $orange-20;
-  font-weight: bold;
-  color: $orange-80;
 }
 
 .Table__cell--danger {
-  //box-shadow: inset 1px 1px 0 $red, inset -1px 0 0 $red;
-  border-bottom-color: $red;
-  background-color: $red-20;
-  font-weight: bold;
-  color: $red-70;
 }
 
 .Table__cell-container {
