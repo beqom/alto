@@ -17,6 +17,16 @@
   outline: 0;
 }
 
+%reset-styles {
+  color: $color-text-default;
+  font-size: 1rem;
+  font-family: $font-family;
+  text-align: initial;
+  font-weight: $font-weight-regular;
+  font-style: normal;
+  text-transform: initial;
+}
+
 %link {
   color: $color-text-link;
   text-decoration: none;

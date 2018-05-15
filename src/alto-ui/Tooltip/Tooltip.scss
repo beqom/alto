@@ -1,0 +1,159 @@
+@import '../scss/inc';
+
+.Tooltip__wrapper {
+  position: relative;
+  &--absolute {
+    position: absolute;
+  }
+}
+
+.Tooltip {
+  visibility: hidden;
+  position: absolute;
+  padding: $spacing-small $spacing-medium;
+  border-radius: $border-radius-default;
+  background-color: $coolgrey-80;
+
+  opacity: 0;
+  transition: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-start;
+  z-index: $z-index-tooltip;
+
+  //default
+  &--bottom {
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  &--top {
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  &--left {
+    top: 50%;
+    right: 100%;
+    transform: translateX(0) translateY(-50%);
+  }
+
+  &--right {
+    top: 50%;
+    left: 100%;
+    transform: translateX(0) translateY(-50%);
+  }
+
+  .Tooltip__wrapper:hover &,
+  &--visible {
+    visibility: visible;
+    opacity: 1;
+    transition: all $duration-quick ease-out 250ms;
+
+    //default
+    &.Tooltip--bottom {
+      transform: translateX(-50%) translateY($spacing-small);
+    }
+
+    &.Tooltip--top {
+      transform: translateX(-50%) translateY(-$spacing-small);
+    }
+
+    &.Tooltip--left {
+      transform: translateY(-50%) translateX(-$spacing-small);
+    }
+
+    &.Tooltip--right {
+      transform: translateY(-50%) translateX($spacing-small);
+    }
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: $spacing-small solid transparent;
+  }
+
+  // &::before {
+  //   border-bottom-color: $coolgrey-20;
+  //   transform: translateX(-50%) translateY(-1px);
+  // }
+
+  //default
+  &--bottom::after {
+    bottom: 100%;
+    left: 50%;
+    border-bottom-color: $coolgrey-80;
+    transform: translateX(-50%);
+  }
+
+  &--top::after {
+    top: 100%;
+    left: 50%;
+    border-top-color: $coolgrey-80;
+    transform: translateX(-50%);
+  }
+
+  &--left::after {
+    top: 50%;
+    left: 100%;
+    border-left-color: $coolgrey-80;
+    transform: translateY(-50%);
+  }
+
+  &--right::after {
+    top: 50%;
+    right: 100%;
+    border-right-color: $coolgrey-80;
+    transform: translateY(-50%);
+  }
+}
+
+// --- sizes ---
+.Tooltip {
+  &--small,
+  &--medium,
+  &--large {
+    white-space: normal;
+  }
+
+  &--small {
+    width: 10rem;
+  }
+  &--medium {
+    width: 20rem;
+  }
+  &--large {
+    width: 30rem;
+  }
+}
+
+.Tooltip__icon {
+  color: $white;
+  // &--success {
+  //   color: $green;
+  // }
+
+  // &--warning {
+  //   color: $orange;
+  // }
+
+  // &--error {
+  //   color: $red;
+  // }
+
+  // &--info {
+  //   color: $blue;
+  // }
+}
+
+.Tooltip__content {
+  @extend %reset-styles;
+  flex: 1;
+  color: $white;
+}
