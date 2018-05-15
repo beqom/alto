@@ -40,6 +40,19 @@ const avatarRenderer = {
 const DEFAULT_DATE_FORMAT = 'd/L/yyyy hh:mm:ss a';
 const parsers = { date: x => DateTime.fromFormat(x, DEFAULT_DATE_FORMAT).toJSDate() };
 
+const getSuperHeroModifiers = (value, col) => {
+  switch (col.key) {
+    case 'power':
+      return {
+        success: value && value > 400,
+        warning: value && value < 400 && value > 200,
+        danger: !value || value < 200,
+      };
+    default:
+      return {};
+  }
+};
+
 storiesOf('Table', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => (
@@ -108,13 +121,13 @@ storiesOf('Table', module)
             comfortable={boolean('comfortable', false)}
             compact={boolean('compact', false)}
             isFirstColumnFrozen={boolean('isFirstColumnFrozen', true)}
-            modifiers={(value, col) => {
-              if (col.key !== 'power') return {};
-              return {
-                success: value && value > 400,
-                warning: value && value < 400 && value > 200,
-                danger: !value || value < 200,
-              };
+            modifiers={boolean('modifiers', true) && getSuperHeroModifiers}
+            showError={(value, col) => {
+              if (col.key === 'power' && value && value < 200)
+                return '{name} is not powerful enougth. Agility ({agility}) is perhaps too low.';
+              if (col.key === 'agility' && value && value <= 0.2)
+                return 'Agility ({agility}) is too low.';
+              return false;
             }}
             renderSummaryCell={
               boolean('renderSummaryCell', true) ? renderSummaryCell(state) : undefined
@@ -127,6 +140,9 @@ storiesOf('Table', module)
               state.rows[rowIndex][col.key] !== calculatedFields.rows[rowIndex][col.key]
             }
             renderers={avatarRenderer}
+            formatters={{
+              percentage: value => `${value * 100}%`,
+            }}
           />
         )}
       </StateProvider>

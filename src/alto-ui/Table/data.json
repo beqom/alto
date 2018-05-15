@@ -69,7 +69,7 @@
   "calculatedFields": {
     "columns": [
       { "key": "name", "title": "Name", "type": "avatar" },
-      { "key": "agility", "title": "Agility", "type": "number", "editable": true },
+      { "key": "agility", "title": "Agility", "type": "percentage", "editable": true },
       { "key": "strength", "title": "Strength", "type": "number", "editable": true },
       { "key": "speed", "title": "Speed", "type": "number", "editable": true },
       { "key": "intelligence", "title": "Intelligence", "type": "number", "editable": true }

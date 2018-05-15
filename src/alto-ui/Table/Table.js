@@ -104,6 +104,8 @@ const renderTableCell = tableProps => {
           render={render}
           editable={isEditable}
           edited={editedFunc}
+          rowIndex={rowIndex}
+          columnIndex={colIndex}
         />
       );
     });
@@ -175,6 +177,7 @@ Table.defaultProps = {
   editable: col => col.editable,
   edited: () => false,
   modifiers: () => {},
+  showError: () => false,
 };
 
 Table.propTypes = {
