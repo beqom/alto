@@ -85,6 +85,7 @@ function loadStories() {
   require('../src/alto-ui/Spinner/story');
   require('../src/alto-ui/Table/story');
   require('../src/alto-ui/Tabs/story');
+  require('../src/alto-ui/Tooltip/story');
   require('../src/alto-ui/Tree/story');
 }
 
