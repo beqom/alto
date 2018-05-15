@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import mathEvaluator from 'math-expression-evaluator';
 import debounce from 'lodash.debounce';
 
+import ExclamationCircleIcon from '../Icons/ExclamationCircle';
 import TextField from '../Form/TextField';
+import Tooltip from '../Tooltip';
 
 import { bemClass } from '../helpers/bem';
 
@@ -29,12 +31,27 @@ const evaluateFormula = (formula, row, errorLabel) => {
 
 const getCellInput = () => TextField;
 
+const getValue = (value, column, row, labels) =>
+  column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
+const getType = (value, column) => (value instanceof Error ? 'error' : column.type || typeof value);
+
+const getFormattedValue = (formatters, parsers, tableProps, labels) => (value, column, row) => {
+  const val = getValue(value, column, row, labels);
+  const type = getType(val, column);
+  const parser = parsers[type] || IDENTITY;
+  const formatter = column.formatter || formatters[type] || IDENTITY;
+  const args = [column, row, tableProps];
+
+  return formatter(parser(val, ...args), ...args);
+};
+
 const getInputProps = type => {
   switch (type) {
     case 'number':
     case 'float':
     case 'int':
     case 'integer':
+    case 'percentage':
       return {
         type: 'number',
       };
@@ -94,6 +111,11 @@ class TableCell extends React.Component {
     }
   }
 
+  getValue() {
+    const { row, column } = this.props;
+    return getValue(this.state.value, column, row, this.labels);
+  }
+
   getStyle() {
     const { column } = this.props;
     if (this.state.editing) {
@@ -103,6 +125,25 @@ class TableCell extends React.Component {
       return { width: column.width, maxWidth: column.width };
     }
     return {};
+  }
+
+  getModifiers() {
+    const { editing } = this.state;
+    const { tableProps, row, column, edited, frozen, editable } = this.props;
+
+    const value = this.getValue();
+    const type = getType(value, column);
+
+    return {
+      [type]: true,
+      formula: !!column.formula,
+      editable,
+      editing,
+      frozen,
+      edited,
+      'with-icon': tableProps.showError(value, column, row),
+      ...tableProps.modifiers(value, column, row),
+    };
   }
 
   startEditing() {
@@ -136,34 +177,96 @@ class TableCell extends React.Component {
     }
   }
 
-  render() {
+  renderContent() {
+    const { editing } = this.state;
     const {
-      column,
-      row,
-      tableProps,
-      renderers,
       formatters,
       parsers,
-      frozen,
-      render,
-      editable,
+      renderers,
+      tableProps,
+      row,
+      column,
       edited,
+      frozen,
+      editable,
+      rowIndex,
+      columnIndex,
     } = this.props;
-    const value = column.formula
-      ? evaluateFormula(column.formula, row, this.labels.errorFormula)
-      : this.state.value;
+
+    const value = this.getValue();
+    const type = getType(value, column);
+
+    const modifiers = {
+      [type]: true,
+      formula: !!column.formula,
+      editable,
+      editing,
+      frozen,
+      edited,
+      ...tableProps.modifiers(value, column, row),
+    };
+
+    const format = getFormattedValue(formatters, parsers, tableProps, this.labels);
+    const renderer = renderers[type] || IDENTITY;
+    const ContentComponent = editable ? 'button' : 'div';
+    const content = (
+      <ContentComponent
+        ref={this.setContentNode}
+        className={bemClass('Table__cell-content', modifiers)}
+        onClick={editable ? this.startEditing : undefined}
+      >
+        {renderer(format(this.state.value, column, row), column, row, tableProps)}
+      </ContentComponent>
+    );
+
+    const error = tableProps.showError(value, column, row);
+    if (!error) return content;
+
+    const icon = <ExclamationCircleIcon baseline className="Table__cell-error-icon" />;
+    const lastRow = rowIndex === tableProps.rows.length - 1;
+    const firstCell = columnIndex === 0;
+    const lastCell = columnIndex === tableProps.columns.length - 1;
+    const errorElement =
+      typeof error === 'string' ? (
+        <Tooltip
+          content={tableProps.columns.reduce(
+            (acc, col) =>
+              acc.replace(
+                new RegExp(`\\{${col.key}\\}`, 'g'),
+                format(row[col.key || col], col, row)
+              ),
+            error
+          )}
+          medium
+          error
+          top={lastRow && !firstCell && !lastCell}
+          left={lastCell}
+          right={firstCell}
+        >
+          {icon}
+        </Tooltip>
+      ) : (
+        icon
+      );
+    return (
+      <Fragment>
+        {errorElement}
+        {content}
+      </Fragment>
+    );
+  }
+
+  render() {
+    const { column, row, tableProps, formatters, frozen, render, editable } = this.props;
     const key = column.key || column;
-    const type = value instanceof Error ? 'error' : column.type || typeof value;
+    const value = getValue(this.state.value, column, row, this.labels);
+    const type = getType(value, column);
 
     const style = this.getStyle();
-    const { editing } = this.state;
     const Input = getCellInput(type);
-    const renderer = renderers[type] || IDENTITY;
-    const parser = parsers[type] || IDENTITY;
-    const formatter = column.formatter || formatters[type] || IDENTITY;
-    const args = [column, row, tableProps];
     if (render) {
-      const format = x => formatter(x, ...args);
+      const formatter = column.formatter || formatters[type] || IDENTITY;
+      const format = x => formatter(x, column, row, tableProps);
 
       return (
         <td
@@ -180,50 +283,35 @@ class TableCell extends React.Component {
             className={bemClass('Table__cell-content', { first: true, [type]: true })}
             ref={this.setContentNode}
           >
-            {render(column, row, format, parser)}
+            <div className="Table__cell-value">{render(column, row, format)}</div>
           </div>
         </td>
       );
     }
-    const modifiers = {
-      [type]: true,
-      formula: !!column.formula,
-      editable,
-      editing,
-      frozen,
-      edited,
-      ...tableProps.modifiers(value, column, row),
-    };
 
-    const contentProps = {
-      ref: this.setContentNode,
-      className: bemClass('Table__cell-content', modifiers),
-      children: renderer(formatter(parser(value, ...args), ...args), ...args),
-    };
+    const modifiers = this.getModifiers();
 
     return (
       <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef} style={style}>
-        {editable ? (
-          <button {...contentProps} onClick={this.startEditing} />
-        ) : (
-          <div {...contentProps} />
-        )}
-        {editable && (
-          <Input
-            ref={this.inputRef}
-            label="edit cell"
-            hideLabel
-            small={tableProps.compact}
-            id={`Table--${tableProps.id}__cell-input--${row[tableProps.rowId]}--${key}`}
-            className={bemClass('Table__cell-input', modifiers)}
-            onBlur={this.stopEditing}
-            style={{ width: (column.width || this.state.width) - 6 }}
-            value={value || ''}
-            onChange={this.handleChange}
-            onKeyDown={this.handleKeyDown}
-            {...getInputProps(type)}
-          />
-        )}
+        <div className="Table__cell-container">
+          {this.renderContent()}
+          {editable && (
+            <Input
+              ref={this.inputRef}
+              label="edit cell"
+              hideLabel
+              small={tableProps.compact}
+              id={`Table--${tableProps.id}__cell-input--${row[tableProps.rowId]}--${key}`}
+              className={bemClass('Table__cell-input', modifiers)}
+              onBlur={this.stopEditing}
+              style={{ width: (column.width || this.state.width) - 6 }}
+              value={value || ''}
+              onChange={this.handleChange}
+              onKeyDown={this.handleKeyDown}
+              {...getInputProps(type)}
+            />
+          )}
+        </div>
       </td>
     );
   }
@@ -261,6 +349,8 @@ TableCell.propTypes = {
   labels: PropTypes.shape({
     errorFormula: PropTypes.string,
   }),
+  rowIndex: PropTypes.number.isRequired,
+  columnIndex: PropTypes.number.isRequired,
 };
 
 export default TableCell;
