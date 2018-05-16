@@ -186,6 +186,15 @@ storiesOf('Button', module)
         <Button {...modifiers}>
           <ArrowRightIcon />
         </Button>
+        <Button small {...modifiers}>
+          <ObjectsIcon left />Icons<ChevronDownIcon right />
+        </Button>
+        <Button {...modifiers}>
+          <ObjectsIcon left />Icons<ChevronDownIcon right />
+        </Button>
+        <Button large {...modifiers}>
+          <ObjectsIcon left />Icons<ChevronDownIcon right />
+        </Button>
       </SimpleWrapper>
     );
   })
