@@ -58,7 +58,7 @@
   }
 
   &--formula {
-    font-style: italic;
+    //font-style: italic;
   }
 
   &--frozen {
@@ -93,28 +93,9 @@
   }
 }
 
-.Table__cell--success {
-  //box-shadow: inset 1px 1px 0 $green, inset -1px 0 0 $green;
-  border-bottom-color: $green;
-  background-color: $green-20;
-  font-weight: bold;
-  color: $green-70;
-}
-
-.Table__cell--warning {
-  //box-shadow: inset 1px 1px 0 $orange, inset -1px 0 0 $orange;
-  border-bottom-color: $orange;
-  background-color: $orange-20;
-  font-weight: bold;
-  color: $orange-80;
-}
-
-.Table__cell--danger {
-  //box-shadow: inset 1px 1px 0 $red, inset -1px 0 0 $red;
-  border-bottom-color: $red;
-  background-color: $red-20;
-  font-weight: bold;
-  color: $red-70;
+.Table__cell--editable {
+  padding-top: $spacing-x-small;
+  padding-bottom: $spacing-x-small;
 }
 
 .Table__cell-container {
@@ -130,26 +111,25 @@
   height: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: 0.5rem 1rem;
+  padding: $spacing-x-small $spacing-medium;
+  min-height: 2rem;
+  line-height: $line-height-input;
   overflow: hidden;
   max-width: 100%;
   flex: 1;
+  margin: 0 $spacing-x-small;
+  border-radius: $border-radius-default;
 
   .Table--compact & {
     padding: 0.375rem 0.75rem;
   }
 
   .Table--comfortable & {
-    padding: 1rem;
+    padding: $spacing-medium;
   }
 
   &--editing {
     display: none;
-  }
-
-  &--edited {
-    color: $purple;
-    font-weight: bold;
   }
 
   &--image,
@@ -211,48 +191,24 @@
   cursor: pointer;
   position: relative;
   transition: all $transition;
-  min-height: 2.5rem;
+  box-shadow: inset 0 0 0 1px $coolgrey-20;
+  .Table__cell--warning & {
+    box-shadow: inset 0 0 0 1px $orange;
+  }
 
-  &::after {
-    content: '';
-    position: absolute;
-    border-bottom: 2px dotted $coolgrey-30;
-    transition: all $transition;
-    left: 1rem;
-    right: 1rem;
-    bottom: 0.3rem;
-
-    .Table--compact & {
-      left: 0.75rem;
-      right: 0.75rem;
-      bottom: 0.4rem;
-    }
-
-    .Table--comfortable & {
-      left: 1rem;
-      right: 1rem;
-      bottom: 0.4rem;
-    }
-    .Table__cell--success & {
-      border-bottom-color: $green;
-    }
-
-    .Table__cell--warning & {
-      border-bottom-color: $orange;
-    }
-
-    .Table__cell--danger & {
-      border-bottom-color: $red;
-    }
+  .Table__cell--danger & {
+    box-shadow: inset 0 0 0 1px $red;
   }
 
   &:hover {
-    color: $blue;
-
-    &::after {
-      border-bottom-color: $blue;
-    }
+    box-shadow: inset 0 0 0 1px $blue-40;
+    cursor: pointer;
   }
+}
+
+.Table__cell-content--edited {
+  font-weight: bold;
+  box-shadow: inset 0 0 0 1px $coolgrey-30;
 }
 
 .Table__cell-content-icon {
@@ -266,7 +222,7 @@
 
 .Table__cell-input {
   display: none;
-  margin: 0 3px;
+  margin: 0 $spacing-x-small;
 
   &--number,
   &--percentage,
