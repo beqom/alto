@@ -104,7 +104,7 @@ const renderTableCell = tableProps => {
           render={render}
           editable={isEditable}
           edited={editedFunc}
-          rowIndex={rowIndex}
+          rowIndex={rowIndex || 0}
           columnIndex={colIndex}
         />
       );
