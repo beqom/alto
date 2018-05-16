@@ -92,7 +92,9 @@ class TableCell extends React.Component {
     this.startEditing = this.startEditing.bind(this);
     this.stopEditing = this.stopEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.format = this.format.bind(this);
     const propagateChange = this.propagateChange.bind(this);
     this.propagateChange = onChangeDebounceTime
       ? debounce(propagateChange, onChangeDebounceTime)
@@ -146,6 +148,26 @@ class TableCell extends React.Component {
     };
   }
 
+  format(value, column, row) {
+    const { formatters, parsers, tableProps } = this.props;
+    const format = getFormattedValue(formatters, parsers, tableProps, this.labels);
+    return format(value, column, row);
+  }
+
+  replaceRowValues(message) {
+    if (typeof message !== 'string') return message;
+    const { row, tableProps } = this.props;
+
+    return tableProps.columns.reduce(
+      (acc, col) =>
+        acc.replace(
+          new RegExp(`\\{${col.key}\\}`, 'g'),
+          this.format(row[col.key || col], col, row)
+        ),
+      message
+    );
+  }
+
   startEditing() {
     const width = this.cellRef.current.offsetWidth;
     this.setState({ editing: true, width });
@@ -164,10 +186,21 @@ class TableCell extends React.Component {
     this.propagateChange(value);
   }
 
+  handleBlur(e) {
+    this.stopEditing();
+    const { value } = e.target;
+    const { column, row, tableProps } = this.props;
+    if (tableProps.onBlur) {
+      const error = tableProps.showError(value, column, row);
+      tableProps.onBlur(value, column, row, this.replaceRowValues(error));
+    }
+  }
+
   propagateChange(value) {
     const { column, row, tableProps } = this.props;
     if (tableProps.onChange) {
-      tableProps.onChange(value, column, row);
+      const error = tableProps.showError(value, column, row);
+      tableProps.onChange(value, column, row, this.replaceRowValues(error));
     }
   }
 
@@ -180,8 +213,6 @@ class TableCell extends React.Component {
   renderContent() {
     const { editing } = this.state;
     const {
-      formatters,
-      parsers,
       renderers,
       tableProps,
       row,
@@ -206,7 +237,6 @@ class TableCell extends React.Component {
       ...tableProps.modifiers(value, column, row),
     };
 
-    const format = getFormattedValue(formatters, parsers, tableProps, this.labels);
     const renderer = renderers[type] || IDENTITY;
     const ContentComponent = editable ? 'button' : 'div';
     const content = (
@@ -215,7 +245,7 @@ class TableCell extends React.Component {
         className={bemClass('Table__cell-content', modifiers)}
         onClick={editable ? this.startEditing : undefined}
       >
-        {renderer(format(this.state.value, column, row), column, row, tableProps)}
+        {renderer(this.format(this.state.value, column, row), column, row, tableProps)}
       </ContentComponent>
     );
 
@@ -229,14 +259,7 @@ class TableCell extends React.Component {
     const errorElement =
       typeof error === 'string' ? (
         <Tooltip
-          content={tableProps.columns.reduce(
-            (acc, col) =>
-              acc.replace(
-                new RegExp(`\\{${col.key}\\}`, 'g'),
-                format(row[col.key || col], col, row)
-              ),
-            error
-          )}
+          content={this.replaceRowValues(error)}
           medium
           error
           top={lastRow && !firstCell && !lastCell}
@@ -303,10 +326,10 @@ class TableCell extends React.Component {
               small={tableProps.compact}
               id={`Table--${tableProps.id}__cell-input--${row[tableProps.rowId]}--${key}`}
               className={bemClass('Table__cell-input', modifiers)}
-              onBlur={this.stopEditing}
               style={{ width: (column.width || this.state.width) - 6 }}
               value={value || ''}
               onChange={this.handleChange}
+              onBlur={this.handleBlur}
               onKeyDown={this.handleKeyDown}
               {...getInputProps(type)}
             />
