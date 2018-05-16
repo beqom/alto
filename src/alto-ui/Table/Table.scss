@@ -94,23 +94,8 @@
 }
 
 .Table__cell--editable {
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-}
-
-.Table__cell--success {
-  // box-shadow: inset -6px 0 0 -1px $green;
-  // background: $green-10;
-}
-
-.Table__cell--warning {
-  // box-shadow: inset -6px 0 0 -1px $orange;
-  // background: $orange-10;
-}
-
-.Table__cell--danger {
-  // box-shadow: inset -6px 0 0 -1px $red;
-  // background: $red-10;
+  padding-top: $spacing-x-small;
+  padding-bottom: $spacing-x-small;
 }
 
 .Table__cell-container {
@@ -118,7 +103,6 @@
   height: 100%;
   display: flex;
   align-items: center;
-  // flex-direction: row-reverse;
 }
 
 .Table__cell-content {
@@ -127,13 +111,13 @@
   height: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: 0.25rem 1rem;
+  padding: $spacing-x-small $spacing-medium;
   min-height: 2rem;
   line-height: $line-height-input;
   overflow: hidden;
   max-width: 100%;
   flex: 1;
-  margin: 0 0.25rem;
+  margin: 0 $spacing-x-small;
   border-radius: $border-radius-default;
 
   .Table--compact & {
@@ -141,7 +125,7 @@
   }
 
   .Table--comfortable & {
-    padding: 1rem;
+    padding: $spacing-medium;
   }
 
   &--editing {
@@ -238,7 +222,7 @@
 
 .Table__cell-input {
   display: none;
-  margin: 0 0.25rem;
+  margin: 0 $spacing-x-small;
 
   &--number,
   &--percentage,
