@@ -15,8 +15,8 @@ setAddon(JSXAddon);
 setOptions({
   name: 'Alto UI',
   url: 'https://github.com/beqom/alto-ui',
-  downPanelInRight: true,
-  showLeftPanel: true,
+  addonPanelInRight: true,
+  showStoriesPanel: true,
 });
 
 /*
