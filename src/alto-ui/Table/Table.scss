@@ -94,18 +94,18 @@
 }
 
 .Table__cell--success {
-  box-shadow: inset -6px 0 0 -1px $green;
-  background: $green-10;
+  // box-shadow: inset -6px 0 0 -1px $green;
+  // background: $green-10;
 }
 
 .Table__cell--warning {
-  box-shadow: inset -6px 0 0 -1px $orange;
-  background: $orange-10;
+  // box-shadow: inset -6px 0 0 -1px $orange;
+  // background: $orange-10;
 }
 
 .Table__cell--danger {
-  box-shadow: inset -6px 0 0 -1px $red;
-  background: $red-10;
+  // box-shadow: inset -6px 0 0 -1px $red;
+  // background: $red-10;
 }
 
 .Table__cell-container {
@@ -113,6 +113,7 @@
   height: 100%;
   display: flex;
   align-items: center;
+  flex-direction: row-reverse;
 }
 
 .Table__cell-content {
