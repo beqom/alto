@@ -28,8 +28,8 @@
 
 .icon--button {
   @extend %reset-button;
-  width: initial;
-  height: initial;
+  width: auto;
+  height: auto;
 
   cursor: pointer;
   padding: 0.375em;
