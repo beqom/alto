@@ -28,10 +28,8 @@
 
 .icon--button {
   @extend %reset-button;
-  width: auto; //For IE11
-  height: auto; //For IE11
-  width: initial;
-  height: initial;
+  width: auto;
+  height: auto;
 
   cursor: pointer;
   padding: 0.375em;
