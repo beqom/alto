@@ -126,7 +126,8 @@ $nav-btn-hover-text-dark: $white;
   border-bottom: 1px solid $coolgrey-20;
   flex: 1;
   list-style: none;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   @include on-narrow {
     display: none;
