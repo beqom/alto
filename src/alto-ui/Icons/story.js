@@ -35,6 +35,7 @@ import Error from './Error';
 import ExclamationCircle from './ExclamationCircle';
 import ExclamationTriangle from './ExclamationTriangle';
 import Expand from './Expand';
+import ExportFile from './ExportFile';
 import Eye from './Eye';
 import File from './File';
 import FileGroup from './FileGroup';
@@ -45,6 +46,7 @@ import FolderOpen from './FolderOpen';
 import Globe from './Globe';
 import Home from './Home';
 import Image from './Image';
+import ImportFile from './ImportFile';
 import InfoCircle from './InfoCircle';
 import Lightbulb from './Lightbulb';
 import List from './List';
@@ -65,6 +67,7 @@ import Search from './Search';
 import Tasks from './Tasks';
 import Times from './Times';
 import Trash from './Trash';
+import Upload from './Upload';
 import User from './User';
 import ViewCards from './ViewCards';
 import ViewColumns from './ViewColumns';
@@ -104,6 +107,7 @@ const icons = Object.entries({
   ExclamationCircle,
   ExclamationTriangle,
   Expand,
+  ExportFile,
   Eye,
   File,
   FileGroup,
@@ -114,6 +118,7 @@ const icons = Object.entries({
   Globe,
   Home,
   Image,
+  ImportFile,
   InfoCircle,
   Lightbulb,
   List,
@@ -134,6 +139,7 @@ const icons = Object.entries({
   Tasks,
   Times,
   Trash,
+  Upload,
   User,
   ViewCards,
   ViewColumns,
