@@ -2,10 +2,9 @@ import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import VisuallyHidden from '../VisuallyHidden';
-import CloseIcon from '../Icons/Close';
 import Button from '../Button';
 import Overlay from '../Overlay';
+import CloseButton from '../CloseButton';
 
 import './Dialog.scss';
 
@@ -24,8 +23,7 @@ const Dialog = props => {
   const openFocusTargetId =
     props.openFocusTargetId ||
     `${id}__${buttons && buttons.length ? `button--${buttons.length}` : 'close-button'}`;
-  
-  const labels = { a11yClose: 'Close', ...props.labels };
+
   return (
     <Overlay
       onClose={onClose}
@@ -50,18 +48,12 @@ const Dialog = props => {
                 </h2>
               )}
               {!!onClose && (
-                <button
+                <CloseButton
                   id={`${id}__close-button`}
                   className="Dialog__close-button"
                   onClick={onClose}
                   disabled={inert}
-                >
-                  <CloseIcon />
-                  <div className="Dialog__close-label">
-                    <span aria-hidden="true">ESC</span>
-                    <VisuallyHidden>{labels.a11yClose}</VisuallyHidden>
-                  </div>
-                </button>
+                />
               )}
             </header>
           )}
@@ -77,7 +69,7 @@ const Dialog = props => {
                       <Button
                         id={`${id}__button--${index + 1}`}
                         className="Dialog__button"
-                        outline={index < buttons.length - 1}
+                        flat={index < buttons.length - 1}
                         onClick={onClose}
                         {...btn}
                         disabled={inert || btn.disabled}
@@ -107,9 +99,6 @@ Dialog.propTypes = {
   children: PropTypes.any,
   open: PropTypes.bool,
   inert: PropTypes.bool,
-  labels: PropTypes.shape({
-    a11yClose: PropTypes.string.isRequired,
-  }),
   title: PropTypes.string,
   onClose: PropTypes.func,
   buttons: PropTypes.arrayOf(
