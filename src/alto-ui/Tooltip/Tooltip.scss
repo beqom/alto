@@ -8,6 +8,7 @@
 }
 
 .Tooltip {
+  @extend %reset-styles;
   visibility: hidden;
   position: absolute;
   padding: $spacing-small $spacing-medium;
@@ -20,6 +21,7 @@
   display: flex;
   align-items: flex-start;
   z-index: $z-index-tooltip;
+  color: $white;
 
   //default
   &--bottom {
@@ -133,6 +135,11 @@
   }
 }
 
+.Tooltip--tiny {
+  padding: $spacing-x-small $spacing-small;
+  font-size: $font-size-small;
+}
+
 .Tooltip__icon {
   color: $white;
   // &--success {
@@ -153,7 +160,5 @@
 }
 
 .Tooltip__content {
-  @extend %reset-styles;
   flex: 1;
-  color: $white;
 }
