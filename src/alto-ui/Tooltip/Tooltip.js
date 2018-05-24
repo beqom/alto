@@ -32,6 +32,7 @@ const Tooltip = ({
   left,
   right,
   top,
+  tiny,
 }) => {
   const Icon = getIcon({
     info,
@@ -54,6 +55,7 @@ const Tooltip = ({
           left,
           right,
           top,
+          tiny,
           bottom: !top && !left && !right,
           visible: show,
         },
@@ -107,6 +109,7 @@ Tooltip.propTypes = {
   left: PropTypes.bool,
   right: PropTypes.bool,
   top: PropTypes.bool,
+  tiny: PropTypes.bool,
 };
 
 export default Tooltip;

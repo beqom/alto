@@ -22,6 +22,7 @@ storiesOf('Tooltip', module)
       top={boolean('top', false)}
       left={boolean('left', false)}
       right={boolean('right', false)}
+      tiny={boolean('tiny', false)}
     >
       {text('children', 'hover me')}
     </Tooltip>
