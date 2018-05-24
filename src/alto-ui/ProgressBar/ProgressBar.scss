@@ -1,0 +1,64 @@
+@import '../scss/inc';
+
+.ProgressBar__tooltip {
+  width: 0;
+  height: 0;
+  position: relative;
+  transition: margin-left $duration-slow;
+}
+
+.ProgressBar__placeholder {
+  height: 0.5rem;
+  border-radius: 0.25rem;
+  background-color: $coolgrey-20;
+  overflow: hidden;
+
+  &--large {
+    height: 2rem;
+    border-radius: $border-radius-default;
+  }
+
+  &--small {
+    height: 2px;
+    border-radius: 0;
+  }
+}
+
+.ProgressBar__bar {
+  height: 100%;
+  background-color: $blue;
+  transition: width $duration-slow;
+
+  &--looping {
+    transition: none;
+    background: linear-gradient(90deg, $blue, $blue 25%, $blue-30, $blue 75%, $blue);
+    background-size: 400% 100%;
+    animation: ProgressBarLooping 2s infinite linear reverse;
+    // background: linear-gradient(90deg, $blue 50%, $blue-50 50%);
+    // background: linear-gradient(45deg, $blue 35%, $blue-50 35%, $blue-50 64%, $blue 64%);
+    // background-size: 1rem 100%;
+    // background-repeat: repeat;
+    // animation: ProgressBarLooping 1s infinite linear reverse;
+  }
+}
+
+@keyframes ProgressBarLooping {
+  0% {
+    background-position: 0% 50%;
+  }
+  80% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+// @keyframes ProgressBarLooping {
+//   0% {
+//     background-position: -2rem 50%;
+//   }
+//   100% {
+//     background-position: 0 50%;
+//   }
+// }
