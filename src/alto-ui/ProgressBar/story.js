@@ -14,7 +14,10 @@ storiesOf('ProgressBar', module)
       small={boolean('small', false)}
       large={boolean('large', false)}
       looping={boolean('looping', false)}
-      tooltipPersistent={boolean('tooltipPersistent', false)}
+      tooltipProps={{
+        ...(boolean('tooltipProps.show', false) ? { show: true } : {}),
+        top: boolean('tooltipProps.top', true),
+      }}
       max={number('max', undefined)}
       min={number('min', undefined)}
       value={number('value', 0.33)}
@@ -22,14 +25,14 @@ storiesOf('ProgressBar', module)
   ))
   .addWithJSX('sizes', () => (
     <Fragment>
-      <ProgressBar small tooltipPersistent value={0.4} />
+      <ProgressBar small tooltipProps={{ show: true }} value={0.4} />
       <br />
       <br />
       <br />
-      <ProgressBar tooltipPersistent value={0.4} />
+      <ProgressBar tooltipProps={{ show: true }} value={0.4} />
       <br />
       <br />
       <br />
-      <ProgressBar large tooltipPersistent value={0.4} />
+      <ProgressBar large tooltipProps={{ show: true }} value={0.4} />
     </Fragment>
   ));
