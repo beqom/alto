@@ -1,0 +1,84 @@
+@import '../../scss/inc';
+
+$menu-item-height: 2.5rem;
+.MenuItem__title {
+  font-weight: $font-weight-semibold;
+  padding: 0 $spacing-small 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.MenuItem__title-text {
+  @extend %text-ellipsis;
+}
+
+.MenuItem__title--not-collapsible {
+  padding-left: 1.75rem;
+  height: $menu-item-height;
+}
+
+.MenuItem-title-button {
+  @extend %reset-button;
+  padding: 0 0 0 $spacing-small;
+  height: $menu-item-height;
+  flex: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  @extend %text-ellipsis;
+}
+
+.MenuItem__title-icon {
+  margin-right: $spacing-x-small;
+  transition: all $transition;
+  color: $coolgrey-30;
+}
+
+.MenuItem__title-icon--open {
+  transform: rotate(90deg);
+}
+
+.MenuItem__details {
+  padding-bottom: $spacing-small;
+}
+
+.MenuItem__details--close {
+  display: none;
+}
+
+.MenuItem__item {
+  padding-right: $spacing-small;
+  transition: background-color $transition;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &:hover {
+    background-color: $blue-10;
+    box-shadow: inset 1px 0 0 0 $coolgrey-20, inset -1px 0 0 0 $coolgrey-20;
+  }
+}
+
+.MenuItem__item--active {
+  background-color: $blue;
+  color: $white;
+
+  &:hover {
+    background-color: $blue;
+    color: $white;
+    box-shadow: inset 1px 0 0 0 $blue, inset -1px 0 0 0 $blue;
+  }
+}
+
+.MenuItem__item-link {
+  font-size: $font-size-small;
+  color: inherit;
+  display: block;
+  flex: 1;
+  padding: $spacing-x-small $spacing-small $spacing-x-small $spacing-xx-large * 0.75;
+
+  @extend %text-ellipsis;
+}

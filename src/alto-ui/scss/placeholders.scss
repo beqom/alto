@@ -62,3 +62,10 @@
     box-shadow: 0 0 0 3px $blue-30;
   }
 }
+
+%text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: nowrap;
+}

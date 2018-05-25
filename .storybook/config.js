@@ -79,6 +79,7 @@ function loadStories() {
   require('../src/alto-ui/Form/story');
   require('../src/alto-ui/List/story');
   require('../src/alto-ui/MediaObject/story');
+  require('../src/alto-ui/MenuList/story');
   require('../src/alto-ui/Pagination/story');
   require('../src/alto-ui/ProgressBar/story');
   require('../src/alto-ui/ShowMore/story');
