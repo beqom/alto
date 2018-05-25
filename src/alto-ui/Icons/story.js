@@ -44,6 +44,8 @@ import Filter from './Filter';
 import Folder from './Folder';
 import FolderOpen from './FolderOpen';
 import Globe from './Globe';
+import Help from './Help';
+import HelpInfo from './HelpInfo';
 import Home from './Home';
 import Image from './Image';
 import ImportFile from './ImportFile';
@@ -67,6 +69,7 @@ import Search from './Search';
 import Tasks from './Tasks';
 import Times from './Times';
 import Trash from './Trash';
+import Unknown from './Unknown';
 import Upload from './Upload';
 import User from './User';
 import ViewCards from './ViewCards';
@@ -116,6 +119,8 @@ const icons = Object.entries({
   Folder,
   FolderOpen,
   Globe,
+  Help,
+  HelpInfo,
   Home,
   Image,
   ImportFile,
@@ -139,6 +144,7 @@ const icons = Object.entries({
   Tasks,
   Times,
   Trash,
+  Unknown,
   Upload,
   User,
   ViewCards,
