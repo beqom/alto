@@ -25,39 +25,34 @@ class ProgressBar extends React.Component {
   }
 
   render() {
-    const {
-      className,
-      small,
-      large,
-      value,
-      max,
-      min,
-      tooltip,
-      tooltipPersistent,
-      looping,
-    } = this.props;
+    const { className, small, large, value, max, min, tooltip, looping, tooltipProps } = this.props;
     const ratio = (Math.max(Math.min(max, value || min), min) - min) / (max - min);
-    const width = looping ? '100%' : `${ratio * 100}%`;
+    const hasValue = value !== null && value !== undefined;
+    const width = looping && !hasValue ? '100%' : `${ratio * 100}%`;
+    const tooltipElement = tooltip &&
+      hasValue && (
+        <div className="ProgressBar__tooltip" style={{ marginLeft: width }}>
+          <Tooltip
+            content={tooltip(value, ratio)}
+            show={this.state.hover}
+            top
+            tiny
+            {...tooltipProps}
+          />
+        </div>
+      );
+    const tooltipTop = !(tooltipProps && tooltipProps.top === false);
     return (
       <div
         className="ProgressBar"
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
-        {tooltip &&
-          !looping && (
-            <div className="ProgressBar__tooltip" style={{ marginLeft: width }}>
-              <Tooltip
-                content={tooltip(value, ratio)}
-                show={this.state.hover || tooltipPersistent}
-                top
-                tiny
-              />
-            </div>
-          )}
+        {tooltipTop && tooltipElement}
         <div className={bemClass('ProgressBar__placeholder', { small, large }, className)}>
           <div className={bemClass('ProgressBar__bar', { looping }, className)} style={{ width }} />
         </div>
+        {!tooltipTop && tooltipElement}
       </div>
     );
   }
@@ -69,8 +64,8 @@ ProgressBar.defaultProps = {
   min: 0,
   max: 1,
   tooltip: (value, ratio) => `${Math.round(ratio * 100)} %`,
-  tooltipPersistent: false,
   looping: false,
+  tooltipProps: {},
 };
 
 ProgressBar.propTypes = {
@@ -80,9 +75,9 @@ ProgressBar.propTypes = {
   value: PropTypes.number,
   max: PropTypes.number,
   min: PropTypes.number,
-  tooltip: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-  tooltipPersistent: PropTypes.bool,
+  tooltip: PropTypes.oneOfType([PropTypes.bool, PropTypes.func, PropTypes.object]),
   looping: PropTypes.bool,
+  tooltipProps: PropTypes.object,
 };
 
 export default ProgressBar;
