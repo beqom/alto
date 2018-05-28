@@ -1,6 +1,6 @@
 // ...
-@import "../../alto-ui/scss/alto-ui";
-@import "_prism";
+@import '../../alto-ui/scss/alto-ui';
+@import '_prism';
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 $layout-border-color: $coolgrey-20;
 
@@ -10,7 +10,6 @@ body {
   background: $color-page-bkgd;
   //background-image: url(//basehold.it/i/16); // 24px baseline
 }
-
 
 .navbar {
   width: 100%;
@@ -30,15 +29,11 @@ body {
   }
 }
 
-
 .navlinks-toggle {
   @include MQ(Mplus) {
     display: none;
   }
 }
-
-
-
 
 .navbar--home {
   background: transparent;
@@ -47,10 +42,9 @@ body {
   .alto-logo g {
     fill: $white;
     transition: $duration-quick $timing-function fill;
-
   }
   .navbar__brand:hover .alto-logo g {
-    fill: rgba($white, .7);
+    fill: rgba($white, 0.7);
   }
 
   .navbar__link {
@@ -104,7 +98,7 @@ body {
 
 .navbar__link {
   font-size: $font-size-large;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
 
   @include MQ(Mplus) {
     padding: 0 1rem;
@@ -144,16 +138,12 @@ body {
 .main-container--home {
   height: auto;
   min-height: 100%;
-  background:
-    url(../images/foreground-wide.svg) top center / cover no-repeat,
-    url(../images/background-wide.svg) bottom center / cover no-repeat
-  ;
+  background: url(../images/foreground-wide.svg) top center / cover no-repeat,
+    url(../images/background-wide.svg) bottom center / cover no-repeat;
 
   @include MQ(XXLplus) {
     background-size: cover, cover;
   }
-
-
 }
 
 .sidenav--page {
@@ -163,12 +153,11 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-
 }
 
 .sidenav__group-title {
   line-height: 1em;
-  padding: .5rem 2rem;
+  padding: 0.5rem 2rem;
   color: $coolgrey-60;
   font-weight: $font-weight-regular;
   font-size: $font-size-large;
@@ -190,16 +179,15 @@ body {
   &.active {
     background: $coolgrey-20;
     color: $coolgrey-70;
-
   }
 }
 
 .alto-hr {
-  margin: 1rem 0 .9375rem;
-  border: .5px solid transparent;
+  margin: 1rem 0 0.9375rem;
+  border: 0.5px solid transparent;
 }
 
-.sidenav--list{
+.sidenav--list {
   list-style-type: none;
   margin-bottom: 1rem;
   > li {
@@ -221,7 +209,6 @@ body {
   align-items: stretch;
   overflow: hidden;
   width: 100%;
-
 }
 
 .flex--col-to-row {
@@ -235,7 +222,6 @@ body {
     align-items: stretch;
     overflow: hidden;
   }
-
 }
 
 .flex-grid {
@@ -272,7 +258,6 @@ body {
   overflow: hidden;
 }
 
-
 .page--single {
   .content-container {
     max-width: 1200px;
@@ -288,9 +273,8 @@ body {
 
 .content__header {
   flex: 0 0 auto;
-  padding: .75rem 2rem;
+  padding: 0.75rem 2rem;
   box-shadow: 0 1px 0 0 $layout-border-color;
-
 }
 
 .page-header__title {
@@ -315,7 +299,6 @@ body {
 .content__body {
   flex: 1 1 auto;
   overflow: auto;
-
 }
 
 .content {
@@ -353,7 +336,6 @@ body {
     + h3 {
       margin-top: 2rem;
     }
-
   }
 
   > h3 {
@@ -361,9 +343,7 @@ body {
     font-weight: $font-weight-semibold;
     margin-top: 3rem;
   }
-
 }
-
 
 .main {
   flex: 1 0 auto;
@@ -405,7 +385,6 @@ body {
       margin-bottom: 0;
     }
   }
-
 }
 
 .hero__link,
@@ -417,7 +396,6 @@ body {
     text-decoration: none;
     box-shadow: 0 0px 0 0 $white;
   }
-
 }
 
 .hero__actions {
@@ -437,19 +415,6 @@ body {
       margin-bottom: 0;
     }
   }
-
-}
-
-.hero__link,
-.hero__link:visited {
-  color: $white;
-  box-shadow: 0 1px 0 0 $white;
-  &:hover {
-    color: $white;
-    text-decoration: none;
-    box-shadow: 0 0px 0 0 $white;
-  }
-
 }
 
 .hero__lead {
@@ -457,9 +422,7 @@ body {
   max-width: 24rem;
   line-height: $line-height-lead;
   color: $white;
-
 }
-
 
 .pages-list {
   margin: 2rem 0;
@@ -471,11 +434,8 @@ body {
 .pages-list__link {
   font-size: $font-size-large;
   display: block;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
 }
-
-
-
 
 // Example
 
@@ -484,8 +444,7 @@ body {
 .alto-demo {
   border-radius: $border-radius-default;
   margin: 1rem 0;
-  box-shadow: 0 2px .25rem rgba($coolgrey-80, .125),
-  inset 0 0 0 1px $coolgrey-20;
+  box-shadow: 0 2px 0.25rem rgba($coolgrey-80, 0.125), inset 0 0 0 1px $coolgrey-20;
 }
 
 .alto-example,
@@ -504,13 +463,10 @@ body {
   justify-content: center;
 }
 
-
 .alto-demo--tall {
   padding-top: 3rem;
   padding-bottom: 3rem;
 }
-
-
 
 .alto-example__code pre {
   border-radius: 0 0 $border-radius-default $border-radius-default;
@@ -525,9 +481,8 @@ body {
 }
 
 .alto-logo g {
-  fill: rgba($white, .8);
+  fill: rgba($white, 0.8);
   transition: $duration-quick $timing-function fill;
-
 }
 .navbar__brand:hover .alto-logo g {
   fill: $white;
@@ -536,8 +491,6 @@ body {
 .example-tabbed-content {
   background: $white;
   border-radius: 0 0 $border-radius-default $border-radius-default;
-  box-shadow:
-    inset 0 -1px 0 0 $coolgrey-20,
-    inset 1px 0 0 0 $coolgrey-20,
-    inset -1px 0 0 0 $coolgrey-20
+  box-shadow: inset 0 -1px 0 0 $coolgrey-20, inset 1px 0 0 0 $coolgrey-20,
+    inset -1px 0 0 0 $coolgrey-20;
 }
