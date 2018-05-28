@@ -103,6 +103,10 @@
   height: 100%;
   display: flex;
   align-items: center;
+  .Table__cell--editable & {
+    padding-left: $spacing-x-small;
+    padding-right: $spacing-x-small;
+  }
 }
 
 .Table__cell-content {
@@ -111,13 +115,13 @@
   height: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: $spacing-x-small $spacing-medium;
+  padding: $spacing-x-small 0.625rem;
   min-height: 2rem;
   line-height: $line-height-input;
   overflow: hidden;
   max-width: 100%;
   flex: 1;
-  margin: 0 $spacing-x-small;
+  margin: 0;
   border-radius: $border-radius-default;
 
   .Table--compact & {
@@ -160,6 +164,8 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     padding-right: 0.75rem;
+    margin: 0;
+    border-radius: 0;
     text-align: left;
     display: flex;
     flex-direction: row;
@@ -192,6 +198,7 @@
   position: relative;
   transition: all $transition;
   box-shadow: inset 0 0 0 1px $coolgrey-20;
+  //border: 1px solid $coolgrey-20;
   .Table__cell--warning & {
     box-shadow: inset 0 0 0 1px $orange;
   }
@@ -222,7 +229,7 @@
 
 .Table__cell-input {
   display: none;
-  margin: 0 $spacing-x-small;
+  margin: 0;
 
   &--number,
   &--percentage,
@@ -269,7 +276,7 @@
   }
 
   .Table__cell:not(:first-child) &:hover {
-    box-shadow: inset 0 -1px 0 0 $coolgrey-20, 0 1px 0 0 $coolgrey-20, inset 1px 0 0 0 $coolgrey-20;
+    box-shadow: inset 0 -1px 0 0 $coolgrey-20, 0 1px 0 0 $coolgrey-20, inset -1px 0 0 0 $coolgrey-20;
   }
 }
 
