@@ -324,7 +324,7 @@ class TableCell extends React.Component {
               label="edit cell"
               hideLabel
               small={tableProps.compact}
-              id={`Table--${tableProps.id}__cell-input--${row[tableProps.rowId]}--${key}`}
+              id={`Table--${tableProps.rowId}__cell-input--${row[tableProps.rowId]}--${key}`}
               className={bemClass('Table__cell-input', modifiers)}
               style={{ width: (column.width || this.state.width) - 6 }}
               value={value || ''}
