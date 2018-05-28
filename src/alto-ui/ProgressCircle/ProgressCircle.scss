@@ -1,0 +1,39 @@
+@import '../scss/inc';
+
+.ProgressCircle {
+  position: relative;
+  display: flex;
+}
+
+.ProgressCircle__placeholder {
+  fill: none;
+  stroke: $coolgrey-20;
+}
+
+.ProgressCircle__circle {
+  fill: none;
+  stroke: $blue;
+}
+
+.ProgressCircle__figure {
+  color: $blue;
+  margin: auto;
+  font-weight: $font-weight-semibold;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-size: $font-size-x-large;
+
+  &--small {
+    font-size: $font-size-medium;
+  }
+
+  &--large {
+    font-size: 3rem;
+  }
+}
+
+.ProgressCircle__figure-unit {
+  font-size: 0.5em;
+  margin-top: 0.3em;
+}
