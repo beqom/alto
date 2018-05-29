@@ -24,6 +24,7 @@ const FileInput = ({
   name,
   required,
   value,
+  children,
 }) => (
   <div className={classnames('FileInput', className)}>
     <input
@@ -48,7 +49,7 @@ const FileInput = ({
         nowrap,
       }}
     >
-      {label}
+      {children || label}
     </Button>
   </div>
 );
@@ -59,7 +60,8 @@ FileInput.defaultProps = {};
 
 FileInput.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
+  children: PropTypes.any,
   onChange: PropTypes.func.isRequired,
   className: PropTypes.string,
   outline: PropTypes.bool,
