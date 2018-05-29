@@ -111,13 +111,17 @@ class Overlay extends React.PureComponent {
       <Fragment>
         {open && blocking && <div className="Overlay__overlay" />}
         <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
-          <FocusTrap
-            active={open && blocking && !inert}
-            className="Overlay__focus-trap"
-            focusTrapOptions={{ clickOutsideDeactivates: true }}
-          >
-            {children}
-          </FocusTrap>
+          {blocking ? (
+            <FocusTrap
+              active={open && !inert}
+              className="Overlay__focus-trap"
+              focusTrapOptions={{ clickOutsideDeactivates: true }}
+            >
+              {children}
+            </FocusTrap>
+          ) : (
+            children
+          )}
         </div>
       </Fragment>
     );
