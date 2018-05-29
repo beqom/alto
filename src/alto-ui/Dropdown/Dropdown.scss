@@ -1,0 +1,111 @@
+@import '../scss/inc';
+
+.DropdownWrapper {
+  position: relative;
+}
+
+.Dropdown {
+  @extend %reset-styles;
+  position: absolute;
+  padding: $spacing-medium;
+  border-radius: $border-radius-default;
+  background-color: $white;
+  white-space: nowrap;
+  z-index: $z-index-dropdown;
+  border: 1px solid $coolgrey-20;
+  display: none;
+
+  &--open {
+    display: block;
+  }
+
+  &--left {
+    left: 50%;
+    margin-left: -($spacing-small + $spacing-x-small);
+  }
+
+  &--right {
+    right: 50%;
+    margin-right: -($spacing-small + $spacing-x-small);
+  }
+
+  &--center {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &--bottom {
+    top: 100%;
+    margin-top: $spacing-small + $spacing-x-small;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  &--top {
+    bottom: 100%;
+    margin-bottom: $spacing-small + $spacing-x-small;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: $spacing-small solid transparent;
+  }
+
+  // --- bottom ---
+
+  &--bottom::before,
+  &--bottom::after {
+    bottom: 100%;
+  }
+
+  &--bottom::before {
+    border-bottom-color: $coolgrey-20;
+    margin-bottom: 1px;
+  }
+
+  &--bottom::after {
+    border-bottom-color: $white;
+  }
+
+  // --- top ---
+
+  &--top::before,
+  &--top::after {
+    top: 100%;
+  }
+
+  &--top::before {
+    border-top-color: $coolgrey-20;
+    margin-top: 1px;
+  }
+
+  &--top::after {
+    border-top-color: $white;
+  }
+
+  // --- left ---
+
+  &--left::before,
+  &--left::after {
+    left: $spacing-x-small;
+  }
+
+  // --- right ---
+
+  &--right::before,
+  &--right::after {
+    right: $spacing-x-small;
+  }
+
+  // --- center ---
+
+  &--center::before,
+  &--center::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
