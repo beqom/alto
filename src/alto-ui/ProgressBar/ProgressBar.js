@@ -44,12 +44,12 @@ class ProgressBar extends React.Component {
     const tooltipTop = !(tooltipProps && tooltipProps.top === false);
     return (
       <div
-        className="ProgressBar"
+        className={bemClass('ProgressBar', {}, className)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
       >
         {tooltipTop && tooltipElement}
-        <div className={bemClass('ProgressBar__placeholder', { small, large }, className)}>
+        <div className={bemClass('ProgressBar__placeholder', { small, large })}>
           <div className={bemClass('ProgressBar__bar', { looping }, className)} style={{ width }} />
         </div>
         {!tooltipTop && tooltipElement}
