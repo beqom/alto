@@ -1,13 +1,5 @@
 @import '../scss/inc';
 
-.MenuList__title {
-  font-size: $font-size-small;
-  font-weight: $font-weight-semibold;
-  margin-bottom: 5px;
-
-  @extend %text-ellipsis;
-}
-
 .MenuList {
   overflow: auto;
   flex: 1;
