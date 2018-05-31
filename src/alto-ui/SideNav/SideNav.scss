@@ -71,7 +71,6 @@ $nav-btn-hover-text-dark: $white;
   flex: 1;
   display: none;
   color: $red;
-  background-color: $white;
 
   @include MQ(Mplus) {
     display: block;
