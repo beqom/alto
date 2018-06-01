@@ -19,6 +19,7 @@ const Dialog = props => {
     buttons,
     closeFocusTargetId,
     inert,
+    a11yLabelClose,
   } = props;
   const openFocusTargetId =
     props.openFocusTargetId ||
@@ -53,6 +54,7 @@ const Dialog = props => {
                   className="Dialog__close-button"
                   onClick={onClose}
                   disabled={inert}
+                  a11yLabel={a11yLabelClose}
                 />
               )}
             </header>
@@ -110,6 +112,7 @@ Dialog.propTypes = {
       }),
     ])
   ),
+  a11yLabelClose: PropTypes.string.isRequired,
 };
 
 export default Dialog;
