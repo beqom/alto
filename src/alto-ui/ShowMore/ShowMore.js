@@ -35,20 +35,23 @@ class ShowMore extends React.Component {
   }
 
   render() {
-    const { children, className, labelToOpen, labelToClose } = this.props;
+    const { children, className, labelToOpen, labelToClose, small, large } = this.props;
     const { open } = this.state;
     return (
       <div className={classnames('ShowMore', className)}>
         <div
-          className={bemClass('ShowMore__content-wrapper', { open })}
+          className={bemClass('ShowMore__content-wrapper', { open, small, large })}
           style={{ height: this.getContentHeight() }}
         >
-          <div className="ShowMore__content" ref={this.setContentNode}>
+          <div
+            className={bemClass('ShowMore__content', { small, large })}
+            ref={this.setContentNode}
+          >
             {children}
           </div>
         </div>
 
-        <Button flat block onClick={this.toggle}>
+        <Button small={small} large={large} flat block onClick={this.toggle}>
           {open ? labelToClose : labelToOpen}
         </Button>
       </div>
@@ -63,11 +66,13 @@ ShowMore.defaultProps = {
 };
 
 ShowMore.propTypes = {
-  labelToOpen: PropTypes.string.isRequired,
-  labelToClose: PropTypes.string.isRequired,
+  labelToOpen: PropTypes.any.isRequired,
+  labelToClose: PropTypes.any.isRequired,
   className: PropTypes.string,
   children: PropTypes.any,
   open: PropTypes.bool,
+  small: PropTypes.bool,
+  large: PropTypes.bool,
 };
 
 export default ShowMore;

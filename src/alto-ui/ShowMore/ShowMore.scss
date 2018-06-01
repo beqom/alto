@@ -7,4 +7,12 @@
 
 .ShowMore__content {
   padding-bottom: $spacing-medium;
+
+  &--small {
+    padding-bottom: $spacing-small;
+  }
+
+  &--large {
+    padding-bottom: $spacing-large;
+  }
 }
