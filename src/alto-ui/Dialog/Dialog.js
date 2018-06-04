@@ -54,7 +54,7 @@ const Dialog = props => {
                   className="Dialog__close-button"
                   onClick={onClose}
                   disabled={inert}
-                  a11yLabel={a11yLabelClose}
+                  a11yLabel={a11yLabelClose || 'Close'}
                 />
               )}
             </header>
@@ -112,7 +112,7 @@ Dialog.propTypes = {
       }),
     ])
   ),
-  a11yLabelClose: PropTypes.string.isRequired,
+  a11yLabelClose: PropTypes.string,
 };
 
 export default Dialog;
