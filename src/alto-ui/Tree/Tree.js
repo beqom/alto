@@ -8,6 +8,9 @@ import Link from '../Link';
 
 import './Tree.scss';
 
+const getKey = (item, keyField) =>
+  typeof keyField === 'function' ? keyField(item) : item[keyField];
+
 class TreeItem extends React.Component {
   constructor(props) {
     super(props);
@@ -105,9 +108,9 @@ class TreeItem extends React.Component {
   render() {
     const { item, hasChildren, keyField, renderIcon } = this.props;
     const { open, fetching } = this.state;
-
-    const selected = this.props.selected === item || this.props.selected === item[keyField];
+    const selected = this.props.selected === item || this.props.selected === getKey(item, keyField);
     const Icon = renderIcon ? renderIcon(item, selected) : null;
+
     return (
       <li className="Tree__item">
         <div className={bemClass('Tree__title', { final: !hasChildren(item) })}>
@@ -146,7 +149,7 @@ TreeItem.propTypes = {
   renderIcon: PropTypes.func,
   onClick: PropTypes.func,
   href: PropTypes.func,
-  keyField: PropTypes.string,
+  keyField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   open: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
   selected: PropTypes.oneOfType([
     PropTypes.string,
@@ -160,7 +163,7 @@ TreeItem.propTypes = {
 const Tree = props => (
   <ul className="Tree">
     {props.items.map((child, index) => (
-      <TreeItem key={child[props.keyField]} {...props} item={child} index={index} />
+      <TreeItem key={getKey(child, props.keyField)} {...props} item={child} index={index} />
     ))}
   </ul>
 );
@@ -183,7 +186,7 @@ Tree.propTypes = {
     // promise
     PropTypes.object,
   ]).isRequired,
-  keyField: PropTypes.string,
+  keyField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
 };
 
 export default Tree;
