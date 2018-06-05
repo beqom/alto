@@ -43,6 +43,7 @@ const Select = props => {
     hideLabel,
     options,
     label,
+    helpText,
     ...otherProps
   } = props;
   return (
@@ -77,6 +78,7 @@ Select.propTypes = {
   small: PropTypes.bool,
   className: PropTypes.string,
   hideLabel: PropTypes.bool,
+  helpText: PropTypes.string,
   options: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,
