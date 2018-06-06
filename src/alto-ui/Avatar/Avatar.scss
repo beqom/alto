@@ -1,6 +1,8 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
 .avatar {
+  min-width: 1em;
+  min-height: 1em;
   width: 1em;
   height: 1em;
   border-radius: 50%;
@@ -34,10 +36,10 @@
 
 .avatar__placeholder-icon-container {
   position: absolute;
-  top: .1em;
-  bottom: .1em;
-  left: .1em;
-  right: .1em;
+  top: 0.1em;
+  bottom: 0.1em;
+  left: 0.1em;
+  right: 0.1em;
   border-radius: 50%;
   overflow: hidden;
   // oveflow issue on chrome: https://stackoverflow.com/a/25206004
@@ -46,7 +48,7 @@
 
 .avatar__placeholder-icon {
   position: absolute;
-  bottom: -.2em;
+  bottom: -0.2em;
   left: 50%;
   transform: translateX(-50%);
   color: $coolgrey-40;
