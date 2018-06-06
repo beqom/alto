@@ -5,6 +5,7 @@ import { DateTime } from 'luxon';
 
 import TextField from '../TextField';
 import Select from '../Select';
+import FormRow from '../FormRow';
 import Button from '../../Button';
 import ChevronLeftIcon from '../../Icons/ChevronLeft';
 import ChevronRightIcon from '../../Icons/ChevronRight';
@@ -29,7 +30,7 @@ const DatePickerHeader = ({ id, date, onChange, labels }) => {
 
   return (
     <div className="DatePicker__header">
-      <form className="DatePicker__month-form">
+      <FormRow className="DatePicker__month-form">
         <Select
           id={`${id}__month-select`}
           label={datePickerLabels.month}
@@ -51,7 +52,7 @@ const DatePickerHeader = ({ id, date, onChange, labels }) => {
           value={date.year}
           onChange={handleChange}
         />
-      </form>
+      </FormRow>
       <div className="DatePicker__nav">
         <Button flat small onClick={() => onChange(previousMonth)}>
           <ChevronLeftIcon />
