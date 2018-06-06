@@ -251,11 +251,9 @@ $nav-btn-hover-text-dark: $white;
   align-items: center;
   justify-content: flex-end;
   flex: 1;
-  padding: 0 1rem;
 
   @include MQ(Mplus) {
     border-bottom: 1px solid $coolgrey-20;
-    padding: 0 1.25rem;
     flex: 0 0 auto;
     justify-content: center;
 
