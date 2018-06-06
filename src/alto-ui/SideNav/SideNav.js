@@ -14,15 +14,10 @@ class SideNav extends React.PureComponent {
     super(props);
 
     this.state = {
-      collapsed: false,
       open: false,
     };
-    this.handleToggle = this.handleToggle.bind(this);
-    this.handleToggleOpen = this.handleToggleOpen.bind(this);
-  }
 
-  handleToggle() {
-    this.setState(({ collapsed }) => ({ collapsed: !collapsed }));
+    this.handleToggleOpen = this.handleToggleOpen.bind(this);
   }
 
   handleToggleOpen() {
@@ -30,7 +25,7 @@ class SideNav extends React.PureComponent {
   }
 
   renderNavItems() {
-    const { collapsed } = this.state;
+    const { collapsed } = this.props;
     return this.props.items.map(item => (
       <li
         id={`${this.props.id}__${item.id}`}
@@ -62,7 +57,7 @@ class SideNav extends React.PureComponent {
   }
 
   render() {
-    const { collapsed, open } = this.state;
+    const { open } = this.state;
     const {
       logoUrl,
       logoSmall,
@@ -75,6 +70,8 @@ class SideNav extends React.PureComponent {
       color,
       expandButtonLabel,
       collapseButtonLabel,
+      collapsed,
+      onToggle,
     } = this.props;
     return (
       <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
@@ -103,7 +100,7 @@ class SideNav extends React.PureComponent {
         </div>
         {!!children && (
           <div className="sidenav__content">
-            {typeof children === 'function' ? children({ collapsed, open }) : children}
+            {typeof children === 'function' ? children(open) : children}
           </div>
         )}
         <Button
@@ -115,19 +112,21 @@ class SideNav extends React.PureComponent {
         >
           {open ? closeMenuButtonLabel : openMenuButtonLabel}
         </Button>
-        <button
-          id={`${id}__collapse-button`}
-          className={bemClass(
-            'sidenav__icon-container',
-            { reverse: collapsed },
-            'sidenav__toggle-button'
-          )}
-          onClick={this.handleToggle}
-          aria-expanded={collapsed}
-        >
-          {collapsed ? <ExpandIcon /> : <CollapseIcon />}
-          <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
-        </button>
+        {onToggle && (
+          <button
+            id={`${id}__collapse-button`}
+            className={bemClass(
+              'sidenav__icon-container',
+              { reverse: collapsed },
+              'sidenav__toggle-button'
+            )}
+            onClick={onToggle}
+            aria-expanded={collapsed}
+          >
+            {collapsed ? <ExpandIcon /> : <CollapseIcon />}
+            <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
+          </button>
+        )}
       </aside>
     );
   }
@@ -138,6 +137,7 @@ SideNav.displayName = 'SideNav';
 SideNav.defaultProps = {
   dark: false,
   id: 'sidenav',
+  collapsed: false,
 };
 
 SideNav.propTypes = {
@@ -161,6 +161,8 @@ SideNav.propTypes = {
       icon: PropTypes.func.isRequired,
     })
   ).isRequired,
+  collapsed: PropTypes.bool,
+  onToggle: PropTypes.func,
 };
 
 export default SideNav;

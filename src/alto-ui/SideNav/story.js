@@ -12,6 +12,7 @@ import LightbulbIcon from '../Icons/Lightbulb';
 import BoltIcon from '../Icons/Bolt';
 import ObjectsIcon from '../Icons/Objects';
 import Avatar from '../Avatar';
+import StateProvider from '../StateProvider';
 
 const items = [
   {
@@ -146,39 +147,45 @@ SideNavRouterProvider.childContextTypes = {
 storiesOf('SideNav', module)
   .addDecorator(story => <Container>{story()}</Container>)
   .addWithJSX('overview', () => (
-    <SideNavRouterProvider currentUrl="#three">
-      {currentUrl => (
-        <SideNav
-          logo={text('logo', 'Brand')}
-          logoSmall={text('logoSmall', 'B.')}
-          logoUrl="#"
-          currentUrl={currentUrl}
-          items={items}
-          color={select(
-            'color',
-            [
-              'red',
-              'orange',
-              'yellow',
-              'lime',
-              'green',
-              'pine',
-              'teal',
-              'blue',
-              'indigo',
-              'purple',
-              'pink',
-            ],
-            'red'
+    <StateProvider state={{ collapsed: false }}>
+      {(state, setState) => (
+        <SideNavRouterProvider currentUrl="#three">
+          {currentUrl => (
+            <SideNav
+              logo={text('logo', 'Brand')}
+              logoSmall={text('logoSmall', 'B.')}
+              logoUrl="#"
+              currentUrl={currentUrl}
+              items={items}
+              color={select(
+                'color',
+                [
+                  'red',
+                  'orange',
+                  'yellow',
+                  'lime',
+                  'green',
+                  'pine',
+                  'teal',
+                  'blue',
+                  'indigo',
+                  'purple',
+                  'pink',
+                ],
+                'red'
+              )}
+              expandButtonLabel="click to expand side navigation"
+              collapseButtonLabel="click to collapse side navigation"
+              openMenuButtonLabel="Menu"
+              closeMenuButtonLabel="Close"
+              dark={boolean('dark', false)}
+              onToggle={() => setState({ collapsed: !state.collapsed })}
+              collapsed={state.collapsed}
+            >
+              {({ collapsed }) => <SideNavContent sideNavCallapsed={collapsed} />}
+            </SideNav>
           )}
-          expandButtonLabel="click to expand side navigation"
-          collapseButtonLabel="click to collapse side navigation"
-          openMenuButtonLabel="Menu"
-          closeMenuButtonLabel="Close"
-          dark={boolean('dark', false)}
-        >
-          {({ collapsed }) => <SideNavContent sideNavCallapsed={collapsed} />}
-        </SideNav>
+        </SideNavRouterProvider>
       )}
-    </SideNavRouterProvider>
+    </StateProvider>
   ));
