@@ -119,13 +119,11 @@
     "reporters": ["default", "jest-junit"],
     "collectCoverage": false,
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx}",
-      "src/*.{js,jsx}",
-      "!src/.*",
-      "!src/__test__/*",
-      "!src/**/__test__/*",
-      "!src/**/index.js",
-      "!src/**/story.js"
+      "src/alto-ui/**/*.{js,jsx}",
+      "src/alto-ui/*.{js,jsx}",
+      "!src/alto-ui/**/__tests__/*",
+      "!src/alto-ui/**/index.js",
+      "!src/alto-ui/**/story.js"
     ]
   },
   "jest-junit": {
