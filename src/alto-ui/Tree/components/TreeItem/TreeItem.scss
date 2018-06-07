@@ -1,0 +1,79 @@
+@import '../../../scss/inc';
+
+.TreeItem {
+  &:not(:last-child) {
+    margin-bottom: $spacing-x-small;
+  }
+}
+
+.TreeItem__subtree {
+  &--close {
+    display: none;
+  }
+}
+
+.TreeItem__title {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+
+  &--final {
+    padding-left: $font-size-x-small + $spacing-x-small * 3;
+  }
+}
+
+.TreeItem__toggle-button {
+  @extend %reset-button;
+
+  cursor: pointer;
+  font-size: $font-size-x-small;
+  padding: $spacing-x-small;
+  line-height: 0;
+  transition: all $transition;
+  margin-right: $spacing-x-small;
+  border-radius: 50%;
+
+  &--open {
+    transform: rotate(90deg);
+  }
+}
+
+.TreeItem__spinner {
+  margin-right: $spacing-x-small * 2;
+}
+
+.TreeItem__icon {
+  margin-right: $spacing-x-small;
+  color: $coolgrey-50;
+  line-height: 0;
+  font-size: $font-size-medium;
+
+  &--selected {
+    color: $blue;
+  }
+}
+
+.TreeItem__button {
+  @extend %reset-button;
+
+  transition: all $transition;
+  font-size: $font-size-small;
+  cursor: pointer;
+  line-height: 1.6;
+  border-radius: 1em;
+  padding: 0 $spacing-small;
+  white-space: nowrap;
+  color: inherit;
+
+  &:hover {
+    background-color: $coolgrey-20;
+  }
+
+  &--active {
+    &,
+    &:hover {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+}
