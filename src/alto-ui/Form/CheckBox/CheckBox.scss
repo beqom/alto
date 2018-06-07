@@ -67,3 +67,8 @@
     }
   }
 }
+
+.CheckBox__label-wrapper {
+  display: block;
+  @extend %text-ellipsis;
+}
