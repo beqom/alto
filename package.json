@@ -66,6 +66,7 @@
     "github-markdown-css": "^2.9.0",
     "hugo-cli": "^0.5.4",
     "jest-cli": "^21.2.1",
+    "jest-junit": "^5.0.0",
     "jquery": "^3.2.1",
     "node-sass": "^4.5.3",
     "prop-types": "^15.6.1",
@@ -115,6 +116,7 @@
         "<rootDir>/__mocks__/fileMock.js",
       "\\.s?css$": "<rootDir>/__mocks__/styleMock.js"
     },
+    "reporters": ["default", "jest-junit"],
     "collectCoverage": false,
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
@@ -125,5 +127,9 @@
       "!src/**/index.js",
       "!src/**/story.js"
     ]
+  },
+  "jest-junit": {
+    "suiteName": "Alto UI jest tests",
+    "output": "./coverage/junit.xml"
   }
 }
