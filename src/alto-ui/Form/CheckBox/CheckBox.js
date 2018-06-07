@@ -8,12 +8,17 @@ const CheckBox = props => {
   return (
     <div className="CheckBox">
       <input {...props} className="CheckBox__input" type="checkbox" />
-      <label htmlFor={props.id} {...{ checked, disabled }} className="CheckBox__label">
-        {props.label}
+      <label
+        htmlFor={props.id}
+        {...{ checked, disabled }}
+        title={props.label}
+        className="CheckBox__label"
+      >
+        <span className="CheckBox__label-wrapper">{props.label}</span>
       </label>
     </div>
   );
-}
+};
 
 CheckBox.defaultProps = {
   checked: false,
@@ -28,4 +33,3 @@ CheckBox.propTypes = {
 };
 
 export default CheckBox;
-
