@@ -7,6 +7,15 @@ import FormElement from '../FormElement';
 
 import './TextField.scss';
 
+const handleChange = (event, onChange) => {
+  if (typeof onChange !== 'function' || !event.target.value) return;
+
+  const regex = /^-?[+]?[0-9]*\.?[0-9]*$/;
+  if (regex.test(event.target.value)) {
+    onChange(event);
+  }
+};
+
 const texfieldProps = bemProps('textfield', ['large', 'small', 'success', 'error', 'area']);
 
 const TextField = React.forwardRef((props, ref) => (
@@ -24,7 +33,11 @@ const TextField = React.forwardRef((props, ref) => (
     ) : (
       <input
         ref={ref}
-        {...texfieldProps(omit(props, ['className', 'hideLabel', 'label', 'style']), 'helpText')}
+        {...texfieldProps(
+          omit(props, ['className', 'hideLabel', 'label', 'style', 'onChange']),
+          'helpText'
+        )}
+        onChange={event => handleChange(event, props.onChange)}
       />
     )}
   </FormElement>
