@@ -38,6 +38,8 @@
 .Dialog__body {
   padding: $spacing-medium;
   flex: 1;
+  // Fix height issues in IE11
+  flex-basis: auto;
   overflow: auto;
 }
 
