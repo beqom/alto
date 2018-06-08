@@ -40,7 +40,6 @@ class DatePicker extends React.Component {
 
   getDate() {
     return this.props.value ? DateTime.fromJSDate(this.props.value) : null;
-    // return DateTime.fromISO(this.props.value);
   }
 
   setDate(date) {

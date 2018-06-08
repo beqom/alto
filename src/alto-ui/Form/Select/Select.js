@@ -47,7 +47,13 @@ const Select = props => {
     ...otherProps
   } = props;
   return (
-    <FormElement {...props} className={className} hideLabel={hideLabel}>
+    <FormElement
+      {...props}
+      helpText={helpText}
+      label={label}
+      className={className}
+      hideLabel={hideLabel}
+    >
       <select
         {...otherProps}
         className={bemClass('Select', {

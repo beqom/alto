@@ -6,7 +6,6 @@ import VisuallyHidden from '../VisuallyHidden';
 import Link from '../Link';
 import CloseIcon from '../Icons/Close';
 
-// import { bemClass } from '../../helpers/bem';
 import './CloseButton.scss';
 
 const CloseButton = ({ a11yLabel, className, ...props }) => {

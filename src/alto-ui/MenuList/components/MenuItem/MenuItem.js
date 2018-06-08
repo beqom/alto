@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Link from '../../Link';
-import ChevronRightIcon from '../../Icons/ChevronRight';
-import { bemClass } from '../../helpers/bem';
+import Link from '../../../Link';
+import ChevronRightIcon from '../../../Icons/ChevronRight';
+import { bemClass } from '../../../helpers/bem';
 
 import './MenuItem.scss';
 
