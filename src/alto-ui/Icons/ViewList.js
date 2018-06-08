@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from './Icon';
 
-const ListCards = props => (
+const ViewList = props => (
   <Icon {...props}>
     {ownProps => (
       <g>
@@ -18,6 +18,6 @@ const ListCards = props => (
   </Icon>
 );
 
-ListCards.displayName = 'ListCards';
+ViewList.displayName = 'ViewList';
 
-export default ListCards;
+export default ViewList;

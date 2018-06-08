@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MenuList from './MenuItem';
+import MenuItem from './MenuItem';
 
-class MenuListContainer extends React.Component {
+class MenuItemContainer extends React.Component {
   constructor(props) {
     super(props);
     this.handleToggle = this.handleToggle.bind(this);
@@ -16,15 +16,15 @@ class MenuListContainer extends React.Component {
   }
 
   render() {
-    return <MenuList {...this.props} open={this.state.open} handleClick={this.handleToggle} />;
+    return <MenuItem {...this.props} open={this.state.open} handleClick={this.handleToggle} />;
   }
 }
 
-MenuListContainer.propTypes = {
+MenuItemContainer.propTypes = {
   onClick: PropTypes.func,
   id: PropTypes.number,
   activeItemId: PropTypes.number,
   collapsible: PropTypes.bool,
 };
 
-export default MenuListContainer;
+export default MenuItemContainer;
