@@ -72,6 +72,7 @@
     "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "storybook-addon-jsx": "^5.3.0",
+    "styled-components": "^2.2.3",
     "stylelint": "^9.2.1",
     "stylelint-config-recommended": "^2.1.0",
     "stylelint-scss": "^3.1.0",
@@ -89,8 +90,7 @@
     "lodash.range": "^3.2.0",
     "luxon": "^1.0.0",
     "math-expression-evaluator": "^1.2.17",
-    "react-day-picker": "^7.1.4",
-    "styled-components": "^2.2.3"
+    "react-day-picker": "^7.1.4"
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
