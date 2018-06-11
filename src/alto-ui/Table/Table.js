@@ -66,6 +66,7 @@ const renderGroupedRow = (tableProps, columns, row, renderCells) => {
     <tr key={`${row[rowId]}-grouped`}>
       <td className="Table__cell Table__cell--grouped Table__cell--frozen">
         <button
+          id={rowId || null}
           className="Table__cell-content Table__cell-content--grouped"
           onClick={() => handleClickOnGroup(row[groupedByColumnId])}
         >
@@ -91,6 +92,7 @@ const renderTableCell = tableProps => {
     columns.map((col, colIndex) => {
       const isEditable = !render && editable(col, row) && !col.formula;
       const editedFunc = render ? null : edited(col, row, colIndex, rowIndex);
+
       return (
         <TableCell
           key={col.key || col}
@@ -106,6 +108,7 @@ const renderTableCell = tableProps => {
           edited={editedFunc}
           rowIndex={rowIndex || 0}
           columnIndex={colIndex}
+          namespace={tableProps.className}
         />
       );
     });
