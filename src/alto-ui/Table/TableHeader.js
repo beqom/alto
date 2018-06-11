@@ -6,12 +6,20 @@ import ChevronDownIcon from '../Icons/ChevronDown';
 import FilterIcon from '../Icons/Filter';
 import { bemClass } from '../helpers/bem';
 
-const TableHeader = ({ columns, isFirstColumnFrozen, onSort, columnSorted, sortDirection }) => (
+const TableHeader = ({
+  columns,
+  isFirstColumnFrozen,
+  onSort,
+  columnSorted,
+  sortDirection,
+  namespace,
+}) => (
   <thead>
     <tr>
       {columns.map((col, colIndex) => {
         const style = col.width || col.width === 0 ? { width: col.width, maxWidth: col.width } : {};
         const frozen = colIndex === 0 && isFirstColumnFrozen;
+        const buttonId = namespace ? `${namespace}-${col.key}` : col.key || null;
         if (onSort) {
           const sorted = col.key === columnSorted || [1, -1].includes(col.sortDirection);
           const { filtered } = col;
@@ -28,6 +36,7 @@ const TableHeader = ({ columns, isFirstColumnFrozen, onSort, columnSorted, sortD
               style={style}
             >
               <button
+                id={buttonId}
                 className="Table__cell-button Table__cell-content Table__cell-content--header"
                 onClick={() => onSort(col)}
                 style={style}
@@ -99,6 +108,7 @@ TableHeader.propTypes = {
     })
   ),
   sortDirection: PropTypes.number,
+  namespace: PropTypes.string,
 };
 
 export default TableHeader;

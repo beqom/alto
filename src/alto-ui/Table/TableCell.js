@@ -219,6 +219,7 @@ class TableCell extends React.Component {
       editable,
       rowIndex,
       columnIndex,
+      namespace,
     } = this.props;
 
     const value = this.getValue();
@@ -238,6 +239,7 @@ class TableCell extends React.Component {
     const ContentComponent = editable ? 'button' : 'div';
     const content = (
       <ContentComponent
+        id={editable ? `${namespace}-${column.key}` || column.key : null}
         ref={this.setContentNode}
         className={bemClass('Table__cell-content', modifiers)}
         onClick={editable ? this.startEditing : undefined}
@@ -277,7 +279,7 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { column, row, tableProps, formatters, frozen, render, editable } = this.props;
+    const { column, row, tableProps, formatters, frozen, render, editable, namespace } = this.props;
     const key = column.key || column;
     const value = getValue(this.state.value, column, row, this.labels);
     const type = getType(value, column);
@@ -313,7 +315,7 @@ class TableCell extends React.Component {
     return (
       <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef} style={style}>
         <div className="Table__cell-container">
-          {this.renderContent()}
+          {this.renderContent(namespace)}
           {editable && (
             <TextField
               ref={this.inputRef}
@@ -370,6 +372,7 @@ TableCell.propTypes = {
   }),
   rowIndex: PropTypes.number.isRequired,
   columnIndex: PropTypes.number.isRequired,
+  namespace: PropTypes.string,
 };
 
 export default TableCell;
