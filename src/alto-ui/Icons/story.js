@@ -31,7 +31,7 @@ import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
 import Envelope from './Envelope';
-import ErrorIcon from './Error';
+import ErrorIcon from './ErrorIcon';
 import ExclamationCircle from './ExclamationCircle';
 import ExclamationTriangle from './ExclamationTriangle';
 import Expand from './Expand';
