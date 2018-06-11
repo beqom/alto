@@ -61,7 +61,7 @@ const renderGroupedRow = (tableProps, columns, row, renderCells) => {
     renderSummaryGroupCell,
   } = tableProps;
   const isCollapsed = collapsedGroups[row[groupedByColumnId]];
-  // const columnsFiltered = columns.filter(col => col.key !== groupedByColumnId);
+
   return (
     <tr key={`${row[rowId]}-grouped`}>
       <td className="Table__cell Table__cell--grouped Table__cell--frozen">

@@ -31,7 +31,7 @@ import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
 import Envelope from './Envelope';
-import Error from './Error';
+import ErrorIcon from './Error';
 import ExclamationCircle from './ExclamationCircle';
 import ExclamationTriangle from './ExclamationTriangle';
 import Expand from './Expand';
@@ -106,7 +106,7 @@ const icons = Object.entries({
   EllipsisHorizontal,
   EllipsisVertical,
   Envelope,
-  Error,
+  ErrorIcon,
   ExclamationCircle,
   ExclamationTriangle,
   Expand,
