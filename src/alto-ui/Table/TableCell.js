@@ -239,7 +239,7 @@ class TableCell extends React.Component {
     const ContentComponent = editable ? 'button' : 'div';
     const content = (
       <ContentComponent
-        id={editable ? `${namespace}-${column.key}` || null : null}
+        id={editable ? `${namespace}-${column.key}` || column.key : null}
         ref={this.setContentNode}
         className={bemClass('Table__cell-content', modifiers)}
         onClick={editable ? this.startEditing : undefined}
