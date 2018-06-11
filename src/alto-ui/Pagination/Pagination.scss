@@ -1,0 +1,54 @@
+@import '../scss/inc';
+
+.Pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Pagination__button {
+  font: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-size: $font-size-small;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 0 10px;
+  margin: 0 2px;
+  line-height: 26px;
+  text-align: center;
+  min-width: 26px;
+  color: $coolgrey-50;
+  border-radius: 13px;
+  transition: color $transition, background-color $transition;
+
+  &:hover {
+    color: $coolgrey-70;
+    background-color: $coolgrey-20;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}
+
+.Pagination__button--current,
+.Pagination__button--current:hover {
+  background-color: $blue-60;
+  color: $white;
+}
+
+.Pagination__button--arrow {
+  padding: 0;
+  font-size: $font-size-medium;
+}
+
+.Pagination__ellipsis {
+  margin: 0 2px;
+  color: $coolgrey-40;
+
+  &:before {
+    content: '...';
+  }
+}

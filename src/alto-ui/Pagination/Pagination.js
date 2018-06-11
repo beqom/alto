@@ -1,81 +1,42 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import range from 'lodash.range';
-import styled from 'styled-components';
 
+import { bemClass } from '../helpers/bem';
 import ChevronLeftIcon from '../Icons/ChevronLeft';
 import ChevronRightIcon from '../Icons/ChevronRight';
-import { getTheme, getColor, fontSize } from '../helpers/theme';
 
-export const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+import './Pagination.scss';
 
-export const PageButton = styled.button`
-  font: inherit;
-  background: transparent;
-  border: 0;
-  outline: 0;
-  border-radius: 0;
-  ${fontSize('small')};
-  cursor: pointer;
-  font-weight: 600;
-  padding: 0 10px;
-  margin: 0 2px;
-  line-height: 26px;
-  text-align: center;
-  min-width: 26px;
-  color: ${getColor('coolGrey.50')};
-  border-radius: 13px;
-  transition: color ${getTheme('transition')}, background-color ${getTheme('transition')};
-
-  :hover {
-    color: ${getColor('coolGrey.70')};
-    background-color: ${getColor('coolGrey.10')};
-  }
-
-  :disabled {
-    opacity: 0.5;
-  }
-`;
-
-export const PageButtonCurrent = PageButton.withComponent('div').extend`
-  &,
-  :hover {
-    background-color: ${getColor('primary')};
-    color: white;
-  }
-`;
-
-export const PageButtonArrow = PageButton.extend`
-  ${fontSize('medium')};
-  padding: 0;
-`;
-
-export const Ellipsis = styled.span`
-  margin: 0 2px;
-  color: ${getColor('coolGrey.40')};
-  :before {
-    content: '...';
-  }
-`;
-
-const renderPageButton = (pages, onClick, current, { pageLabel, currentPageLabel, goToPageLabel }) =>
+const renderPageButton = (
+  pages,
+  onClick,
+  current,
+  { pageLabel, currentPageLabel, goToPageLabel }
+) =>
   pages.map(page => {
     if (current === page) {
       return (
-        <PageButtonCurrent key={page} aria-label={`${currentPageLabel}, ${pageLabel} ${page}`} aria-current>
+        <div
+          key={page}
+          className={bemClass('Pagination__button', { current: true })}
+          aria-label={`${currentPageLabel}, ${pageLabel} ${page}`}
+          aria-current
+        >
           {page}
-        </PageButtonCurrent>
+        </div>
       );
     }
 
     return (
-      <PageButton key={page} onClick={() => onClick(page)} aria-label={`${goToPageLabel} ${page}`}>
+      <button
+        key={page}
+        className="Pagination__button"
+        onClick={() => onClick(page)}
+        aria-label={`${goToPageLabel} ${page}`}
+      >
         {page}
-      </PageButton>
+      </button>
     );
   });
 
@@ -97,29 +58,33 @@ const Pagination = ({ className, max, current, onClick, labels }) => {
 
   const paginationLabels = {
     pageLabel: 'page',
-    currentPageLabel: 'Current page', 
-    goToPageLabel: 'Go to page', 
+    currentPageLabel: 'Current page',
+    goToPageLabel: 'Go to page',
     ...labels,
   };
   return (
-    <Container className={className}>
-
+    <div className={bemClass('Pagination', {}, className)}>
       {renderPageButton(firstPage, onClick, currentValue, paginationLabels)}
-      {!!beforePages.length && <Ellipsis />}
+      {!!beforePages.length && <span className="Pagination__ellipsis" />}
       {renderPageButton(currentPages, onClick, currentValue, paginationLabels)}
-      {!!afterPages.length && <Ellipsis />}
+      {!!afterPages.length && <span className="Pagination__ellipsis" />}
       {renderPageButton(lastPage, onClick, currentValue, paginationLabels)}
 
-      <PageButtonArrow onClick={() => onClick(currentValue - 1)} disabled={currentValue === 1}>
+      <button
+        className={bemClass('Pagination__button', { arrow: true })}
+        onClick={() => onClick(currentValue - 1)}
+        disabled={currentValue === 1}
+      >
         <ChevronLeftIcon />
-      </PageButtonArrow>
-      <PageButtonArrow
+      </button>
+      <button
+        className={bemClass('Pagination__button', { arrow: true })}
         onClick={() => onClick(currentValue + 1)}
         disabled={currentValue === maxValue}
       >
         <ChevronRightIcon />
-      </PageButtonArrow>
-    </Container>
+      </button>
+    </div>
   );
 };
 
