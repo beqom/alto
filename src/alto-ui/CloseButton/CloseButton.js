@@ -11,7 +11,7 @@ import './CloseButton.scss';
 const CloseButton = ({ a11yLabel, className, ...props }) => {
   const Component = props.href || props.to ? Link : 'button';
   return (
-    <Component {...props} className={classnames('CloseButton', className)}>
+    <Component {...props} id={a11yLabel || null} className={classnames('CloseButton', className)}>
       <CloseIcon className="CloseButton__icon" />
       <div className="CloseButton__label">
         <span aria-hidden="true">ESC</span>
