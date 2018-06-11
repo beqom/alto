@@ -7,8 +7,13 @@ import FormElement from '../FormElement';
 
 import './TextField.scss';
 
-const handleChange = (event, onChange) => {
+const handleChange = (event, type, onChange) => {
   if (typeof onChange !== 'function' || !event.target.value) return;
+
+  if (type !== 'number') {
+    onChange(event);
+    return;
+  }
 
   const regex = /^-?[+]?[0-9]*\.?[0-9]*$/;
   if (regex.test(event.target.value)) {
@@ -37,7 +42,7 @@ const TextField = React.forwardRef((props, ref) => (
           omit(props, ['className', 'hideLabel', 'label', 'style', 'onChange']),
           'helpText'
         )}
-        onChange={event => handleChange(event, props.onChange)}
+        onChange={event => handleChange(event, props.type, props.onChange)}
       />
     )}
   </FormElement>
