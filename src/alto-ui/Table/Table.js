@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import { bemClass } from '../helpers/bem';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import CheckIcon from '../Icons/Check';
-import ErrorIcon from '../Icons/Error';
+import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
 import TableCell from './TableCell';
 import TableHeader from './TableHeader';
