@@ -140,6 +140,7 @@ const Table = props => {
           columnSorted={columnSorted}
           sortDirection={sortDirection}
           columns={columns}
+          namespace={className}
         />
         <tbody>
           {renderSummaryCell && <tr>{renderCells(columns, {}, null, renderSummaryCell)}</tr>}
