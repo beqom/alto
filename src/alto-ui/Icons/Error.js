@@ -20,7 +20,7 @@ const ErrorSolid = props => (
   />
 );
 
-const Error = props => (
+const ErrorIcon = props => (
   <Icon {...props}>
     {props.outline
       ? ownProps => <ErrorOutline {...ownProps} />
@@ -28,14 +28,14 @@ const Error = props => (
   </Icon>
 );
 
-Error.displayName = 'Error';
+ErrorIcon.displayName = 'Error';
 
-Error.defaultProps = {
+ErrorIcon.defaultProps = {
   outline: false,
 };
 
-Error.propTypes = {
+ErrorIcon.propTypes = {
   outline: PropTypes.bool,
 };
 
-export default Error;
+export default ErrorIcon;

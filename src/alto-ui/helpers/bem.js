@@ -15,7 +15,8 @@ const bem = (ComponentToRender, block, modifiers = [], extraProps = []) => {
   };
 
   Component.propTypes = modifiers.reduce(
-    (acc, modifier) => ({...acc, [modifier]: PropTypes.bool}), {}
+    (acc, modifier) => ({ ...acc, [modifier]: PropTypes.bool }),
+    {}
   );
 
   Component.propTypes.className = PropTypes.string;
@@ -23,11 +24,11 @@ const bem = (ComponentToRender, block, modifiers = [], extraProps = []) => {
   return Component;
 };
 
-export const bemClass = (block, modifiers = {}, ...others) =>
+export const bemClass = (block, modifiers, ...others) =>
   classnames(
     block,
-    Object.keys(modifiers)
-      .filter(modifier => !!modifiers[modifier])
+    Object.keys(modifiers || {})
+      .filter(modifier => !!(modifiers || {})[modifier])
       .map(modifier => `${block}--${modifier}`),
     ...others
   ).trim();
@@ -44,8 +45,7 @@ export const bemProps = (block, modifiers, ...others) => (props, extraProps) => 
   return Object.assign(
     {},
     Object.entries(props).reduce(
-      (acc, [prop, value]) =>
-        propsToExclude.includes(prop) ? acc : ({ ...acc, [prop]: value }),
+      (acc, [prop, value]) => (propsToExclude.includes(prop) ? acc : { ...acc, [prop]: value }),
       {}
     ),
     {

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import omit from 'lodash.omit';
 
 import VisuallyHidden from '../VisuallyHidden';
 import { bemClass } from '../helpers/bem';
@@ -22,7 +23,6 @@ const Icon = props => {
     baseline,
     left,
     right,
-    outline,
     viewBox,
     color,
     size,
@@ -33,7 +33,7 @@ const Icon = props => {
   } = props;
   return (
     <Container
-      {...otherProps}
+      {...omit(otherProps, 'outline')}
       className={bemClass(
         'icon',
         { baseline, left, right, button: props.onClick },

@@ -29,8 +29,6 @@ const evaluateFormula = (formula, row, errorLabel) => {
   }
 };
 
-const getCellInput = () => TextField;
-
 const getValue = (value, column, row, labels) =>
   column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
 const getType = (value, column) => (value instanceof Error ? 'error' : column.type || typeof value);
@@ -61,19 +59,6 @@ const getInputProps = type => {
 };
 
 class TableCell extends React.Component {
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (!nextProps.column.formula) {
-      const nextValue = nextProps.row[nextProps.column.key || nextProps.column];
-      if (nextValue !== prevState.originalValue) {
-        return {
-          value: nextValue,
-          originalValue: nextValue,
-        };
-      }
-    }
-    return null;
-  }
-
   constructor(props) {
     super(props);
 
@@ -104,9 +89,21 @@ class TableCell extends React.Component {
     this.labels = { errorFormula: ERROR_MESSAGE, ...props.labels };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (!nextProps.column.formula) {
+      const nextValue = nextProps.row[nextProps.column.key || nextProps.column];
+      if (nextValue !== prevState.originalValue) {
+        return {
+          value: nextValue,
+          originalValue: nextValue,
+        };
+      }
+    }
+    return null;
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const becameEditing = !prevState.editing && this.state.editing;
-    // const becameNotEditing = prevState.editing && !this.state.editing;
 
     if (becameEditing) {
       this.focus();
@@ -286,7 +283,6 @@ class TableCell extends React.Component {
     const type = getType(value, column);
 
     const style = this.getStyle();
-    const Input = getCellInput(type);
     if (render) {
       const formatter = column.formatter || formatters[type] || IDENTITY;
       const format = x => formatter(x, column, row, tableProps);
@@ -319,7 +315,7 @@ class TableCell extends React.Component {
         <div className="Table__cell-container">
           {this.renderContent()}
           {editable && (
-            <Input
+            <TextField
               ref={this.inputRef}
               label="edit cell"
               hideLabel
