@@ -7,11 +7,12 @@ import { getKey } from './helpers';
 import './Tree.scss';
 
 const Tree = props => (
-  <ul className="Tree">
+  <ul id={props.id} className="Tree">
     {props.items.map((child, index) => (
       <TreeItem
-        key={getKey(child, props.keyField)}
         {...props}
+        id={props.id ? `${props.id}__item--${getKey(child, props.keyField)}-${index}` : undefined}
+        key={getKey(child, props.keyField)}
         noCache={props.noCache}
         item={child}
         index={index}
@@ -28,6 +29,7 @@ Tree.defaultProps = {
 };
 
 Tree.propTypes = {
+  id: PropTypes.string,
   items: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.object),
     // promise
