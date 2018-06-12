@@ -8,7 +8,12 @@ import ImageIcon from '../Icons/Image';
 
 import './MediaObject.scss';
 
-const getStyle = (width, height) => ({
+const getImageStyle = (maxWidth, maxHeight) => ({
+  ...(maxWidth ? { maxWidth } : {}),
+  ...(maxHeight ? { maxHeight } : {}),
+});
+
+const getImagePlaceholderStyle = (width, height) => ({
   ...(width ? { width } : {}),
   ...(height ? { height } : {}),
 });
@@ -45,13 +50,12 @@ const MediaObject = ({
           className="MediaObject__image"
           src={src}
           alt={alt}
-          style={Object.assign(
-            {},
-            imageWidth ? { maxWidth: imageWidth } : {},
-            imageHeight ? { maxHeight: imageHeight } : {}
-          )}
+          style={getImageStyle(imageWidth, imageHeight)}
         >
-          <div className="MediaObject__image-placeholder" style={getStyle(imageWidth, imageHeight)}>
+          <div
+            className="MediaObject__image-placeholder"
+            style={getImagePlaceholderStyle(imageWidth, imageHeight)}
+          >
             <ImageIcon className="MediaObject__image-placeholder-icon" />
           </div>
         </Image>
