@@ -6,11 +6,12 @@ import { bemClass } from '../helpers/bem';
 
 import './Tabs.scss';
 
-const Tabs = ({ items, children, className, currentUrl, panel }) => (
-  <ul className={bemClass('tabs', { panel }, className)} role="tablist">
-    {items.map(item => (
+const Tabs = ({ id, items, children, className, currentUrl, panel }) => (
+  <ul id={id} className={bemClass('tabs', { panel }, className)} role="tablist">
+    {items.map((item, index) => (
       <li key={item.url} className="tabs__tab">
         <Link
+          id={id ? `${id}__link--${index}` : undefined}
           className={bemClass('tabs__link', { active: item.url === currentUrl, panel })}
           href={item.url}
         >
@@ -28,6 +29,7 @@ Tabs.defaultProps = {
 };
 
 Tabs.propTypes = {
+  id: PropTypes.string,
   className: PropTypes.string,
   panel: PropTypes.bool,
   children: PropTypes.func,
