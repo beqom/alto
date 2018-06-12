@@ -1,9 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { ThemeProvider } from 'styled-components';
-
-import defaultTheme from '../theme';
-import { getColor } from '../helpers/theme';
 
 const resetCssCode = `
   * {
@@ -26,14 +22,14 @@ class AltoUIRoot extends React.PureComponent {
   }
 
   addStyles() {
-    const { theme, resetCSS } = this.props;
+    const { resetCSS } = this.props;
     const css = `
       ${resetCSS ? resetCssCode : ''}
 
       html {
-        font-size: ${theme.fontSize.root};
+        font-size: 16px;
         font-family: 'Source Sans Pro', sans-serif;
-        color: ${getColor('text')({ theme })};
+        color: #333c48;
         background: white;
         line-height: 1.2;
         overflow: hidden;
@@ -54,19 +50,17 @@ class AltoUIRoot extends React.PureComponent {
   }
 
   render() {
-    const { children, theme } = this.props;
-    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+    const { children } = this.props;
+    return <Fragment>{children}</Fragment>;
   }
 }
 
 AltoUIRoot.defaultProps = {
-  theme: defaultTheme,
   resetCSS: false,
 };
 
 AltoUIRoot.propTypes = {
   children: PropTypes.any.isRequired,
-  theme: PropTypes.object,
   resetCSS: PropTypes.bool,
 };
 

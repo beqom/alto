@@ -210,6 +210,7 @@ class TableCell extends React.Component {
   renderContent() {
     const { editing } = this.state;
     const {
+      id,
       renderers,
       tableProps,
       row,
@@ -238,6 +239,7 @@ class TableCell extends React.Component {
     const ContentComponent = editable ? 'button' : 'div';
     const content = (
       <ContentComponent
+        id={editable && id ? `${id}__button` : undefined}
         ref={this.setContentNode}
         className={bemClass('Table__cell-content', modifiers)}
         onClick={editable ? this.startEditing : undefined}
@@ -277,7 +279,7 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { column, row, tableProps, formatters, frozen, render, editable } = this.props;
+    const { id, column, row, tableProps, formatters, frozen, render, editable } = this.props;
     const key = column.key || column;
     const value = getValue(this.state.value, column, row, this.labels);
     const type = getType(value, column);
@@ -320,7 +322,7 @@ class TableCell extends React.Component {
               label="edit cell"
               hideLabel
               small={tableProps.compact}
-              id={`Table--${tableProps.rowId}__cell-input--${row[tableProps.rowId]}--${key}`}
+              id={id ? `${id}__input` : `Table__cell-input--${row[tableProps.rowId]}--${key}`}
               className={bemClass('Table__cell-input', modifiers)}
               style={{ width: (column.width || this.state.width) - 6 }}
               value={value || ''}
@@ -344,6 +346,7 @@ TableCell.defaultProps = {
 };
 
 TableCell.propTypes = {
+  id: PropTypes.string,
   column: PropTypes.shape({
     key: PropTypes.any.isRequired,
     title: PropTypes.any.isRequired,
