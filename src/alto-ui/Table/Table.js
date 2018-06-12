@@ -85,7 +85,7 @@ const renderTableCell = tableProps => {
   const parsers = { ...PARSERS, ...tableProps.parsers };
   const formatters = { ...FORMATTERS, ...tableProps.formatters };
 
-  const { isFirstColumnFrozen, editable, edited } = tableProps;
+  const { id, isFirstColumnFrozen, editable, edited } = tableProps;
 
   return (columns, row, rowIndex, render) =>
     columns.map((col, colIndex) => {
@@ -93,6 +93,7 @@ const renderTableCell = tableProps => {
       const editedFunc = render ? null : edited(col, row, colIndex, rowIndex);
       return (
         <TableCell
+          id={id ? `${id}__cell--${col.key || col}-${row[tableProps.rowId]}` : undefined}
           key={col.key || col}
           row={row}
           column={col}
@@ -113,6 +114,7 @@ const renderTableCell = tableProps => {
 
 const Table = props => {
   const {
+    id,
     className,
     rows,
     rowId,
@@ -130,8 +132,9 @@ const Table = props => {
   const renderCells = renderTableCell(props);
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
-      <table className="Table__table">
+      <table id={id} className="Table__table">
         <TableHeader
+          tableId={id}
           isFirstColumnFrozen={isFirstColumnFrozen}
           onSort={onSort}
           columnSorted={columnSorted}
@@ -181,7 +184,7 @@ Table.defaultProps = {
 };
 
 Table.propTypes = {
-  // id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   className: PropTypes.string,
   rowId: PropTypes.string,
   columns: PropTypes.arrayOf(
