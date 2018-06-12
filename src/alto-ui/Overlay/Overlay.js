@@ -94,7 +94,7 @@ class Overlay extends React.PureComponent {
   }
 
   handleKeyDown(e) {
-    if (e.key === 'Escape') {
+    if (e.key === 'Escape' || e.key === 'Esc') {
       this.props.onClose();
     }
   }
