@@ -22,14 +22,14 @@ const Alert = ({ className, filled, success, warning, error, show, onClose, chil
   return (
     <div
       className={bemClass(
-        'alert',
+        'Alert',
         { filled, success, warning, error, closable: !!onClose },
         className
       )}
     >
-      <Icon className="alert__icon" />
-      <div className="alert__message">{children}</div>
-      {onClose && <CloseIcon className="alert__close" onClick={onClose} />}
+      <Icon className="Alert__icon" />
+      <div className="Alert__message">{children}</div>
+      {onClose && <CloseIcon className="Alert__close" onClick={onClose} />}
     </div>
   );
 };
