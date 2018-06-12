@@ -202,7 +202,7 @@ class TableCell extends React.Component {
   }
 
   handleKeyDown(e) {
-    if (e.key === 'Escape' || e.key === 'Enter') {
+    if (e.key === 'Escape' || e.key === 'Esc' || e.key === 'Enter') {
       this.stopEditing();
     }
   }
