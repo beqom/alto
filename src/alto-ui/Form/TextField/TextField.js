@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import omit from 'lodash.omit';
 
 import { bemProps } from '../../helpers/bem';
+import { isIE11 } from '../../helpers/navigator';
 import FormElement from '../FormElement';
 
 import './TextField.scss';
 
 const handleChange = (event, type, onChange) => {
-  if (typeof onChange !== 'function' || !event.target.value) return;
+  if (typeof onChange !== 'function') return;
 
   if (type !== 'number') {
     onChange(event);
@@ -39,9 +40,11 @@ const TextField = React.forwardRef((props, ref) => (
       <input
         ref={ref}
         {...texfieldProps(
-          omit(props, ['className', 'hideLabel', 'label', 'style', 'onChange']),
+          omit(props, ['className', 'hideLabel', 'label', 'style', 'onChange', 'type']),
           'helpText'
         )}
+        // IE for ever <3
+        type={isIE11() && props.type === 'number' ? 'text' : props.type}
         onChange={event => handleChange(event, props.type, props.onChange)}
       />
     )}
