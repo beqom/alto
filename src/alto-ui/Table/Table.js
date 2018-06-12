@@ -54,6 +54,7 @@ const RENDERERS = {
 
 const renderGroupedRow = (tableProps, columns, row, renderCells) => {
   const {
+    id,
     rowId,
     groupedByColumnId,
     handleClickOnGroup,
@@ -66,6 +67,7 @@ const renderGroupedRow = (tableProps, columns, row, renderCells) => {
     <tr key={`${row[rowId]}-grouped`}>
       <td className="Table__cell Table__cell--grouped Table__cell--frozen">
         <button
+          id={id ? `${id}__${row[rowId]}-grouped` : undefined}
           className="Table__cell-content Table__cell-content--grouped"
           onClick={() => handleClickOnGroup(row[groupedByColumnId])}
         >
