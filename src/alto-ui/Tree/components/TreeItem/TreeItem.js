@@ -34,6 +34,7 @@ const renderTreeItem = (id, keyField, item, selected, renderItem, href, onClick,
       {...props}
       className={bemClass('TreeItem__button', {
         active: selected,
+        hoverable: !!(href || onClick),
       })}
     >
       {renderItem(item, selected)}

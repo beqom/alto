@@ -58,15 +58,17 @@
 
   transition: all $transition;
   font-size: $font-size-small;
-  cursor: pointer;
   line-height: 1.6;
   border-radius: 1em;
   padding: 0 $spacing-small;
   white-space: nowrap;
   color: inherit;
 
-  &:hover {
-    background-color: $coolgrey-20;
+  &--hoverable {
+    cursor: pointer;
+    &:hover {
+      background-color: $coolgrey-20;
+    }
   }
 
   &--active {
