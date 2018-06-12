@@ -21,7 +21,7 @@ const renderChildren = (open, children, props) => {
   );
 };
 
-const renderTreeItem = (item, selected, renderItem, href, onClick, handleClick) => {
+const renderTreeItem = (id, keyField, item, selected, renderItem, href, onClick, handleClick) => {
   const ButtonOrLink = typeof href === 'function' ? Link : 'button';
   const props = Object.assign(
     {},
@@ -30,6 +30,7 @@ const renderTreeItem = (item, selected, renderItem, href, onClick, handleClick) 
   );
   return (
     <ButtonOrLink
+      id={id ? `${id}__button` : undefined}
       {...props}
       className={bemClass('TreeItem__button', {
         active: selected,
@@ -41,6 +42,7 @@ const renderTreeItem = (item, selected, renderItem, href, onClick, handleClick) 
 };
 const TreeItem = props => {
   const {
+    id,
     item,
     hasChildren,
     keyField,
@@ -57,11 +59,12 @@ const TreeItem = props => {
   const Icon = renderIcon ? renderIcon(item, isSelected) : null;
 
   return (
-    <li className="TreeItem">
+    <li id={id} className="TreeItem">
       <div className={bemClass('TreeItem__title', { final: !hasChildren(item) })}>
         {!state.fetching &&
           !!hasChildren(item) && (
             <button
+              id={id ? `${id}__toggle-button` : undefined}
               className={bemClass('TreeItem__toggle-button', { open: state.open })}
               onClick={handleToggle}
             >
@@ -74,7 +77,7 @@ const TreeItem = props => {
             <Icon outline={!isSelected} />
           </div>
         )}
-        {renderTreeItem(item, isSelected, renderItem, href, onClick, handleClick)}
+        {renderTreeItem(id, keyField, item, isSelected, renderItem, href, onClick, handleClick)}
       </div>
       {renderChildren(state.open, state.children, props)}
     </li>
@@ -82,6 +85,7 @@ const TreeItem = props => {
 };
 
 TreeItem.propTypes = {
+  id: PropTypes.string,
   item: PropTypes.object,
   hasChildren: PropTypes.func,
   keyField: PropTypes.any,

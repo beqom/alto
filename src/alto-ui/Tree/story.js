@@ -23,6 +23,7 @@ storiesOf('Tree', module)
     <StateProvider state={{ selected: '5aabf8b8965960c3349c4c80' }}>
       {(state, setState) => (
         <Tree
+          id="Tree__list"
           onClick={item => setState({ selected: item.id })}
           items={items}
           selected={state.selected}
