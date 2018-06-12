@@ -1,6 +1,6 @@
 @import '../scss/inc';
 
-.avatar {
+.Avatar {
   min-width: 1em;
   min-height: 1em;
   width: 1em;
@@ -10,31 +10,31 @@
   font-size: 3.5rem;
 }
 
-.avatar--small {
+.Avatar--small {
   font-size: 2rem;
 }
 
-.avatar--large {
+.Avatar--large {
   font-size: 5rem;
 }
 
-.avatar--big {
+.Avatar--big {
   font-size: 8rem;
 }
 
-.avatar__image {
+.Avatar__image {
   width: 100%;
   height: 100%;
 }
 
-.avatar__placeholder {
+.Avatar__placeholder {
   background-color: $coolgrey-20;
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-.avatar__placeholder-icon-container {
+.Avatar__placeholder-icon-container {
   position: absolute;
   top: 0.1em;
   bottom: 0.1em;
@@ -46,7 +46,7 @@
   z-index: 1;
 }
 
-.avatar__placeholder-icon {
+.Avatar__placeholder-icon {
   position: absolute;
   bottom: -0.2em;
   left: 50%;
