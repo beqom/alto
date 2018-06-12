@@ -18,6 +18,7 @@ storiesOf('Tabs', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <Tabs
+      id="My-Tabs"
       panel={boolean('panel', false)}
       currentUrl={select('currentUrl', ['none'].concat(urls), '#one')}
       items={items}
