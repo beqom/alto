@@ -7,13 +7,17 @@ import ChevronLeft from '../Icons/ChevronLeft';
 import ChevronRight from '../Icons/ChevronRight';
 import './Breadcrumb.scss';
 
-const renderItems = (items, backToLabel) => {
+const renderItems = (breadcrumbId, items, backToLabel) => {
   if (items.length === 1) {
     const { title, url } = items[0];
     return (
       <li className="breadcrumb__item">
         <ChevronLeft className="breadcrumb__chevron breadcrumb__chevron--solo" />
-        <Link className="breadcrumb__link" href={url}>
+        <Link
+          id={breadcrumbId ? `${breadcrumbId}__item--0` : undefined}
+          className="breadcrumb__link"
+          href={url}
+        >
           {`${backToLabel} ${title}`}
         </Link>
       </li>
@@ -23,20 +27,24 @@ const renderItems = (items, backToLabel) => {
   return items.map(({ title, url }, i) => (
     <li className="breadcrumb__item" key={url}>
       {i !== 0 && <ChevronRight className="breadcrumb__chevron" />}
-      <a className="breadcrumb__link" href={url}>
+      <a
+        id={breadcrumbId ? `${breadcrumbId}__item--${i}` : undefined}
+        className="breadcrumb__link"
+        href={url}
+      >
         {title}
       </a>
     </li>
   ));
 };
 
-const Breadcrumb = ({ items, className, labels }) => {
+const Breadcrumb = ({ id, items, className, labels }) => {
   if (!items || !items.length) return null;
 
   const breadcrumbLabels = { backToLabel: 'Back to', ...labels };
   return (
-    <ul className={classnames('breadcrumb', className)}>
-      {renderItems(items, breadcrumbLabels.backToLabel)}
+    <ul id={id} className={classnames('breadcrumb', className)}>
+      {renderItems(id, items, breadcrumbLabels.backToLabel)}
     </ul>
   );
 };
@@ -46,6 +54,7 @@ Breadcrumb.displayName = 'Breadcrumb';
 Breadcrumb.defaultProps = {};
 
 Breadcrumb.propTypes = {
+  id: PropTypes.string,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,

@@ -19,6 +19,7 @@ storiesOf('Breadcrumb', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => (
     <Breadcrumb
+      id="MyBreadcrumb"
       items={items.slice(
         0,
         number('items', 3, { range: true, step: 1, min: 0, max: items.length })
