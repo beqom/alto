@@ -13,6 +13,7 @@ storiesOf('Pagination', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <Pagination
+      id="ComponentPagination"
       max={number('max', 20)}
       current={number('current', 10)}
       onClick={action('onClick')}
