@@ -14,8 +14,12 @@ import DatePickerHeader from './DatePickerHeader';
 
 import './DatePicker.scss';
 
-const renderDay = date => (
-  <button tabIndex="-1" className="DayPicker__a11y-day-button">
+const renderDay = datePickerId => date => (
+  <button
+    id={`${datePickerId}__day--${date.getTime()}`}
+    tabIndex="-1"
+    className="DayPicker__a11y-day-button"
+  >
     <span aria-hidden="true">{date.getDate()}</span>
     <VisuallyHidden>
       {DateTime.fromJSDate(date).toLocaleString(DateTime.DATE_HUGE)}, button
@@ -102,7 +106,7 @@ class DatePicker extends React.Component {
               }}
               localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
               selectedDays={date ? date.toJSDate() : null}
-              renderDay={renderDay}
+              renderDay={renderDay(id)}
             />
           </Card>
         </Overlay>
