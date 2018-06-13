@@ -9,6 +9,7 @@ import ChevronRightIcon from '../Icons/ChevronRight';
 import './Pagination.scss';
 
 const renderPageButton = (
+  paginationId,
   pages,
   onClick,
   current,
@@ -18,6 +19,7 @@ const renderPageButton = (
     if (current === page) {
       return (
         <div
+          id={paginationId ? `${paginationId}__button--${page}` : undefined}
           key={page}
           className={bemClass('Pagination__button', { current: true })}
           aria-label={`${currentPageLabel}, ${pageLabel} ${page}`}
@@ -30,6 +32,7 @@ const renderPageButton = (
 
     return (
       <button
+        id={paginationId ? `${paginationId}__button--${page}` : undefined}
         key={page}
         className="Pagination__button"
         onClick={() => onClick(page)}
@@ -40,7 +43,7 @@ const renderPageButton = (
     );
   });
 
-const Pagination = ({ className, max, current, onClick, labels }) => {
+const Pagination = ({ id, className, max, current, onClick, labels }) => {
   const maxValue = Math.max(0, max);
   const currentValue = Math.min(max, Math.max(1, current));
   if (maxValue === 0) return null;
@@ -63,14 +66,15 @@ const Pagination = ({ className, max, current, onClick, labels }) => {
     ...labels,
   };
   return (
-    <div className={bemClass('Pagination', {}, className)}>
-      {renderPageButton(firstPage, onClick, currentValue, paginationLabels)}
+    <div id={id} className={bemClass('Pagination', {}, className)}>
+      {renderPageButton(id, firstPage, onClick, currentValue, paginationLabels)}
       {!!beforePages.length && <span className="Pagination__ellipsis" />}
-      {renderPageButton(currentPages, onClick, currentValue, paginationLabels)}
+      {renderPageButton(id, currentPages, onClick, currentValue, paginationLabels)}
       {!!afterPages.length && <span className="Pagination__ellipsis" />}
-      {renderPageButton(lastPage, onClick, currentValue, paginationLabels)}
+      {renderPageButton(id, lastPage, onClick, currentValue, paginationLabels)}
 
       <button
+        id={id ? `${id}__button--prev` : undefined}
         className={bemClass('Pagination__button', { arrow: true })}
         onClick={() => onClick(currentValue - 1)}
         disabled={currentValue === 1}
@@ -78,6 +82,7 @@ const Pagination = ({ className, max, current, onClick, labels }) => {
         <ChevronLeftIcon />
       </button>
       <button
+        id={id ? `${id}__button--next` : undefined}
         className={bemClass('Pagination__button', { arrow: true })}
         onClick={() => onClick(currentValue + 1)}
         disabled={currentValue === maxValue}
@@ -95,6 +100,7 @@ Pagination.defaultProps = {
 };
 
 Pagination.propTypes = {
+  id: PropTypes.string,
   /** additonal class to add to the wrapper component */
   className: PropTypes.string,
   /** current page number (between 1 -> max) */
