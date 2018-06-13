@@ -76,16 +76,24 @@ storiesOf('List', module)
   .addDecorator(story => <div style={{ width: 600, maxWidth: '100%' }}>{story()}</div>)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
-    <List items={object('items', items)} selected={text('selected', 'five')} />
+    <List
+      id="MyList__overview"
+      items={object('items', items)}
+      selected={text('selected', 'five')}
+    />
   ))
   .addWithJSX('simple', () => (
-    <List items={array('items', ['Apple', 'Orange', 'Banana'])} selected={text('selected', '')} />
+    <List
+      id="MyList__simple"
+      items={array('items', ['Apple', 'Orange', 'Banana'])}
+      selected={text('selected', '')}
+    />
   ))
   .addWithJSX('with Avatars', () => {
     const selected = text('selected', '3');
     const users = object('items', people);
     return (
-      <List items={users} selected={selected}>
+      <List id="MyList__avatars" items={users} selected={selected}>
         {(item, active) => (
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <Avatar src={item.img} alt={`image of ${item.name}`} />
