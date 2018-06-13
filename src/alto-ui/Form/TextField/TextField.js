@@ -22,6 +22,9 @@ const handleChange = (event, type, onChange) => {
   }
 };
 
+// IE for ever <3
+const getInputType = type => (isIE11() && type === 'number' ? 'text' : type);
+
 const texfieldProps = bemProps('textfield', ['large', 'small', 'success', 'error', 'area']);
 
 const TextField = React.forwardRef((props, ref) => (
@@ -43,8 +46,7 @@ const TextField = React.forwardRef((props, ref) => (
           omit(props, ['className', 'hideLabel', 'label', 'style', 'onChange', 'type']),
           'helpText'
         )}
-        // IE for ever <3
-        type={isIE11() && props.type === 'number' ? 'text' : props.type}
+        type={getInputType(props.type)}
         onChange={event => handleChange(event, props.type, props.onChange)}
       />
     )}
