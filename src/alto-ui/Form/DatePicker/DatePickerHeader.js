@@ -54,10 +54,16 @@ const DatePickerHeader = ({ id, date, onChange, labels }) => {
         />
       </FormRow>
       <div className="DatePicker__nav">
-        <Button flat small onClick={() => onChange(previousMonth)}>
+        <Button
+          id={`${id}__button--previous-month`}
+          flat
+          small
+          onClick={() => onChange(previousMonth)}
+        >
           <ChevronLeftIcon />
         </Button>
         <Button
+          id={`${id}__button--today`}
           flat
           small
           className="DatePicker__today-button"
@@ -65,7 +71,7 @@ const DatePickerHeader = ({ id, date, onChange, labels }) => {
         >
           Today
         </Button>
-        <Button flat small onClick={() => onChange(nextMonth)}>
+        <Button id={`${id}__button--next-month`} flat small onClick={() => onChange(nextMonth)}>
           <ChevronRightIcon />
         </Button>
       </div>
