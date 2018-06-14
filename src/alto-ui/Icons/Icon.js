@@ -35,7 +35,7 @@ const Icon = props => {
     <Container
       {...omit(otherProps, 'outline')}
       className={bemClass(
-        'icon',
+        'Icon',
         { baseline, left, right, button: props.onClick },
         props.className
       )}
@@ -50,7 +50,7 @@ const Icon = props => {
         role="presentation"
       >
         {children({ fill: color })}
-        {badged && <circle className="icon__badge" cx="30" cy="6" r="5" />}
+        {badged && <circle className="Icon__badge" cx="30" cy="6" r="5" />}
       </svg>
       {!!a11yLabel && <VisuallyHidden>{a11yLabel}</VisuallyHidden>}
     </Container>
