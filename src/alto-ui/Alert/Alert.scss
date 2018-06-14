@@ -32,7 +32,7 @@ $alert-text-margin-top: $alert-height / 2 - $alert-text-line-height / 2;
 }
 
 .Alert--warning {
-  @include alert-color($purple-10, $purple, $purple);
+  @include alert-color($orange-10, $orange, $orange);
 }
 
 .Alert--filled {
