@@ -291,6 +291,7 @@ class TableCell extends React.Component {
 
       return (
         <td
+          title={this.getValue()}
           className={bemClass('Table__cell', {
             first: true,
             [type]: true,
@@ -313,7 +314,12 @@ class TableCell extends React.Component {
     const modifiers = this.getModifiers();
 
     return (
-      <td className={bemClass('Table__cell', modifiers)} ref={this.cellRef} style={style}>
+      <td
+        title={this.getValue()}
+        className={bemClass('Table__cell', modifiers)}
+        ref={this.cellRef}
+        style={style}
+      >
         <div className="Table__cell-container">
           {this.renderContent()}
           {editable && (
