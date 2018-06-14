@@ -1,6 +1,6 @@
 @import '../scss/inc';
 
-.icon {
+.Icon {
   display: inline-block;
   font-size: 1em;
   width: 1em;
@@ -8,25 +8,25 @@
   line-height: 1;
 }
 
-.icon--baseline,
-.icon--left,
-.icon--right {
+.Icon--baseline,
+.Icon--left,
+.Icon--right {
   font-size: 1em;
 }
 
-.icon--baseline {
+.Icon--baseline {
   transform: scale(1.5) translateY(0.125em);
 }
 
-.icon--left {
+.Icon--left {
   margin-right: 0.25em;
 }
 
-.icon--right {
+.Icon--right {
   margin-left: 0.25em;
 }
 
-.icon--button {
+.Icon--button {
   @extend %reset-button;
   width: auto;
   height: auto;
@@ -54,6 +54,6 @@
   // }
 }
 
-.icon__badge {
+.Icon__badge {
   fill: $red;
 }
