@@ -6,9 +6,7 @@ import JSXAddon from 'storybook-addon-jsx';
 //import { withInfo, setDefaults } from '@storybook/addon-info';
 import { checkA11y } from '@storybook/addon-a11y';
 
-//import fixAddonInfo from './fixAddonInfo';
-
-import AltoUIRoot from '../src/alto-ui/AltoUIRoot';
+import Root from './Root';
 
 setAddon(JSXAddon);
 
@@ -49,23 +47,7 @@ addDecorator(checkA11y);
 
 addDecorator(withKnobs);
 
-addDecorator(story => (
-  <AltoUIRoot resetCSS>
-    <div
-      style={{
-        backgroundColor: '#f8f9fb',
-        position: 'fixed',
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-        overflow: 'auto',
-      }}
-    >
-      {story()}
-    </div>
-  </AltoUIRoot>
-));
+addDecorator(story => <Root>{story()}</Root>);
 
 function loadStories() {
   require('../src/alto-ui/Alert/story');
