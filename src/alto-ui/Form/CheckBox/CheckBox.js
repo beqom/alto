@@ -4,14 +4,15 @@ import PropTypes from 'prop-types';
 import './CheckBox.scss';
 
 const CheckBox = props => {
-  const { checked, disabled } = props;
+  const { label, ...inputProps } = props;
   return (
     <div className="CheckBox">
-      <input {...props} className="CheckBox__input" type="checkbox" />
+      <input {...inputProps} className="CheckBox__input" type="checkbox" />
       <label
         htmlFor={props.id}
-        {...{ checked, disabled }}
-        title={props.label}
+        checked={props.checked}
+        disabled={props.disabled}
+        title={label}
         className="CheckBox__label"
       >
         <span className="CheckBox__label-wrapper">{props.label}</span>
