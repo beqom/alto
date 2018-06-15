@@ -4,6 +4,7 @@ import mathEvaluator from 'math-expression-evaluator';
 import debounce from 'lodash.debounce';
 
 import ExclamationCircleIcon from '../Icons/ExclamationCircle';
+import ExclamationTriangleIcon from '../Icons/ExclamationTriangle';
 import TextField from '../Form/TextField';
 import Tooltip from '../Tooltip';
 
@@ -248,10 +249,19 @@ class TableCell extends React.Component {
       </ContentComponent>
     );
 
-    const error = tableProps.showError(value, column, row);
+    const error =
+      typeof tableProps.showError === 'function' ? tableProps.showError(value, column, row) : false;
     if (!error) return content;
+    const warning =
+      typeof tableProps.isWarningError === 'function'
+        ? tableProps.isWarningError(value, column, row)
+        : false;
 
-    const icon = <ExclamationCircleIcon baseline className="Table__cell-error-icon" />;
+    const icon = warning ? (
+      <ExclamationTriangleIcon baseline className="Table__cell-warning-icon" />
+    ) : (
+      <ExclamationCircleIcon baseline className="Table__cell-error-icon" />
+    );
     const lastRow = rowIndex === tableProps.rows.length - 1;
     const firstCell = columnIndex === 0;
     const lastCell = columnIndex === tableProps.columns.length - 1;
@@ -260,7 +270,8 @@ class TableCell extends React.Component {
         <Tooltip
           content={this.replaceRowValues(error)}
           medium
-          error
+          error={!warning}
+          warning={warning}
           top={lastRow && !firstCell && !lastCell}
           left={lastCell}
           right={firstCell}

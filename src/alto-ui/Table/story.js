@@ -127,6 +127,12 @@ storiesOf('Table', module)
                 return '{name} is not powerful enougth. Agility ({agility}) is perhaps too low.';
               if (col.key === 'agility' && value && value <= 0.2)
                 return 'Agility ({agility}) is too low.';
+              if (col.key === 'intelligence' && value && value < 80)
+                return 'Intelligence ({intelligence}) is too low. Except for Superman, warning is enought';
+              return false;
+            }}
+            isWarningError={(value, col) => {
+              if (col.key === 'intelligence' && value && value < 80) return true;
               return false;
             }}
             renderSummaryCell={

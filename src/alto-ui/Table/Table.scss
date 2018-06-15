@@ -290,6 +290,11 @@
   margin: 0 $spacing-small;
 }
 
+.Table__cell-warning-icon {
+  color: $orange;
+  margin: 0 $spacing-small;
+}
+
 .Table__header-cell-title {
   width: calc(100% - calc(2rem - 12px));
   max-width: calc(100% - calc(2rem - 12px));
