@@ -1,6 +1,6 @@
 @import '../scss/inc';
 
-.breadcrumb {
+.Breadcrumb {
   display: flex;
   align-items: center;
   list-style: none;
@@ -8,20 +8,20 @@
   font-weight: $font-weight-semibold;
 }
 
-.breadcrumb__item {
+.Breadcrumb__item {
   display: flex;
   align-items: center;
 }
 
-.breadcrumb__link {
+.Breadcrumb__link {
   @extend %link;
   padding: 0;
 }
 
-.breadcrumb__chevron {
+.Breadcrumb__chevron {
   margin: 0 0.125rem;
 }
 
-.breadcrumb__chevron--solo {
+.Breadcrumb__chevron--solo {
   margin: 0;
 }
