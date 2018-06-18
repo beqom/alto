@@ -67,7 +67,7 @@ const TreeItem = props => {
             hoverable: !!(href || onClick),
           })}
         >
-          {renderItem(item, selected)}
+          {renderItem(item, isSelected)}
         </ButtonOrLink>
       </div>
       {renderChildren(state.open, state.children, props)}
