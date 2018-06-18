@@ -24,11 +24,13 @@ class TreeItemContainer extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.open !== this.props.open) {
-      const open =
-        typeof nextProps.open === 'function' ? nextProps.open(nextProps.item) : nextProps.open;
-      this.setState({ open });
-      this.checkChildren(open);
+    const { open, item } = this.props;
+    const prevOpen = typeof open === 'function' ? open(item) : open;
+    const nextOpen = typeof nextProps.open === 'function' ? nextProps.open(item) : nextProps.open;
+
+    if (nextOpen !== prevOpen) {
+      this.setState({ open: nextOpen });
+      this.checkChildren(nextOpen);
     }
   }
 
