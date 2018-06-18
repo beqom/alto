@@ -51,9 +51,11 @@ $alert-text-margin-top: $alert-height / 2 - $alert-text-line-height / 2;
   }
 }
 
-.Alert__icon,
+.Alert__icon {
+  transform: translateY($spacing-small);
+}
 .Alert__close {
-  transform: translateY(calc(#{$alert-height / 2} - 50%));
+  transform: translateY($spacing-x-small);
 }
 
 .Alert__icon {
@@ -63,6 +65,7 @@ $alert-text-margin-top: $alert-height / 2 - $alert-text-line-height / 2;
 
 .Alert__message {
   flex: 1;
+  flex-basis: auto;
   padding: $alert-text-margin-top $spacing-x-small;
 }
 
