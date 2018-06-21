@@ -64,7 +64,7 @@ const TreeItem = props => {
           {...(typeof onClick === 'function' ? { onClick: handleClick } : {})}
           className={bemClass('TreeItem__button', {
             active: isSelected,
-            hoverable: !!(href || onClick),
+            hoverable: item.hoverable || true,
           })}
         >
           {renderItem(item, isSelected)}
