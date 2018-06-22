@@ -235,9 +235,10 @@ $nav-btn-hover-text-dark: $white;
 
 .sidenav__section-item-title {
   font-size: $font-size-medium;
-  flex: 1;
   font-weight: 400;
-  text-align: left;
+  width: 9rem;
+
+  @extend %text-ellipsis;
 }
 
 .sidenav__section-item-chevron {

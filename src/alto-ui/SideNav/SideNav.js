@@ -48,7 +48,9 @@ class SideNav extends React.PureComponent {
             {collapsed ? (
               <VisuallyHidden> {item.title} </VisuallyHidden>
             ) : (
-              <div className="sidenav__section-item-title">{item.title}</div>
+              <div className="sidenav__section-item-title" title={item.title}>
+                {item.title}
+              </div>
             )}
           </div>
         </Link>
