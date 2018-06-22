@@ -17,7 +17,7 @@ import StateProvider from '../StateProvider';
 const items = [
   {
     id: 1,
-    title: 'Numbers',
+    title: 'Numbers and digits display',
     icon: LightbulbIcon,
     url: '#one',
   },
