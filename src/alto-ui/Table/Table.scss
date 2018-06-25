@@ -91,6 +91,11 @@
       box-shadow: unset;
     }
   }
+
+  // Added to fix issue on ie11
+  &--avatar {
+    min-width: 12rem;
+  }
 }
 
 .Table__cell--editable {
