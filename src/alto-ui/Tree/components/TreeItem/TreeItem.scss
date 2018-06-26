@@ -63,12 +63,10 @@
   padding: 0 $spacing-small;
   white-space: nowrap;
   color: inherit;
+  cursor: pointer;
 
-  &--hoverable {
-    cursor: pointer;
-    &:hover {
-      background-color: $coolgrey-20;
-    }
+  &:hover {
+    background-color: $coolgrey-20;
   }
 
   &--active {

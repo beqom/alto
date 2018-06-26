@@ -20,6 +20,7 @@ const renderChildren = (open, children, props) => {
     </div>
   );
 };
+
 const TreeItem = props => {
   const {
     id,
@@ -34,6 +35,7 @@ const TreeItem = props => {
     renderItem,
     href,
     onClick,
+    isClickable,
   } = props;
   const isSelected = selected === item || selected === getKey(item, keyField);
   const Icon = renderIcon ? renderIcon(item, isSelected) : null;
@@ -58,17 +60,20 @@ const TreeItem = props => {
             <Icon outline={!isSelected} />
           </div>
         )}
-        <ButtonOrLink
-          id={id ? `${id}__button` : undefined}
-          {...(typeof href === 'function' ? { href: href(item, selected) } : {})}
-          {...(typeof onClick === 'function' ? { onClick: handleClick } : {})}
-          className={bemClass('TreeItem__button', {
-            active: isSelected,
-            hoverable: !!(href || onClick),
-          })}
-        >
-          {renderItem(item, isSelected)}
-        </ButtonOrLink>
+        {isClickable ? (
+          <ButtonOrLink
+            id={id ? `${id}__button` : undefined}
+            {...(typeof href === 'function' ? { href: href(item, selected) } : {})}
+            {...(typeof onClick === 'function' ? { onClick: handleClick } : {})}
+            className={bemClass('TreeItem__button', {
+              active: isSelected,
+            })}
+          >
+            {renderItem(item, isSelected)}
+          </ButtonOrLink>
+        ) : (
+          <div>{renderItem(item, isSelected)}</div>
+        )}
       </div>
       {renderChildren(state.open, state.children, props)}
     </li>
@@ -92,6 +97,7 @@ TreeItem.propTypes = {
   renderItem: PropTypes.func,
   href: PropTypes.any,
   onClick: PropTypes.func,
+  isClickable: PropTypes.bool,
 };
 
 export default TreeItem;

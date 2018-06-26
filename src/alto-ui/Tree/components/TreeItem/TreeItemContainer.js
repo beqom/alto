@@ -67,18 +67,21 @@ class TreeItemContainer extends React.Component {
   }
 
   render() {
+    const { clickable, item } = this.props;
     return (
       <TreeItem
         {...this.props}
         state={this.state}
         handleToggle={this.toggle}
         handleClick={this.handleClick}
+        isClickable={clickable(item)}
       />
     );
   }
 }
 
 TreeItemContainer.defaultProps = {
+  clickable: () => true,
   hasChildren: item => !!item.children && !!item.children.length,
   getChildren: item => item.children,
   renderItem: item => item.title || item.name,
@@ -110,6 +113,7 @@ TreeItemContainer.propTypes = {
     PropTypes.object,
   ]),
   onToggle: PropTypes.func,
+  clickable: PropTypes.func,
 };
 
 export default TreeItemContainer;
