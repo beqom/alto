@@ -35,6 +35,7 @@ const FileInput = ({
     />
     <Button
       tag="label"
+      className="FileInput__label"
       htmlFor={id}
       {...{
         disabled,

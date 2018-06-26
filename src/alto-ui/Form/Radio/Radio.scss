@@ -47,6 +47,7 @@
 
     input:focus + & {
       box-shadow: 0 0 0 3px $blue-20;
+      @include focused(true);
     }
   }
 
