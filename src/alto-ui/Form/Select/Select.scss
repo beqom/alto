@@ -1,6 +1,7 @@
 @import '../../scss/inc';
 
 .Select {
+  @extend %focusable;
   font-size: $font-size-medium;
   outline: 0;
   background: $white;

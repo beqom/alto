@@ -1,6 +1,7 @@
 @import '../../scss/inc';
 
 .textfield {
+  @extend %focusable;
   font: inherit;
   background: transparent;
   outline: 0;

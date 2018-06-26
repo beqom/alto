@@ -32,6 +32,7 @@
 
   .Switch__input:focus + .Switch__label & {
     box-shadow: 0 0 0 3px $blue-20;
+    @include focused(true);
   }
 
   .Switch__input:disabled + .Switch__label & {

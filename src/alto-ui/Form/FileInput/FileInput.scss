@@ -3,3 +3,7 @@
 .FileInput__input {
   @extend %visually-hidden;
 }
+
+.FileInput__input:focus + .FileInput__label {
+  @include focused;
+}

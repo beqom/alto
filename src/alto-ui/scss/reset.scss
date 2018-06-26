@@ -6,15 +6,6 @@
   box-sizing: border-box;
 }
 
-html {
-  font-size: $font-size-root;
-  font-family: $font-family;
-  color: $color-text-default;
-  background: white;
-  line-height: 1.2;
-  overflow: hidden;
-}
-
 button {
   font: inherit;
   background: transparent;
