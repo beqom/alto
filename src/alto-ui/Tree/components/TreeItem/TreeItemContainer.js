@@ -67,14 +67,14 @@ class TreeItemContainer extends React.Component {
   }
 
   render() {
-    const { clickable, item } = this.props;
+    const { clickable, item, onClick, href } = this.props;
     return (
       <TreeItem
         {...this.props}
         state={this.state}
         handleToggle={this.toggle}
         handleClick={this.handleClick}
-        isClickable={clickable(item)}
+        isClickable={clickable(item) && (onClick || href)}
       />
     );
   }
