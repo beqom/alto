@@ -266,6 +266,7 @@ $size-touch: 3rem !default;
 // ===================================
 // Z-index
 
+$z-index-focusable-focused: 20000 !default;
 $z-index-toast: 11000 !default;
 $z-index-alert: 11000 !default;
 $z-index-modal: 10000 !default;
@@ -344,3 +345,9 @@ $mq-xx-large: 1980px !default;
 
 $header-height: 3.5rem;
 $footer-height: 3rem;
+
+// ===================================
+// FOCUS
+
+$focusable-box-shadow: inset 0 0 0 2px $blue, inset 0 0 0 4px $white !important;
+$focusable-out-box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue !important;
