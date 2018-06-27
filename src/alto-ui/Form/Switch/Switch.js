@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import './Switch.scss';
 
 const Switch = props => {
-  const { checked, disabled, id, label, onChange } = props;
+  const { className, checked, disabled, id, label, onChange } = props;
   return (
-    <div className="Switch">
+    <div className={classnames('Switch', className)}>
       <input
         onChange={onChange}
         className="Switch__input"
@@ -29,6 +30,7 @@ Switch.defaultProps = {
 };
 
 Switch.propTypes = {
+  className: PropTypes.string,
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
   checked: PropTypes.bool,
