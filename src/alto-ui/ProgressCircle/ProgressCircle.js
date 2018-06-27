@@ -10,7 +10,7 @@ const getSizes = (small, large) => {
   return { size: 16 * 5, thickness: 4 };
 };
 
-const ProgressCircle = ({ small, large, value, min, max, className, children }) => {
+const ProgressCircle = ({ id, small, large, value, min, max, className, children }) => {
   const { size, thickness } = getSizes(small, large);
   const radius = size / 2 - thickness / 2;
   const len = 2 * Math.PI * radius;
@@ -18,6 +18,7 @@ const ProgressCircle = ({ small, large, value, min, max, className, children }) 
 
   return (
     <div
+      id={id}
       className={bemClass('ProgressCircle', { small, large }, className)}
       style={{
         width: size,
@@ -70,6 +71,7 @@ ProgressCircle.defaultProps = {
 };
 
 ProgressCircle.propTypes = {
+  id: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.any,
   small: PropTypes.bool,

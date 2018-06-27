@@ -11,6 +11,7 @@ storiesOf('ProgressBar', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <ProgressBar
+      id="MyProgressBar"
       small={boolean('small', false)}
       large={boolean('large', false)}
       looping={boolean('looping', false)}
