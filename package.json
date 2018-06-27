@@ -90,7 +90,8 @@
     "lodash.range": "^3.2.0",
     "luxon": "^1.0.0",
     "math-expression-evaluator": "^1.2.17",
-    "react-day-picker": "^7.1.4"
+    "react-day-picker": "^7.1.4",
+    "react-transition-group": "^2.3.1"
   },
   "peerDependencies": {
     "prop-types": "^15.6.0",
