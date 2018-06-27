@@ -16,11 +16,12 @@ const getIcon = (success, warning, danger) => {
   return InfoCircleIcon;
 };
 
-const Alert = ({ className, filled, success, warning, error, show, onClose, children }) => {
+const Alert = ({ id, className, filled, success, warning, error, show, onClose, children }) => {
   if (show === false) return null;
   const Icon = getIcon(success, warning, error);
   return (
     <div
+      id={id}
       className={bemClass(
         'Alert',
         { filled, success, warning, error, closable: !!onClose },
@@ -39,6 +40,7 @@ Alert.displayName = 'Alert';
 Alert.defaultProps = {};
 
 Alert.propTypes = {
+  id: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.any,
   filled: PropTypes.bool,

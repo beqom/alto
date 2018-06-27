@@ -25,7 +25,18 @@ class ProgressBar extends React.Component {
   }
 
   render() {
-    const { className, small, large, value, max, min, tooltip, looping, tooltipProps } = this.props;
+    const {
+      id,
+      className,
+      small,
+      large,
+      value,
+      max,
+      min,
+      tooltip,
+      looping,
+      tooltipProps,
+    } = this.props;
     const ratio = (Math.max(Math.min(max, value || min), min) - min) / (max - min);
     const hasValue = value !== null && value !== undefined;
     const width = looping && !hasValue ? '100%' : `${ratio * 100}%`;
@@ -44,6 +55,7 @@ class ProgressBar extends React.Component {
     const tooltipTop = !(tooltipProps && tooltipProps.top === false);
     return (
       <div
+        id={id}
         className={bemClass('ProgressBar', {}, className)}
         onMouseEnter={this.handleMouseEnter}
         onMouseLeave={this.handleMouseLeave}
@@ -69,6 +81,7 @@ ProgressBar.defaultProps = {
 };
 
 ProgressBar.propTypes = {
+  id: PropTypes.string,
   className: PropTypes.string,
   small: PropTypes.bool,
   large: PropTypes.bool,

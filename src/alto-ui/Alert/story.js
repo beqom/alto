@@ -11,6 +11,7 @@ storiesOf('Alert', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <Alert
+      id="MyAlert"
       filled={boolean('filled', false)}
       success={boolean('success', false)}
       warning={boolean('warning', false)}

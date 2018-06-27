@@ -10,6 +10,7 @@ storiesOf('ProgressCircle', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => (
     <ProgressCircle
+      id="MyProgressCircle"
       small={boolean('small', false)}
       large={boolean('large', false)}
       max={number('max', undefined)}
