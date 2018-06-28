@@ -44,6 +44,7 @@ import Home from './Home';
 import Image from './Image';
 import ImportFile from './ImportFile';
 import InfoCircle from './InfoCircle';
+import InfoStandard from './InfoStandard';
 import Lightbulb from './Lightbulb';
 import List from './List';
 import Menu from './Menu';
@@ -119,6 +120,7 @@ export default {
   Image,
   ImportFile,
   InfoCircle,
+  InfoStandard,
   Lightbulb,
   List,
   Menu,
