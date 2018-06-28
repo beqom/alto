@@ -97,7 +97,7 @@ TreeItem.propTypes = {
   renderItem: PropTypes.func,
   href: PropTypes.any,
   onClick: PropTypes.func,
-  isClickable: PropTypes.bool,
+  isClickable: PropTypes.func,
 };
 
 export default TreeItem;
