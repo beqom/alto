@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
 
@@ -106,10 +107,10 @@ class Overlay extends React.PureComponent {
   }
 
   render() {
-    const { open, children, blocking, inert } = this.props;
+    const { open, children, blocking, inert, className } = this.props;
     return (
       <Fragment>
-        {open && blocking && <div className="Overlay__overlay" />}
+        {open && blocking && <div className={classnames('Overlay__overlay', className)} />}
         <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
           {blocking ? (
             <FocusTrap
@@ -137,6 +138,7 @@ Overlay.defaultProps = {
 
 Overlay.propTypes = {
   children: PropTypes.any,
+  className: PropTypes.string,
   onClose: PropTypes.func,
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
