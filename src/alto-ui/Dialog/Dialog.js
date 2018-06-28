@@ -27,6 +27,7 @@ const Dialog = props => {
 
   return (
     <Overlay
+      className="Dialog__overlay"
       onClose={onClose}
       openFocusTargetId={openFocusTargetId}
       closeFocusTargetId={closeFocusTargetId}

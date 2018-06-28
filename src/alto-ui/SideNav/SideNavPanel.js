@@ -15,12 +15,14 @@ const SideNavPanel = ({
   closeFocusTargetId,
   className,
   panelClassName,
+  inert,
 }) => (
   <Overlay
     open={open}
     openFocusTargetId={`${closeFocusTargetId}__open`}
     onClose={onClose}
     closeFocusTargetId={closeFocusTargetId}
+    inert={inert}
   >
     <TransitionGroup>
       {open && (
@@ -29,12 +31,13 @@ const SideNavPanel = ({
             <div className={classnames('sidenav__panel-container', panelClassName)}>
               <header className="sidenav__panel-header">
                 <div className="sidenav__panel-title">{title}</div>
-                <CloseButton
-                  id={`${closeFocusTargetId}__open`}
-                  onClick={onClose}
-                  tabIndex={open ? 0 : -1}
-                  a11yLabel="Close Panel"
-                />
+                {!inert && (
+                  <CloseButton
+                    id={`${closeFocusTargetId}__open`}
+                    onClick={onClose}
+                    a11yLabel="Close Panel"
+                  />
+                )}
               </header>
               <div className={classnames('sidenav__panel-body', className)}>{children}</div>
             </div>
@@ -57,6 +60,7 @@ SideNavPanel.propTypes = {
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   closeFocusTargetId: PropTypes.string.isRequired,
+  inert: PropTypes.bool,
 };
 
 export default SideNavPanel;
