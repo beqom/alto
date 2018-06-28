@@ -22,7 +22,7 @@ const SideNavPanel = ({
     openFocusTargetId={`${closeFocusTargetId}__open`}
     onClose={onClose}
     closeFocusTargetId={closeFocusTargetId}
-    inert={inert}
+    inert={!!inert}
   >
     <TransitionGroup>
       {open && (
