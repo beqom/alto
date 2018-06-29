@@ -1,1 +1,1 @@
-export { defautl } from './CopyToClipboard';
+export { default } from './CopyToClipboard';
