@@ -19,6 +19,7 @@ import Cog from './Cog';
 import Config from './Config';
 import Collapse from './Collapse';
 import Copy from './Copy';
+import CopyToClipboard from './CopyToClipboard';
 import Delete from './Delete';
 import Download from './Download';
 import Edit from './Edit';
@@ -94,6 +95,7 @@ export default {
   Cog,
   Collapse,
   Copy,
+  CopyToClipboard,
   Config,
   Delete,
   Download,
