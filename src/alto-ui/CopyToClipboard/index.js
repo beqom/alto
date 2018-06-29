@@ -1,0 +1,1 @@
+export { defautl } from './CopyToClipboard';
