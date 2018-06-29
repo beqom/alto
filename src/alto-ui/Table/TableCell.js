@@ -265,11 +265,13 @@ class TableCell extends React.Component {
     const lastRow = rowIndex === tableProps.rows.length - 1;
     const firstCell = columnIndex === 0;
     const lastCell = columnIndex === tableProps.columns.length - 1;
+    const tooltipContent = this.replaceRowValues(error);
+    const isMedium = tooltipContent.length > 35;
     const errorElement =
       typeof error === 'string' ? (
         <Tooltip
-          content={this.replaceRowValues(error)}
-          medium
+          content={tooltipContent}
+          medium={isMedium}
           error={!warning}
           warning={warning}
           top={lastRow && !firstCell && !lastCell}
