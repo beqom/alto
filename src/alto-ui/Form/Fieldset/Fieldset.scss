@@ -1,0 +1,10 @@
+@import '../../scss/inc';
+
+.Fieldset {
+  border: none;
+}
+
+.Fieldset__legend {
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-small;
+}
