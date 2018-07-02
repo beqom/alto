@@ -6,17 +6,17 @@ import Button from '../Button';
 import CopyToClipboardIcon from '../Icons/CopyToClipboard';
 import CheckIcon from '../Icons/Check';
 
-const copyToClipboard = str => {
+const copyToClipboard = (str, node = document.body) => {
   const el = document.createElement('textarea');
   el.value = str;
   el.setAttribute('readonly', '');
   el.style.position = 'absolute';
   el.style.left = '-9999px';
-  document.body.appendChild(el);
+  node.appendChild(el);
 
   el.select();
   document.execCommand('copy');
-  document.body.removeChild(el);
+  node.removeChild(el);
 };
 
 class CopyToClipboard extends React.Component {
@@ -25,6 +25,7 @@ class CopyToClipboard extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.state = { succes: false };
+    this.buttonRef = React.createRef();
   }
 
   componentWillUnmount() {
@@ -35,7 +36,9 @@ class CopyToClipboard extends React.Component {
 
   handleClick() {
     if (typeof this.props.children === 'string') {
-      copyToClipboard(this.props.children);
+      copyToClipboard(this.props.children, this.buttonRef.current);
+      this.buttonRef.current.focus();
+
       this.setState(() => ({ succes: true }));
 
       this.timeout = setTimeout(() => this.setState({ succes: false }), this.props.timer);
@@ -44,7 +47,11 @@ class CopyToClipboard extends React.Component {
 
   render() {
     return (
-      <Button {...omit(this.props, ['succesLabel', 'label'])} onClick={this.handleClick}>
+      <Button
+        buttonRef={this.buttonRef}
+        {...omit(this.props, ['succesLabel', 'label'])}
+        onClick={this.handleClick}
+      >
         {this.state.succes ? <CheckIcon left /> : <CopyToClipboardIcon left />}
         {this.state.succes && this.props.succesLabel ? this.props.succesLabel : this.props.label}
       </Button>
