@@ -30,10 +30,10 @@ class Link extends React.Component {
   }
 
   render() {
-    const { href, ref } = this.props;
+    const { href, linkRef, ...props } = this.props;
 
     return (
-      <a {...this.props} onClick={this.handleClick} href={href} ref={ref}>
+      <a {...props} onClick={this.handleClick} href={href} ref={linkRef}>
         {this.props.children}
       </a>
     );
@@ -43,7 +43,7 @@ class Link extends React.Component {
 Link.propTypes = {
   onClick: PropTypes.func,
   href: PropTypes.string.isRequired,
-  ref: PropTypes.object,
+  linkRef: PropTypes.object,
   children: PropTypes.any,
   target: PropTypes.string,
 };

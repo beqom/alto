@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash.omit';
 
 import Link from '../Link';
 import { bemProps } from '../helpers/bem';
@@ -20,21 +19,20 @@ const buttonProps = bemProps('button', [
   'disabled',
 ]);
 
-const Button = props => {
-  const safeProps = buttonProps(omit(props, 'buttonRef'));
+const Button = ({ buttonRef, ...props }) => {
   if (props.tag) {
-    return <props.tag {...safeProps} disabled={props.disabled} ref={props.buttonRef} />;
+    return <props.tag {...buttonProps(props)} disabled={props.disabled} ref={buttonRef} />;
   }
 
   if (props.href) {
     return (
-      <Link {...safeProps} ref={props.buttonRef} href={props.href} disabled={props.disabled}>
+      <Link {...buttonProps(props)} linkRef={buttonRef} href={props.href} disabled={props.disabled}>
         {props.children}
       </Link>
     );
   }
 
-  return <button {...safeProps} disabled={props.disabled} ref={props.buttonRef} />;
+  return <button {...buttonProps(props)} disabled={props.disabled} ref={buttonRef} />;
 };
 
 Button.displayName = 'Button';
