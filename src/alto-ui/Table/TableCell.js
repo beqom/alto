@@ -13,9 +13,6 @@ import { bemClass } from '../helpers/bem';
 import './Table.scss';
 
 const IDENTITY = x => x;
-const DEFAULT_LABELS = {
-  errorFormula: 'There is an error in formula',
-};
 
 const evaluateFormula = (formula, row, errorLabel) => {
   const expression = Object.entries(row).reduce(
@@ -89,10 +86,6 @@ class TableCell extends React.Component {
       : propagateChange;
     this.inputRef = React.createRef();
     this.cellRef = React.createRef();
-    this.labels = {
-      ...DEFAULT_LABELS,
-      ...props.labels,
-    };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {

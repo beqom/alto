@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ChevronUpIcon from '../Icons/ChevronUp';
 import ChevronDownIcon from '../Icons/ChevronDown';
 import FilterIcon from '../Icons/Filter';
+import VisuallyHidden from '../VisuallyHidden';
 import { bemClass } from '../helpers/bem';
 
 const TableHeader = ({
@@ -13,6 +14,7 @@ const TableHeader = ({
   onSort,
   columnSorted,
   sortDirection,
+  labels,
 }) => (
   <thead>
     <tr>
@@ -41,6 +43,7 @@ const TableHeader = ({
                 style={style}
                 title={col.title}
               >
+                <VisuallyHidden>{labels.a11ySortLabel}</VisuallyHidden>
                 {filtered ? <FilterIcon className="Table__filter-icon" /> : null}
                 <span className="Table__header-cell-title">{col.title}</span>
                 <div className="Table__header-cell-sortable-icons">
@@ -108,6 +111,7 @@ TableHeader.propTypes = {
     })
   ),
   sortDirection: PropTypes.number,
+  labels: PropTypes.object,
 };
 
 export default TableHeader;

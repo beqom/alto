@@ -12,6 +12,11 @@ import TableHeader from './TableHeader';
 
 import './Table.scss';
 
+const DEFAULT_LABELS = {
+  errorFormula: 'There is an error in formula',
+  a11ySortLabel: 'Click to sort this column by Ascending or Descending',
+};
+
 const PARSERS = {};
 
 const FORMATTERS = {
@@ -129,9 +134,15 @@ const Table = props => {
     columnSorted,
     sortDirection,
     onSort,
+    labels,
   } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
   const renderCells = renderTableCell(props);
+  const tableLabels = {
+    ...DEFAULT_LABELS,
+    ...labels,
+  };
+
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
       <table id={id} className="Table__table">
@@ -142,6 +153,7 @@ const Table = props => {
           columnSorted={columnSorted}
           sortDirection={sortDirection}
           columns={columns}
+          labels={tableLabels}
         />
         <tbody>
           {renderSummaryCell && <tr>{renderCells(columns, {}, null, renderSummaryCell)}</tr>}
@@ -218,6 +230,7 @@ Table.propTypes = {
   ),
   sortDirection: PropTypes.number,
   onSort: PropTypes.func,
+  labels: PropTypes.object,
 };
 
 export default Table;
