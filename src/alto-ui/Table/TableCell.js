@@ -110,8 +110,8 @@ class TableCell extends React.Component {
   }
 
   getValue() {
-    const { row, column } = this.props;
-    return getValue(this.state.value, column, row, this.labels);
+    const { row, column, labels } = this.props;
+    return getValue(this.state.value, column, row, labels);
   }
 
   getStyle() {
@@ -145,8 +145,8 @@ class TableCell extends React.Component {
   }
 
   format(value, column, row) {
-    const { formatters, parsers, tableProps } = this.props;
-    const format = getFormattedValue(formatters, parsers, tableProps, this.labels);
+    const { formatters, parsers, tableProps, labels } = this.props;
+    const format = getFormattedValue(formatters, parsers, tableProps, labels);
     return format(value, column, row);
   }
 
@@ -290,9 +290,19 @@ class TableCell extends React.Component {
   }
 
   render() {
-    const { id, column, row, tableProps, formatters, frozen, render, editable } = this.props;
+    const {
+      id,
+      column,
+      row,
+      tableProps,
+      formatters,
+      frozen,
+      render,
+      editable,
+      labels,
+    } = this.props;
     const key = column.key || column;
-    const value = getValue(this.state.value, column, row, this.labels);
+    const value = getValue(this.state.value, column, row, labels);
     const type = getType(value, column);
 
     const style = this.getStyle();

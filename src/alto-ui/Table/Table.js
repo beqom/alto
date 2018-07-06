@@ -87,7 +87,7 @@ const renderGroupedRow = (tableProps, columns, row, renderCells) => {
   );
 };
 
-const renderTableCell = tableProps => {
+const renderTableCell = (tableProps, labels) => {
   const renderers = { ...RENDERERS, ...tableProps.renderers };
   const parsers = { ...PARSERS, ...tableProps.parsers };
   const formatters = { ...FORMATTERS, ...tableProps.formatters };
@@ -114,6 +114,7 @@ const renderTableCell = tableProps => {
           edited={editedFunc}
           rowIndex={rowIndex || 0}
           columnIndex={colIndex}
+          labels={labels}
         />
       );
     });
@@ -137,11 +138,11 @@ const Table = props => {
     labels,
   } = props;
   const columns = props.columns || Object.keys(rows[0]).map(key => ({ key, title: key }));
-  const renderCells = renderTableCell(props);
   const tableLabels = {
     ...DEFAULT_LABELS,
     ...labels,
   };
+  const renderCells = renderTableCell(props, labels);
 
   return (
     <div className={bemClass('Table', { comfortable, compact }, className)}>
