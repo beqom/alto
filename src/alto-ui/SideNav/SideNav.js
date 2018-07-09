@@ -9,6 +9,10 @@ import { bemClass } from '../helpers/bem';
 
 import './SideNav.scss';
 
+const DEFAULT_LABELS = {
+  a11yLogo: 'Company logo',
+};
+
 class SideNav extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -75,16 +79,21 @@ class SideNav extends React.PureComponent {
       collapsed,
       onToggle,
     } = this.props;
+    const labels = {
+      ...DEFAULT_LABELS,
+      ...this.props.labels,
+    };
     return (
       <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
         <header className="sidenav__header">
-          <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl}>
+          <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl} title={labels.a11yLogo}>
             {collapsed ? logoSmall : logo}
           </a>
           <a
             id={`${id}__logo--narrow`}
             className="sidenav__logo sidenav__logo--narrow"
             href={logoUrl}
+            title={labels.a11yLogo}
           >
             {logo}
           </a>
@@ -165,6 +174,7 @@ SideNav.propTypes = {
   ).isRequired,
   collapsed: PropTypes.bool,
   onToggle: PropTypes.func,
+  labels: PropTypes.object,
 };
 
 export default SideNav;
