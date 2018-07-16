@@ -1,0 +1,12 @@
+@import '../../../scss/inc';
+
+.DatagridHeaderCell {
+  width: 8rem;
+  height: 2rem;
+  line-height: 2;
+  overflow: hidden;
+  flex-shrink: 0;
+  padding: 0.2rem;
+  border: 1px solid grey;
+  border-bottom: 3px solid grey;
+}
