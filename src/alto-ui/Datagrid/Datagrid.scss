@@ -1,0 +1,46 @@
+@import '../scss/inc';
+
+.Datagrid {
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  &--loaded {
+    opacity: 1;
+  }
+}
+
+.Datagrid__head,
+.Datagrid__body {
+  display: flex;
+}
+
+.Datagrid__body {
+  flex: 1;
+}
+
+.Datagrid__head {
+  .ps__rail-x {
+    display: none;
+  }
+}
+
+.Datagrid__header-row--static,
+.Datagrid__rows--static {
+  flex: 1;
+}
+.Datagrid__header-row,
+.Datagrid__rows {
+  overflow: hidden;
+}
+
+.Datagrid__rows--frozen {
+  .ps__rail-y {
+    display: none;
+  }
+}
+
+.Datagrid__rows--static {
+  overflow: auto;
+}
