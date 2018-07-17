@@ -5,15 +5,24 @@ import DatagridHeaderCell from '../DatagridHeaderCell';
 
 import './DatagridHeaderRow.scss';
 
-const DatagridHeaderRow = ({ columns }) => (
-  <div className="DatagridHeaderRow">
-    {columns.map(column => <DatagridHeaderCell key={column.key} column={column} />)}
+const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart }) => (
+  <div role="row" aria-rowindex={rowIndex} className="DatagridHeaderRow">
+    {columns.map((column, colIndex) => (
+      <DatagridHeaderCell
+        key={column.key}
+        column={column}
+        colIndex={colIndex + columnIndexStart + 1}
+        rowIndex={rowIndex}
+      />
+    ))}
   </div>
 );
 
 DatagridHeaderRow.displayName = 'DatagridHeaderRow';
 
-DatagridHeaderRow.defaultProps = {};
+DatagridHeaderRow.defaultProps = {
+  columnIndexStart: 0,
+};
 
 DatagridHeaderRow.propTypes = {
   columns: PropTypes.arrayOf(
@@ -22,6 +31,8 @@ DatagridHeaderRow.propTypes = {
       title: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
+  rowIndex: PropTypes.number.isRequired,
+  columnIndexStart: PropTypes.number,
 };
 
 export default DatagridHeaderRow;
