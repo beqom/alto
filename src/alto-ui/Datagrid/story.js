@@ -10,7 +10,7 @@ import { rows, columns } from './data.json';
 
 storiesOf('Datagrid', module)
   .addDecorator(centered)
-  .addWithJSX('playground', () => (
+  .add('playground', () => (
     <div style={{ width: 800, maxWidth: '100%', height: 600, maxHeight: '100%' }}>
       <Datagrid rows={rows.slice(0, 30)} rowKeyField={item => item.login_uuid} columns={columns} />
     </div>
