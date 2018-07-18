@@ -5,7 +5,7 @@ import DatagridHeaderCell from '../DatagridHeaderCell';
 
 import './DatagridHeaderRow.scss';
 
-const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart }) => (
+const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context }) => (
   <div role="row" aria-rowindex={rowIndex} className="DatagridHeaderRow">
     {columns.map((column, colIndex) => (
       <DatagridHeaderCell
@@ -13,6 +13,7 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart }) => (
         column={column}
         colIndex={colIndex + columnIndexStart + 1}
         rowIndex={rowIndex}
+        context={context}
       />
     ))}
   </div>
@@ -33,6 +34,7 @@ DatagridHeaderRow.propTypes = {
   ).isRequired,
   rowIndex: PropTypes.number.isRequired,
   columnIndexStart: PropTypes.number,
+  context: PropTypes.object.isRequired,
 };
 
 export default DatagridHeaderRow;
