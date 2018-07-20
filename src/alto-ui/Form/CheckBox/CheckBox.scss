@@ -1,5 +1,9 @@
 @import '../../scss/inc';
 
+.CheckBox {
+  position: relative;
+}
+
 .CheckBox__input {
   @extend %visually-hidden;
 }
