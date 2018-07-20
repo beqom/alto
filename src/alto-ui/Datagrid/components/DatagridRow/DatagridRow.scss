@@ -2,8 +2,4 @@
 
 .DatagridRow {
   display: flex;
-
-  &:not(:last-child) {
-    border-bottom: 1px solid $coolgrey-20;
-  }
 }

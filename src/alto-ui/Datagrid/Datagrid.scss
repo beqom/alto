@@ -27,8 +27,7 @@
 }
 
 .Datagrid__head {
-  box-shadow: 0 2px 0 $coolgrey-20;
-  margin-right: 2px;
+  border-bottom: 1px solid $coolgrey-20;
 
   .ps__rail-x {
     display: none;
@@ -36,8 +35,8 @@
 }
 
 .Datagrid__header-row--frozen {
-  margin-right: 3px;
-  box-shadow: 3px 0 0 $coolgrey-20;
+  margin-right: 2px;
+  box-shadow: 2px 0 0 $coolgrey-20;
 }
 
 .Datagrid__header-row--static,
@@ -50,8 +49,8 @@
 }
 
 .Datagrid__rows--frozen {
-  box-shadow: 3px 0 0 $coolgrey-20;
-  margin-right: 3px;
+  box-shadow: 2px 0 0 $coolgrey-20;
+  margin-right: 2px;
   .ps__rail-y {
     display: none;
   }
