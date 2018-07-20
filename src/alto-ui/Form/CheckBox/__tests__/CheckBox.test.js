@@ -20,7 +20,7 @@ describe('<CheckBox />', () => {
   it('should spread the good props to the <input />', () => {
     const props = {
       id: 'my-checkbox',
-      checked: true,
+      defaultChecked: true,
       onChange: jest.fn(),
       title: 'This is a checkbox',
     };
@@ -31,12 +31,12 @@ describe('<CheckBox />', () => {
 
   it('should render correctly the <label />', () => {
     const wrapper = shallow(
-      <CheckBox id="my-checkbox" label="Are you still alive" checked disabled />
+      <CheckBox id="my-checkbox" label="Are you still alive" defaultChecked disabled />
     );
     const label = wrapper.childAt(1);
     expect(label.type()).toBe('label');
     expect(label.prop('htmlFor')).toBe('my-checkbox');
-    expect(label.prop('checked')).toBe(true);
+    expect(label.prop('defaultChecked')).toBe(true);
     expect(label.prop('disabled')).toBe(true);
     expect(label.text()).toBe('Are you still alive');
   });

@@ -10,7 +10,7 @@ const CheckBox = props => {
       <input {...inputProps} className="CheckBox__input" type="checkbox" />
       <label
         htmlFor={props.id}
-        checked={props.checked}
+        defaultChecked={props.defaultChecked}
         disabled={props.disabled}
         title={label}
         className="CheckBox__label"
@@ -22,14 +22,14 @@ const CheckBox = props => {
 };
 
 CheckBox.defaultProps = {
-  checked: false,
+  defaultChecked: false,
   disabled: false,
 };
 
 CheckBox.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  checked: PropTypes.bool,
+  defaultChecked: PropTypes.bool,
   disabled: PropTypes.bool,
 };
 
