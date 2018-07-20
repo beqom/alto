@@ -6,6 +6,10 @@
   text-align: left;
   display: flex;
 
+  *:not(:last-child) > & {
+    border-bottom: 1px solid $coolgrey-20;
+  }
+
   &--number,
   &--percentage,
   &--int,
@@ -24,7 +28,7 @@
     font-size: $font-size-large;
   }
 
-  &--grouped {
+  &--header {
     background-color: $coolgrey-10;
     font-weight: $font-weight-semibold;
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
@@ -133,7 +133,7 @@ class Datagrid extends React.PureComponent {
     this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
   }
 
-  renderHeaderRows(columns, columnIndexStart = 0) {
+  renderHeaderRows(columns, columnIndexStart = 1) {
     return (
       <DatagridHeaderRow
         rowIndex={1}
@@ -144,19 +144,43 @@ class Datagrid extends React.PureComponent {
     );
   }
 
-  renderRows(columns, headersCount, columnIndexStart = 0) {
-    const { rowKeyField } = this.props;
-    return this.props.rows.map((row, index) => (
+  renderSummuryRow(columns, headersCount = 1, columnIndexStart = 1) {
+    const { renderSummaryCell } = this.props;
+    if (!renderSummaryCell) return null;
+
+    return (
       <DatagridRow
-        key={rowKeyField(row)}
         columns={columns}
-        row={row}
-        rowIndex={index + headersCount}
-        index={index}
+        index={0}
+        header
+        rowIndex={headersCount + 1}
         context={this.getContext()}
+        render={renderSummaryCell}
         columnIndexStart={columnIndexStart}
       />
-    ));
+    );
+  }
+
+  renderRows(columns, headersCount = 1, columnIndexStart = 0) {
+    const { rowKeyField, renderSummaryCell } = this.props;
+    const summaryRowsCount = renderSummaryCell ? 1 : 0;
+
+    return (
+      <Fragment>
+        {this.renderSummuryRow(columns, headersCount, columnIndexStart)}
+        {this.props.rows.map((row, index) => (
+          <DatagridRow
+            key={rowKeyField(row)}
+            columns={columns}
+            row={row}
+            rowIndex={headersCount + summaryRowsCount + 1 + index}
+            index={index}
+            context={this.getContext()}
+            columnIndexStart={columnIndexStart + 1}
+          />
+        ))}
+      </Fragment>
+    );
   }
 
   render() {
@@ -238,6 +262,7 @@ Datagrid.propTypes = {
   renderers: PropTypes.object,
   formatters: PropTypes.object,
   parsers: PropTypes.object,
+  renderSummaryCell: PropTypes.func,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,
@@ -248,17 +273,3 @@ Datagrid.propTypes = {
 };
 
 export default Datagrid;
-
-/*
-iv(role="grid")
-  div(role="presentation")
-  div(role="row")
-    div(role="columheader") foo
-    div(role="columnheader") bar
-  div(role="presentation")
-  each cols, i in Array(50)
-    div(role="row")
-      each cols, j in Array(20)
-        div(role="gridcell") #{i} - #{j}
-
-*/

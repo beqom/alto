@@ -127,7 +127,7 @@ class DatagridCell extends React.Component {
 
   getModifiers() {
     const { editing } = this.state;
-    const { context, row, column, edited, editable } = this.props;
+    const { context, row, column, edited, editable, header } = this.props;
 
     const value = this.getValue();
     const type = getType(value, column);
@@ -138,6 +138,7 @@ class DatagridCell extends React.Component {
       editable,
       editing,
       edited,
+      header,
       'with-icon': context.showError(value, column, row),
       ...context.modifiers(value, column, row),
     };
@@ -219,7 +220,7 @@ class DatagridCell extends React.Component {
   }
 
   renderContent() {
-    const { id, context, row, column, editable, rowIndex, colIndex } = this.props;
+    const { id, context, row, column, editable, rowIndex, colIndex, render } = this.props;
     const value = this.getValue();
     const modifiers = this.getModifiers();
 
@@ -235,6 +236,8 @@ class DatagridCell extends React.Component {
         {this.renderValue()}
       </ContentComponent>
     );
+
+    if (render) return content;
 
     const error =
       typeof context.showError === 'function' ? context.showError(value, column, row) : false;
@@ -327,6 +330,7 @@ DatagridCell.displayName = 'DatagridCell';
 DatagridCell.defaultProps = {
   editable: false,
   edited: false,
+  row: {},
 };
 
 DatagridCell.propTypes = {
@@ -339,7 +343,7 @@ DatagridCell.propTypes = {
     width: PropTypes.number,
     formula: PropTypes.string,
   }),
-  row: PropTypes.object.isRequired,
+  row: PropTypes.object,
   rowIndex: PropTypes.number.isRequired,
   colIndex: PropTypes.number.isRequired,
   context: PropTypes.shape({
@@ -356,6 +360,7 @@ DatagridCell.propTypes = {
   render: PropTypes.func,
   editable: PropTypes.bool,
   edited: PropTypes.bool,
+  header: PropTypes.bool,
 };
 
 export default DatagridCell;

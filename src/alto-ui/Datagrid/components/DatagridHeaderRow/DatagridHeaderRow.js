@@ -11,7 +11,7 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context }) => 
       <DatagridHeaderCell
         key={column.key}
         column={column}
-        colIndex={colIndex + columnIndexStart + 1}
+        colIndex={colIndex + columnIndexStart}
         rowIndex={rowIndex}
         context={context}
       />
@@ -22,7 +22,7 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context }) => 
 DatagridHeaderRow.displayName = 'DatagridHeaderRow';
 
 DatagridHeaderRow.defaultProps = {
-  columnIndexStart: 0,
+  columnIndexStart: 1,
 };
 
 DatagridHeaderRow.propTypes = {
