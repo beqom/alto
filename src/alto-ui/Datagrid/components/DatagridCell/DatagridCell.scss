@@ -135,15 +135,6 @@
   box-shadow: inset 0 0 0 1px $coolgrey-30;
 }
 
-.DatagridCell__content-icon {
-  margin-right: 10px;
-  transition: all $transition;
-}
-
-.DatagridCell__content-icon--collapsed {
-  transform: rotate(-90deg);
-}
-
 .DatagridCell__input {
   display: none;
   margin: 0;
