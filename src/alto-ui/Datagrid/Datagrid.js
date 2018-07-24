@@ -10,6 +10,7 @@ import Avatar from '../Avatar';
 
 import { bemClass } from '../helpers/bem';
 import DatagridHeaderRow from './components/DatagridHeaderRow';
+import DatagridGroupedRow from './components/DatagridGroupedRow';
 import DatagridRow from './components/DatagridRow';
 
 import './Datagrid.scss';
@@ -65,6 +66,7 @@ class Datagrid extends React.PureComponent {
 
     this.state = {
       loaded: false,
+      collapsedGroups: {},
     };
 
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
@@ -74,6 +76,7 @@ class Datagrid extends React.PureComponent {
     this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
     this.handleScrollXStaticRows = this.handleScrollXStaticRows.bind(this);
     this.handleScrollYStaticRows = this.handleScrollYStaticRows.bind(this);
+    this.handleToggleGroup = this.handleToggleGroup.bind(this);
   }
 
   componentDidMount() {
@@ -116,6 +119,14 @@ class Datagrid extends React.PureComponent {
   setStaticRowsNode(node) {
     this.staticRowsNode = node;
   }
+  handleToggleGroup(groupId) {
+    const stateGroupId = this.state.collapsedGroups[groupId];
+    const collapsedGroups = {
+      ...this.state.collapsedGroups,
+      [groupId]: !stateGroupId,
+    };
+    this.setState({ collapsedGroups });
+  }
 
   handleScrollXStaticHeader() {
     this.staticRowsNode.scrollLeft = this.staticHeaderNode.scrollLeft;
@@ -133,7 +144,7 @@ class Datagrid extends React.PureComponent {
     this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
   }
 
-  renderHeaderRows(columns, columnIndexStart = 1) {
+  renderHeaderRows(columns, columnIndexStart = 0) {
     return (
       <DatagridHeaderRow
         rowIndex={1}
@@ -144,7 +155,7 @@ class Datagrid extends React.PureComponent {
     );
   }
 
-  renderSummuryRow(columns, headersCount = 1, columnIndexStart = 1) {
+  renderSummuryRow(columns, headersCount = 1, columnIndexStart = 0) {
     const { renderSummaryCell } = this.props;
     if (!renderSummaryCell) return null;
 
@@ -162,23 +173,53 @@ class Datagrid extends React.PureComponent {
   }
 
   renderRows(columns, headersCount = 1, columnIndexStart = 0) {
-    const { rowKeyField, renderSummaryCell } = this.props;
+    const { rowKeyField, renderSummaryCell, groupedByColumnKey } = this.props;
     const summaryRowsCount = renderSummaryCell ? 1 : 0;
+
+    const rows = this.props.rows.reduce((acc, row, index, arr) => {
+      const isFirstRow = index === 0;
+      const isPrecededByDifferentGroup =
+        isFirstRow || row[groupedByColumnKey] !== arr[index - 1][groupedByColumnKey];
+
+      const key = rowKeyField(row);
+      const rowIndex = headersCount + summaryRowsCount + 1 + acc.length;
+      const sharedProps = {
+        collapsed: groupedByColumnKey && !!this.state.collapsedGroups[row[groupedByColumnKey]],
+        columns,
+        context: this.getContext(),
+        columnIndexStart,
+        index,
+      };
+
+      const groupedRow =
+        groupedByColumnKey && isPrecededByDifferentGroup ? (
+          <DatagridGroupedRow
+            {...sharedProps}
+            key={`${key}--group`}
+            firstRowInGroup={row}
+            rowIndex={rowIndex}
+            onToggle={this.handleToggleGroup}
+          />
+        ) : null;
+
+      const groupedRowArr = groupedRow ? [groupedRow] : [];
+
+      return [
+        ...acc,
+        ...groupedRowArr,
+        <DatagridRow
+          {...sharedProps}
+          key={key}
+          row={row}
+          rowIndex={rowIndex + groupedRowArr.length + 1}
+        />,
+      ];
+    }, []);
 
     return (
       <Fragment>
         {this.renderSummuryRow(columns, headersCount, columnIndexStart)}
-        {this.props.rows.map((row, index) => (
-          <DatagridRow
-            key={rowKeyField(row)}
-            columns={columns}
-            row={row}
-            rowIndex={headersCount + summaryRowsCount + 1 + index}
-            index={index}
-            context={this.getContext()}
-            columnIndexStart={columnIndexStart + 1}
-          />
-        ))}
+        {rows}
       </Fragment>
     );
   }
@@ -263,6 +304,7 @@ Datagrid.propTypes = {
   formatters: PropTypes.object,
   parsers: PropTypes.object,
   renderSummaryCell: PropTypes.func,
+  groupedByColumnKey: PropTypes.string,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,

@@ -1,0 +1,23 @@
+@import '../../../scss/inc';
+
+.DatagridGroupedRow__button {
+  height: 3rem;
+  overflow: hidden;
+  flex-shrink: 0;
+  text-align: left;
+  border-bottom: 1px solid $coolgrey-20;
+  font-weight: $font-weight-semibold;
+  display: flex;
+  background-color: $coolgrey-10;
+  padding: $spacing-x-small 0.625rem;
+  align-items: center;
+}
+
+.DatagridGroupedRow__toggle-icon {
+  margin-right: $spacing-small;
+  transition: all $transition;
+}
+
+.DatagridGroupedRow__toggle-icon--collapsed {
+  transform: rotate(-90deg);
+}
