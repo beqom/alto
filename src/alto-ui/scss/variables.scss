@@ -1,6 +1,6 @@
 // ===========================
 // Alto
-$alto-version: '0.10.0' !default;
+$alto-version: '0.10.1' !default;
 $deprecate-mode: 'sensible' !default;
 
 // ===================================
@@ -186,7 +186,7 @@ $colors: (
   white: $white,
   grey: $coolgrey-60,
   darkgrey: $coolgrey-90,
-  black: $black
+  black: $black,
 );
 
 $color-page-bkgd: $blue-10 !default;
