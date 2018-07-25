@@ -131,8 +131,8 @@ $coolgrey-90: #192328 !default;
 $coolgrey-80: #333c48 !default;
 $coolgrey-70: #3f4f5e !default;
 $coolgrey-60: #4f6376 !default;
-$coolgrey-50: #5f788c !default;
-$coolgrey-40: #8096ac !default;
+$coolgrey-50: #758fa3 !default;
+$coolgrey-40: #a3b5c6 !default;
 $coolgrey-30: #bfcedd !default;
 $coolgrey-20: #dae4ed !default;
 $coolgrey-10: #f8f9fb !default;
@@ -351,3 +351,8 @@ $footer-height: 3rem;
 
 $focusable-box-shadow: inset 0 0 0 2px $blue, inset 0 0 0 4px $white !important;
 $focusable-out-box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue !important;
+
+// ===================================
+// Forms
+
+$color-input-border: $coolgrey-40 !default;
