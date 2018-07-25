@@ -115,6 +115,7 @@
   position: relative;
   transition: all $transition;
   box-shadow: inset 0 0 0 1px $color-input-border;
+  background-color: $white;
   //border: 1px solid $coolgrey-20;
   .DatagridCell--warning & {
     box-shadow: inset 0 0 0 1px $orange;
