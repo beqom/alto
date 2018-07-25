@@ -114,7 +114,7 @@
   cursor: pointer;
   position: relative;
   transition: all $transition;
-  box-shadow: inset 0 0 0 1px $coolgrey-20;
+  box-shadow: inset 0 0 0 1px $color-input-border;
   //border: 1px solid $coolgrey-20;
   .DatagridCell--warning & {
     box-shadow: inset 0 0 0 1px $orange;
