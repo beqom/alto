@@ -6,6 +6,7 @@ import debounce from 'lodash.debounce';
 import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
 import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import TextField from '../../../Form/TextField';
+import Select from '../../../Form/Select';
 import Tooltip from '../../../Tooltip';
 
 import { bemClass } from '../../../helpers/bem';
@@ -63,7 +64,6 @@ class DatagridCell extends React.Component {
     super(props);
 
     const value = props.row[props.column.key];
-
     this.state = {
       editing: false,
       width: 150,
@@ -144,6 +144,24 @@ class DatagridCell extends React.Component {
     };
   }
 
+  getSharedFieldProps() {
+    const value = this.getValue();
+    const { id, context, row, column } = this.props;
+    return {
+      ref: this.inputRef,
+      id: id ? `${id}__input` : `DatagridCell__input--${row[context.rowId]}--${column.key}`,
+      label: 'edit cell',
+      hideLabel: true,
+      small: context.compact,
+      style: { width: (column.width || this.state.width) - 6 },
+      value: value || '',
+      onChange: this.handleChange,
+      onBlur: this.handleBlur,
+      onKeyDown: this.handleKeyDown,
+      className: bemClass('DatagridCell__input', this.getModifiers()),
+    };
+  }
+
   format(value, column, row) {
     const { context } = this.props;
     const format = getFormattedValue(context);
@@ -166,6 +184,12 @@ class DatagridCell extends React.Component {
 
   startEditing() {
     const width = this.cellRef.current.offsetWidth;
+    const { row, column, context } = this.props;
+    const { onStartEditing } = context || {};
+    if (onStartEditing && typeof onStartEditing === 'function') {
+      onStartEditing(column, row);
+    }
+
     this.setState({ editing: true, width });
   }
   stopEditing() {
@@ -222,6 +246,8 @@ class DatagridCell extends React.Component {
   renderContent() {
     const { id, context, row, column, editable, rowIndex, colIndex, render } = this.props;
     const value = this.getValue();
+    const type = getType(value, column);
+    if (type === 'list') return null;
     const modifiers = this.getModifiers();
 
     const ContentComponent = editable ? 'button' : 'div';
@@ -281,14 +307,31 @@ class DatagridCell extends React.Component {
     );
   }
 
-  render() {
-    const { id, column, row, context, editable, rowIndex, colIndex } = this.props;
-    const key = column.key || column;
+  renderInput() {
+    const { column, row, context, editable, render } = this.props;
+    if (render) return null;
     const value = getValue(this.state.value, column, row, context.labels);
     const type = getType(value, column);
 
-    const style = this.getStyle();
+    if (!editable && type !== 'list') return null;
 
+    if (type === 'list') {
+      return (
+        <Select
+          onFocus={this.startEditing}
+          {...this.getSharedFieldProps()}
+          disabled={!editable}
+          {...context.getSelectProps(column, row)}
+        />
+      );
+    }
+
+    return <TextField {...this.getSharedFieldProps()} {...getInputProps(type)} />;
+  }
+
+  render() {
+    const { rowIndex, colIndex } = this.props;
+    const style = this.getStyle();
     const modifiers = this.getModifiers();
 
     return (
@@ -303,22 +346,7 @@ class DatagridCell extends React.Component {
       >
         <div className="DatagridCell__container">
           {this.renderContent()}
-          {editable && (
-            <TextField
-              ref={this.inputRef}
-              label="edit cell"
-              hideLabel
-              small={context.compact}
-              id={id ? `${id}__input` : `DatagridCell__input--${row[context.rowId]}--${key}`}
-              className={bemClass('DatagridCell__input', modifiers)}
-              style={{ width: (column.width || this.state.width) - 6 }}
-              value={value || ''}
-              onChange={this.handleChange}
-              onBlur={this.handleBlur}
-              onKeyDown={this.handleKeyDown}
-              {...getInputProps(type)}
-            />
-          )}
+          {this.renderInput()}
         </div>
       </div>
     );
@@ -342,6 +370,7 @@ DatagridCell.propTypes = {
     type: PropTypes.string,
     width: PropTypes.number,
     formula: PropTypes.string,
+    formatter: PropTypes.func,
   }),
   row: PropTypes.object,
   rowIndex: PropTypes.number.isRequired,
@@ -356,6 +385,7 @@ DatagridCell.propTypes = {
       errorFormula: PropTypes.string,
     }),
     locale: PropTypes.string,
+    onStartEditing: PropTypes.func,
   }),
   render: PropTypes.func,
   editable: PropTypes.bool,
