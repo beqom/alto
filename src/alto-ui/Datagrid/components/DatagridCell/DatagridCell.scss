@@ -153,6 +153,14 @@
   &--editing {
     display: block;
   }
+
+  &--list {
+    display: block;
+
+    &.DatagridCell__input--edited select {
+      font-weight: bold;
+    }
+  }
 }
 
 .DatagridCell__error-icon-wrapper {

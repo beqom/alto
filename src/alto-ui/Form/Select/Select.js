@@ -8,7 +8,7 @@ import FormElement from '../FormElement';
 import './Select.scss';
 
 const renderOptions = options =>
-  options.reduce((acc, option) => {
+  (options || []).reduce((acc, option) => {
     if (option) {
       if (option.value !== undefined) {
         if (isArray(option.value)) {
@@ -33,7 +33,7 @@ const renderOptions = options =>
     return acc;
   }, []);
 
-const Select = props => {
+const Select = React.forwardRef((props, ref) => {
   const {
     success,
     error,
@@ -55,6 +55,7 @@ const Select = props => {
       hideLabel={hideLabel}
     >
       <select
+        ref={ref}
         {...otherProps}
         className={bemClass('Select', {
           success,
@@ -67,7 +68,7 @@ const Select = props => {
       </select>
     </FormElement>
   );
-};
+});
 
 Select.displayName = 'Select';
 
