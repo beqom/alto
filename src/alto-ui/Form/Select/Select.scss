@@ -3,6 +3,7 @@
 .Select {
   @extend %focusable;
   font-size: $font-size-medium;
+  font-family: $font-family;
   outline: 0;
   background: $white;
   color: currentColor;
