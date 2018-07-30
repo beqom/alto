@@ -139,6 +139,7 @@
 .DatagridCell__input {
   display: none;
   margin: 0;
+  flex: 1;
 
   &--number,
   &--percentage,
@@ -176,4 +177,9 @@
 .DatagridCell__warning-icon {
   color: $orange;
   margin: 0 $spacing-small;
+}
+
+.DatagridCell__spinner {
+  flex-shrink: 0;
+  margin-left: $spacing-small;
 }
