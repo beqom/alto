@@ -8,6 +8,7 @@ import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import TextField from '../../../Form/TextField';
 import Select from '../../../Form/Select';
 import Tooltip from '../../../Tooltip';
+import Spinner from '../../../Spinner';
 
 import { bemClass } from '../../../helpers/bem';
 
@@ -153,7 +154,6 @@ class DatagridCell extends React.Component {
       label: 'edit cell',
       hideLabel: true,
       small: context.compact,
-      style: { width: (column.width || this.state.width) - 6 },
       value: value || '',
       onChange: this.handleChange,
       onBlur: this.handleBlur,
@@ -316,13 +316,17 @@ class DatagridCell extends React.Component {
     if (!editable && type !== 'list') return null;
 
     if (type === 'list') {
+      const { fetching, ...selectProps } = context.getSelectProps(column, row) || {};
       return (
-        <Select
-          onFocus={this.startEditing}
-          {...this.getSharedFieldProps()}
-          disabled={!editable}
-          {...context.getSelectProps(column, row)}
-        />
+        <Fragment>
+          <Select
+            onFocus={this.startEditing}
+            {...this.getSharedFieldProps()}
+            disabled={!editable}
+            {...selectProps}
+          />
+          {fetching && <Spinner className="DatagridCell__spinner" small />}
+        </Fragment>
       );
     }
 
@@ -386,6 +390,7 @@ DatagridCell.propTypes = {
     }),
     locale: PropTypes.string,
     onStartEditing: PropTypes.func,
+    getSelectProps: PropTypes.func,
   }),
   render: PropTypes.func,
   editable: PropTypes.bool,
