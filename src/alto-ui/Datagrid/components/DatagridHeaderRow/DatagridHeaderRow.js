@@ -24,9 +24,15 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context }) => 
       }
 
       if (!column.children.length) return null;
+      const width = column.children.map(col => col.width || '').reduce((acc, w) => acc + w);
+      const style = width || width === 0 ? { width, maxWidth: width } : {};
       return (
         <div key={column.children[0].key} className="DatagridHeaderRow__group">
-          <div className={bemClass('DatagridHeaderRow__group-title', { empty: !column.title })}>
+          <div
+            className={bemClass('DatagridHeaderRow__group-title', { empty: !column.title })}
+            style={style}
+            title={column.title}
+          >
             {column.title}
           </div>
           <div className="DatagridHeaderRow__group-columns">
