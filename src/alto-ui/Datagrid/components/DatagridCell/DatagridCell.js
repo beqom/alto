@@ -334,7 +334,7 @@ class DatagridCell extends React.Component {
   }
 
   render() {
-    const { rowIndex, colIndex } = this.props;
+    const { aria } = this.props;
     const style = this.getStyle();
     const modifiers = this.getModifiers();
 
@@ -345,8 +345,8 @@ class DatagridCell extends React.Component {
         ref={this.cellRef}
         style={style}
         role="gridcell"
-        aria-rowindex={rowIndex}
-        aria-colindex={colIndex}
+        aria-rowindex={aria.rowIndex}
+        aria-colindex={aria.colIndex}
       >
         <div className="DatagridCell__container">
           {this.renderContent()}
@@ -396,6 +396,10 @@ DatagridCell.propTypes = {
   editable: PropTypes.bool,
   edited: PropTypes.bool,
   header: PropTypes.bool,
+  aria: PropTypes.shape({
+    rowIndex: PropTypes.number.isRequired,
+    colIndex: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default DatagridCell;

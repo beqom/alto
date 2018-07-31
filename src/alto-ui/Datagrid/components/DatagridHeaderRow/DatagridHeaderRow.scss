@@ -3,3 +3,31 @@
 .DatagridHeaderRow {
   display: flex;
 }
+
+.DatagridHeaderRow__group-title {
+  flex-shrink: 0;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  overflow: hidden;
+  border-bottom: 1px solid $coolgrey-20;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-small;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 0.625rem;
+  color: $coolgrey-60;
+  text-align: left;
+  background-color: $white;
+
+  .DatagridHeaderRow__group:not(:last-child) & {
+    box-shadow: inset -1px 0 0 0 $coolgrey-20;
+  }
+
+  &--empty {
+    background: transparent;
+  }
+}
+
+.DatagridHeaderRow__group-columns {
+  display: flex;
+}

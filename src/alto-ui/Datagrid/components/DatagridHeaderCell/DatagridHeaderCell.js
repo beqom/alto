@@ -58,7 +58,7 @@ class DatagridHeaderCell extends React.Component {
   }
 
   render() {
-    const { column, context, rowIndex, colIndex } = this.props;
+    const { column, context, rowIndex, colIndex, first, last } = this.props;
 
     const style =
       column.width || column.width === 0 ? { width: column.width, maxWidth: column.width } : {};
@@ -69,9 +69,11 @@ class DatagridHeaderCell extends React.Component {
       <div
         key={column.key}
         className={bemClass('DatagridHeaderCell', {
-          sortable: true,
+          sortable: !!context.onSort,
           sorted,
           filtered: column.filtered,
+          first,
+          last,
         })}
         style={style}
         role="columheader"
@@ -83,6 +85,11 @@ class DatagridHeaderCell extends React.Component {
     );
   }
 }
+
+DatagridHeaderCell.defaultProps = {
+  first: false,
+  last: false,
+};
 
 DatagridHeaderCell.propTypes = {
   context: PropTypes.shape({
@@ -112,6 +119,8 @@ DatagridHeaderCell.propTypes = {
   }),
   rowIndex: PropTypes.number.isRequired,
   colIndex: PropTypes.number.isRequired,
+  first: PropTypes.bool,
+  last: PropTypes.bool,
 };
 
 export default DatagridHeaderCell;

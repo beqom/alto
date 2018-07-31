@@ -225,9 +225,15 @@ class Datagrid extends React.PureComponent {
   }
 
   render() {
-    const { className, columns, rows, id } = this.props;
+    const { className, columns, columnHeaders, rows, id } = this.props;
     const staticColumns = columns.filter(({ frozen }) => !frozen);
     const frozenColumns = columns.filter(({ frozen }) => frozen);
+    const staticColumnHeaders = columnHeaders
+      ? columnHeaders.filter(({ frozen }) => !frozen)
+      : staticColumns;
+    const frozenColumnHeaders = columnHeaders
+      ? columnHeaders.filter(({ frozen }) => frozen)
+      : frozenColumns;
     const headersCount = 1;
 
     return (
@@ -239,7 +245,7 @@ class Datagrid extends React.PureComponent {
       >
         <div role="rowgroup" className="Datagrid__head">
           <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
-            {this.renderHeaderRows(frozenColumns)}
+            {this.renderHeaderRows(frozenColumnHeaders)}
           </div>
           <div role="presentation" className={bemClass('Datagrid__header-row', { static: true })}>
             <PerfectScrollbar
@@ -247,7 +253,7 @@ class Datagrid extends React.PureComponent {
               onScrollX={this.handleScrollXStaticHeader}
               option={{ suppressScrollY: true }}
             >
-              {this.renderHeaderRows(staticColumns, frozenColumns.length)}
+              {this.renderHeaderRows(staticColumnHeaders, frozenColumns.length)}
             </PerfectScrollbar>
           </div>
         </div>
@@ -307,6 +313,18 @@ Datagrid.propTypes = {
   parsers: PropTypes.object,
   renderSummaryCell: PropTypes.func,
   groupedByColumnKey: PropTypes.string,
+  columnHeaders: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.string,
+      title: PropTypes.string,
+      children: PropTypes.arrayOf(
+        PropTypes.shape({
+          key: PropTypes.string.isRequired,
+          title: PropTypes.string.isRequired,
+        }).isRequired
+      ).isRequired,
+    }).isRequired
+  ),
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,
