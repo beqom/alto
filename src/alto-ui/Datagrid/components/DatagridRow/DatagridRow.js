@@ -33,14 +33,15 @@ const DatagridRow = ({
             id={id}
             key={column.key}
             row={row}
-            rowIndex={rowIndex}
+            rowIndex={index}
             column={column}
-            colIndex={colIndex + columnIndexStart + 1}
+            colIndex={colIndex}
             editable={editable}
             edited={edited}
             render={render}
             header={header}
             context={context}
+            aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
           />
         );
       })
