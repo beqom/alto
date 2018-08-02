@@ -291,6 +291,7 @@ Datagrid.defaultProps = {
   modifiers: () => {},
   showError: () => false,
   locale: 'en-US',
+  wrapHeader: () => false,
 };
 
 Datagrid.propTypes = {
@@ -325,6 +326,7 @@ Datagrid.propTypes = {
       ).isRequired,
     }).isRequired
   ),
+  wrapHeader: PropTypes.func,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,
