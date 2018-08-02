@@ -2,6 +2,12 @@
 
 .DatagridHeaderRow {
   display: flex;
+  height: 100%;
+}
+
+.DatagridHeaderRow__group {
+  display: flex;
+  flex-direction: column;
 }
 
 .DatagridHeaderRow__group-title {
@@ -30,4 +36,5 @@
 
 .DatagridHeaderRow__group-columns {
   display: flex;
+  flex: 1;
 }

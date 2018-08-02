@@ -11,12 +11,23 @@ import { bemClass } from '../../../helpers/bem';
 import './DatagridHeaderCell.scss';
 
 class DatagridHeaderCell extends React.Component {
-  renderContent(style, sorted) {
+  renderContent(style, sorted, wrapped) {
     const { context, column } = this.props;
+
+    const titleStyle = {
+      ...(wrapped && wrapped !== true ? { maxHeight: `${wrapped * 1.2}em` } : {}),
+    };
+
     if (!context.onSort) {
       return (
-        <div className="DatagridHeaderCell__content" title={column.title}>
-          {column.title}
+        <div
+          className={bemClass('DatagridHeaderCell__content', { wrapped })}
+          title={column.title}
+          style={style}
+        >
+          <span className={bemClass('DatagridHeaderCell__title', { wrapped })} style={titleStyle}>
+            {column.title}
+          </span>
         </div>
       );
     }
@@ -27,7 +38,7 @@ class DatagridHeaderCell extends React.Component {
     return (
       <button
         id={context.id ? `${context.id}__header-button--${column.key}` : undefined}
-        className={bemClass('DatagridHeaderCell__content', { button: true })}
+        className={bemClass('DatagridHeaderCell__content', { button: true, wrapped })}
         onClick={() => context.onSort(column)}
         style={style}
         title={column.title}
@@ -36,7 +47,12 @@ class DatagridHeaderCell extends React.Component {
         {column.filtered ? (
           <FilterIcon className={bemClass('DatagridHeaderCell__icon', { filter: true })} />
         ) : null}
-        <span className="DatagridHeaderCell__title">{column.title}</span>
+        <span
+          className={bemClass('DatagridHeaderCell__title', { sortable: true, wrapped })}
+          style={titleStyle}
+        >
+          {column.title}
+        </span>
         <div className="DatagridHeaderCell__sortable-icons">
           <div
             className={bemClass('DatagridHeaderCell__icon', {
@@ -60,8 +76,13 @@ class DatagridHeaderCell extends React.Component {
   render() {
     const { column, context, rowIndex, colIndex, first, last } = this.props;
 
-    const style =
-      column.width || column.width === 0 ? { width: column.width, maxWidth: column.width } : {};
+    const wrapped = context.wrapHeader(column);
+    const { width } = column;
+
+    const style = {
+      ...(width || width === 0 ? { width, maxWidth: width } : {}),
+      ...(wrapped && wrapped !== true ? { maxHeight: `${wrapped * 1.2 + 1.8}em` } : {}),
+    };
 
     const sorted = column.key === context.columnSorted || [1, -1].includes(column.sortDirection);
 
@@ -74,13 +95,14 @@ class DatagridHeaderCell extends React.Component {
           filtered: column.filtered,
           first,
           last,
+          wrapped,
         })}
         style={style}
         role="columheader"
         aria-rowindex={rowIndex}
         aria-colindex={colIndex}
       >
-        {this.renderContent(style, sorted)}
+        {this.renderContent(style, sorted, wrapped)}
       </div>
     );
   }
