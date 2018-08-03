@@ -12,7 +12,6 @@
   transform: translateX(-50%) translateY(-50%);
   display: flex;
   flex-direction: column;
-  max-height: calc(100% - #{$spacing-large});
 }
 
 .Dialog__overlay {
@@ -45,6 +44,7 @@
   // Fix height issues in IE11
   flex-basis: auto;
   overflow: auto;
+  max-height: calc(100vh - 10rem);
 }
 
 .Dialog__footer {
