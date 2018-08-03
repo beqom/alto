@@ -76,6 +76,7 @@ class Datagrid extends React.PureComponent {
     this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
     this.handleScrollXStaticRows = this.handleScrollXStaticRows.bind(this);
     this.handleScrollYStaticRows = this.handleScrollYStaticRows.bind(this);
+    this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
   }
 
@@ -86,8 +87,13 @@ class Datagrid extends React.PureComponent {
       this.frozenRowsNode.scrollTop = 0;
       this.staticRowsNode.scrollLeft = 0;
       this.staticRowsNode.scrollTop = 0;
+      this.trackDimensions();
       this.setState({ loaded: true });
     }, 0);
+  }
+
+  componentDidUpdate() {
+    this.trackDimensions();
   }
 
   getContext() {
@@ -119,6 +125,11 @@ class Datagrid extends React.PureComponent {
   setStaticRowsNode(node) {
     this.staticRowsNode = node;
   }
+
+  trackDimensions() {
+    this.staticHeaderNode.style.width = `${this.staticRowsNode.clientWidth}px`;
+    this.frozenRowsNode.style.height = `${this.staticRowsNode.clientHeight}px`;
+  }
   handleToggleGroup(groupId) {
     const stateGroupId = this.state.collapsedGroups[groupId];
     const collapsedGroups = {
@@ -138,9 +149,15 @@ class Datagrid extends React.PureComponent {
 
   handleScrollXStaticRows() {
     this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
+    this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
   }
 
   handleScrollYStaticRows() {
+    this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
+  }
+
+  handleScrollStaticRows() {
+    this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
     this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
   }
 
@@ -269,13 +286,19 @@ class Datagrid extends React.PureComponent {
             </PerfectScrollbar>
           </div>
           <div role="presentation" className={bemClass('Datagrid__rows', { static: true })}>
-            <PerfectScrollbar
+            {/* <PerfectScrollbar
               containerRef={this.setStaticRowsNode}
               onScrollX={this.handleScrollXStaticRows}
               onScrollY={this.handleScrollYStaticRows}
+            > */}
+            <div
+              className="Datagrid__rows-container"
+              ref={this.setStaticRowsNode}
+              onScroll={this.handleScrollStaticRows}
             >
               {this.renderRows(staticColumns, headersCount, frozenColumns.length)}
-            </PerfectScrollbar>
+            </div>
+            {/* </PerfectScrollbar> */}
           </div>
         </div>
       </div>
