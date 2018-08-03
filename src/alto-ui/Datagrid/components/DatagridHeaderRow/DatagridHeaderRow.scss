@@ -6,8 +6,7 @@
 }
 
 .DatagridHeaderRow__group {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
 .DatagridHeaderRow__group-title {
@@ -36,5 +35,5 @@
 
 .DatagridHeaderRow__group-columns {
   display: flex;
-  flex: 1;
+  height: calc(100% - 1.5rem);
 }
