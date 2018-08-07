@@ -2,6 +2,7 @@
 
 .Tree {
   list-style: none;
+  overflow: hidden;
 
   & & {
     margin-left: $spacing-medium;
