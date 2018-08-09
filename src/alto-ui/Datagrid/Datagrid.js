@@ -83,6 +83,8 @@ class Datagrid extends React.PureComponent {
   componentDidMount() {
     // fix scroll initial value
     setTimeout(() => {
+      this.staticHeaderNode.style = {};
+      this.frozenRowsNode.style = {};
       this.staticHeaderNode.scrollLeft = 0;
       this.frozenRowsNode.scrollTop = 0;
       this.staticRowsNode.scrollLeft = 0;
@@ -115,15 +117,15 @@ class Datagrid extends React.PureComponent {
   }
 
   setStaticHeaderNode(node) {
-    this.staticHeaderNode = node;
+    this.staticHeaderNode = node || {};
   }
 
   setFrozenRowsNode(node) {
-    this.frozenRowsNode = node;
+    this.frozenRowsNode = node || {};
   }
 
   setStaticRowsNode(node) {
-    this.staticRowsNode = node;
+    this.staticRowsNode = node || {};
   }
 
   trackDimensions() {
