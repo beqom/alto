@@ -60,6 +60,9 @@ const RENDERERS = {
   error: x => <ErrorIcon outline title={x.message} />,
 };
 
+// Needed in case of the node is not provided as soon as needed
+const fakeNode = document.createElement('div');
+
 class Datagrid extends React.PureComponent {
   constructor() {
     super();
@@ -83,8 +86,8 @@ class Datagrid extends React.PureComponent {
   componentDidMount() {
     // fix scroll initial value
     setTimeout(() => {
-      this.staticHeaderNode.style = {};
-      this.frozenRowsNode.style = {};
+      this.staticHeaderNode.setAttribute('style', '');
+      this.frozenRowsNode.setAttribute('style', '');
       this.staticHeaderNode.scrollLeft = 0;
       this.frozenRowsNode.scrollTop = 0;
       this.staticRowsNode.scrollLeft = 0;
@@ -117,15 +120,15 @@ class Datagrid extends React.PureComponent {
   }
 
   setStaticHeaderNode(node) {
-    this.staticHeaderNode = node || {};
+    this.staticHeaderNode = node || fakeNode;
   }
 
   setFrozenRowsNode(node) {
-    this.frozenRowsNode = node || {};
+    this.frozenRowsNode = node || fakeNode;
   }
 
   setStaticRowsNode(node) {
-    this.staticRowsNode = node || {};
+    this.staticRowsNode = node || fakeNode;
   }
 
   trackDimensions() {
