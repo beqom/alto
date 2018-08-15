@@ -179,9 +179,9 @@ class Datagrid extends React.PureComponent {
     );
   }
 
-  renderSummaryRow(columns, headersCount = 1, columnIndexStart = 0) {
+  renderSummaryRow(columns, numberOfRows, headersCount = 1, columnIndexStart = 0) {
     const { renderSummaryCell } = this.props;
-    if (!renderSummaryCell) return null;
+    if (!renderSummaryCell || !numberOfRows) return null;
 
     return (
       <DatagridRow
@@ -263,7 +263,12 @@ class Datagrid extends React.PureComponent {
         <div role="rowgroup" className="Datagrid__head">
           <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
             {this.renderHeaderRows(frozenColumnHeaders)}
-            {this.renderSummaryRow(frozenColumns, HEADER_ROW_INDEX + 1)}
+            {this.renderSummaryRow(
+              frozenColumns,
+              staticColumns.length,
+              HEADER_ROW_INDEX + 1,
+              frozenColumns.length
+            )}
           </div>
           <div role="presentation" className={bemClass('Datagrid__header-row', { static: true })}>
             <PerfectScrollbar
@@ -272,7 +277,12 @@ class Datagrid extends React.PureComponent {
               option={{ suppressScrollY: true }}
             >
               {this.renderHeaderRows(staticColumnHeaders, frozenColumns.length)}
-              {this.renderSummaryRow(staticColumns, HEADER_ROW_INDEX + 1, frozenColumns.length)}
+              {this.renderSummaryRow(
+                staticColumns,
+                staticColumns.length,
+                HEADER_ROW_INDEX + 1,
+                frozenColumns.length
+              )}
             </PerfectScrollbar>
           </div>
         </div>
