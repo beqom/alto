@@ -18,9 +18,8 @@ const FormElement = props => {
         <div
           className={bemClass('form-element__help-text', { error, disabled, success })}
           id={`${id}__help-text`}
-        >
-          {props.helpText}
-        </div>
+          dangerouslySetInnerHTML={{ __html: props.helpText }}
+        />
       )}
     </div>
   );
