@@ -86,6 +86,7 @@
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lodash.isarray": "^4.0.0",
+    "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "lodash.range": "^3.2.0",
     "luxon": "^1.0.0",

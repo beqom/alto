@@ -2,6 +2,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import isEqual from 'lodash.isequal';
+
 import ChevronUpIcon from '../../../Icons/ChevronUp';
 import ChevronDownIcon from '../../../Icons/ChevronDown';
 import FilterIcon from '../../../Icons/Filter';
@@ -11,6 +13,9 @@ import { bemClass } from '../../../helpers/bem';
 import './DatagridHeaderCell.scss';
 
 class DatagridHeaderCell extends React.Component {
+  shouldComponentUpdate(nextProps) {
+    return !isEqual(this.props.column, nextProps.column);
+  }
   renderContent(style, sorted, wrapped) {
     const { context, column } = this.props;
 
