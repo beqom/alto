@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import mathEvaluator from 'math-expression-evaluator';
 import debounce from 'lodash.debounce';
+import isEqual from 'lodash.isequal';
 
 import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
 import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
@@ -102,6 +103,10 @@ class DatagridCell extends React.Component {
     return null;
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !isEqual(this.state, nextState);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const becameEditing = !prevState.editing && this.state.editing;
 
@@ -197,7 +202,7 @@ class DatagridCell extends React.Component {
   }
 
   focus() {
-    this.inputRef.current.focus();
+    if (this.inputRef.current) this.inputRef.current.focus();
   }
 
   handleChange(e) {
@@ -264,9 +269,9 @@ class DatagridCell extends React.Component {
     );
 
     if (render) return content;
-
     const error =
       typeof context.showError === 'function' ? context.showError(value, column, row) : false;
+
     if (!error) return content;
     const warning =
       typeof context.isWarningError === 'function'
