@@ -275,6 +275,7 @@ class Datagrid extends React.PureComponent {
               containerRef={this.setStaticHeaderNode}
               onScrollX={this.handleScrollXStaticHeader}
               option={{ suppressScrollY: true }}
+              className="DataGrid__perfect-scrollbar"
             >
               {this.renderHeaderRows(staticColumnHeaders, frozenColumns.length)}
               {this.renderSummaryRow(
@@ -293,6 +294,7 @@ class Datagrid extends React.PureComponent {
               containerRef={this.setFrozenRowsNode}
               onScrollY={this.handleScrollYFrozenRows}
               option={{ suppressScrollX: true }}
+              className="DataGrid__perfect-scrollbar"
             >
               {this.renderRows(frozenColumns, headersCount)}
             </PerfectScrollbar>
