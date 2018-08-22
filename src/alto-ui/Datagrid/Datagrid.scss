@@ -68,3 +68,9 @@
   right: 0;
   overflow: auto;
 }
+
+.DataGrid__perfect-scrollbar {
+  // Override inline with added by scrollbar package
+  width: 100% !important;
+  height: 100% !important;
+}
