@@ -5,10 +5,7 @@
   flex-shrink: 0;
   text-align: left;
   display: flex;
-
-  *:not(:last-child) > & {
-    border-bottom: 1px solid $coolgrey-20;
-  }
+  border-bottom: 1px solid $coolgrey-20;
 
   &--number,
   &--percentage,
