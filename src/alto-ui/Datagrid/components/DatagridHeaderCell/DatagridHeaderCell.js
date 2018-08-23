@@ -86,7 +86,7 @@ class DatagridHeaderCell extends React.Component {
 
     const style = {
       ...(width || width === 0 ? { width, maxWidth: width } : {}),
-      ...(wrapped && wrapped !== true ? { maxHeight: `${wrapped * 1.2 + 1.8}em` } : {}),
+      ...(wrapped && wrapped !== true ? { height: `${wrapped * 1.2 + 1.8}em` } : {}),
     };
 
     const sorted = column.key === context.columnSorted || [1, -1].includes(column.sortDirection);
