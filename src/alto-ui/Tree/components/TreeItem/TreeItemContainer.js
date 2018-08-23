@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isEqual from 'lodash.isequal';
 
 import TreeItem from './TreeItem';
 
@@ -33,15 +32,6 @@ class TreeItemContainer extends React.Component {
       this.setState({ open: nextOpen });
       this.checkChildren(nextOpen);
     }
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (!isEqual(this.state, nextState) || !isEqual(this.props.item, nextProps.item)) {
-      return true;
-    }
-    const { selected } = this.props;
-    if (selected !== nextProps.selected) return true;
-    return false;
   }
 
   checkChildren(open) {
