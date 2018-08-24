@@ -74,3 +74,11 @@
   width: 100% !important;
   height: 100% !important;
 }
+
+.Datagrid__no-data-label {
+  font-size: $spacing-xx-large;
+  color: $coolgrey-40;
+  text-align: center;
+  padding: 0;
+  margin: auto;
+}
