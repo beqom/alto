@@ -85,7 +85,7 @@ class DatagridHeaderCell extends React.Component {
     const { width } = column;
 
     const style = {
-      ...(width || width === 0 ? { width, maxWidth: width } : {}),
+      ...(width || width === 0 ? { width, minWidth: '2rem', maxWidth: width } : {}),
       ...(wrapped && wrapped !== true ? { height: `${wrapped * 1.2 + 1.8}em` } : {}),
     };
 

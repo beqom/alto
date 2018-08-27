@@ -125,8 +125,9 @@ class DatagridCell extends React.Component {
     if (this.state.editing) {
       return { width: this.state.width, maxWidth: this.state.width };
     }
-    if (column.width || column.width === 0) {
-      return { width: column.width, maxWidth: column.width };
+    const { width } = column;
+    if (width || width === 0) {
+      return { width, minWidth: '2rem', maxWidth: width };
     }
     return {};
   }
