@@ -1,4 +1,4 @@
-@import '../scss/inc';
+@import "../scss/inc";
 
 .Icon {
   display: inline-block;
@@ -33,26 +33,16 @@
   height: auto;
 
   cursor: pointer;
-  padding: 0.375em;
   line-height: 0;
   transition: all $transition;
   border-radius: 50%;
+  font-size: 1.25rem;
   border: 1px solid transparent;
-  opacity: 0.5;
+  color: $coolgrey-60;
 
   &:hover {
-    // background-color: $coolgrey-10;
-    // border-color: $coolgrey-20;
-    opacity: 1;
+    color: $coolgrey-80;
   }
-
-  // &:active,
-  // &--active {
-  //   &,
-  //   &:hover {
-  //     background-color: $coolgrey-20;
-  //   }
-  // }
 }
 
 .Icon__badge {
