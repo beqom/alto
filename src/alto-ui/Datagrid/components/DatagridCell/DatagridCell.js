@@ -239,15 +239,14 @@ class DatagridCell extends React.Component {
   }
 
   renderContent() {
-    const { id, context, row, column, editable, rowIndex, colIndex, render, readonly } = this.props;
+    const { id, context, row, column, editable, rowIndex, colIndex, render } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
-    if (type === 'list' && !readonly) return null;
     const modifiers = this.getModifiers();
 
     const ContentComponent = editable ? 'button' : 'div';
 
-    const content = (
+    const content = type !== 'list' && (
       <ContentComponent
         id={editable && id ? `${id}__button` : undefined}
         ref={this.setContentNode}
