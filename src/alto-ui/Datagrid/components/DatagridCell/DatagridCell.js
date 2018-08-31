@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import mathEvaluator from 'math-expression-evaluator';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
 
@@ -11,26 +10,12 @@ import Select from '../../../Form/Select';
 import Tooltip from '../../../Tooltip';
 import Spinner from '../../../Spinner';
 
+import { evaluateFormula } from '../../helpers';
 import { bemClass } from '../../../helpers/bem';
 
 import './DatagridCell.scss';
 
 const IDENTITY = x => x;
-
-const evaluateFormula = (formula, row, errorLabel) => {
-  const expression = Object.entries(row).reduce(
-    (acc, [key, value]) => acc.replace(new RegExp(`\\[${key}\\]`, 'g'), value || 0),
-    formula
-  );
-
-  try {
-    const res = mathEvaluator.eval(expression);
-    if (!Number.isFinite(res) || Number.isNaN(res)) return new Error(errorLabel);
-    return res;
-  } catch (e) {
-    return new Error(errorLabel);
-  }
-};
 
 const getValue = (value, column, row, labels) =>
   column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
@@ -119,7 +104,8 @@ class DatagridCell extends React.Component {
   }
 
   getValue() {
-    const { row, column, context } = this.props;
+    const { row, column, context, render } = this.props;
+    if (render) return '';
     return getValue(this.state.value, column, row, context.labels);
   }
 
@@ -241,22 +227,22 @@ class DatagridCell extends React.Component {
 
   renderValue() {
     const { render, column, row, context } = this.props;
-    const value = this.getValue();
-    const type = getType(value, column);
     if (render) {
-      const formatter = column.formatter || context.formatters[type] || IDENTITY;
+      const formatter = column.formatter || IDENTITY;
       const format = x => formatter(x, column, row, context);
       return render(column, row, format);
     }
+    const value = this.getValue();
+    const type = getType(value, column);
     const renderer = context.renderers[type] || IDENTITY;
     return renderer(this.format(this.state.value, column, row), column, row, context);
   }
 
   renderContent() {
-    const { id, context, row, column, editable, rowIndex, colIndex, render } = this.props;
+    const { id, context, row, column, editable, rowIndex, colIndex, render, readonly } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
-    if (type === 'list') return null;
+    if (type === 'list' && !readonly) return null;
     const modifiers = this.getModifiers();
 
     const ContentComponent = editable ? 'button' : 'div';
@@ -317,12 +303,12 @@ class DatagridCell extends React.Component {
   }
 
   renderInput() {
-    const { column, row, context, editable, render } = this.props;
+    const { column, row, context, editable, render, readonly } = this.props;
     if (render) return null;
     const value = getValue(this.state.value, column, row, context.labels);
     const type = getType(value, column);
 
-    if (!editable && type !== 'list') return null;
+    if ((!editable && type !== 'list') || readonly) return null;
 
     if (type === 'list') {
       const { fetching, ...selectProps } = context.getSelectProps(column, row) || {};
@@ -343,13 +329,13 @@ class DatagridCell extends React.Component {
   }
 
   render() {
-    const { aria } = this.props;
+    const { aria, render } = this.props;
     const style = this.getStyle();
     const modifiers = this.getModifiers();
 
     return (
       <div
-        title={this.getValue()}
+        title={render ? undefined : this.getValue()}
         className={bemClass('DatagridCell', modifiers)}
         ref={this.cellRef}
         style={style}
@@ -409,6 +395,7 @@ DatagridCell.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
   }).isRequired,
+  readonly: PropTypes.bool,
 };
 
 export default DatagridCell;
