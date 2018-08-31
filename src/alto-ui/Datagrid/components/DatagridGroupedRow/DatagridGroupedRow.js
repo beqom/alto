@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { evaluateFormula } from '../../helpers';
 import { bemClass } from '../../../helpers/bem';
 
 import DatagridRow from '../DatagridRow';
@@ -8,28 +9,49 @@ import ChevronDownIcon from '../../../Icons/ChevronDown';
 
 import './DatagridGroupedRow.scss';
 
+const sum = xs => xs.reduce((a, b) => a + b);
+
+const getGroupColumnSummary = (column, rows, labels) => {
+  if (column.formula) {
+    const rowResults = rows.map(r => evaluateFormula(column.formula, r, labels.errorFormula));
+    const error = rowResults.find(res => res instanceof Error);
+    if (error) return error;
+    return sum(rowResults);
+  }
+  return sum(rows.map(r => r[column.key]));
+};
+
 const DatagridGroupedRow = ({
   firstRowInGroup,
   collapsed,
   onToggle,
   context,
   columns,
+  subRows,
   ...datagridRowProps
 }) => {
-  const { id, rowKeyField, groupedByColumnKey, renderSummaryGroupCell } = context;
+  const { id, rowKeyField, groupedByColumnKey, groupedSummaryColumnKeys, labels } = context;
 
   const key = rowKeyField(firstRowInGroup);
   const value = firstRowInGroup[groupedByColumnKey];
   const column = columns.find(col => col.key === groupedByColumnKey);
 
+  const row = columns.filter(col => groupedSummaryColumnKeys.includes(col.key)).reduce(
+    (acc, col) => ({
+      ...acc,
+      [col.key]: getGroupColumnSummary(col, subRows, labels),
+    }),
+    {}
+  );
+
   return (
     <DatagridRow
       {...datagridRowProps}
-      row={firstRowInGroup}
+      row={row}
       header
       columns={columns.filter(col => col.key !== groupedByColumnKey)}
-      render={renderSummaryGroupCell}
       context={context}
+      readonly
     >
       {cells => (
         <Fragment>
@@ -65,7 +87,8 @@ DatagridGroupedRow.propTypes = {
     id: PropTypes.string,
     rowKeyField: PropTypes.func.isRequired,
     groupedByColumnKey: PropTypes.string,
-    renderSummaryGroupCell: PropTypes.func.isRequired,
+    groupedSummaryColumnKeys: PropTypes.arrayOf(PropTypes.string).isRequired,
+    labels: PropTypes.object.isRequired,
   }),
   columns: PropTypes.arrayOf(
     PropTypes.shape({
@@ -73,6 +96,7 @@ DatagridGroupedRow.propTypes = {
       title: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
+  subRows: PropTypes.arrayOf(PropTypes.object).isRequired,
   // ... and other DatagridRow Props
 };
 

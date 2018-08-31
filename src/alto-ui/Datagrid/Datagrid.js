@@ -201,10 +201,10 @@ class Datagrid extends React.PureComponent {
   }
 
   renderRows(columns, headersCount = 1, columnIndexStart = 0) {
-    const { rowKeyField, renderSummaryCell, groupedByColumnKey } = this.props;
+    const { rowKeyField, renderSummaryCell, groupedByColumnKey, rows } = this.props;
     const summaryRowsCount = renderSummaryCell ? 1 : 0;
 
-    return this.props.rows.reduce((acc, row, index, arr) => {
+    return rows.reduce((acc, row, index, arr) => {
       const isFirstRow = index === 0;
       const isPrecededByDifferentGroup =
         isFirstRow || row[groupedByColumnKey] !== arr[index - 1][groupedByColumnKey];
@@ -227,6 +227,7 @@ class Datagrid extends React.PureComponent {
             firstRowInGroup={row}
             rowIndex={rowIndex}
             onToggle={this.handleToggleGroup}
+            subRows={rows.filter(r => r[groupedByColumnKey] === row[groupedByColumnKey])}
           />
         ) : null;
 
@@ -341,6 +342,7 @@ Datagrid.defaultProps = {
   showError: () => false,
   locale: 'en-US',
   wrapHeader: () => false,
+  groupedSummaryColumnKeys: [],
 };
 
 Datagrid.propTypes = {
@@ -363,6 +365,7 @@ Datagrid.propTypes = {
   parsers: PropTypes.object,
   renderSummaryCell: PropTypes.func,
   groupedByColumnKey: PropTypes.string,
+  groupedSummaryColumnKeys: PropTypes.arrayOf(PropTypes.string),
   columnHeaders: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,
