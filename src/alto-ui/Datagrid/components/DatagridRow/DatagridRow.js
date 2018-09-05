@@ -17,38 +17,48 @@ const DatagridRow = ({
   context,
   children,
   collapsed,
-}) => (
-  <div role="row" aria-rowindex={rowIndex} className={bemClass('DatagridRow', { collapsed })}>
-    {children(
-      columns.map((column, colIndex) => {
-        const editable = !header && !render && context.editable(column, row) && !column.formula;
-        const edited =
-          !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
+}) => {
+  const { onRowClick, rowKeyField } = context;
+  const clickable = typeof onRowClick === 'function';
+  return (
+    <div
+      role="row"
+      aria-rowindex={rowIndex}
+      className={bemClass('DatagridRow', { collapsed, clickable })}
+      {...(clickable ? { onClick: () => onRowClick(row), tabIndex: '0' } : {})}
+    >
+      {children(
+        columns.map((column, colIndex) => {
+          const editable =
+            !clickable && !header && !render && context.editable(column, row) && !column.formula;
+          const edited =
+            !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
 
-        const id =
-          context.id && row
-            ? `${context.id}__cell--${column.key}-${context.rowKeyField(row)}`
-            : undefined;
-        return (
-          <DatagridCell
-            id={id}
-            key={column.key}
-            row={row}
-            rowIndex={index}
-            column={column}
-            colIndex={colIndex}
-            editable={editable}
-            edited={edited}
-            render={render}
-            header={header}
-            context={context}
-            aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
-          />
-        );
-      })
-    )}
-  </div>
-);
+          const id =
+            context.id && row
+              ? `${context.id}__cell--${column.key}-${rowKeyField(row)}`
+              : undefined;
+          return (
+            <DatagridCell
+              id={id}
+              key={column.key}
+              row={row}
+              rowIndex={index}
+              column={column}
+              colIndex={colIndex}
+              editable={editable}
+              edited={edited}
+              render={render}
+              header={header}
+              context={context}
+              aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
+            />
+          );
+        })
+      )}
+    </div>
+  );
+};
 
 DatagridRow.displayName = 'DatagridRow';
 
