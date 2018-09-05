@@ -17,14 +17,13 @@ const DatagridRow = ({
   context,
   children,
   collapsed,
-  readonly,
 }) => (
   <div role="row" aria-rowindex={rowIndex} className={bemClass('DatagridRow', { collapsed })}>
     {children(
       columns.map((column, colIndex) => {
-        const editable = !readonly && !render && context.editable(column, row) && !column.formula;
+        const editable = !header && !render && context.editable(column, row) && !column.formula;
         const edited =
-          !readonly && !render && context.edited(column, row, columnIndexStart + colIndex, index);
+          !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
 
         const id =
           context.id && row
@@ -44,7 +43,6 @@ const DatagridRow = ({
             header={header}
             context={context}
             aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
-            readonly={readonly}
           />
         );
       })
@@ -59,7 +57,6 @@ DatagridRow.defaultProps = {
   index: 0,
   children: x => x,
   collapsed: false,
-  readonly: false,
 };
 
 DatagridRow.propTypes = {
@@ -81,7 +78,6 @@ DatagridRow.propTypes = {
   }).isRequired,
   children: PropTypes.func,
   collapsed: PropTypes.bool,
-  readonly: PropTypes.bool,
 };
 
 export default DatagridRow;
