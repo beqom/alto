@@ -18,7 +18,7 @@ const getGroupColumnSummary = (column, rows, labels) => {
     if (error) return error;
     return sum(rowResults);
   }
-  return sum(rows.map(r => r[column.key]));
+  return sum(rows.map(r => parseFloat(r[column.key] || 0)));
 };
 
 const DatagridGroupedRow = ({
@@ -51,7 +51,6 @@ const DatagridGroupedRow = ({
       header
       columns={columns.filter(col => col.key !== groupedByColumnKey)}
       context={context}
-      readonly
     >
       {cells => (
         <Fragment>
