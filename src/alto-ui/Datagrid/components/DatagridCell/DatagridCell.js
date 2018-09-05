@@ -21,14 +21,19 @@ const getValue = (value, column, row, labels) =>
   column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
 const getType = (value, column) => (value instanceof Error ? 'error' : column.type || typeof value);
 
-const getFormattedValue = context => (value, column, row) => {
-  const val = getValue(value, column, row, context.labels);
-  const type = getType(val, column);
+const getFormatter = (context, type) => (value, column, row) => {
   const parser = context.parsers[type] || IDENTITY;
   const formatter = column.formatter || context.formatters[type] || IDENTITY;
   const args = [column, row, context];
 
-  return formatter(parser(val, ...args), ...args);
+  return formatter(parser(value, ...args), ...args);
+};
+
+const getFormattedValue = context => (value, column, row) => {
+  const val = getValue(value, column, row, context.labels);
+  const type = getType(val, column);
+  const format = getFormatter(context, type);
+  return format(value, column, row);
 };
 
 const getInputProps = type => {
@@ -76,7 +81,7 @@ class DatagridCell extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!nextProps.column.formula) {
+    if (!nextProps.column.formula || nextProps.header) {
       const nextValue = nextProps.row[nextProps.column.key || nextProps.column];
       if (nextValue !== prevState.originalValue) {
         return {
@@ -104,9 +109,18 @@ class DatagridCell extends React.Component {
   }
 
   getValue() {
-    const { row, column, context, render } = this.props;
+    const { row, column, context, render, header } = this.props;
     if (render) return '';
+    if (header) return this.state.value;
     return getValue(this.state.value, column, row, context.labels);
+  }
+
+  getFormattedValue() {
+    const { context, row, column } = this.props;
+    const value = this.getValue();
+    const type = getType(value, column);
+    const format = getFormatter(context, type);
+    return format(value, column, row);
   }
 
   getStyle() {
@@ -235,7 +249,7 @@ class DatagridCell extends React.Component {
     const value = this.getValue();
     const type = getType(value, column);
     const renderer = context.renderers[type] || IDENTITY;
-    return renderer(this.format(this.state.value, column, row), column, row, context);
+    return renderer(this.getFormattedValue(), column, row, context);
   }
 
   renderContent() {
@@ -302,12 +316,12 @@ class DatagridCell extends React.Component {
   }
 
   renderInput() {
-    const { column, row, context, editable, render, readonly } = this.props;
+    const { column, row, context, editable, render, header } = this.props;
     if (render) return null;
     const value = getValue(this.state.value, column, row, context.labels);
     const type = getType(value, column);
 
-    if ((!editable && type !== 'list') || readonly) return null;
+    if ((!editable && type !== 'list') || header) return null;
 
     if (type === 'list') {
       const { fetching, ...selectProps } = context.getSelectProps(column, row) || {};
@@ -394,7 +408,6 @@ DatagridCell.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
   }).isRequired,
-  readonly: PropTypes.bool,
 };
 
 export default DatagridCell;
