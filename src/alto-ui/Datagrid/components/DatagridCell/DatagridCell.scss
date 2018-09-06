@@ -7,6 +7,15 @@
   display: flex;
   border-bottom: 1px solid $coolgrey-20;
 
+  .DatagridRow--clickable:hover & {
+    transition: background-color $transition;
+    background-color: $blue-10;
+
+    &--selected {
+      background-color: $blue-20;
+    }
+  }
+
   &--number,
   &--percentage,
   &--int,
@@ -28,6 +37,10 @@
   &--header {
     background-color: $coolgrey-10;
     font-weight: $font-weight-semibold;
+  }
+
+  &--selected {
+    background-color: $blue-20;
   }
 }
 

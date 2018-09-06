@@ -18,7 +18,7 @@ const DatagridRow = ({
   children,
   collapsed,
 }) => {
-  const { onRowClick, rowKeyField } = context;
+  const { onRowClick, rowKeyField, selectedRowKey } = context;
   const clickable = typeof onRowClick === 'function';
   return (
     <div
@@ -52,6 +52,7 @@ const DatagridRow = ({
               header={header}
               context={context}
               aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
+              selectedRowKey={selectedRowKey}
             />
           );
         })
