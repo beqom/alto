@@ -1,0 +1,71 @@
+@import '../scss/inc';
+
+.Menu {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.Menu--right {
+  .Dropdown {
+    left: 100%;
+    margin-left: 1.75rem;
+    margin-top: 0;
+    top: 0;
+
+    &::before,
+    &::after {
+      top: $spacing-x-small;
+      right: 100%;
+      left: initial;
+      border-bottom-color: transparent;
+    }
+
+    &::before {
+      border-right-color: $coolgrey-20;
+      margin-right: 1px;
+    }
+
+    &::after {
+      border-right-color: $white;
+    }
+  }
+}
+
+.Menu__item {
+  &:not(:last-child) {
+    margin-bottom: $spacing-small;
+  }
+}
+
+.MenuItem {
+  @extend %reset-button;
+  cursor: pointer;
+  display: block;
+  color: $coolgrey-50;
+  transition: all $transition;
+
+  &:hover {
+    color: $coolgrey-90;
+  }
+
+  &--active,
+  &--active:hover {
+    color: $blue;
+  }
+
+  &--submenu {
+    &::after {
+      content: ' ‣';
+      display: inline-block;
+      transform: scale(2);
+      margin-left: $spacing-medium;
+    }
+  }
+
+  &--disabled,
+  &--disabled:hover {
+    color: $coolgrey-50;
+    text-decoration: line-through;
+  }
+}
