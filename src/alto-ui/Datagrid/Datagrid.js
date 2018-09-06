@@ -186,7 +186,6 @@ class Datagrid extends React.PureComponent {
   renderSummaryRow(columns, numberOfRows, headersCount = 1, columnIndexStart = 0) {
     const { renderSummaryCell } = this.props;
     if (!renderSummaryCell || !numberOfRows) return null;
-
     return (
       <DatagridRow
         columns={columns}
