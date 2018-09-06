@@ -97,7 +97,9 @@ class DatagridCell extends React.Component {
     if (!isEqual(this.state, nextState)) {
       return true;
     }
-    return this.props.row !== nextProps.row;
+    return (
+      this.props.row !== nextProps.row || this.props.selectedRowKey !== nextProps.selectedRowKey
+    );
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -137,11 +139,19 @@ class DatagridCell extends React.Component {
 
   getModifiers() {
     const { editing } = this.state;
-    const { context, row, column, edited, editable, header } = this.props;
-
+    const {
+      context,
+      row,
+      column,
+      edited,
+      editable,
+      header,
+      selectedRowKey,
+      clickable,
+    } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
-
+    const selected = selectedRowKey && context.rowKeyField(row) === selectedRowKey;
     return {
       [type]: true,
       formula: !!column.formula,
@@ -149,6 +159,8 @@ class DatagridCell extends React.Component {
       editing,
       edited,
       header,
+      selected,
+      clickable,
       'with-icon': context.showError(value, column, row),
       ...context.modifiers(value, column, row),
     };
@@ -408,6 +420,8 @@ DatagridCell.propTypes = {
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
   }).isRequired,
+  selectedRowKey: PropTypes.string,
+  clickable: PropTypes.bool,
 };
 
 export default DatagridCell;
