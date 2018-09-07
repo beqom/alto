@@ -3,6 +3,7 @@ import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
 import ArrowUp from './ArrowUp';
+import Balance from './Balance';
 import Bars from './Bars';
 import Bell from './Bell';
 import Bolt from './Bolt';
@@ -61,6 +62,7 @@ import Plus from './Plus';
 import PlusCircle from './PlusCircle';
 import Populations from './Populations';
 import Remove from './Remove';
+import Repeat from './Repeat';
 import Search from './Search';
 import Tasks from './Tasks';
 import Times from './Times';
@@ -80,6 +82,7 @@ export default {
   ArrowLeft,
   ArrowUp,
   ArrowRight,
+  Balance,
   Bars,
   Bell,
   Bolt,
@@ -138,6 +141,7 @@ export default {
   PlusCircle,
   Populations,
   Remove,
+  Repeat,
   Search,
   Tasks,
   Times,
