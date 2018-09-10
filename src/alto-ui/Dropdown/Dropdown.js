@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import Popover from '../Popover';
 import PopoverWrapper from '../Popover/PopoverWrapper';
 
-import './Menu.scss';
-import MenuItem from './MenuItem';
+import './Dropdown.scss';
+import DropdownItem from './DropdownItem';
 import { bemClass } from '../helpers/bem';
 
-class Menu extends React.Component {
+class Dropdown extends React.Component {
   constructor(props) {
     super(props);
 
@@ -53,13 +53,13 @@ class Menu extends React.Component {
         ? children(this.toggle, this.open, this.close, this.state.open)
         : children;
     return (
-      <PopoverWrapper className={bemClass('Menu', {}, className)}>
+      <PopoverWrapper className={bemClass('Dropdown', {}, className)}>
         {trigger}
         <Popover {...popoverProps} open={this.state.open} onClose={onClose || this.close}>
-          <ul className="Menu">
+          <ul className="Dropdown">
             {items.map(item => (
-              <li key={item.key} className="Menu__item">
-                <MenuItem item={item} menuProps={this.props} popoverProps={popoverProps} />
+              <li key={item.key} className="Dropdown__item">
+                <DropdownItem item={item} dropdownProps={this.props} popoverProps={popoverProps} />
               </li>
             ))}
           </ul>
@@ -69,13 +69,13 @@ class Menu extends React.Component {
   }
 }
 
-Menu.displayName = 'Menu';
+Dropdown.displayName = 'Dropdown';
 
-Menu.defaultProps = {
+Dropdown.defaultProps = {
   open: false,
 };
 
-Menu.propTypes = {
+Dropdown.propTypes = {
   onClose: PropTypes.func,
   open: PropTypes.bool,
   className: PropTypes.string,
@@ -87,4 +87,4 @@ Menu.propTypes = {
   ).isRequired,
 };
 
-export default Menu;
+export default Dropdown;
