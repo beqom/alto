@@ -1,13 +1,13 @@
 @import '../scss/inc';
 
-.Menu {
+.Dropdown {
   margin: 0;
   list-style: none;
   padding: 0;
   padding: $spacing-x-small 0;
 }
 
-.MenuItem {
+.DropdownItem {
   @extend %reset-button;
   cursor: pointer;
   display: block;
@@ -24,7 +24,7 @@
     color: $blue;
   }
 
-  &--submenu {
+  &--subdropdown {
     &::after {
       content: ' ‣';
       display: inline-block;

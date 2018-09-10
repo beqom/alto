@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
-import Menu from './Menu';
+import Dropdown from './Dropdown';
 
 const getPopoverProps = propoverProps => {
   const { top, left, right, end, ...otherProps } = propoverProps;
@@ -16,14 +16,14 @@ const getPopoverProps = propoverProps => {
   return { ...otherProps, right: true, start: true };
 };
 
-const MenuItem = ({ item, menuProps, popoverProps }) => {
+const DropdownItem = ({ item, dropdownProps, popoverProps }) => {
   const { title, items, className, ...buttonProps } = item;
 
   if (!items || !items.length) {
     return (
       <button
         {...buttonProps}
-        className={bemClass('MenuItem', { disabled: item.disabled }, className)}
+        className={bemClass('DropdownItem', { disabled: item.disabled }, className)}
       >
         {title}
       </button>
@@ -31,13 +31,18 @@ const MenuItem = ({ item, menuProps, popoverProps }) => {
   }
 
   return (
-    <Menu {...menuProps} {...getPopoverProps(popoverProps)} items={items} onClose={undefined}>
+    <Dropdown
+      {...dropdownProps}
+      {...getPopoverProps(popoverProps)}
+      items={items}
+      onClose={undefined}
+    >
       {(toggle, open, close, isOpen) => (
         <button
           {...buttonProps}
           className={bemClass(
-            'MenuItem',
-            { submenu: true, active: isOpen, disabled: item.disabled },
+            'DropdownItem',
+            { subdropdown: true, active: isOpen, disabled: item.disabled },
             className
           )}
           onClick={toggle}
@@ -45,23 +50,23 @@ const MenuItem = ({ item, menuProps, popoverProps }) => {
           {title}
         </button>
       )}
-    </Menu>
+    </Dropdown>
   );
 };
 
-MenuItem.displayName = 'MenuItem';
+DropdownItem.displayName = 'DropdownItem';
 
-MenuItem.defaultProps = {};
+DropdownItem.defaultProps = {};
 
-MenuItem.propTypes = {
+DropdownItem.propTypes = {
   item: PropTypes.shape({
     title: PropTypes.any.isRequired,
     items: PropTypes.array,
     className: PropTypes.string,
     onClick: PropTypes.func,
   }).isRequired,
-  menuProps: PropTypes.object.isRequired,
+  dropdownProps: PropTypes.object.isRequired,
   popoverProps: PropTypes.object.isRequired,
 };
 
-export default MenuItem;
+export default DropdownItem;

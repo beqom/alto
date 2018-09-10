@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
 
 import OptionsIcon from '../Icons/Options';
-import Menu from './Menu';
+import Dropdown from './Dropdown';
 
 const items = [
   {
@@ -15,13 +15,13 @@ const items = [
   },
   {
     key: '2',
-    title: 'Sub Menu',
+    title: 'Sub Dropdown',
     items: [
       { key: 'foo', title: 'Foo' },
       { key: 'bar', title: 'Bar' },
       {
         key: 'baz',
-        title: 'Sub Sub Menu',
+        title: 'Sub Sub Dropdown',
         items: [
           { key: 'foo', title: 'Foo' },
           { key: 'bar', title: 'Bar' },
@@ -37,8 +37,8 @@ const items = [
   },
 ];
 
-storiesOf('Menu', module)
+storiesOf('Dropdown', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
-    <Menu items={items}>{onClick => <OptionsIcon onClick={onClick} />}</Menu>
+    <Dropdown items={items}>{onClick => <OptionsIcon onClick={onClick} />}</Dropdown>
   ));
