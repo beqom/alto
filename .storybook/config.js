@@ -59,7 +59,6 @@ function loadStories() {
   require('../src/alto-ui/CopyToClipboard/story');
   require('../src/alto-ui/Datagrid/story');
   require('../src/alto-ui/Dialog/story');
-  require('../src/alto-ui/Dropdown/story');
   require('../src/alto-ui/Icons/story');
   require('../src/alto-ui/Form/story');
   require('../src/alto-ui/List/story');
@@ -67,6 +66,7 @@ function loadStories() {
   require('../src/alto-ui/Menu/story');
   require('../src/alto-ui/MenuList/story');
   require('../src/alto-ui/Pagination/story');
+  require('../src/alto-ui/Popover/story');
   require('../src/alto-ui/ProgressBar/story');
   require('../src/alto-ui/ProgressCircle/story');
   require('../src/alto-ui/ShowMore/story');
