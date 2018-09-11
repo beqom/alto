@@ -5,7 +5,7 @@ import Popover from '../Popover';
 import PopoverWrapper from '../Popover/PopoverWrapper';
 
 import './Dropdown.scss';
-import DropdownItem from './DropdownItem';
+import DropdownItem from './components/DropdownItem';
 import { bemClass } from '../helpers/bem';
 
 class Dropdown extends React.Component {

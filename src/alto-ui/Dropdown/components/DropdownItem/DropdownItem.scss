@@ -1,0 +1,34 @@
+@import '../../../scss/inc';
+
+.DropdownItem {
+  @extend %reset-button;
+  cursor: pointer;
+  display: block;
+  color: $coolgrey-50;
+  transition: all $transition;
+  padding: $spacing-x-small $spacing-medium;
+
+  &:hover {
+    color: $coolgrey-90;
+  }
+
+  &--active,
+  &--active:hover {
+    color: $blue;
+  }
+
+  &--subdropdown {
+    &::after {
+      content: ' ‣';
+      display: inline-block;
+      transform: scale(2);
+      margin-left: $spacing-medium;
+    }
+  }
+
+  &--disabled,
+  &--disabled:hover {
+    color: $coolgrey-50;
+    text-decoration: line-through;
+  }
+}
