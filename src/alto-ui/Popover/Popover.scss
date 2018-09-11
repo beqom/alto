@@ -13,6 +13,7 @@
   z-index: $z-index-popover;
   display: none;
   border: 1px solid $coolgrey-20;
+  padding: $spacing-medium;
 
   &--open {
     display: block;

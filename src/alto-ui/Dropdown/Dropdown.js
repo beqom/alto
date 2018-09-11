@@ -53,10 +53,15 @@ class Dropdown extends React.Component {
         ? children(this.toggle, this.open, this.close, this.state.open)
         : children;
     return (
-      <PopoverWrapper className={bemClass('Dropdown', {}, className)}>
+      <PopoverWrapper className={bemClass('Dropdown__wrapper', {}, className)}>
         {trigger}
-        <Popover {...popoverProps} open={this.state.open} onClose={onClose || this.close}>
-          <ul className="Dropdown">
+        <Popover
+          {...popoverProps}
+          className="Dropdown"
+          open={this.state.open}
+          onClose={onClose || this.close}
+        >
+          <ul className="Dropdown__list">
             {items.map(item => (
               <li key={item.key} className="Dropdown__item">
                 <DropdownItem item={item} dropdownProps={this.props} popoverProps={popoverProps} />

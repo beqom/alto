@@ -1,9 +1,11 @@
 @import '../scss/inc';
 
 .Dropdown {
-  margin: 0;
-  list-style: none;
   padding: 0;
+}
+
+.Dropdown__list {
+  list-style: none;
   padding: $spacing-x-small 0;
 }
 
