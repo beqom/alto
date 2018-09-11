@@ -42,6 +42,7 @@ const Select = React.forwardRef((props, ref) => {
     className,
     hideLabel,
     options,
+    readonly,
     label,
     helpText,
     ...otherProps
@@ -57,11 +58,13 @@ const Select = React.forwardRef((props, ref) => {
       <select
         ref={ref}
         {...otherProps}
+        disabled={readonly || otherProps.disabled}
         className={bemClass('Select', {
           success,
           error,
           large,
           small,
+          readonly,
         })}
       >
         {props.children || renderOptions(options)}
