@@ -48,11 +48,28 @@
     font-size: $font-size-small;
     line-height: 2;
   }
+
   &:disabled {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
     border-color: $coolgrey-20;
     box-shadow: none;
+  }
+
+  &--readonly,
+  &--readonly:hover,
+  &--readonly:focus,
+  &--readonly:disabled {
+    cursor: default;
+    color: currentColor;
+    background: transparent;
+    box-shadow: none;
+    &::-ms-expand {
+      display: none;
+    }
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
   }
 }

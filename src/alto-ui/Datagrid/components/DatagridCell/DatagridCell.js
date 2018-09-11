@@ -332,8 +332,8 @@ class DatagridCell extends React.Component {
           <Select
             onFocus={this.startEditing}
             {...this.getSharedFieldProps()}
-            disabled={!editable}
             {...selectProps}
+            readonly={!editable}
           />
           {fetching && <Spinner className="DatagridCell__spinner" small />}
         </Fragment>
