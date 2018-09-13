@@ -64,7 +64,12 @@ class Dropdown extends React.Component {
           <ul className="Dropdown__list">
             {items.map(item => (
               <li key={item.key} className="Dropdown__item">
-                <DropdownItem item={item} dropdownProps={this.props} popoverProps={popoverProps} />
+                <DropdownItem
+                  item={item}
+                  dropdownProps={this.props}
+                  popoverProps={popoverProps}
+                  onClose={this.props.onClose || this.close}
+                />
               </li>
             ))}
           </ul>
@@ -81,6 +86,7 @@ Dropdown.defaultProps = {
 };
 
 Dropdown.propTypes = {
+  onClick: PropTypes.func,
   onClose: PropTypes.func,
   open: PropTypes.bool,
   className: PropTypes.string,
