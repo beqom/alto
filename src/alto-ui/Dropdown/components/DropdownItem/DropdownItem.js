@@ -16,8 +16,7 @@ const getPopoverProps = propoverProps => {
   return { ...otherProps, right: true, start: true };
 };
 
-const DropdownItem = ({ item, dropdownProps, popoverProps }) => {
-  const { title, items, className, ...buttonProps } = item;
+    const { title, items, className, Icon, ...buttonProps } = item;
 
   if (!items || !items.length) {
     return (
@@ -25,6 +24,7 @@ const DropdownItem = ({ item, dropdownProps, popoverProps }) => {
         {...buttonProps}
         className={bemClass('DropdownItem', { disabled: item.disabled }, className)}
       >
+          {Icon && <Icon left outline />}
         {title}
       </button>
     );
