@@ -342,6 +342,7 @@ Datagrid.defaultProps = {
   locale: 'en-US',
   wrapHeader: () => false,
   groupedSummaryColumnKeys: [],
+  onClickCellDropdownItem: () => {},
 };
 
 Datagrid.propTypes = {
@@ -385,6 +386,8 @@ Datagrid.propTypes = {
   onSort: PropTypes.func,
   // eslint-disable-next-line react/no-unused-prop-types
   columnSorted: PropTypes.object,
+  // eslint-disable-next-line react/no-unused-prop-types
+  onClickCellDropdownItem: PropTypes.func,
 };
 
 export default Datagrid;

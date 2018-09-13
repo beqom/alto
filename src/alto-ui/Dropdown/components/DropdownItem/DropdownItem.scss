@@ -3,7 +3,8 @@
 .DropdownItem {
   @extend %reset-button;
   cursor: pointer;
-  display: block;
+  display: flex;
+  align-items: center;
   color: $coolgrey-50;
   transition: all $transition;
   padding: $spacing-x-small $spacing-medium;

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { bemClass } from '../../../helpers/bem';
 import Dropdown from '../../Dropdown';
 
+import './DropdownItem.scss';
+
 const getPopoverProps = propoverProps => {
   const { top, left, right, end, ...otherProps } = propoverProps;
   // left or right ?
@@ -16,43 +18,67 @@ const getPopoverProps = propoverProps => {
   return { ...otherProps, right: true, start: true };
 };
 
-const DropdownItem = ({ item, dropdownProps, popoverProps }) => {
-  const { title, items, className, ...buttonProps } = item;
+class DropdownItem extends React.Component {
+  constructor() {
+    super();
 
-  if (!items || !items.length) {
-    return (
-      <button
-        {...buttonProps}
-        className={bemClass('DropdownItem', { disabled: item.disabled }, className)}
-      >
-        {title}
-      </button>
-    );
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  return (
-    <Dropdown
-      {...dropdownProps}
-      {...getPopoverProps(popoverProps)}
-      items={items}
-      onClose={undefined}
-    >
-      {(toggle, open, close, isOpen) => (
+  handleClick(e) {
+    if (this.props.item.onClick) {
+      this.props.item.onClick(e);
+    }
+
+    if (this.props.dropdownProps.onClick) {
+      this.props.dropdownProps.onClick(this.props.item);
+    }
+
+    this.props.onClose();
+  }
+
+  render() {
+    const { item, dropdownProps, popoverProps } = this.props;
+    const { title, items, className, Icon, ...buttonProps } = item;
+
+    if (!items || !items.length) {
+      return (
         <button
           {...buttonProps}
-          className={bemClass(
-            'DropdownItem',
-            { subdropdown: true, active: isOpen, disabled: item.disabled },
-            className
-          )}
-          onClick={toggle}
+          onClick={this.handleClick}
+          className={bemClass('DropdownItem', { disabled: item.disabled }, className)}
+          title={title}
         >
+          {Icon && <Icon left outline />}
           {title}
         </button>
-      )}
-    </Dropdown>
-  );
-};
+      );
+    }
+
+    return (
+      <Dropdown
+        {...dropdownProps}
+        {...getPopoverProps(popoverProps)}
+        items={items}
+        onClose={undefined}
+      >
+        {(toggle, open, close, isOpen) => (
+          <button
+            {...buttonProps}
+            className={bemClass(
+              'DropdownItem',
+              { subdropdown: true, active: isOpen, disabled: item.disabled },
+              className
+            )}
+            onClick={toggle}
+          >
+            {title}
+          </button>
+        )}
+      </Dropdown>
+    );
+  }
+}
 
 DropdownItem.displayName = 'DropdownItem';
 
@@ -67,6 +93,7 @@ DropdownItem.propTypes = {
   }).isRequired,
   dropdownProps: PropTypes.object.isRequired,
   popoverProps: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default DropdownItem;

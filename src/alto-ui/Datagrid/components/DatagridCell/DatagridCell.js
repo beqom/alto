@@ -9,6 +9,8 @@ import TextField from '../../../Form/TextField';
 import Select from '../../../Form/Select';
 import Tooltip from '../../../Tooltip';
 import Spinner from '../../../Spinner';
+import Dropdown from '../../../Dropdown';
+import OptionsIcon from '../../../Icons/Options';
 
 import { evaluateFormula } from '../../helpers';
 import { bemClass } from '../../../helpers/bem';
@@ -251,43 +253,33 @@ class DatagridCell extends React.Component {
     }
   }
 
-  renderValue() {
-    const { render, column, row, context } = this.props;
-    if (render) {
-      const formatter = column.formatter || IDENTITY;
-      const format = x => formatter(x, column, row, context);
-      return render(column, row, format);
-    }
-    const value = this.getValue();
-    const type = getType(value, column);
-    const renderer = context.renderers[type] || IDENTITY;
-    return renderer(this.getFormattedValue(), column, row, context);
+  renderDropdown() {
+    const { column, header, context } = this.props;
+    if (header || !column.cellDropdownItems || !column.cellDropdownItems.length) return null;
+    return (
+      <Dropdown
+        items={column.cellDropdownItems}
+        end
+        onClick={item =>
+          context.onClickCellDropdownItem(item, this.getValue(), this.props.row, this.props.column)
+        }
+      >
+        {onClick => (
+          <div className="DatagridCell__dropdown">
+            <OptionsIcon onClick={onClick} />
+          </div>
+        )}
+      </Dropdown>
+    );
   }
 
-  renderContent() {
-    const { id, context, row, column, editable, rowIndex, colIndex, render } = this.props;
+  renderError() {
+    const { column, row, rowIndex, colIndex, context } = this.props;
     const value = this.getValue();
-    const type = getType(value, column);
-    const modifiers = this.getModifiers();
-
-    const ContentComponent = editable ? 'button' : 'div';
-
-    const content = type !== 'list' && (
-      <ContentComponent
-        id={editable && id ? `${id}__button` : undefined}
-        ref={this.setContentNode}
-        className={bemClass('DatagridCell__content', modifiers)}
-        onClick={editable ? this.startEditing : undefined}
-      >
-        {this.renderValue()}
-      </ContentComponent>
-    );
-
-    if (render) return content;
     const error =
       typeof context.showError === 'function' ? context.showError(value, column, row) : false;
 
-    if (!error) return content;
+    if (!error) return null;
     const warning =
       typeof context.isWarningError === 'function'
         ? context.isWarningError(value, column, row)
@@ -303,28 +295,34 @@ class DatagridCell extends React.Component {
     const lastCell = colIndex === context.columns.length - 1;
     const tooltipContent = this.replaceRowValues(error);
     const isMedium = tooltipContent.length > 35;
-    const errorElement =
-      typeof error === 'string' ? (
-        <Tooltip
-          content={tooltipContent}
-          medium={isMedium}
-          error={!warning}
-          warning={warning}
-          top={lastRow && !firstCell && !lastCell}
-          left={lastCell}
-          right={firstCell}
-        >
-          {icon}
-        </Tooltip>
-      ) : (
-        icon
-      );
-    return (
-      <Fragment>
-        {errorElement}
-        {content}
-      </Fragment>
+    return typeof error === 'string' ? (
+      <Tooltip
+        content={tooltipContent}
+        medium={isMedium}
+        error={!warning}
+        warning={warning}
+        top={lastRow && !firstCell && !lastCell}
+        left={lastCell}
+        right={firstCell}
+      >
+        {icon}
+      </Tooltip>
+    ) : (
+      icon
     );
+  }
+
+  renderValue() {
+    const { render, column, row, context } = this.props;
+    if (render) {
+      const formatter = column.formatter || IDENTITY;
+      const format = x => formatter(x, column, row, context);
+      return render(column, row, format);
+    }
+    const value = this.getValue();
+    const type = getType(value, column);
+    const renderer = context.renderers[type] || IDENTITY;
+    return renderer(this.getFormattedValue(), column, row, context);
   }
 
   renderInput() {
@@ -353,6 +351,37 @@ class DatagridCell extends React.Component {
     return <TextField {...this.getSharedFieldProps()} {...getInputProps(type)} />;
   }
 
+  renderContent() {
+    const { id, column, render, editable } = this.props;
+    const value = this.getValue();
+    const type = getType(value, column);
+    const modifiers = this.getModifiers();
+
+    const ContentComponent = editable ? 'button' : 'div';
+
+    const content = type !== 'list' && (
+      <ContentComponent
+        id={editable && id ? `${id}__button` : undefined}
+        ref={this.setContentNode}
+        className={bemClass('DatagridCell__content', modifiers)}
+        onClick={editable ? this.startEditing : undefined}
+      >
+        {this.renderValue()}
+      </ContentComponent>
+    );
+
+    if (render) return content;
+
+    return (
+      <Fragment>
+        {this.renderError()}
+        {content}
+        {this.renderInput()}
+        {this.renderDropdown()}
+      </Fragment>
+    );
+  }
+
   render() {
     const { aria, render } = this.props;
     const style = this.getStyle();
@@ -368,10 +397,7 @@ class DatagridCell extends React.Component {
         aria-rowindex={aria.rowIndex}
         aria-colindex={aria.colIndex}
       >
-        <div className="DatagridCell__container">
-          {this.renderContent()}
-          {this.renderInput()}
-        </div>
+        <div className="DatagridCell__container">{this.renderContent()}</div>
       </div>
     );
   }
@@ -411,6 +437,7 @@ DatagridCell.propTypes = {
     locale: PropTypes.string,
     onStartEditing: PropTypes.func,
     getSelectProps: PropTypes.func,
+    onClickCellDropdownItem: PropTypes.func.isRequired,
   }),
   render: PropTypes.func,
   editable: PropTypes.bool,

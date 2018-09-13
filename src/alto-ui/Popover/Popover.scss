@@ -158,6 +158,24 @@
     bottom: -1px;
   }
 
+  &--top::before {
+    border-top-color: $coolgrey-20;
+    top: 0;
+  }
+
+  &--top::after {
+    border-top-color: $white;
+    top: -1px;
+  }
+
+  &--top,
+  &--bottom {
+    &::before,
+    &::after {
+      left: 0;
+    }
+  }
+
   // --- left ---
 
   &--left::before {
@@ -180,5 +198,13 @@
   &--right::after {
     border-right-color: $white;
     right: -1px;
+  }
+
+  &--left,
+  &--right {
+    &::before,
+    &::after {
+      top: 0;
+    }
   }
 }
