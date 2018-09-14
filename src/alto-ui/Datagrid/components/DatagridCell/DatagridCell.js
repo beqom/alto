@@ -291,6 +291,7 @@ class DatagridCell extends React.Component {
     ) : (
       <ExclamationCircleIcon baseline className="DatagridCell__error-icon" />
     );
+    const firstRow = rowIndex === 0;
     const lastRow = rowIndex === context.rows.length - 1;
     const firstCell = colIndex === 0;
     const lastCell = colIndex === context.columns.length - 1;
@@ -302,7 +303,7 @@ class DatagridCell extends React.Component {
         medium={isMedium}
         error={!warning}
         warning={warning}
-        top={lastRow && !firstCell && !lastCell}
+        top={lastRow && !firstCell && !lastCell && !firstRow}
         left={lastCell}
         right={firstCell}
       >
