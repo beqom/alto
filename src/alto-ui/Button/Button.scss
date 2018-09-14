@@ -75,7 +75,13 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 }
 
 // Flat Buttons
-@mixin button--flat($color-default, $color-hover-text, $color-focus, $color-hover-bkgd) {
+@mixin button--flat(
+  $color-default,
+  $color-hover-text,
+  $color-focus,
+  $color-hover-bkgd,
+  $color-active-bkgd
+) {
   color: $color-default;
 
   &,
@@ -98,8 +104,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     background: $color-hover-bkgd;
   }
 
-  &:active {
-    color: $color-default;
+  &.button--active {
+    background: $color-active-bkgd;
   }
 
   &:disabled,
@@ -115,7 +121,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-weight: $font-weight-regular;
+  font-weight: $font-weight-semibold;
   font-size: $font-size-medium;
   font-family: $font-family-alt;
   padding: 0.4375rem 0.75rem; // Button height = 32px
@@ -217,7 +223,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 // Flat
 
 .button--flat {
-  @include button--flat($blue, $blue-80, $blue-20, $blue-20);
+  @include button--flat($coolgrey-70, $coolgrey-80, $blue-30, $coolgrey-20, $coolgrey-30);
   background: transparent;
   border-color: transparent;
   padding-left: 0.5rem;
@@ -225,13 +231,19 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 }
 
 .button--flat.button--success {
-  @include button--flat($green, $green-80, $green-20, $green-20);
+  @include button--flat($green, $green-80, $green-20, $green-20, $green-30);
 }
 
 .button--flat.button--danger {
-  @include button--flat($red, $red-80, $red-20, $red-20);
+  @include button--flat($red, $red-80, $red-20, $red-20, $red-30);
 }
 
 .button--flat.button--white {
-  @include button--flat($white, rgba($white, 0.8), $color-white-button-focus, rgba($white, 0.2));
+  @include button--flat(
+    $white,
+    rgba($white, 0.8),
+    $color-white-button-focus,
+    rgba($white, 0.2),
+    rgba($white, 0.3)
+  );
 }
