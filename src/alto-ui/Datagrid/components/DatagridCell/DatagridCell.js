@@ -96,6 +96,7 @@ class DatagridCell extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.render) return true;
     if (!isEqual(this.state, nextState)) {
       return true;
     }
