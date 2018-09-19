@@ -6,6 +6,7 @@ import isEqual from 'lodash.isequal';
 import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
 import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import TextField from '../../../Form/TextField';
+import InputNumber from '../../../Form/InputNumber';
 import Select from '../../../Form/Select';
 import Tooltip from '../../../Tooltip';
 import Spinner from '../../../Spinner';
@@ -69,6 +70,7 @@ class DatagridCell extends React.Component {
     this.startEditing = this.startEditing.bind(this);
     this.stopEditing = this.stopEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeNumber = this.handleChangeNumber.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.format = this.format.bind(this);
@@ -216,6 +218,11 @@ class DatagridCell extends React.Component {
     this.propagateChange(value);
   }
 
+  handleChangeNumber(e, value) {
+    this.setState({ value });
+    this.propagateChange(value);
+  }
+
   handleBlur(e) {
     this.stopEditing();
     const { value } = e.target;
@@ -339,8 +346,18 @@ class DatagridCell extends React.Component {
         </Fragment>
       );
     }
-
-    return <TextField {...this.getSharedFieldProps()} {...getInputProps(type)} />;
+    const inputType = getInputProps(type);
+    if (inputType.type && inputType.type === 'number' && context.locale) {
+      return (
+        <InputNumber
+          {...this.getSharedFieldProps()}
+          onChange={this.handleChangeNumber}
+          locale={context.locale}
+          precision={column.precision}
+        />
+      );
+    }
+    return <TextField {...this.getSharedFieldProps()} {...inputType} />;
   }
 
   render() {
