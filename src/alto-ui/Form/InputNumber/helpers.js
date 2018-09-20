@@ -16,8 +16,10 @@ export const parse = (value, locale, precision) =>
     precision
   );
 
-export const format = (value, locale, precision) =>
-  parse(value, locale, precision).toLocaleString(locale, {
-    minimumFractionDigits: precision,
-    maximumFractionDigits: precision,
-  });
+export const format = (value, locale, precision, currency) =>
+  [
+    parse(value, locale, precision).toLocaleString(locale, {
+      minimumFractionDigits: precision,
+      maximumFractionDigits: precision,
+    }),
+  ].map(valueFormatted => (currency ? `${currency} ${valueFormatted}` : valueFormatted))[0];

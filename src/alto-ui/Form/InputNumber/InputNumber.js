@@ -23,15 +23,16 @@ class InputNumber extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { value, locale, precision } = props;
+    const { value, locale, precision, currency } = props;
     if (
       state.prev.value !== value ||
       state.prev.precision !== precision ||
-      state.prev.locale !== locale
+      state.prev.locale !== locale ||
+      state.prev.currency !== currency
     ) {
       return {
         prev: props,
-        display: state.editing ? state.display : format(value, locale, precision),
+        display: state.editing ? state.display : format(value, locale, precision, currency),
       };
     }
     return null;
@@ -67,8 +68,8 @@ class InputNumber extends React.Component {
   }
 
   format(value) {
-    const { locale, precision } = this.props;
-    return format(value, locale, precision);
+    const { locale, precision, currency } = this.props;
+    return format(value, locale, precision, currency);
   }
 
   render() {
@@ -95,6 +96,7 @@ InputNumber.propTypes = {
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   precision: PropTypes.number,
   locale: PropTypes.string,
+  currency: PropTypes.string,
   forwardedRef: PropTypes.object,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
