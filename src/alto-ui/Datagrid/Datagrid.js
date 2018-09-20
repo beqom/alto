@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { DateTime } from 'luxon';
+import throttle from 'lodash.throttle';
 
 import CheckIcon from '../Icons/Check';
 import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
+import { isIE11 } from '../helpers/navigator';
 
 import { bemClass } from '../helpers/bem';
 import DatagridHeaderRow from './components/DatagridHeaderRow';
@@ -66,22 +68,31 @@ const fakeNode = document.createElement('div');
 const HEADER_ROW_INDEX = 1;
 
 class Datagrid extends React.PureComponent {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       loaded: false,
       collapsedGroups: {},
     };
 
+    const { scrollingSyncThrottleTime } = props;
+
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
     this.setFrozenRowsNode = this.setFrozenRowsNode.bind(this);
     this.setStaticRowsNode = this.setStaticRowsNode.bind(this);
-    this.handleScrollXStaticHeader = this.handleScrollXStaticHeader.bind(this);
-    this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
+    this.handleScrollXStaticHeader = scrollingSyncThrottleTime
+      ? throttle(this.handleScrollXStaticHeader.bind(this), scrollingSyncThrottleTime)
+      : this.handleScrollXStaticHeader.bind(this);
+    this.handleScrollYFrozenRows = scrollingSyncThrottleTime
+      ? throttle(this.handleScrollYFrozenRows.bind(this), scrollingSyncThrottleTime)
+      : this.handleScrollYFrozenRows.bind(this);
+    this.handleScrollStaticRows = scrollingSyncThrottleTime
+      ? throttle(this.handleScrollStaticRows.bind(this), scrollingSyncThrottleTime)
+      : this.handleScrollStaticRows.bind(this);
+
     this.handleScrollXStaticRows = this.handleScrollXStaticRows.bind(this);
     this.handleScrollYStaticRows = this.handleScrollYStaticRows.bind(this);
-    this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
   }
 
@@ -343,6 +354,7 @@ Datagrid.defaultProps = {
   locale: 'en-US',
   wrapHeader: () => false,
   groupedSummaryColumnKeys: [],
+  scrollingSyncThrottleTime: isIE11() ? 50 : 0,
 };
 
 Datagrid.propTypes = {
@@ -378,6 +390,7 @@ Datagrid.propTypes = {
       ).isRequired,
     }).isRequired
   ),
+  scrollingSyncThrottleTime: PropTypes.number,
   wrapHeader: PropTypes.func,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types

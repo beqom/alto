@@ -89,6 +89,7 @@
     "lodash.isequal": "^4.5.0",
     "lodash.omit": "^4.5.0",
     "lodash.range": "^3.2.0",
+    "lodash.throttle": "^4.1.1",
     "luxon": "^1.0.0",
     "math-expression-evaluator": "^1.2.17",
     "react-day-picker": "^7.1.4",

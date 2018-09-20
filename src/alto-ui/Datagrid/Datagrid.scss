@@ -18,6 +18,13 @@
   }
 }
 
+@media all and (-ms-high-contrast: none) {
+  *::-ms-backdrop,
+  .Datagrid {
+    border-radius: 0;
+  } /* IE11 */
+}
+
 .Datagrid__head,
 .Datagrid__body {
   display: flex;
