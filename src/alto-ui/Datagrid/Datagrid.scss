@@ -57,9 +57,14 @@
   overflow: hidden;
 }
 
+.Datagrid__header-row--static {
+  overflow-y: scroll;
+}
+
 .Datagrid__rows--frozen {
   box-shadow: 2px 0 0 $coolgrey-20;
   margin-right: 2px;
+  overflow-x: scroll;
   .ps__rail-y {
     display: none;
   }
@@ -75,7 +80,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: auto;
+  overflow: scroll;
 }
 
 .DataGrid__perfect-scrollbar {
