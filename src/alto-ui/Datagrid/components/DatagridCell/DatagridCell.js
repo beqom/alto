@@ -8,7 +8,6 @@ import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import TextField from '../../../Form/TextField';
 import InputNumber from '../../../Form/InputNumber';
 import Select from '../../../Form/Select';
-import Tooltip from '../../../Tooltip';
 import Spinner from '../../../Spinner';
 
 import { evaluateFormula } from '../../helpers';
@@ -261,7 +260,7 @@ class DatagridCell extends React.Component {
   }
 
   renderContent() {
-    const { id, context, row, column, editable, rowIndex, colIndex, render } = this.props;
+    const { id, context, row, column, editable, render } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
     const modifiers = this.getModifiers();
@@ -289,36 +288,19 @@ class DatagridCell extends React.Component {
         ? context.isWarningError(value, column, row)
         : false;
 
-    const icon = warning ? (
-      <ExclamationTriangleIcon baseline className="DatagridCell__warning-icon" />
-    ) : (
-      <ExclamationCircleIcon baseline className="DatagridCell__error-icon" />
-    );
-    const firstRow = rowIndex === 0;
-    const lastRow = rowIndex === context.rows.length - 1;
-    const firstCell = colIndex === 0;
-    const lastCell = colIndex === context.columns.length - 1;
     const tooltipContent = this.replaceRowValues(error);
-    const isMedium = tooltipContent.length > 35;
-    const errorElement =
-      typeof error === 'string' ? (
-        <Tooltip
-          content={tooltipContent}
-          medium={isMedium}
-          error={!warning}
-          warning={warning}
-          top={lastRow && !firstCell && !lastCell && !firstRow}
-          left={lastCell}
-          right={firstCell}
-        >
-          {icon}
-        </Tooltip>
-      ) : (
-        icon
-      );
+    const icon = warning ? (
+      <ExclamationTriangleIcon
+        title={tooltipContent}
+        baseline
+        className="DatagridCell__warning-icon"
+      />
+    ) : (
+      <ExclamationCircleIcon title={tooltipContent} baseline className="DatagridCell__error-icon" />
+    );
     return (
       <Fragment>
-        {errorElement}
+        {icon}
         {content}
       </Fragment>
     );
