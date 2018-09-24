@@ -16,10 +16,16 @@ export const parse = (value, locale, precision) =>
     precision
   );
 
-export const format = (value, locale, precision, currency) =>
-  [
-    parse(value, locale, precision).toLocaleString(locale, {
-      minimumFractionDigits: precision,
-      maximumFractionDigits: precision,
-    }),
-  ].map(valueFormatted => (currency ? `${currency} ${valueFormatted}` : valueFormatted))[0];
+export const format = (value, locale, precision, currency) => {
+  if (!value && value !== 0) return '';
+
+  const valueParsed = parse(value, locale, precision);
+  if (Number.isNaN(valueParsed)) return '';
+
+  const valueFormatted = valueParsed.toLocaleString(locale, {
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
+  });
+
+  return currency ? `${currency} ${valueFormatted}` : valueFormatted;
+};
