@@ -12,17 +12,11 @@
   max-height: 100%;
   // Misalignement on last rows
   line-height: 1;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 
   &--loaded {
     opacity: 1;
   }
-}
-
-@media all and (-ms-high-contrast: none) {
-  *::-ms-backdrop,
-  .Datagrid {
-    border-radius: 0;
-  } /* IE11 */
 }
 
 .Datagrid__head,
@@ -58,13 +52,22 @@
 }
 
 .Datagrid__header-row--static {
-  overflow-y: scroll;
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .Datagrid__rows--frozen {
   box-shadow: 2px 0 0 $coolgrey-20;
   margin-right: 2px;
-  overflow-x: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    display: none;
+  }
   .ps__rail-y {
     display: none;
   }
@@ -72,6 +75,7 @@
 
 .Datagrid__rows--static {
   position: relative;
+  overflow: auto;
 }
 
 .Datagrid__rows-container {
@@ -80,7 +84,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .DataGrid__perfect-scrollbar {
@@ -95,4 +99,20 @@
   text-align: center;
   padding: 0;
   margin: auto;
+}
+
+@media all and (-ms-high-contrast: none) {
+  *::-ms-backdrop,
+  .Datagrid {
+    border-radius: 0;
+  } /* IE11 */
+
+  .Datagrid__header-row--static {
+    -ms-overflow-style: none;
+  }
+
+  .Datagrid__rows--frozen {
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+  }
 }
