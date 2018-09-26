@@ -64,7 +64,8 @@ class InputNumber extends React.Component {
 
   parse(value) {
     const { locale, precision } = this.props;
-    return parse(value, locale, precision);
+    const res = parse(value, locale, precision);
+    return Number.isNaN(res) ? '' : res;
   }
 
   format(value) {

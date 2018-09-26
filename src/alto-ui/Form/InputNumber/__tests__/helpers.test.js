@@ -18,6 +18,8 @@ describe('InputNumber/helpers', () => {
   it('should parse correctly depending on value, locale and precision', () => {
     const value = '100,55';
     const en = 'en-US';
+    expect(parse('', en, 0)).toBe(NaN);
+    expect(parse(undefined, en, 0)).toBe(NaN);
     expect(parse(value, en, 0)).toBe(10055);
     expect(parse(value, en, 1)).toBe(10055);
     expect(parse(value, en, 2)).toBe(10055);
@@ -32,6 +34,7 @@ describe('InputNumber/helpers', () => {
 
   it('should format correctly depending on value, locale and precision', () => {
     const en = 'en-US';
+    expect(format('', en, 2)).toBe('');
     expect(format(1000.0, en, 2)).toBe('1,000.00');
     expect(format(123456789, en, 2)).toBe('123,456,789.00');
     expect(format(1234.123, en, 2)).toBe('1,234.12');

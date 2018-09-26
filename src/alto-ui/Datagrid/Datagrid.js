@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import PerfectScrollbar from 'react-perfect-scrollbar';
-import 'react-perfect-scrollbar/dist/css/styles.css';
 import { DateTime } from 'luxon';
-import throttle from 'lodash.throttle';
 
 import CheckIcon from '../Icons/Check';
 import ErrorIcon from '../Icons/ErrorIcon';
@@ -76,23 +73,16 @@ class Datagrid extends React.PureComponent {
       collapsedGroups: {},
     };
 
-    const { scrollingSyncThrottleTime } = props;
+    this.scrollingElt = null;
+    this.timeout = null;
 
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
     this.setFrozenRowsNode = this.setFrozenRowsNode.bind(this);
     this.setStaticRowsNode = this.setStaticRowsNode.bind(this);
-    this.handleScrollXStaticHeader = scrollingSyncThrottleTime
-      ? throttle(this.handleScrollXStaticHeader.bind(this), scrollingSyncThrottleTime)
-      : this.handleScrollXStaticHeader.bind(this);
-    this.handleScrollYFrozenRows = scrollingSyncThrottleTime
-      ? throttle(this.handleScrollYFrozenRows.bind(this), scrollingSyncThrottleTime)
-      : this.handleScrollYFrozenRows.bind(this);
-    this.handleScrollStaticRows = scrollingSyncThrottleTime
-      ? throttle(this.handleScrollStaticRows.bind(this), scrollingSyncThrottleTime)
-      : this.handleScrollStaticRows.bind(this);
+    this.handleScrollXStaticHeader = this.handleScrollXStaticHeader.bind(this);
+    this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
+    this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
 
-    this.handleScrollXStaticRows = this.handleScrollXStaticRows.bind(this);
-    this.handleScrollYStaticRows = this.handleScrollYStaticRows.bind(this);
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
   }
 
@@ -149,7 +139,9 @@ class Datagrid extends React.PureComponent {
   trackDimensions() {
     if (this.staticHeaderNode && this.frozenRowsNode && this.staticRowsNode) {
       this.staticHeaderNode.style.width = `${this.staticRowsNode.clientWidth}px`;
-      this.frozenRowsNode.style.height = `${this.staticRowsNode.clientHeight}px`;
+      if (!isIE11()) {
+        this.frozenRowsNode.style.height = `${this.staticRowsNode.clientHeight}px`;
+      }
     }
   }
   handleToggleGroup(groupId) {
@@ -162,25 +154,37 @@ class Datagrid extends React.PureComponent {
   }
 
   handleScrollXStaticHeader() {
-    this.staticRowsNode.scrollLeft = this.staticHeaderNode.scrollLeft;
+    if (!this.scrollingElt || this.scrollingElt === 'handleScrollXStaticHeader') {
+      this.scrollingElt = 'handleScrollXStaticHeader';
+      this.staticRowsNode.scrollLeft = this.staticHeaderNode.scrollLeft;
+      this.resetScrollingElt();
+    }
   }
 
   handleScrollYFrozenRows() {
-    this.staticRowsNode.scrollTop = this.frozenRowsNode.scrollTop;
-  }
-
-  handleScrollXStaticRows() {
-    this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
-    this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
-  }
-
-  handleScrollYStaticRows() {
-    this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
+    if (!this.scrollingElt || this.scrollingElt === 'handleScrollYFrozenRows') {
+      this.scrollingElt = 'handleScrollYFrozenRows';
+      this.staticRowsNode.scrollTop = this.frozenRowsNode.scrollTop;
+      this.resetScrollingElt();
+    }
   }
 
   handleScrollStaticRows() {
-    this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
-    this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
+    if (!this.scrollingElt || this.scrollingElt === 'handleScrollStaticRows') {
+      this.scrollingElt = 'handleScrollStaticRows';
+      this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
+      this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
+      this.resetScrollingElt();
+    }
+  }
+
+  resetScrollingElt() {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
+      this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
+      this.scrollingElt = null;
+    }, 200);
   }
 
   renderHeaderRows(columns, columnIndexStart = 0) {
@@ -287,43 +291,34 @@ class Datagrid extends React.PureComponent {
               frozenColumns.length
             )}
           </div>
-          <div role="presentation" className={bemClass('Datagrid__header-row', { static: true })}>
-            <PerfectScrollbar
-              containerRef={this.setStaticHeaderNode}
-              onScrollX={this.handleScrollXStaticHeader}
-              option={{ suppressScrollY: true }}
-              className="DataGrid__perfect-scrollbar"
-            >
-              {this.renderHeaderRows(staticColumnHeaders, frozenColumns.length)}
-              {this.renderSummaryRow(
-                staticColumns,
-                staticColumns.length,
-                HEADER_ROW_INDEX + 1,
-                frozenColumns.length
-              )}
-            </PerfectScrollbar>
+          <div
+            role="presentation"
+            ref={this.setStaticHeaderNode}
+            onScroll={this.handleScrollXStaticHeader}
+            className={bemClass('Datagrid__header-row', { static: true })}
+          >
+            {this.renderHeaderRows(staticColumnHeaders, frozenColumns.length)}
+            {this.renderSummaryRow(
+              staticColumns,
+              staticColumns.length,
+              HEADER_ROW_INDEX + 1,
+              frozenColumns.length
+            )}
           </div>
         </div>
 
         <div role="rowgroup" className="Datagrid__body">
           {this.props.rows.length ? (
             <Fragment>
-              <div role="presentation" className={bemClass('Datagrid__rows', { frozen: true })}>
-                <PerfectScrollbar
-                  containerRef={this.setFrozenRowsNode}
-                  onScrollY={this.handleScrollYFrozenRows}
-                  option={{ suppressScrollX: true }}
-                  className="DataGrid__perfect-scrollbar"
-                >
-                  {this.renderRows(frozenColumns, headersCount)}
-                </PerfectScrollbar>
+              <div
+                role="presentation"
+                ref={this.setFrozenRowsNode}
+                onScroll={this.handleScrollYFrozenRows}
+                className={bemClass('Datagrid__rows', { frozen: true })}
+              >
+                {this.renderRows(frozenColumns, headersCount)}
               </div>
               <div role="presentation" className={bemClass('Datagrid__rows', { static: true })}>
-                {/* <PerfectScrollbar
-              containerRef={this.setStaticRowsNode}
-              onScrollX={this.handleScrollXStaticRows}
-              onScrollY={this.handleScrollYStaticRows}
-            > */}
                 <div
                   className="Datagrid__rows-container"
                   ref={this.setStaticRowsNode}
@@ -331,7 +326,6 @@ class Datagrid extends React.PureComponent {
                 >
                   {this.renderRows(staticColumns, headersCount, frozenColumns.length)}
                 </div>
-                {/* </PerfectScrollbar> */}
               </div>
             </Fragment>
           ) : (
@@ -353,8 +347,6 @@ Datagrid.defaultProps = {
   locale: 'en-US',
   wrapHeader: () => false,
   groupedSummaryColumnKeys: [],
-  onClickCellDropdownItem: () => {},
-  scrollingSyncThrottleTime: isIE11() ? 50 : 0,
 };
 
 Datagrid.propTypes = {
@@ -390,7 +382,6 @@ Datagrid.propTypes = {
       ).isRequired,
     }).isRequired
   ),
-  scrollingSyncThrottleTime: PropTypes.number,
   wrapHeader: PropTypes.func,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
