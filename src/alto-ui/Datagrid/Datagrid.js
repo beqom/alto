@@ -347,6 +347,7 @@ Datagrid.defaultProps = {
   locale: 'en-US',
   wrapHeader: () => false,
   groupedSummaryColumnKeys: [],
+  onClickCellDropdownItem: () => {},
 };
 
 Datagrid.propTypes = {
