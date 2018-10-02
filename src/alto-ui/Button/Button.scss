@@ -127,7 +127,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   font-size: $font-size-medium;
   font-family: $font-family-alt;
   padding: 0 0.75rem;
-  height: 1.75rem; // Button height = 32px
+  height: $height-default; // Button height = 32px
   line-height: $line-height-button;
   border: none;
   border-radius: $border-radius-default;
