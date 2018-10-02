@@ -230,16 +230,11 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 .button--flat {
   @include button--flat(
     $coolgrey-60,
-    // Default text
-      $blue-60,
-    // Hover Text
-      $blue-30,
-    // Focus outline
-      transparent,
-    // Hover bkgd
-      $blue-20,
-    //Active bkgd
-      $blue-70
+    $blue-60,
+    $blue-30,
+    transparent,
+    $blue-20,
+    $blue-70
   );
   background: transparent;
   border-color: transparent;
