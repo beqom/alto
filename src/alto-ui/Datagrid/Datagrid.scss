@@ -101,6 +101,15 @@
   margin: auto;
 }
 
+.DataGrid__row--checkbox {
+  display: flex;
+  align-items: center;
+  padding-left: $spacing-medium;
+  height: 3rem;
+  width: 3rem;
+  border-bottom: 1px solid $coolgrey-20;
+}
+
 @media all and (-ms-high-contrast: none) {
   *::-ms-backdrop,
   .Datagrid {
