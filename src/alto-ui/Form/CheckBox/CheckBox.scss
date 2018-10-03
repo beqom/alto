@@ -12,7 +12,6 @@
   font-size: $font-size-medium;
   line-height: 2em;
   height: 2em;
-  padding-left: 1.5em;
   cursor: pointer;
   position: relative;
   outline: 0;
@@ -73,7 +72,14 @@
   }
 }
 
-.CheckBox__label-wrapper {
-  display: block;
+.CheckBox__label-text {
   @extend %text-ellipsis;
+
+  margin-left: 1.5em;
+}
+
+.CheckBox__label-text--hidden {
+  @extend %visually-hidden;
+
+  margin: 0;
 }

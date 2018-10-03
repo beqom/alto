@@ -6,8 +6,9 @@ import CheckIcon from '../Icons/Check';
 import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
 import { isIE11 } from '../helpers/navigator';
-
 import { bemClass } from '../helpers/bem';
+import CheckBox from '../Form/CheckBox';
+
 import DatagridHeaderRow from './components/DatagridHeaderRow';
 import DatagridGroupedRow from './components/DatagridGroupedRow';
 import DatagridRow from './components/DatagridRow';
@@ -17,6 +18,7 @@ import './Datagrid.scss';
 const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
   a11ySortLabel: 'Click to sort this column by Ascending or Descending',
+  checkboxLabel: 'Check to select a row',
 };
 
 const PARSERS = {};
@@ -187,18 +189,19 @@ class Datagrid extends React.PureComponent {
     }, 200);
   }
 
-  renderHeaderRows(columns, columnIndexStart = 0) {
+  renderHeaderRows(columns, hasCheckBox, columnIndexStart = 0) {
     return (
       <DatagridHeaderRow
         rowIndex={HEADER_ROW_INDEX}
         columns={columns}
         columnIndexStart={columnIndexStart}
         context={this.getContext()}
+        hasCheckBox={hasCheckBox}
       />
     );
   }
 
-  renderSummaryRow(columns, numberOfRows, headersCount = 1, columnIndexStart = 0) {
+  renderSummaryRow(columns, numberOfRows, headersCount = 1, columnIndexStart = 0, hasCheckBox) {
     const { renderSummaryCell } = this.props;
     if (!renderSummaryCell || !numberOfRows) return null;
     return (
@@ -210,12 +213,19 @@ class Datagrid extends React.PureComponent {
         context={this.getContext()}
         render={renderSummaryCell}
         columnIndexStart={columnIndexStart}
-      />
+      >
+        {cells => (
+          <Fragment>
+            {hasCheckBox && <div className="DataGrid__row--checkbox" />}
+            {cells}
+          </Fragment>
+        )}
+      </DatagridRow>
     );
   }
 
-  renderRows(columns, headersCount = 1, columnIndexStart = 0) {
-    const { rowKeyField, renderSummaryCell, groupedByColumnKey, rows } = this.props;
+  renderRows(columns, hasCheckBox, headersCount = 1, columnIndexStart = 0) {
+    const { rowKeyField, renderSummaryCell, groupedByColumnKey, rows, id } = this.props;
     const summaryRowsCount = renderSummaryCell ? 1 : 0;
 
     return rows.reduce((acc, row, index, arr) => {
@@ -246,7 +256,7 @@ class Datagrid extends React.PureComponent {
         ) : null;
 
       const groupedRowArr = groupedRow ? [groupedRow] : [];
-
+      const { labels } = this.getContext();
       return [
         ...acc,
         ...groupedRowArr,
@@ -255,13 +265,27 @@ class Datagrid extends React.PureComponent {
           key={key}
           row={row}
           rowIndex={rowIndex + groupedRowArr.length + 1}
-        />,
+        >
+          {cells => (
+            <Fragment>
+              {hasCheckBox && (
+                <CheckBox
+                  id={`${id || 'Datagrid'}__${key}-checkbox`}
+                  className="DataGrid__row--checkbox"
+                  label={labels.checkboxLabel}
+                  hideLabel
+                />
+              )}
+              {cells}
+            </Fragment>
+          )}
+        </DatagridRow>,
       ];
     }, []);
   }
 
   render() {
-    const { className, columns, columnHeaders, rows, id } = this.props;
+    const { className, columns, columnHeaders, rows, onSelectRow, id } = this.props;
     const staticColumns = columns.filter(({ frozen }) => !frozen);
     const frozenColumns = columns.filter(({ frozen }) => frozen);
     const staticColumnHeaders = columnHeaders
@@ -274,6 +298,7 @@ class Datagrid extends React.PureComponent {
 
     const { labels } = this.getContext();
 
+    const hasCheckbox = typeof onSelectRow === 'function';
     return (
       <div
         id={id}
@@ -283,12 +308,13 @@ class Datagrid extends React.PureComponent {
       >
         <div role="rowgroup" className="Datagrid__head">
           <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
-            {this.renderHeaderRows(frozenColumnHeaders)}
+            {this.renderHeaderRows(frozenColumnHeaders, hasCheckbox)}
             {this.renderSummaryRow(
               frozenColumns,
               staticColumns.length,
               HEADER_ROW_INDEX + 1,
-              frozenColumns.length
+              frozenColumns.length,
+              hasCheckbox
             )}
           </div>
           <div
@@ -297,7 +323,7 @@ class Datagrid extends React.PureComponent {
             onScroll={this.handleScrollXStaticHeader}
             className={bemClass('Datagrid__header-row', { static: true })}
           >
-            {this.renderHeaderRows(staticColumnHeaders, frozenColumns.length)}
+            {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
             {this.renderSummaryRow(
               staticColumns,
               staticColumns.length,
@@ -316,7 +342,7 @@ class Datagrid extends React.PureComponent {
                 onScroll={this.handleScrollYFrozenRows}
                 className={bemClass('Datagrid__rows', { frozen: true })}
               >
-                {this.renderRows(frozenColumns, headersCount)}
+                {this.renderRows(frozenColumns, hasCheckbox, headersCount)}
               </div>
               <div role="presentation" className={bemClass('Datagrid__rows', { static: true })}>
                 <div
@@ -324,7 +350,7 @@ class Datagrid extends React.PureComponent {
                   ref={this.setStaticRowsNode}
                   onScroll={this.handleScrollStaticRows}
                 >
-                  {this.renderRows(staticColumns, headersCount, frozenColumns.length)}
+                  {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
                 </div>
               </div>
             </Fragment>
@@ -383,6 +409,7 @@ Datagrid.propTypes = {
       ).isRequired,
     }).isRequired
   ),
+  onSelectRow: PropTypes.func,
   wrapHeader: PropTypes.func,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
