@@ -9,7 +9,14 @@ import DatagridHeaderCell from '../DatagridHeaderCell';
 import './DatagridHeaderRow.scss';
 
 const renderCheckbox = (context, rowIndex) => {
-  const { columnHeaders, wrapHeader, labels, id } = context;
+  const {
+    columnHeaders,
+    wrapHeader,
+    labels,
+    id,
+    onSelectAllRows,
+    isDisplayedRowsSelected,
+  } = context;
 
   const column = columnHeaders[0] || {};
   const checkboxId = `${id || 'DatagridHeaderRow'}__${rowIndex}-checkbox`;
@@ -28,6 +35,8 @@ const renderCheckbox = (context, rowIndex) => {
             id={checkboxId}
             className="DatagridHeaderRow__checkbox"
             style={style}
+            checked={isDisplayedRowsSelected}
+            onChange={onSelectAllRows}
             hideLabel
             label={labels.checkboxLabel}
           />

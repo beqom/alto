@@ -6,6 +6,8 @@ import DatagridHeaderRow from './DatagridHeaderRow';
 
 class DatagridHeaderRowContainer extends React.Component {
   shouldComponentUpdate(nextProps) {
+    if (this.props.context.isDisplayedRowsSelected !== nextProps.context.isDisplayedRowsSelected)
+      return true;
     return !isEqual(this.props.columns, nextProps.columns);
   }
 
@@ -16,6 +18,9 @@ class DatagridHeaderRowContainer extends React.Component {
 
 DatagridHeaderRowContainer.propTypes = {
   columns: PropTypes.array,
+  context: PropTypes.shape({
+    isDisplayedRowsSelected: PropTypes.bool,
+  }),
 };
 
 export default DatagridHeaderRowContainer;
