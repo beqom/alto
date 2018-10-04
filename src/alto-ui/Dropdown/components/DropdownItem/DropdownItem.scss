@@ -1,6 +1,15 @@
 @import '../../../scss/inc';
 
 .DropdownItem {
+  display: flex;
+  align-items: center;
+}
+
+.DropdownItem__element {
+  flex: 1;
+}
+
+.DropdownItem__element--button {
   @extend %reset-button;
   cursor: pointer;
   display: flex;
@@ -18,18 +27,21 @@
     color: $blue;
   }
 
-  &--subdropdown {
-    &::after {
-      content: ' ‣';
-      display: inline-block;
-      transform: scale(2);
-      margin-left: $spacing-medium;
-    }
-  }
-
   &--disabled,
   &--disabled:hover {
     color: $coolgrey-50;
     text-decoration: line-through;
   }
+}
+
+.DropdownItem__element--checkbox {
+  margin: 0 $spacing-medium;
+}
+
+.DropdownItem__element-title {
+  flex: 1;
+}
+
+.DropdownItem__more {
+  margin-right: $spacing-medium;
 }

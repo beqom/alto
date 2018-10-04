@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
 import PopoverWrapper from '../Popover/PopoverWrapper';
-
-import './Dropdown.scss';
-import DropdownItem from './components/DropdownItem';
+import ChevronDown from '../Icons/ChevronDown';
+import Button from '../Button';
 import { bemClass } from '../helpers/bem';
+
+import DropdownItem from './components/DropdownItem';
+import './Dropdown.scss';
 
 class Dropdown extends React.Component {
   constructor(props) {
@@ -18,7 +20,6 @@ class Dropdown extends React.Component {
       open: props.open,
     };
 
-    this.open = this.open.bind(this);
     this.close = this.close.bind(this);
     this.toggle = this.toggle.bind(this);
   }
@@ -33,46 +34,81 @@ class Dropdown extends React.Component {
     return null;
   }
 
-  open() {
-    this.setState({ open: true });
+  isSelected(key) {
+    const { selected } = this.props;
+    return Array.isArray(selected) ? selected.includes(key) : key === selected;
   }
 
   close() {
-    this.setState({ open: false });
+    this.toggle(false);
   }
 
-  toggle() {
-    this.setState(state => ({ open: !state.open }));
+  toggle(open) {
+    this.setState({ open: typeof open === 'boolean' ? open : !this.state.open });
+  }
+
+  renderTrigger() {
+    const { renderTrigger, label, items } = this.props;
+    if (typeof renderTrigger === 'function') {
+      return renderTrigger(this.toggle, this.state.open);
+    }
+
+    const text =
+      label || (items.find(({ key }) => this.isSelected(key)) || {}).title || 'undefined label';
+
+    return (
+      <Button flat onClick={this.toggle} active={this.state.open}>
+        {text} <ChevronDown right />
+      </Button>
+    );
+  }
+
+  renderItem(popoverProps) {
+    return (item, selected) => (
+      <DropdownItem
+        item={item}
+        selected={selected}
+        dropdownProps={this.props}
+        popoverProps={popoverProps}
+        onClose={this.props.onClose || this.close}
+      />
+    );
   }
 
   render() {
-    const { className, children, items, onClose, ...popoverProps } = this.props;
+    const {
+      className,
+      items,
+      onClose,
+      renderTrigger,
+      children,
+      selected,
+      ...popoverProps
+    } = this.props;
 
-    const trigger =
-      typeof children === 'function'
-        ? children(this.toggle, this.open, this.close, this.state.open)
-        : children;
+    const renderItem = typeof children === 'function' ? children : this.renderItem(popoverProps);
+
     return (
       <PopoverWrapper className={bemClass('Dropdown__wrapper', {}, className)}>
-        {trigger}
+        {this.renderTrigger()}
         <Popover
+          hidePointer={!renderTrigger}
+          start={!renderTrigger}
           {...popoverProps}
           className="Dropdown"
           open={this.state.open}
           onClose={onClose || this.close}
         >
-          <ul className="Dropdown__list">
-            {items.map(item => (
-              <li key={item.key} className="Dropdown__item">
-                <DropdownItem
-                  item={item}
-                  dropdownProps={this.props}
-                  popoverProps={popoverProps}
-                  onClose={this.props.onClose || this.close}
-                />
-              </li>
-            ))}
-          </ul>
+          {items && (
+            <ul className="Dropdown__list">
+              {items.map(item => (
+                <li key={item.key} className="Dropdown__item">
+                  {renderItem(item, this.isSelected(item.key))}
+                </li>
+              ))}
+            </ul>
+          )}
+          {children}
         </Popover>
       </PopoverWrapper>
     );
@@ -85,17 +121,25 @@ Dropdown.defaultProps = {
   open: false,
 };
 
+const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired;
+
 Dropdown.propTypes = {
+  // id is required for checkboxes
+  id: PropTypes.string,
   onClick: PropTypes.func,
   onClose: PropTypes.func,
   open: PropTypes.bool,
   className: PropTypes.string,
-  children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
+  children: PropTypes.any,
+  renderTrigger: PropTypes.func,
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      key: PropTypes.string.isRequired,
+      key: keyPropType,
     }).isRequired
-  ).isRequired,
+  ),
+  onSelect: PropTypes.func,
+  label: PropTypes.any,
+  selected: PropTypes.oneOfType([PropTypes.arrayOf(keyPropType), keyPropType]),
 };
 
 export default Dropdown;

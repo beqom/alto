@@ -2,9 +2,11 @@
 
 .Dropdown {
   padding: 0;
+  max-height: 20rem;
+  overflow: auto;
 }
 
 .Dropdown__list {
   list-style: none;
-  padding: $spacing-x-small 0;
+  padding: $spacing-small 0;
 }
