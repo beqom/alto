@@ -14,6 +14,7 @@
   display: none;
   border: 1px solid $coolgrey-20;
   padding: $spacing-medium;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
 
   &--open {
     display: block;
@@ -25,22 +26,34 @@
 
   &--top {
     bottom: 100%;
-    margin-bottom: $spacing-small + $spacing-x-small;
+    margin-bottom: $spacing-small;
+    &.Popover--pointed {
+      margin-bottom: $spacing-small + $spacing-x-small;
+    }
   }
 
   &--bottom {
     top: 100%;
-    margin-top: $spacing-small + $spacing-x-small;
+    margin-top: $spacing-small;
+    &.Popover--pointed {
+      margin-top: $spacing-small + $spacing-x-small;
+    }
   }
 
   &--left {
     right: 100%;
-    margin-right: $spacing-small + $spacing-x-small;
+    margin-right: $spacing-small;
+    &.Popover--pointed {
+      margin-right: $spacing-small + $spacing-x-small;
+    }
   }
 
   &--right {
     left: 100%;
-    margin-left: $spacing-small + $spacing-x-small;
+    margin-left: $spacing-small;
+    &.Popover--pointed {
+      margin-left: $spacing-small + $spacing-x-small;
+    }
   }
 
   // -----------------
