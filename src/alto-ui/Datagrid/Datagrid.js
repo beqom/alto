@@ -225,7 +225,15 @@ class Datagrid extends React.PureComponent {
   }
 
   renderRows(columns, hasCheckBox, headersCount = 1, columnIndexStart = 0) {
-    const { rowKeyField, renderSummaryCell, groupedByColumnKey, rows, id } = this.props;
+    const {
+      rowKeyField,
+      renderSummaryCell,
+      groupedByColumnKey,
+      rows,
+      id,
+      selectedRows,
+      onSelectRow,
+    } = this.props;
     const summaryRowsCount = renderSummaryCell ? 1 : 0;
 
     return rows.reduce((acc, row, index, arr) => {
@@ -274,6 +282,8 @@ class Datagrid extends React.PureComponent {
                   className="DataGrid__row--checkbox"
                   label={labels.checkboxLabel}
                   hideLabel
+                  checked={(selectedRows || []).includes(key)}
+                  onChange={() => onSelectRow(row)}
                 />
               )}
               {cells}
@@ -396,6 +406,7 @@ Datagrid.propTypes = {
   parsers: PropTypes.object,
   renderSummaryCell: PropTypes.func,
   groupedByColumnKey: PropTypes.string,
+  selectedRows: PropTypes.array,
   groupedSummaryColumnKeys: PropTypes.arrayOf(PropTypes.string),
   columnHeaders: PropTypes.arrayOf(
     PropTypes.shape({
