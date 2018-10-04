@@ -44,6 +44,7 @@ storiesOf('Popover', module)
             right={boolean('right', false)}
             start={boolean('start', false)}
             end={boolean('end', false)}
+            hidePointer={boolean('hidePointer', false)}
           >
             {text('children', 'Hello world!')}
           </Popover>

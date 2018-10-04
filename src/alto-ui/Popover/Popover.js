@@ -18,6 +18,7 @@ const Popover = ({
   openFocusTargetId,
   closeFocusTargetId,
   open,
+  hidePointer,
 }) => (
   <Overlay
     onClose={onClose}
@@ -25,15 +26,17 @@ const Popover = ({
     closeFocusTargetId={closeFocusTargetId}
     open={open}
   >
-    <span
-      className={bemClass('Popover__arrow', {
-        open,
-        bottom: !top && !left && !right,
-        top,
-        left,
-        right,
-      })}
-    />
+    {!hidePointer && (
+      <span
+        className={bemClass('Popover__arrow', {
+          open,
+          bottom: !top && !left && !right,
+          top,
+          left,
+          right,
+        })}
+      />
+    )}
     <div
       className={bemClass(
         'Popover',
@@ -46,6 +49,7 @@ const Popover = ({
           center: !start && !end,
           start,
           end,
+          pointed: !hidePointer,
         },
         className
       )}
@@ -71,6 +75,7 @@ Popover.propTypes = {
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
   open: PropTypes.bool,
+  hidePointer: PropTypes.bool,
 };
 
 export default Popover;
