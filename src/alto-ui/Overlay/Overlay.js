@@ -90,20 +90,24 @@ class Overlay extends React.PureComponent {
 
   handleFocusOutside(e) {
     if (this.contentNode && this.props.open && !this.contentNode.contains(e.target)) {
-      this.props.onClose();
+      this.dispatchClose();
     }
   }
 
   handleKeyDown(e) {
     if (e.key === 'Escape' || e.key === 'Esc') {
-      this.props.onClose();
+      this.dispatchClose();
     }
   }
 
   handleClickOutside(e) {
     if (this.contentNode && !this.contentNode.contains(e.target)) {
-      this.props.onClose();
+      this.dispatchClose();
     }
+  }
+
+  dispatchClose() {
+    setTimeout(this.props.onClose, 0);
   }
 
   render() {
