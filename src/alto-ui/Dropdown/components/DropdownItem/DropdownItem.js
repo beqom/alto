@@ -62,7 +62,7 @@ class DropdownItem extends React.Component {
 
   renderItem(handleClick, active) {
     const { item, selected, dropdownProps } = this.props;
-    const { key, title, className } = item;
+    const { key, title, className, disabled } = item;
 
     if (dropdownProps.onSelect) {
       return (
@@ -71,6 +71,7 @@ class DropdownItem extends React.Component {
           id={`${dropdownProps.id || title}-checkbox-${key}`}
           label={title}
           checked={selected}
+          disabled={disabled}
           onChange={this.handleSelect}
         />
       );
