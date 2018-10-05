@@ -22,6 +22,7 @@ class Dropdown extends React.Component {
 
     this.close = this.close.bind(this);
     this.toggle = this.toggle.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -41,6 +42,15 @@ class Dropdown extends React.Component {
 
   close() {
     this.toggle(false);
+  }
+
+  handleClose() {
+    const { onClose } = this.props;
+    if (onClose) {
+      onClose(this.close);
+    } else {
+      this.close();
+    }
   }
 
   toggle(open) {
@@ -70,7 +80,7 @@ class Dropdown extends React.Component {
         selected={selected}
         dropdownProps={this.props}
         popoverProps={popoverProps}
-        onClose={this.props.onClose || this.close}
+        onClose={this.handleClose}
       />
     );
   }
@@ -97,7 +107,7 @@ class Dropdown extends React.Component {
           {...popoverProps}
           className="Dropdown"
           open={this.state.open}
-          onClose={onClose || this.close}
+          onClose={this.handleClose}
         >
           {items && (
             <ul className="Dropdown__list">
