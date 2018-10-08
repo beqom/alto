@@ -241,7 +241,8 @@ class Datagrid extends React.PureComponent {
       const isPrecededByDifferentGroup =
         isFirstRow || row[groupedByColumnKey] !== arr[index - 1][groupedByColumnKey];
 
-      const key = `${rowKeyField(row)}_${index}`;
+      const key = rowKeyField(row);
+      const uniqueId = `${key}__${index}`;
       const rowIndex = headersCount + summaryRowsCount + 1 + acc.length;
       const sharedProps = {
         collapsed: groupedByColumnKey && !!this.state.collapsedGroups[row[groupedByColumnKey]],
@@ -255,7 +256,7 @@ class Datagrid extends React.PureComponent {
         groupedByColumnKey && isPrecededByDifferentGroup ? (
           <DatagridGroupedRow
             {...sharedProps}
-            key={`${key}--group`}
+            key={`${uniqueId}--group`}
             firstRowInGroup={row}
             rowIndex={rowIndex}
             onToggle={this.handleToggleGroup}
@@ -270,7 +271,7 @@ class Datagrid extends React.PureComponent {
         ...groupedRowArr,
         <DatagridRow
           {...sharedProps}
-          key={key}
+          key={uniqueId}
           row={row}
           rowIndex={rowIndex + groupedRowArr.length + 1}
         >
