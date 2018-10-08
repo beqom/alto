@@ -224,7 +224,7 @@ class Datagrid extends React.PureComponent {
       const isPrecededByDifferentGroup =
         isFirstRow || row[groupedByColumnKey] !== arr[index - 1][groupedByColumnKey];
 
-      const key = rowKeyField(row);
+      const key = `${rowKeyField(row)}_${index}`;
       const rowIndex = headersCount + summaryRowsCount + 1 + acc.length;
       const sharedProps = {
         collapsed: groupedByColumnKey && !!this.state.collapsedGroups[row[groupedByColumnKey]],
