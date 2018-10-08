@@ -39,6 +39,7 @@ class SideNav extends React.PureComponent {
         <Link
           id={`${this.props.id}__${item.id}__link`}
           href={item.url}
+          title={item.title}
           className={bemClass('sidenav__route-link', {
             active: this.props.currentUrl.indexOf(item.url) === 0,
           })}
@@ -52,9 +53,7 @@ class SideNav extends React.PureComponent {
             {collapsed ? (
               <VisuallyHidden> {item.title} </VisuallyHidden>
             ) : (
-              <div className="sidenav__section-item-title" title={item.title}>
-                {item.title}
-              </div>
+              <div className="sidenav__section-item-title">{item.title}</div>
             )}
           </div>
         </Link>
