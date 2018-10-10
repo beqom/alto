@@ -70,6 +70,7 @@ function loadStories() {
   require('../src/alto-ui/Popover/story');
   require('../src/alto-ui/ProgressBar/story');
   require('../src/alto-ui/ProgressCircle/story');
+  require('../src/alto-ui/RelativeBox/story');
   require('../src/alto-ui/ShowMore/story');
   require('../src/alto-ui/SideNav/story');
   require('../src/alto-ui/Spinner/story');
