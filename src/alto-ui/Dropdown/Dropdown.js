@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
-import PopoverWrapper from '../Popover/PopoverWrapper';
 import ChevronDown from '../Icons/ChevronDown';
 import Button from '../Button';
 import { bemClass } from '../helpers/bem';
@@ -99,28 +98,26 @@ class Dropdown extends React.Component {
     const renderItem = typeof children === 'function' ? children : this.renderItem(popoverProps);
 
     return (
-      <PopoverWrapper className={bemClass('Dropdown__wrapper', {}, className)}>
-        {this.renderTrigger()}
-        <Popover
-          hidePointer={!renderTrigger}
-          start={!renderTrigger}
-          {...popoverProps}
-          className="Dropdown"
-          open={this.state.open}
-          onClose={this.handleClose}
-        >
-          {items && (
-            <ul className="Dropdown__list">
-              {items.map(item => (
-                <li key={item.key} className="Dropdown__item">
-                  {renderItem(item, this.isSelected(item.key))}
-                </li>
-              ))}
-            </ul>
-          )}
-          {children}
-        </Popover>
-      </PopoverWrapper>
+      <Popover
+        start={!renderTrigger}
+        {...popoverProps}
+        className={bemClass('Dropdown', {}, className)}
+        baseClassName="Dropdown"
+        open={this.state.open}
+        target={this.renderTrigger()}
+        onClose={this.handleClose}
+      >
+        {items && (
+          <ul className="Dropdown__list">
+            {items.map(item => (
+              <li key={item.key} className="Dropdown__item">
+                {renderItem(item, this.isSelected(item.key))}
+              </li>
+            ))}
+          </ul>
+        )}
+        {children}
+      </Popover>
     );
   }
 }

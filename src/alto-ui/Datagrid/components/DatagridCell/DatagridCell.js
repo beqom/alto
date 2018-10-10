@@ -270,13 +270,8 @@ class DatagridCell extends React.Component {
         onClick={item =>
           context.onClickCellDropdownItem(item, this.getValue(), this.props.row, this.props.column)
         }
-      >
-        {onClick => (
-          <div className="DatagridCell__dropdown">
-            <OptionsIcon onClick={onClick} />
-          </div>
-        )}
-      </Dropdown>
+        renderTrigger={onClick => <OptionsIcon onClick={onClick} />}
+      />
     );
   }
 

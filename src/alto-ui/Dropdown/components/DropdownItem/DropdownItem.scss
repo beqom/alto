@@ -6,7 +6,7 @@
 }
 
 .DropdownItem__element {
-  flex: 1;
+  flex-grow: 1;
 }
 
 .DropdownItem__element--button {
@@ -39,7 +39,8 @@
 }
 
 .DropdownItem__element-title {
-  flex: 1;
+  //flex: 1;
+  white-space: nowrap;
 }
 
 .DropdownItem__more {
