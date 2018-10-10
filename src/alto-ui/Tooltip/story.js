@@ -4,6 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
+import Button from '../Button';
 import Tooltip from './Tooltip';
 
 storiesOf('Tooltip', module)
@@ -52,18 +53,13 @@ storiesOf('Tooltip', module)
     );
   })
   .addWithJSX('directions', () => (
-    <div style={{ display: 'flex', justifyContent: 'space-between', width: 700 }}>
-      <Tooltip content="Hello world!" show>
-        default
+    <Tooltip content="default" show>
+      <Tooltip content="left" show left>
+        <Tooltip content="top" show top>
+          <Tooltip content="right" show right>
+            <Button>Hello world!</Button>
+          </Tooltip>
+        </Tooltip>
       </Tooltip>
-      <Tooltip content="Hello world!" show left>
-        left
-      </Tooltip>
-      <Tooltip content="Hello world!" show top>
-        top
-      </Tooltip>
-      <Tooltip content="Hello world!" show right>
-        right
-      </Tooltip>
-    </div>
+    </Tooltip>
   ));
