@@ -11,7 +11,7 @@ import Dropdown from '../../Dropdown';
 import './DropdownItem.scss';
 
 const getPopoverProps = propoverProps => {
-  const { top, left, right, end, ...otherProps } = propoverProps;
+  const { top, bottom, left, right, start, middle, end, ...otherProps } = propoverProps;
   // left or right ?
   if (left || right) return propoverProps;
   // top
@@ -23,7 +23,9 @@ const getPopoverProps = propoverProps => {
 };
 
 const renderMoreTriggerIcon = handleClick => (
-  <MoreIcon className="DropdownItem__more" onClick={handleClick} />
+  <button className="DropdownItem__more" onClick={handleClick}>
+    <MoreIcon />
+  </button>
 );
 
 class DropdownItem extends React.Component {
@@ -56,6 +58,18 @@ class DropdownItem extends React.Component {
     dropdownProps.onSelect(selection, item);
   }
 
+  hasOnClick() {
+    const { item, dropdownProps } = this.props;
+    return !!(item.onClick || dropdownProps.onClick);
+  }
+
+  hasItems() {
+    const {
+      item: { items },
+    } = this.props;
+    return !!(items && items.length);
+  }
+
   renderFullItem(...args) {
     return <div className="DropdownItem">{this.renderItem(...args)}</div>;
   }
@@ -81,10 +95,10 @@ class DropdownItem extends React.Component {
   }
 
   renderItemButton(handleClick, active) {
-    const { item, selected, dropdownProps } = this.props;
+    const { item, selected } = this.props;
     const { title, items, onClick, className, Icon, ...itemProps } = item;
-    const hasItems = !!(items && items.length);
-    const hasOnClick = !!(onClick || dropdownProps.onClick);
+    const hasItems = this.hasItems();
+    const hasOnClick = this.hasOnClick();
     const LinkOrButton = itemProps.href ? Link : 'button';
 
     return (
@@ -112,7 +126,7 @@ class DropdownItem extends React.Component {
     return (
       <Dropdown
         {...dropdownProps}
-        {...getPopoverProps(popoverProps)}
+        {...(this.hasOnClick() ? { margin: 0 } : getPopoverProps(popoverProps))}
         items={items}
         onClose={undefined}
         renderTrigger={renderTrigger}
@@ -121,13 +135,8 @@ class DropdownItem extends React.Component {
   }
 
   render() {
-    const {
-      item: { items, onClick },
-      dropdownProps,
-    } = this.props;
-
-    const hasItems = !!(items && items.length);
-    const hasOnClick = !!(onClick || dropdownProps.onClick);
+    const hasItems = this.hasItems();
+    const hasOnClick = this.hasOnClick();
 
     if (hasItems) {
       if (hasOnClick) {
@@ -159,7 +168,7 @@ DropdownItem.propTypes = {
   dropdownProps: PropTypes.object.isRequired,
   popoverProps: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
-  selected: PropTypes.func,
+  selected: PropTypes.bool,
 };
 
 export default DropdownItem;

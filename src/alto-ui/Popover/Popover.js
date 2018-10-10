@@ -2,68 +2,85 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
+import RelativeBox from '../RelativeBox';
 import Overlay from '../Overlay';
 
 import './Popover.scss';
 
-const Popover = ({
-  className,
-  children,
-  top,
-  right,
-  left,
-  start,
-  end,
-  onClose,
-  openFocusTargetId,
-  closeFocusTargetId,
-  open,
-  hidePointer,
-}) => (
-  <Overlay
-    onClose={onClose}
-    openFocusTargetId={openFocusTargetId}
-    closeFocusTargetId={closeFocusTargetId}
-    open={open}
-  >
-    {!hidePointer && (
-      <span
-        className={bemClass('Popover__arrow', {
-          open,
-          bottom: !top && !left && !right,
-          top,
-          left,
-          right,
-        })}
-      />
-    )}
-    <div
-      className={bemClass(
-        'Popover',
-        {
-          open,
-          bottom: !top && !left && !right,
-          top,
-          left,
-          right,
-          center: !start && !end,
-          start,
-          end,
-          pointed: !hidePointer,
-        },
-        className
-      )}
-    >
-      {children}
-    </div>
-  </Overlay>
-);
+class Popover extends React.Component {
+  constructor() {
+    super();
+
+    this.targetRef = React.createRef();
+  }
+
+  renderTrigger() {
+    const { target } = this.props;
+    if (target instanceof Element || this.props.targetRef) return null;
+    if (typeof target === 'function') return target(this.targetRef);
+    return (
+      <div ref={this.targetRef} className="Popover__trigger">
+        {target}
+      </div>
+    );
+  }
+
+  render() {
+    const {
+      className,
+      children,
+      onClose,
+      openFocusTargetId,
+      closeFocusTargetId,
+      open,
+      target,
+      ...relativeBoxProps
+    } = this.props;
+
+    return (
+      <Overlay
+        onClose={onClose}
+        openFocusTargetId={openFocusTargetId}
+        closeFocusTargetId={closeFocusTargetId}
+        open={open}
+        render
+      >
+        {this.renderTrigger()}
+        <RelativeBox
+          className={bemClass(
+            'Popover',
+            {
+              open,
+            },
+            className
+          )}
+          watch={{ open }}
+          margin={6.4}
+          targetRef={this.targetRef}
+          {...relativeBoxProps}
+        >
+          {children}
+        </RelativeBox>
+      </Overlay>
+    );
+  }
+}
 
 Popover.displayName = 'Popover';
 
 Popover.defaultProps = {};
 
 Popover.propTypes = {
+  target: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.array,
+    PropTypes.element,
+    PropTypes.object,
+    PropTypes.func,
+  ]).isRequired,
+  targetRef: PropTypes.shape({
+    current: PropTypes.object,
+  }),
   className: PropTypes.string,
   children: PropTypes.any,
   top: PropTypes.bool,
@@ -75,7 +92,6 @@ Popover.propTypes = {
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
   open: PropTypes.bool,
-  hidePointer: PropTypes.bool,
 };
 
 export default Popover;
