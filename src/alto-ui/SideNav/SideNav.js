@@ -5,6 +5,7 @@ import ExpandIcon from '../Icons/Expand';
 import VisuallyHidden from '../VisuallyHidden';
 import Button from '../Button';
 import Link from '../Link';
+import Tooltip from '../Tooltip';
 import { bemClass } from '../helpers/bem';
 
 import './SideNav.scss';
@@ -28,6 +29,42 @@ class SideNav extends React.PureComponent {
     this.setState(({ open }) => ({ open: !open }));
   }
 
+  renderItemContent(item) {
+    return (
+      <Link
+        id={`${this.props.id}__${item.id}__link`}
+        href={item.url}
+        className={bemClass('sidenav__route-link', {
+          active: this.props.currentUrl.indexOf(item.url) === 0,
+        })}
+      >
+        <div className="sidenav__section-item">
+          {item.icon && (
+            <div className="sidenav__section-item-icon">
+              <item.icon outline />
+            </div>
+          )}
+          {this.props.collapsed ? (
+            <VisuallyHidden> {item.title} </VisuallyHidden>
+          ) : (
+            <div className="sidenav__section-item-title">{item.title}</div>
+          )}
+        </div>
+      </Link>
+    );
+  }
+
+  renderItem(item) {
+    if (this.props.collapsed) {
+      return (
+        <Tooltip right content={item.title}>
+          {this.renderItemContent(item)}
+        </Tooltip>
+      );
+    }
+    return this.renderItemContent(item);
+  }
+
   renderNavItems() {
     const { collapsed } = this.props;
     return this.props.items.map(item => (
@@ -36,27 +73,7 @@ class SideNav extends React.PureComponent {
         className={bemClass('sidenav__section', { collapsed })}
         key={item.title}
       >
-        <Link
-          id={`${this.props.id}__${item.id}__link`}
-          href={item.url}
-          title={item.title}
-          className={bemClass('sidenav__route-link', {
-            active: this.props.currentUrl.indexOf(item.url) === 0,
-          })}
-        >
-          <div className="sidenav__section-item">
-            {item.icon && (
-              <div className="sidenav__section-item-icon">
-                <item.icon outline />
-              </div>
-            )}
-            {collapsed ? (
-              <VisuallyHidden> {item.title} </VisuallyHidden>
-            ) : (
-              <div className="sidenav__section-item-title">{item.title}</div>
-            )}
-          </div>
-        </Link>
+        {this.renderItem(item)}
       </li>
     ));
   }
