@@ -116,6 +116,7 @@ class Dropdown extends React.Component {
             ))}
           </ul>
         )}
+        {!!items && !!children && <hr className="Dropdown__separator" />}
         {children}
       </Popover>
     );

@@ -22,8 +22,11 @@ const getPopoverProps = propoverProps => {
   return { ...otherProps, right: true, start: true };
 };
 
-const renderMoreTriggerIcon = handleClick => (
-  <button className="DropdownItem__more" onClick={handleClick}>
+const renderMoreTriggerIcon = (handleClick, active) => (
+  <button
+    className={bemClass('DropdownItem__button', { active, more: true })}
+    onClick={handleClick}
+  >
     <MoreIcon />
   </button>
 );
@@ -81,7 +84,7 @@ class DropdownItem extends React.Component {
     if (dropdownProps.onSelect) {
       return (
         <CheckBox
-          className={bemClass('DropdownItem__element', { checkbox: true }, className)}
+          className={bemClass('DropdownItem__checkbox', {}, className)}
           id={`${dropdownProps.id || title}-checkbox-${key}`}
           label={title}
           checked={selected}
@@ -106,14 +109,14 @@ class DropdownItem extends React.Component {
         {...itemProps}
         onClick={handleClick || this.handleClick}
         className={bemClass(
-          'DropdownItem__element',
-          { button: true, disabled: item.disabled, active: active || item.active, selected },
+          'DropdownItem__button',
+          { main: true, disabled: item.disabled, active: active || item.active, selected },
           className
         )}
         title={title}
       >
         {Icon && <Icon left outline />}
-        <span className="DropdownItem__element-title">{title}</span>
+        <span className="DropdownItem__button-title">{title}</span>
         {hasItems && !hasOnClick && <ChevronRightIcon right />}
       </LinkOrButton>
     );
