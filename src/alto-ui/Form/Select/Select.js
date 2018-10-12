@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import isArray from 'lodash.isarray';
 import { bemClass } from '../../helpers/bem';
 
 import FormElement from '../FormElement';
@@ -11,7 +10,7 @@ const renderOptions = options =>
   (options || []).reduce((acc, option) => {
     if (option) {
       if (option.value !== undefined) {
-        if (isArray(option.value)) {
+        if (Array.isArray(option.value)) {
           return acc.concat([
             <optgroup label={option.title} key={option.title}>
               {renderOptions(option.value)}
