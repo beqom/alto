@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
+import Line from '../Line';
 import ChevronDown from '../Icons/ChevronDown';
 import Button from '../Button';
 import { bemClass } from '../helpers/bem';
@@ -118,7 +119,7 @@ class Dropdown extends React.Component {
             ))}
           </ul>
         )}
-        {hasItems && !!children && <hr className="Dropdown__separator" />}
+        {hasItems && !!children && <Line />}
         {children}
       </Popover>
     );

@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
 
 import StateProvider from '../StateProvider';
-import OptionsIcon from '../Icons/Options';
 import Dropdown from './Dropdown';
 
 const items = [
@@ -51,13 +50,7 @@ const items = [
 
 storiesOf('Dropdown', module)
   .addDecorator(centered)
-  .addWithJSX('overview', () => (
-    <Dropdown
-      items={items}
-      renderTrigger={onClick => <OptionsIcon onClick={onClick} />}
-      selected="1"
-    />
-  ))
+  .addWithJSX('overview', () => <Dropdown items={items} label="Click me" selected="1" />)
   .addWithJSX('selectable', () => (
     <StateProvider state={{ selected: [] }}>
       {(state, setState) => (

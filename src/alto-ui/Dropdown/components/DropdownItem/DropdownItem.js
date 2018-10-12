@@ -167,6 +167,7 @@ DropdownItem.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func,
     href: PropTypes.string,
+    Icon: PropTypes.element,
   }).isRequired,
   dropdownProps: PropTypes.object.isRequired,
   popoverProps: PropTypes.object.isRequired,
