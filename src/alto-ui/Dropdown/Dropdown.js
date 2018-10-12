@@ -92,6 +92,7 @@ class Dropdown extends React.Component {
       renderTrigger,
       children,
       selected,
+      onClick,
       ...popoverProps
     } = this.props;
 
