@@ -96,6 +96,7 @@ class Dropdown extends React.Component {
     } = this.props;
 
     const renderItem = typeof children === 'function' ? children : this.renderItem(popoverProps);
+    const hasItems = Array.isArray(items) && !!items.length;
 
     return (
       <Popover
@@ -107,7 +108,7 @@ class Dropdown extends React.Component {
         target={this.renderTrigger()}
         onClose={this.handleClose}
       >
-        {items && (
+        {hasItems && (
           <ul className="Dropdown__list">
             {items.map(item => (
               <li key={item.key} className="Dropdown__item">
@@ -116,7 +117,7 @@ class Dropdown extends React.Component {
             ))}
           </ul>
         )}
-        {!!items && !!children && <hr className="Dropdown__separator" />}
+        {hasItems && !!children && <hr className="Dropdown__separator" />}
         {children}
       </Popover>
     );
