@@ -52,7 +52,11 @@ const items = [
 storiesOf('Dropdown', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
-    <Dropdown items={items} renderTrigger={onClick => <OptionsIcon onClick={onClick} />} />
+    <Dropdown
+      items={items}
+      renderTrigger={onClick => <OptionsIcon onClick={onClick} />}
+      selected="1"
+    />
   ))
   .addWithJSX('selectable', () => (
     <StateProvider state={{ selected: [] }}>
