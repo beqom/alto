@@ -37,6 +37,7 @@ import File from './File';
 import FileGroup from './FileGroup';
 import FileSettings from './FileSettings';
 import Filter from './Filter';
+import Floppy from './Floppy';
 import Folder from './Folder';
 import FolderOpen from './FolderOpen';
 import Globe from './Globe';
@@ -64,9 +65,11 @@ import Populations from './Populations';
 import Remove from './Remove';
 import Repeat from './Repeat';
 import Search from './Search';
+import Sync from './Sync';
 import Tasks from './Tasks';
 import Times from './Times';
 import Trash from './Trash';
+import Undo from './Undo';
 import Unknown from './Unknown';
 import Upload from './Upload';
 import User from './User';
@@ -116,6 +119,7 @@ export default {
   FileGroup,
   FileSettings,
   Filter,
+  Floppy,
   Folder,
   FolderOpen,
   Globe,
@@ -143,9 +147,11 @@ export default {
   Remove,
   Repeat,
   Search,
+  Sync,
   Tasks,
   Times,
   Trash,
+  Undo,
   Unknown,
   Upload,
   User,
