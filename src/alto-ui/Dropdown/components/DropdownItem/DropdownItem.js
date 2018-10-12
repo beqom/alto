@@ -40,6 +40,11 @@ class DropdownItem extends React.Component {
     this.renderFullItem = this.renderFullItem.bind(this);
   }
 
+  getItems() {
+    const { item, dropdownProps } = this.props;
+    return item.items !== undefined ? item.items : dropdownProps.getItems(item);
+  }
+
   handleClick(e) {
     if (this.props.item.onClick) {
       this.props.item.onClick(e);
@@ -67,10 +72,8 @@ class DropdownItem extends React.Component {
   }
 
   hasItems() {
-    const {
-      item: { items },
-    } = this.props;
-    return !!(items && items.length);
+    const items = this.getItems();
+    return Array.isArray(items) && !!items.length;
   }
 
   renderFullItem(...args) {
@@ -124,16 +127,17 @@ class DropdownItem extends React.Component {
 
   renderDropdown(renderTrigger) {
     const { item, dropdownProps, popoverProps } = this.props;
-    const { items } = item;
 
     return (
       <Dropdown
         {...dropdownProps}
         {...(this.hasOnClick() ? { margin: 0 } : getPopoverProps(popoverProps))}
-        items={items}
+        items={this.getItems()}
         onClose={undefined}
         renderTrigger={renderTrigger}
-      />
+      >
+        {item.content}
+      </Dropdown>
     );
   }
 
@@ -168,6 +172,7 @@ DropdownItem.propTypes = {
     onClick: PropTypes.func,
     href: PropTypes.string,
     Icon: PropTypes.element,
+    content: PropTypes.any,
   }).isRequired,
   dropdownProps: PropTypes.object.isRequired,
   popoverProps: PropTypes.object.isRequired,

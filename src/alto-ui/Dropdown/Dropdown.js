@@ -94,6 +94,7 @@ class Dropdown extends React.Component {
       children,
       selected,
       onClick,
+      getItems,
       ...popoverProps
     } = this.props;
 
@@ -130,6 +131,7 @@ Dropdown.displayName = 'Dropdown';
 
 Dropdown.defaultProps = {
   open: false,
+  getItems: () => null,
 };
 
 const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired;
@@ -151,6 +153,7 @@ Dropdown.propTypes = {
   onSelect: PropTypes.func,
   label: PropTypes.any,
   selected: PropTypes.oneOfType([PropTypes.arrayOf(keyPropType), keyPropType]),
+  getItems: PropTypes.func,
 };
 
 export default Dropdown;
