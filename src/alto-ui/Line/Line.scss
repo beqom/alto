@@ -1,0 +1,56 @@
+@import '../scss/inc';
+
+.Line {
+  border: 0;
+  border-top: 1px solid $coolgrey-20;
+
+  &--xxsmall {
+    margin: $spacing-xx-small 0;
+  }
+  &--xsmall {
+    margin: $spacing-x-small 0;
+  }
+  &--small {
+    margin: $spacing-small 0;
+  }
+  &--medium {
+    margin: $spacing-medium 0;
+  }
+  &--large {
+    margin: $spacing-large 0;
+  }
+  &--xlarge {
+    margin: $spacing-x-large 0;
+  }
+  &--xxlarge {
+    margin: $spacing-xx-large 0;
+  }
+}
+
+.Line--vertical {
+  border: 0;
+  width: 0;
+  border-left: 1px solid $coolgrey-20;
+
+  &.Line--xxsmall {
+    margin: 0 $spacing-xx-small;
+  }
+  &.Line--xsmall {
+    margin: 0 $spacing-x-small;
+  }
+  &.Line--small {
+    margin: 0 $spacing-small;
+  }
+  &.Line--medium {
+    margin: 0 $spacing-medium;
+  }
+  &.Line--large {
+    margin: 0 $spacing-large;
+  }
+  &.Line--xlarge {
+    margin: 0 $spacing-x-large;
+  }
+  &.Line--xxlarge {
+    margin: 0 $spacing-xx-large;
+  }
+}
