@@ -46,12 +46,11 @@ class DropdownItem extends React.Component {
   }
 
   handleClick(e) {
-    if (this.props.item.onClick) {
-      this.props.item.onClick(e);
-    }
-
-    if (this.props.dropdownProps.onClick) {
-      this.props.dropdownProps.onClick(this.props.item);
+    const { item, dropdownProps } = this.props;
+    if (item.onClick) {
+      item.onClick(e);
+    } else if (dropdownProps.onClick) {
+      dropdownProps.onClick(item);
     }
 
     this.props.onClose();
