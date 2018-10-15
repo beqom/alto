@@ -8,6 +8,7 @@ import Avatar from '../Avatar';
 import { isIE11 } from '../helpers/navigator';
 import { bemClass } from '../helpers/bem';
 import CheckBox from '../Form/CheckBox';
+import Tooltip from '../Tooltip';
 
 import DatagridHeaderRow from './components/DatagridHeaderRow';
 import DatagridGroupedRow from './components/DatagridGroupedRow';
@@ -58,7 +59,11 @@ const RENDERERS = {
   image: (x, col, row, { comfortable, compact }) => (
     <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
   ),
-  error: x => <ErrorIcon outline title={x.message} />,
+  error: x => (
+    <Tooltip content={x.message}>
+      <ErrorIcon outline />
+    </Tooltip>
+  ),
 };
 
 // Needed in case of the node is not provided as soon as needed

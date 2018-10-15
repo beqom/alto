@@ -11,6 +11,7 @@ import Select from '../../../Form/Select';
 import Spinner from '../../../Spinner';
 import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
+import Tooltip from '../../../Tooltip';
 
 import { evaluateFormula } from '../../helpers';
 import { bemClass } from '../../../helpers/bem';
@@ -289,16 +290,12 @@ class DatagridCell extends React.Component {
 
     const tooltipContent = this.replaceRowValues(error);
     const icon = warning ? (
-      <ExclamationTriangleIcon
-        title={tooltipContent}
-        baseline
-        className="DatagridCell__warning-icon"
-      />
+      <ExclamationTriangleIcon baseline className="DatagridCell__warning-icon" />
     ) : (
-      <ExclamationCircleIcon title={tooltipContent} baseline className="DatagridCell__error-icon" />
+      <ExclamationCircleIcon baseline className="DatagridCell__error-icon" />
     );
 
-    return icon;
+    return <Tooltip content={tooltipContent}>{icon}</Tooltip>;
   }
 
   renderValue() {
@@ -311,6 +308,9 @@ class DatagridCell extends React.Component {
     const value = this.getValue();
     const type = getType(value, column);
     const renderer = context.renderers[type] || IDENTITY;
+    if (type === 'error') {
+      return renderer(value, column, row, context);
+    }
     return renderer(this.getFormattedValue(), column, row, context);
   }
 
@@ -388,7 +388,7 @@ class DatagridCell extends React.Component {
 
     return (
       <div
-        title={render ? undefined : this.getValue()}
+        title={render || modifiers.error ? undefined : this.getValue()}
         className={bemClass('DatagridCell', modifiers)}
         ref={this.cellRef}
         style={style}
