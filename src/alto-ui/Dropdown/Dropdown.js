@@ -65,7 +65,7 @@ class Dropdown extends React.Component {
 
     const text =
       label ||
-      (items.find(({ key }) => this.isSelected(key)) || {}).title ||
+      ((items || []).find(({ key }) => this.isSelected(key)) || {}).title ||
       defaultLabel ||
       'undefined label';
 
