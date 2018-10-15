@@ -7,7 +7,6 @@ import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
 import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import TextField from '../../../Form/TextField';
 import InputNumber from '../../../Form/InputNumber';
-import Select from '../../../Form/Select';
 import Spinner from '../../../Spinner';
 import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
@@ -73,6 +72,7 @@ class DatagridCell extends React.Component {
     this.stopEditing = this.stopEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeNumber = this.handleChangeNumber.bind(this);
+    this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.format = this.format.bind(this);
@@ -171,12 +171,17 @@ class DatagridCell extends React.Component {
     };
   }
 
+  getId() {
+    const { id, row, column, context } = this.props;
+    return id ? `${id}__input` : `DatagridCell__input--${row[context.rowId]}--${column.key}`;
+  }
+
   getSharedFieldProps() {
     const value = this.getValue();
-    const { id, context, row, column } = this.props;
+    const { context } = this.props;
     return {
       ref: this.inputRef,
-      id: id ? `${id}__input` : `DatagridCell__input--${row[context.rowId]}--${column.key}`,
+      id: this.getId(),
       label: 'edit cell',
       hideLabel: true,
       small: context.compact,
@@ -230,6 +235,12 @@ class DatagridCell extends React.Component {
     const { value } = e.target;
     this.setState({ value });
     this.propagateChange(value);
+  }
+
+  handleChangeDropdown(row) {
+    const { key } = row;
+    this.setState({ value: key });
+    this.propagateChange(key);
   }
 
   handleChangeNumber(e, value) {
@@ -323,14 +334,22 @@ class DatagridCell extends React.Component {
     if ((!editable && type !== 'list') || header) return null;
 
     if (type === 'list') {
+      const selectedValue = this.getValue();
       const { fetching, ...selectProps } = context.getSelectProps(column, row) || {};
+      if (!editable) {
+        const itemSelected = (selectProps.items || []).find(item => item.key === selectedValue);
+        return (
+          <div className="DatagridCell__content">{itemSelected ? itemSelected.title : ''}</div>
+        );
+      }
       return (
         <Fragment>
-          <Select
-            onFocus={this.startEditing}
-            {...this.getSharedFieldProps()}
+          <Dropdown
+            id={this.getId()}
+            selected={selectedValue}
+            defaultLabel="Select"
+            onClick={this.handleChangeDropdown}
             {...selectProps}
-            readonly={!editable}
           />
           {fetching && <Spinner className="DatagridCell__spinner" small />}
         </Fragment>

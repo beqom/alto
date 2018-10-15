@@ -58,13 +58,16 @@ class Dropdown extends React.Component {
   }
 
   renderTrigger() {
-    const { renderTrigger, label, items } = this.props;
+    const { renderTrigger, defaultLabel, label, items } = this.props;
     if (typeof renderTrigger === 'function') {
       return renderTrigger(this.toggle, this.state.open);
     }
 
     const text =
-      label || (items.find(({ key }) => this.isSelected(key)) || {}).title || 'undefined label';
+      label ||
+      (items.find(({ key }) => this.isSelected(key)) || {}).title ||
+      defaultLabel ||
+      'undefined label';
 
     return (
       <Button flat onClick={this.toggle} active={this.state.open}>
@@ -95,6 +98,7 @@ class Dropdown extends React.Component {
       selected,
       onClick,
       getItems,
+      defaultLabel,
       ...popoverProps
     } = this.props;
 
@@ -152,6 +156,7 @@ Dropdown.propTypes = {
   ),
   onSelect: PropTypes.func,
   label: PropTypes.any,
+  defaultLabel: PropTypes.string,
   selected: PropTypes.oneOfType([PropTypes.arrayOf(keyPropType), keyPropType]),
   getItems: PropTypes.func,
 };
