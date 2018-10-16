@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
@@ -7,6 +7,7 @@ import CheckBox from '../../../Form/CheckBox';
 import ChevronRightIcon from '../../../Icons/ChevronRight';
 import MoreIcon from '../../../Icons/More';
 
+import DropdownItemEditInput from '../DropdownItemEditInput';
 import Dropdown from '../../Dropdown';
 import './DropdownItem.scss';
 
@@ -32,8 +33,8 @@ const renderMoreTriggerIcon = (handleClick, active) => (
 );
 
 class DropdownItem extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.handleClick = this.handleClick.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
@@ -80,14 +81,14 @@ class DropdownItem extends React.Component {
   }
 
   renderItem(handleClick, active) {
-    const { item, selected, dropdownProps } = this.props;
-    const { key, title, className, disabled } = item;
+    const { id, item, selected, dropdownProps } = this.props;
+    const { title, className, disabled } = item;
 
     if (dropdownProps.onSelect) {
       return (
         <CheckBox
           className={bemClass('DropdownItem__checkbox', {}, className)}
-          id={`${dropdownProps.id || title}-checkbox-${key}`}
+          id={`${id}__checkbox`}
           label={title}
           checked={selected}
           disabled={disabled}
@@ -100,8 +101,8 @@ class DropdownItem extends React.Component {
   }
 
   renderItemButton(handleClick, active) {
-    const { item, selected } = this.props;
-    const { title, items, onClick, className, Icon, ...itemProps } = item;
+    const { id, item, selected } = this.props;
+    const { title, items, onClick, editable, className, Icon, ...itemProps } = item;
     const hasItems = this.hasItems();
     const hasOnClick = this.hasOnClick();
     const LinkOrButton = itemProps.href ? Link : 'button';
@@ -109,6 +110,7 @@ class DropdownItem extends React.Component {
     return (
       <LinkOrButton
         {...itemProps}
+        id={id}
         onClick={handleClick || this.handleClick}
         className={bemClass(
           'DropdownItem__button',
@@ -124,28 +126,49 @@ class DropdownItem extends React.Component {
     );
   }
 
+  renderEditableInput() {
+    const { item, dropdownProps } = this.props;
+    if (!item.editable) return null;
+
+    return items => (
+      <Fragment>
+        <DropdownItemEditInput
+          id={`${this.props.id}__editable-input`}
+          label="Edit"
+          value={item.title}
+          onSave={dropdownProps.onSaveEdit}
+          invalidate={dropdownProps.invalidateEdit}
+          item={item}
+        />
+        {items}
+      </Fragment>
+    );
+  }
+
   renderDropdown(renderTrigger) {
-    const { item, dropdownProps, popoverProps } = this.props;
+    const { id, dropdownProps, popoverProps } = this.props;
 
     return (
       <Dropdown
         {...dropdownProps}
         {...(this.hasOnClick() ? { margin: 0 } : getPopoverProps(popoverProps))}
+        id={`${id}__dropdown`}
         items={this.getItems()}
         onClose={undefined}
         renderTrigger={renderTrigger}
       >
-        {item.content}
+        {this.renderEditableInput()}
       </Dropdown>
     );
   }
 
   render() {
+    const { item } = this.props;
     const hasItems = this.hasItems();
     const hasOnClick = this.hasOnClick();
 
     if (hasItems) {
-      if (hasOnClick) {
+      if (hasOnClick || item.editable) {
         return (
           <div className="DropdownItem">
             {this.renderItem()}
@@ -164,6 +187,7 @@ DropdownItem.displayName = 'DropdownItem';
 DropdownItem.defaultProps = {};
 
 DropdownItem.propTypes = {
+  id: PropTypes.string.isRequired,
   item: PropTypes.shape({
     title: PropTypes.any.isRequired,
     items: PropTypes.array,
@@ -172,6 +196,7 @@ DropdownItem.propTypes = {
     href: PropTypes.string,
     Icon: PropTypes.func,
     content: PropTypes.any,
+    editable: PropTypes.bool,
   }).isRequired,
   dropdownProps: PropTypes.object.isRequired,
   popoverProps: PropTypes.object.isRequired,

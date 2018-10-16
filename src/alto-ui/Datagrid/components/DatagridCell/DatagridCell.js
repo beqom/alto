@@ -277,6 +277,7 @@ class DatagridCell extends React.Component {
     if (header || !column.cellDropdownItems || !column.cellDropdownItems.length) return null;
     return (
       <Dropdown
+        id={this.getId()}
         items={column.cellDropdownItems}
         end
         onClick={item =>

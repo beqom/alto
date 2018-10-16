@@ -1,0 +1,20 @@
+@import '../../../scss/inc';
+
+.DropdownItemEditInput {
+  padding: $spacing-x-small;
+  display: flex;
+  align-items: flex-start;
+}
+
+.DropdownItemEditInput__textfield {
+  flex-grow: 1;
+}
+
+.DropdownItemEditInput__spinner {
+  margin-top: $spacing-x-small;
+  margin-left: $spacing-small;
+}
+
+.DropdownItemEditInput__icon {
+  margin-left: $spacing-small;
+}
