@@ -47,7 +47,8 @@ class Overlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    this.close();
+    this.removeCloseEventListener();
+    clearTimeout(this.closingTimeout);
   }
 
   setContentNode(contentNode) {
@@ -107,7 +108,8 @@ class Overlay extends React.PureComponent {
   }
 
   dispatchClose() {
-    setTimeout(this.props.onClose, 0);
+    clearTimeout(this.closingTimeout);
+    this.closingTimeout = setTimeout(this.props.onClose, 0);
   }
 
   render() {
