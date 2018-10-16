@@ -16,7 +16,6 @@
 
   opacity: 0;
   transition: none;
-  white-space: nowrap;
   display: flex;
   align-items: flex-start;
   z-index: $z-index-tooltip;
@@ -49,20 +48,14 @@
 
 // --- sizes ---
 .Tooltip {
-  &--small,
-  &--medium,
-  &--large {
-    white-space: normal;
-  }
-
   &--small {
-    width: 10rem;
+    max-width: 10rem;
   }
   &--medium {
-    width: 20rem;
+    max-width: 20rem;
   }
   &--large {
-    width: 30rem;
+    max-width: 30rem;
   }
 }
 

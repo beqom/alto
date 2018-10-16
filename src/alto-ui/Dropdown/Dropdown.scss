@@ -2,6 +2,8 @@
 
 .Dropdown {
   padding: 0;
+  // abtitary amount
+  max-width: 15rem;
 
   .Dropdown--left,
   .Dropdown--right {
@@ -17,6 +19,7 @@
 .Dropdown__list {
   list-style: none;
   padding: $spacing-x-small;
+  // abtitary amount
   max-height: 20rem;
   overflow: auto;
 }

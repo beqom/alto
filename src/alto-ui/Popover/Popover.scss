@@ -4,14 +4,9 @@
   @extend %reset-styles;
   border-radius: $border-radius-default;
   background-color: $white;
-  white-space: nowrap;
   z-index: $z-index-popover;
-  display: none;
+  display: block;
   border: 1px solid $coolgrey-20;
   padding: $spacing-medium;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-
-  &--open {
-    display: block;
-  }
 }

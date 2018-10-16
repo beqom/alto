@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
-import Line from '../Line';
 import ChevronDown from '../Icons/ChevronDown';
 import Button from '../Button';
 import { bemClass } from '../helpers/bem';
@@ -86,14 +85,33 @@ class Dropdown extends React.Component {
   }
 
   renderItem(popoverProps) {
+    const { id } = this.props;
     return (item, selected) => (
       <DropdownItem
+        id={`${id}__item--${item.key}`}
         item={item}
         selected={selected}
         dropdownProps={this.props}
         popoverProps={popoverProps}
         onClose={this.handleClose}
       />
+    );
+  }
+
+  renderList(popoverProps) {
+    const { items } = this.props;
+    const hasItems = Array.isArray(items) && !!items.length;
+    if (!hasItems) return null;
+
+    const renderItem = this.renderItem(popoverProps);
+    return (
+      <ul className="Dropdown__list">
+        {items.map(item => (
+          <li key={item.key} className="Dropdown__item">
+            {renderItem(item, this.isSelected(item.key))}
+          </li>
+        ))}
+      </ul>
     );
   }
 
@@ -109,11 +127,12 @@ class Dropdown extends React.Component {
       onClick,
       getItems,
       defaultLabel,
+      onSaveEdit,
+      invalidateEdit,
       ...popoverProps
     } = this.props;
 
-    const renderItem = typeof children === 'function' ? children : this.renderItem(popoverProps);
-    const hasItems = Array.isArray(items) && !!items.length;
+    const renderContent = typeof children === 'function' ? children : list => children || list;
 
     return (
       <Popover
@@ -125,17 +144,7 @@ class Dropdown extends React.Component {
         target={this.renderTrigger()}
         onClose={this.handleClose}
       >
-        {hasItems && (
-          <ul className="Dropdown__list">
-            {items.map(item => (
-              <li key={item.key} className="Dropdown__item">
-                {renderItem(item, this.isSelected(item.key))}
-              </li>
-            ))}
-          </ul>
-        )}
-        {hasItems && !!children && <Line />}
-        {children}
+        {renderContent(this.renderList(popoverProps))}
       </Popover>
     );
   }
@@ -151,8 +160,7 @@ Dropdown.defaultProps = {
 const keyPropType = PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired;
 
 Dropdown.propTypes = {
-  // id is required for checkboxes
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
   onClick: PropTypes.func,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
@@ -170,6 +178,8 @@ Dropdown.propTypes = {
   defaultLabel: PropTypes.string,
   selected: PropTypes.oneOfType([PropTypes.arrayOf(keyPropType), keyPropType]),
   getItems: PropTypes.func,
+  onSaveEdit: PropTypes.func,
+  invalidateEdit: PropTypes.func,
 };
 
 export default Dropdown;

@@ -1,4 +1,4 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
 .Icon {
   display: inline-block;
@@ -43,6 +43,12 @@
   &:hover {
     color: $coolgrey-80;
   }
+}
+
+.Icon--disabled,
+.Icon--disabled:hover {
+  color: $coolgrey-30;
+  cursor: default;
 }
 
 .Icon__badge {
