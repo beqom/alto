@@ -46,21 +46,16 @@ class Popover extends React.Component {
         render
       >
         {this.renderTrigger()}
-        <RelativeBox
-          className={bemClass(
-            'Popover',
-            {
-              open,
-            },
-            className
-          )}
-          watch={{ open }}
-          margin={6.4}
-          targetRef={this.targetRef}
-          {...relativeBoxProps}
-        >
-          {children}
-        </RelativeBox>
+        {open && (
+          <RelativeBox
+            className={bemClass('Popover', {}, className)}
+            margin={6.4}
+            targetRef={this.targetRef}
+            {...relativeBoxProps}
+          >
+            {children}
+          </RelativeBox>
+        )}
       </Overlay>
     );
   }
