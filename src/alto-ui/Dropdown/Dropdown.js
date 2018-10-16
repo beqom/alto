@@ -23,6 +23,7 @@ class Dropdown extends React.Component {
     this.close = this.close.bind(this);
     this.toggle = this.toggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -53,6 +54,14 @@ class Dropdown extends React.Component {
     }
   }
 
+  handleOpen() {
+    const { onOpen } = this.props;
+    if (onOpen) {
+      onOpen();
+    }
+    this.toggle();
+  }
+
   toggle(open) {
     this.setState({ open: typeof open === 'boolean' ? open : !this.state.open });
   }
@@ -70,7 +79,7 @@ class Dropdown extends React.Component {
       'undefined label';
 
     return (
-      <Button flat onClick={this.toggle} active={this.state.open}>
+      <Button flat onClick={this.handleOpen} active={this.state.open}>
         {text} <ChevronDown right />
       </Button>
     );
@@ -92,6 +101,7 @@ class Dropdown extends React.Component {
     const {
       className,
       items,
+      onOpen,
       onClose,
       renderTrigger,
       children,
@@ -144,6 +154,7 @@ Dropdown.propTypes = {
   // id is required for checkboxes
   id: PropTypes.string,
   onClick: PropTypes.func,
+  onOpen: PropTypes.func,
   onClose: PropTypes.func,
   open: PropTypes.bool,
   className: PropTypes.string,
