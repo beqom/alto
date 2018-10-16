@@ -4,7 +4,6 @@
   @extend %reset-styles;
   border-radius: $border-radius-default;
   background-color: $white;
-  white-space: nowrap;
   z-index: $z-index-popover;
   display: block;
   border: 1px solid $coolgrey-20;
