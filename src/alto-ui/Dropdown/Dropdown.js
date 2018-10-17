@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Popover from '../Popover';
 import ChevronDown from '../Icons/ChevronDown';
 import Button from '../Button';
+import Spinner from '../Spinner';
 import { bemClass } from '../helpers/bem';
 
 import DropdownItem from './components/DropdownItem';
@@ -66,7 +67,8 @@ class Dropdown extends React.Component {
   }
 
   renderTrigger() {
-    const { renderTrigger, defaultLabel, label, items } = this.props;
+    const { renderTrigger, defaultLabel, label, items, loading, loadingItems } = this.props;
+    const { open } = this.state;
     if (typeof renderTrigger === 'function') {
       return renderTrigger(this.toggle, this.state.open);
     }
@@ -79,7 +81,12 @@ class Dropdown extends React.Component {
 
     return (
       <Button flat onClick={this.handleOpen} active={this.state.open}>
-        {text} <ChevronDown right />
+        {text}
+        {(loading && !loadingItems) || (loadingItems && !open) ? (
+          <Spinner className="Dropdown__trigger-spinner" small />
+        ) : (
+          <ChevronDown right />
+        )}
       </Button>
     );
   }
@@ -99,9 +106,16 @@ class Dropdown extends React.Component {
   }
 
   renderList(popoverProps) {
-    const { items } = this.props;
+    const { items, loadingItems } = this.props;
     const hasItems = Array.isArray(items) && !!items.length;
     if (!hasItems) return null;
+    if (loadingItems) {
+      return (
+        <div className="Dropdown__items-spinner">
+          <Spinner centered />
+        </div>
+      );
+    }
 
     const renderItem = this.renderItem(popoverProps);
     return (
@@ -129,6 +143,8 @@ class Dropdown extends React.Component {
       defaultLabel,
       onSaveEdit,
       invalidateEdit,
+      loading,
+      loadingItems,
       ...popoverProps
     } = this.props;
 
@@ -180,6 +196,8 @@ Dropdown.propTypes = {
   getItems: PropTypes.func,
   onSaveEdit: PropTypes.func,
   invalidateEdit: PropTypes.func,
+  loading: PropTypes.bool,
+  loadingItems: PropTypes.bool,
 };
 
 export default Dropdown;

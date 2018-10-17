@@ -3,7 +3,7 @@
 .Dropdown {
   padding: 0;
   // abtitary amount
-  max-width: 15rem;
+  max-width: 55rem;
 
   .Dropdown--left,
   .Dropdown--right {
@@ -24,7 +24,11 @@
   overflow: auto;
 }
 
-.Dropdown__separator {
-  border: 0;
-  border-top: 1px solid $coolgrey-20;
+.Dropdown__trigger-spinner {
+  margin-left: $spacing-small;
+}
+
+.Dropdown__items-spinner {
+  width: 10rem;
+  height: 6rem;
 }
