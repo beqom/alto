@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
+import { boolean, text } from '@storybook/addon-knobs';
 
 import StateProvider from '../StateProvider';
 import Dropdown from './Dropdown';
@@ -50,7 +51,15 @@ const items = [
 
 storiesOf('Dropdown', module)
   .addDecorator(centered)
-  .addWithJSX('overview', () => <Dropdown items={items} label="Click me" selected="1" />)
+  .addWithJSX('overview', () => (
+    <Dropdown
+      items={items}
+      label={text('label', 'Click me')}
+      loading={boolean('loading', false)}
+      loadingItems={boolean('loadingItems', false)}
+      selected="1"
+    />
+  ))
   .addWithJSX('selectable', () => (
     <StateProvider state={{ selected: [] }}>
       {(state, setState) => (
