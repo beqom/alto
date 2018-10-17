@@ -7,7 +7,6 @@ import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
 import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import TextField from '../../../Form/TextField';
 import InputNumber from '../../../Form/InputNumber';
-import Spinner from '../../../Spinner';
 import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
 import Tooltip from '../../../Tooltip';
@@ -51,6 +50,14 @@ const getInputProps = type => {
     default:
       return {};
   }
+};
+
+const diff = (a, b) => {
+  const aEntries = Object.entries(a || {});
+  return (
+    aEntries.some(([key, value]) => value !== b[key]) ||
+    aEntries.length !== Object.values(b || {}).length
+  );
 };
 
 class DatagridCell extends React.Component {
@@ -103,7 +110,9 @@ class DatagridCell extends React.Component {
       return true;
     }
     return (
-      this.props.row !== nextProps.row || this.props.selectedRowKey !== nextProps.selectedRowKey
+      diff(this.props.selectProps, nextProps.selectProps) ||
+      this.props.row !== nextProps.row ||
+      this.props.selectedRowKey !== nextProps.selectedRowKey
     );
   }
 
@@ -327,7 +336,7 @@ class DatagridCell extends React.Component {
   }
 
   renderInput() {
-    const { column, row, context, editable, render, header } = this.props;
+    const { column, row, context, editable, render, header, selectProps } = this.props;
     if (render) return null;
     const value = getValue(this.state.value, column, row, context.labels);
     const type = getType(value, column);
@@ -336,7 +345,6 @@ class DatagridCell extends React.Component {
 
     if (type === 'list') {
       const selectedValue = this.getValue();
-      const { fetching, ...selectProps } = context.getSelectProps(column, row) || {};
       if (!editable) {
         const itemSelected = (selectProps.items || []).find(item => item.key === selectedValue);
         return (
@@ -350,9 +358,12 @@ class DatagridCell extends React.Component {
             selected={selectedValue}
             defaultLabel="Select"
             onClick={this.handleChangeDropdown}
+            onOpen={() =>
+              typeof context.handleStartEditing === 'function' &&
+              context.handleStartEditing(column, row)
+            }
             {...selectProps}
           />
-          {fetching && <Spinner className="DatagridCell__spinner" small />}
         </Fragment>
       );
     }
@@ -468,6 +479,7 @@ DatagridCell.propTypes = {
   }).isRequired,
   selectedRowKey: PropTypes.string,
   clickable: PropTypes.bool,
+  selectProps: PropTypes.object,
 };
 
 export default DatagridCell;
