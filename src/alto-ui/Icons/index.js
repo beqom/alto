@@ -23,6 +23,7 @@ import Copy from './Copy';
 import CopyToClipboard from './CopyToClipboard';
 import Delete from './Delete';
 import Download from './Download';
+import DragHandle from './DragHandle';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
@@ -105,6 +106,7 @@ export default {
   Config,
   Delete,
   Download,
+  DragHandle,
   Edit,
   EllipsisHorizontal,
   EllipsisVertical,
