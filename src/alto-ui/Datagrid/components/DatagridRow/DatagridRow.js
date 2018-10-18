@@ -38,6 +38,8 @@ const DatagridRow = ({
             context.id && row
               ? `${context.id}__cell--${column.key}-${rowKeyField(row)}`
               : undefined;
+
+          const selectProps = column.type === 'list' ? context.getSelectProps(column, row) : null;
           return (
             <DatagridCell
               id={id}
@@ -53,6 +55,7 @@ const DatagridRow = ({
               context={context}
               aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
               selectedRowKey={selectedRowKey}
+              selectProps={selectProps}
             />
           );
         })
