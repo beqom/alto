@@ -108,7 +108,6 @@ class Dropdown extends React.Component {
   renderList(popoverProps) {
     const { items, loadingItems } = this.props;
     const hasItems = Array.isArray(items) && !!items.length;
-    if (!hasItems) return null;
     if (loadingItems) {
       return (
         <div className="Dropdown__items-spinner">
@@ -116,6 +115,7 @@ class Dropdown extends React.Component {
         </div>
       );
     }
+    if (!hasItems) return null;
 
     const renderItem = this.renderItem(popoverProps);
     return (
