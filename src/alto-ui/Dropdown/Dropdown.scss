@@ -24,6 +24,11 @@
   overflow: auto;
 }
 
+.Dropdown__trigger-content {
+  max-width: 20rem;
+  @extend %text-ellipsis;
+}
+
 .Dropdown__trigger-spinner {
   margin-left: $spacing-small;
 }

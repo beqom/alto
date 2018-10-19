@@ -81,7 +81,7 @@ class Dropdown extends React.Component {
 
     return (
       <Button flat onClick={this.handleOpen} active={this.state.open}>
-        {text}
+        <span className="Dropdown__trigger-content">{text}</span>
         {(loading && !loadingItems) || (loadingItems && !open) ? (
           <Spinner className="Dropdown__trigger-spinner" small />
         ) : (
