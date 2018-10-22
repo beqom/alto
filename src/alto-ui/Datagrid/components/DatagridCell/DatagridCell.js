@@ -349,7 +349,7 @@ class DatagridCell extends React.Component {
 
     return (
       <div
-        title={render ? undefined : this.getValue()}
+        title={render ? undefined : this.getFormattedValue()}
         className={bemClass('DatagridCell', modifiers)}
         ref={this.cellRef}
         style={style}
