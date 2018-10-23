@@ -33,6 +33,7 @@ const DatagridRow = ({
             !clickable && !header && !render && context.editable(column, row) && !column.formula;
           const edited =
             !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
+          const disabled = !header && !render && context.disabled(column, row);
 
           const id =
             context.id && row
@@ -50,6 +51,7 @@ const DatagridRow = ({
               colIndex={colIndex + columnIndexStart}
               editable={editable}
               edited={edited}
+              disabled={disabled}
               render={render}
               header={header}
               context={context}
