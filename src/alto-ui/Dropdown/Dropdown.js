@@ -149,10 +149,9 @@ class Dropdown extends React.Component {
     } = this.props;
 
     const renderContent = typeof children === 'function' ? children : list => children || list;
-
     return (
       <Popover
-        start={!renderTrigger}
+        start={!renderTrigger && !popoverProps.middle && !popoverProps.end}
         {...popoverProps}
         className={bemClass('Dropdown', {}, className)}
         baseClassName="Dropdown"
@@ -160,7 +159,7 @@ class Dropdown extends React.Component {
         target={this.renderTrigger()}
         onClose={this.handleClose}
       >
-        {renderContent(this.renderList(popoverProps))}
+        {renderContent(this.renderList(popoverProps), this.handleClose)}
       </Popover>
     );
   }
