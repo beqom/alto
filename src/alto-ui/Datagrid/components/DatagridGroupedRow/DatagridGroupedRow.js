@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { evaluateFormula } from '../../helpers';
+import { evaluateFormula } from '../../../helpers/formula';
 import { bemClass } from '../../../helpers/bem';
 
 import DatagridRow from '../DatagridRow';
