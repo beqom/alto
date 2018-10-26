@@ -159,6 +159,7 @@ class DatagridCell extends React.Component {
       column,
       edited,
       editable,
+      disabled,
       header,
       selectedRowKey,
       clickable,
@@ -172,6 +173,7 @@ class DatagridCell extends React.Component {
       editable,
       editing,
       edited,
+      disabled,
       header,
       selected,
       clickable,
@@ -472,6 +474,7 @@ DatagridCell.propTypes = {
   render: PropTypes.func,
   editable: PropTypes.bool,
   edited: PropTypes.bool,
+  disabled: PropTypes.bool,
   header: PropTypes.bool,
   aria: PropTypes.shape({
     rowIndex: PropTypes.number.isRequired,
