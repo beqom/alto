@@ -10,7 +10,7 @@ import InputNumber from '../../../Form/InputNumber';
 import Select from '../../../Form/Select';
 import Spinner from '../../../Spinner';
 
-import { evaluateFormula } from '../../helpers';
+import { evaluateFormula } from '../../../helpers/formula';
 import { bemClass } from '../../../helpers/bem';
 
 import './DatagridCell.scss';
