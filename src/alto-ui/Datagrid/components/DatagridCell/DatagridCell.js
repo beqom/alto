@@ -338,7 +338,7 @@ class DatagridCell extends React.Component {
   }
 
   renderInput() {
-    const { column, row, context, editable, render, header, selectProps } = this.props;
+    const { column, row, context, editable, disabled, render, header, selectProps } = this.props;
     if (render) return null;
     const value = getValue(this.state.value, column, row, context.labels);
     const type = getType(value, column);
@@ -347,7 +347,7 @@ class DatagridCell extends React.Component {
 
     if (type === 'list') {
       const selectedValue = this.getValue();
-      if (!editable) {
+      if (!editable || disabled) {
         const itemSelected = (selectProps.items || []).find(item => item.key === selectedValue);
         return (
           <div className="DatagridCell__content">{itemSelected ? itemSelected.title : ''}</div>
@@ -384,7 +384,7 @@ class DatagridCell extends React.Component {
   }
 
   renderContent() {
-    const { id, column, render, editable } = this.props;
+    const { id, column, render, editable, disabled } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
     const modifiers = this.getModifiers();
@@ -395,6 +395,7 @@ class DatagridCell extends React.Component {
       <ContentComponent
         id={editable && id ? `${id}__button` : undefined}
         ref={this.setContentNode}
+        disabled={disabled}
         className={bemClass('DatagridCell__content', modifiers)}
         onClick={editable ? this.startEditing : undefined}
       >
