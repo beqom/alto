@@ -11,7 +11,7 @@ import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
 import Tooltip from '../../../Tooltip';
 
-import { evaluateFormula } from '../../helpers';
+import { evaluateFormula } from '../../../helpers/formula';
 import { bemClass } from '../../../helpers/bem';
 
 import './DatagridCell.scss';

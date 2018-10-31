@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import mathEvaluator from 'math-expression-evaluator';
 import debounce from 'lodash.debounce';
 
 import ExclamationCircleIcon from '../Icons/ExclamationCircle';
@@ -9,25 +8,11 @@ import TextField from '../Form/TextField';
 import Tooltip from '../Tooltip';
 
 import { bemClass } from '../helpers/bem';
+import { evaluateFormula } from '../helpers/formula';
 
 import './Table.scss';
 
 const IDENTITY = x => x;
-
-const evaluateFormula = (formula, row, errorLabel) => {
-  const expression = Object.entries(row).reduce(
-    (acc, [key, value]) => acc.replace(new RegExp(`\\[${key}\\]`, 'g'), value || 0),
-    formula
-  );
-
-  try {
-    const res = mathEvaluator.eval(expression);
-    if (!Number.isFinite(res) || Number.isNaN(res)) return new Error(errorLabel);
-    return res;
-  } catch (e) {
-    return new Error(errorLabel);
-  }
-};
 
 const getValue = (value, column, row, labels) =>
   column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
