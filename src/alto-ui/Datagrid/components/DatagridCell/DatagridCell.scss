@@ -126,24 +126,43 @@
   transition: all $transition;
   box-shadow: inset 0 0 0 1px $color-input-border;
   background-color: $white;
-  //border: 1px solid $coolgrey-20;
-  .DatagridCell--warning & {
-    box-shadow: inset 0 0 0 1px $orange;
-  }
-
-  .DatagridCell--danger & {
-    box-shadow: inset 0 0 0 1px $red;
-  }
-
   &:hover {
     box-shadow: inset 0 0 0 1px $blue-40;
     cursor: pointer;
+  }
+  .DatagridCell--warning &,
+  .DatagridCell--warning &:hover {
+    box-shadow: inset 0 0 0 1px $orange;
+    color: $orange-70;
+  }
+
+  .DatagridCell--danger &,
+  .DatagridCell--danger &:hover {
+    box-shadow: inset 0 0 0 1px $red;
+    color: $red;
   }
 }
 
 .DatagridCell__content--edited {
   font-weight: bold;
   box-shadow: inset 0 0 0 1px $coolgrey-30;
+}
+
+.DatagridCell__content--disabled {
+  box-shadow: inset 0 0 0 1px $color-input-border-disabled;
+  &:hover {
+    box-shadow: inset 0 0 0 1px $color-input-border-disabled;
+    cursor: default;
+  }
+  .DatagridCell--warning &,
+  .DatagridCell--warning &:hover {
+    box-shadow: inset 0 0 0 1px $color-input-border-disabled;
+  }
+
+  .DatagridCell--danger &,
+  .DatagridCell--danger &:hover {
+    box-shadow: inset 0 0 0 1px $color-input-border-disabled;
+  }
 }
 
 .DatagridCell__input {
