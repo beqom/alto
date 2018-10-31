@@ -133,7 +133,7 @@ $coolgrey-70: #495866 !default;
 $coolgrey-60: #66778a !default;
 $coolgrey-50: #8398a8 !default;
 $coolgrey-40: #a3b5c6 !default;
-$coolgrey-30: #bfcedd !default;
+$coolgrey-30: #c2d0de !default;
 $coolgrey-20: #e0e9f1 !default;
 $coolgrey-10: #f8f9fb !default;
 
@@ -356,3 +356,4 @@ $focusable-out-box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue !important;
 // Forms
 
 $color-input-border: $coolgrey-40 !default;
+$color-input-border-disabled: transparent !default;
