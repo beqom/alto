@@ -67,7 +67,16 @@ class Dropdown extends React.Component {
   }
 
   renderTrigger() {
-    const { renderTrigger, defaultLabel, label, items, loading, loadingItems } = this.props;
+    const {
+      renderTrigger,
+      defaultLabel,
+      label,
+      items,
+      loading,
+      loadingItems,
+      small,
+      large,
+    } = this.props;
     const { open } = this.state;
     if (typeof renderTrigger === 'function') {
       return renderTrigger(this.toggle, this.state.open);
@@ -80,7 +89,7 @@ class Dropdown extends React.Component {
       'undefined label';
 
     return (
-      <Button flat onClick={this.handleOpen} active={this.state.open}>
+      <Button small={small} large={large} flat onClick={this.handleOpen} active={this.state.open}>
         <span className="Dropdown__trigger-content">{text}</span>
         {(loading && !loadingItems) || (loadingItems && !open) ? (
           <Spinner className="Dropdown__trigger-spinner" small />
@@ -145,6 +154,8 @@ class Dropdown extends React.Component {
       invalidateEdit,
       loading,
       loadingItems,
+      small,
+      large,
       ...popoverProps
     } = this.props;
 
@@ -153,7 +164,7 @@ class Dropdown extends React.Component {
       <Popover
         start={!renderTrigger && !popoverProps.middle && !popoverProps.end}
         {...popoverProps}
-        className={bemClass('Dropdown', {}, className)}
+        className={bemClass('Dropdown', { small, large }, className)}
         baseClassName="Dropdown"
         open={this.state.open}
         target={this.renderTrigger()}
@@ -197,6 +208,8 @@ Dropdown.propTypes = {
   invalidateEdit: PropTypes.func,
   loading: PropTypes.bool,
   loadingItems: PropTypes.bool,
+  small: PropTypes.bool,
+  large: PropTypes.bool,
 };
 
 export default Dropdown;
