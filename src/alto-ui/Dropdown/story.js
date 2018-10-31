@@ -57,6 +57,8 @@ storiesOf('Dropdown', module)
       label={text('label', 'Click me')}
       loading={boolean('loading', false)}
       loadingItems={boolean('loadingItems', false)}
+      small={boolean('small', false)}
+      large={boolean('large', false)}
       selected="1"
     />
   ))
