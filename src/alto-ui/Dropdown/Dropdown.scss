@@ -26,6 +26,7 @@
 
 .Dropdown__trigger-content {
   max-width: 20rem;
+  line-height: 1.2;
   @extend %text-ellipsis;
 }
 
