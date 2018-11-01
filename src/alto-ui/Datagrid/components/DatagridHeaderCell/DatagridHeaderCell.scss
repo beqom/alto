@@ -2,7 +2,6 @@
 
 .DatagridHeaderCell {
   min-height: 3em;
-  overflow: hidden;
   flex-shrink: 0;
   text-align: left;
   border-bottom: 1px solid $coolgrey-20;
@@ -121,4 +120,26 @@
 
 .DatagridHeaderCell--sorted .DatagridHeaderCell__sortable-icons {
   opacity: 1;
+}
+
+.DatagridHeaderCell__resize-handle {
+  width: 0;
+  height: 100%;
+  position: relative;
+  opacity: 0;
+  cursor: col-resize;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 100%;
+    left: -3px;
+    top: 0;
+    background-color: $coolgrey-20;
+  }
 }

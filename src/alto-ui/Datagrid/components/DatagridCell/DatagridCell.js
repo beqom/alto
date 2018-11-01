@@ -67,7 +67,6 @@ class DatagridCell extends React.Component {
     const value = props.row[props.column.key];
     this.state = {
       editing: false,
-      width: 150,
       value,
       // eslint-disable-next-line react/no-unused-state
       originalValue: value,
@@ -111,8 +110,9 @@ class DatagridCell extends React.Component {
     }
     return (
       diff(this.props.selectProps, nextProps.selectProps) ||
-      this.props.row !== nextProps.row ||
-      this.props.selectedRowKey !== nextProps.selectedRowKey
+        this.props.row !== nextProps.row ||
+        this.props.selectedRowKey !== nextProps.selectedRowKey,
+      this.props.width !== nextProps.width
     );
   }
 
@@ -140,15 +140,11 @@ class DatagridCell extends React.Component {
   }
 
   getStyle() {
-    const { column } = this.props;
     if (this.state.editing) {
       return { width: this.state.width, maxWidth: this.state.width };
     }
-    const { width } = column;
-    if (width || width === 0) {
-      return { width, minWidth: '2rem', maxWidth: width };
-    }
-    return {};
+    const { width } = this.props;
+    return { width, minWidth: '2rem', maxWidth: width };
   }
 
   getModifiers() {
@@ -442,6 +438,7 @@ DatagridCell.defaultProps = {
   editable: false,
   edited: false,
   row: {},
+  width: 150,
 };
 
 DatagridCell.propTypes = {
@@ -451,7 +448,6 @@ DatagridCell.propTypes = {
     title: PropTypes.any.isRequired,
     description: PropTypes.string,
     type: PropTypes.string,
-    width: PropTypes.number,
     formula: PropTypes.string,
     formatter: PropTypes.func,
   }),
@@ -484,6 +480,7 @@ DatagridCell.propTypes = {
   selectedRowKey: PropTypes.string,
   clickable: PropTypes.bool,
   selectProps: PropTypes.object,
+  width: PropTypes.number,
 };
 
 export default DatagridCell;
