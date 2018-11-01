@@ -110,8 +110,8 @@ class DatagridCell extends React.Component {
     }
     return (
       diff(this.props.selectProps, nextProps.selectProps) ||
-        this.props.row !== nextProps.row ||
-        this.props.selectedRowKey !== nextProps.selectedRowKey,
+      this.props.row !== nextProps.row ||
+      this.props.selectedRowKey !== nextProps.selectedRowKey ||
       this.props.width !== nextProps.width
     );
   }
