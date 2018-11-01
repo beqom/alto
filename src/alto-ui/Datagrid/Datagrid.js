@@ -13,6 +13,7 @@ import Tooltip from '../Tooltip';
 import DatagridHeaderRow from './components/DatagridHeaderRow';
 import DatagridGroupedRow from './components/DatagridGroupedRow';
 import DatagridRow from './components/DatagridRow';
+import DatagridResizer from './components/DatagridResizer';
 
 import './Datagrid.scss';
 
@@ -71,6 +72,16 @@ const fakeNode = document.createElement('div');
 
 const HEADER_ROW_INDEX = 1;
 
+const emptyBoundingClientRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
+
+const initialStateResizer = {
+  column: null,
+  parent: emptyBoundingClientRect,
+  target: emptyBoundingClientRect,
+  container: emptyBoundingClientRect,
+  resizing: false,
+};
+
 class Datagrid extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -78,6 +89,8 @@ class Datagrid extends React.PureComponent {
     this.state = {
       loaded: false,
       collapsedGroups: {},
+      resizer: initialStateResizer,
+      columnsWidth: {},
     };
 
     this.scrollingElt = null;
@@ -89,8 +102,12 @@ class Datagrid extends React.PureComponent {
     this.handleScrollXStaticHeader = this.handleScrollXStaticHeader.bind(this);
     this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
     this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
-
+    this.handleMouseEnterResizeHandle = this.handleMouseEnterResizeHandle.bind(this);
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
+    this.handleStopResize = this.handleStopResize.bind(this);
+    this.handleStartResize = this.handleStartResize.bind(this);
+
+    this.containerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -128,6 +145,8 @@ class Datagrid extends React.PureComponent {
       parsers,
       formatters,
       labels,
+      onMouseEnterResizeHandle: this.handleMouseEnterResizeHandle,
+      columnsWidth: this.state.columnsWidth,
     };
   }
 
@@ -192,6 +211,25 @@ class Datagrid extends React.PureComponent {
       this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
       this.scrollingElt = null;
     }, 200);
+  }
+
+  handleMouseEnterResizeHandle(e, column) {
+    if (this.state.resizer.resizing) return;
+    const target = e.target.getBoundingClientRect();
+    const parent = e.target.parentNode.getBoundingClientRect();
+    const container = this.containerRef.current.getBoundingClientRect();
+    this.setState({ resizer: { column, target, parent, container } });
+  }
+
+  handleStartResize() {
+    this.setState(({ resizer }) => ({ resizer: { ...resizer, resizing: true } }));
+  }
+
+  handleStopResize(deltaX) {
+    this.setState(({ columnsWidth, resizer }) => ({
+      resizer: initialStateResizer,
+      columnsWidth: { ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX },
+    }));
   }
 
   renderHeaderRows(columns, hasCheckBox, columnIndexStart = 0) {
@@ -300,6 +338,26 @@ class Datagrid extends React.PureComponent {
     }, []);
   }
 
+  renderResizer() {
+    const {
+      resizer: { target, container, parent, resizing },
+    } = this.state;
+
+    return (
+      <DatagridResizer
+        left={target.left}
+        top={target.top}
+        handleHeight={target.height}
+        height={container.bottom - target.top}
+        maxLeft={parent.left + 32}
+        maxRight={container.right}
+        onStart={this.handleStartResize}
+        onStop={this.handleStopResize}
+        resizing={resizing}
+      />
+    );
+  }
+
   render() {
     const { className, columns, columnHeaders, rows, onSelectRow, id } = this.props;
     const staticColumns = columns.filter(({ frozen }) => !frozen);
@@ -321,7 +379,9 @@ class Datagrid extends React.PureComponent {
         role="grid"
         aria-rowcount={headersCount + rows.length}
         className={bemClass('Datagrid', { loaded: this.state.loaded }, className)}
+        ref={this.containerRef}
       >
+        {this.renderResizer()}
         <div role="rowgroup" className="Datagrid__head">
           <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
             {this.renderHeaderRows(frozenColumnHeaders, hasCheckbox)}
@@ -382,6 +442,7 @@ class Datagrid extends React.PureComponent {
 Datagrid.displayName = 'Datagrid';
 
 Datagrid.defaultProps = {
+  disabled: col => col.disabled,
   editable: col => col.editable,
   edited: () => false,
   modifiers: () => {},

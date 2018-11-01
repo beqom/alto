@@ -51,6 +51,7 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context, hasCh
   <div role="row" aria-rowindex={rowIndex} className="DatagridHeaderRow">
     {hasCheckBox && renderCheckbox(context, rowIndex)}
     {columns.map((column, colIndex) => {
+      const { columnsWidth } = context;
       if (!column.children) {
         return (
           <DatagridHeaderCell
@@ -61,13 +62,16 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context, hasCh
             context={context}
             last={colIndex === columns.length - 1}
             first={colIndex === 0}
+            width={columnsWidth[column.key] || column.width}
           />
         );
       }
 
       if (!column.children.length) return null;
-      const width = column.children.map(col => col.width || '').reduce((acc, w) => acc + w);
-      const style = width || width === 0 ? { width, maxWidth: width } : {};
+      const width = column.children
+        .map(col => columnsWidth[col.key] || col.width || 150)
+        .reduce((acc, w) => acc + w);
+      const style = { width, maxWidth: width };
       return (
         <div key={column.children[0].key} className="DatagridHeaderRow__group">
           <div
@@ -89,6 +93,7 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context, hasCh
                   colIndex === columns.length - 1 && subColumnIndex === column.children.length - 1
                 }
                 first={colIndex === 0 && subColumnIndex === 0}
+                width={columnsWidth[subColumn.key] || subColumn.width}
               />
             ))}
           </div>
@@ -118,6 +123,7 @@ DatagridHeaderRow.propTypes = {
     columnHeaders: PropTypes.array,
     wrapHeader: PropTypes.func,
     labels: PropTypes.object,
+    columnsWidth: PropTypes.object.isRequired,
   }).isRequired,
   hasCheckBox: PropTypes.bool,
 };
