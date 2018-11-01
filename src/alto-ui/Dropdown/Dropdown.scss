@@ -19,8 +19,7 @@
 .Dropdown__list {
   list-style: none;
   padding: $spacing-x-small;
-  // abtitary amount
-  max-height: 20rem;
+  max-height: 20rem; // abtitary amount
   overflow: auto;
 }
 
