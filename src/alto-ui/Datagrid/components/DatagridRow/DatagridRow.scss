@@ -12,3 +12,9 @@
     outline: 0;
   }
 }
+
+.DatagridRow__last-cell {
+  border-left: 1px solid $coolgrey-20;
+  min-width: 8rem;
+  flex: 1;
+}

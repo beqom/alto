@@ -17,6 +17,7 @@ const DatagridRow = ({
   context,
   children,
   collapsed,
+  extraCell,
 }) => {
   const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
   const clickable = typeof onRowClick === 'function';
@@ -67,6 +68,7 @@ const DatagridRow = ({
           );
         })
       )}
+      {!!extraCell && <div className="DatagridRow__last-cell" />}
     </div>
   );
 };
@@ -99,6 +101,7 @@ DatagridRow.propTypes = {
   }).isRequired,
   children: PropTypes.func,
   collapsed: PropTypes.bool,
+  extraCell: PropTypes.bool,
 };
 
 export default DatagridRow;

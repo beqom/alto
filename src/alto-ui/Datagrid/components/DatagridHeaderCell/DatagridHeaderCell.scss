@@ -71,6 +71,7 @@
 
   &--wrapped {
     white-space: normal;
+    word-break: break-word;
   }
 
   .Datagrid--compact & {

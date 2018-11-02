@@ -33,7 +33,14 @@ const renderCheckbox = (context, rowIndex) => {
   return <CheckBox id={checkboxId} hideLabel label={labels.checkboxLabel} />;
 };
 
-const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context, hasCheckBox }) => (
+const DatagridHeaderRow = ({
+  columns,
+  rowIndex,
+  columnIndexStart,
+  context,
+  hasCheckBox,
+  extraCell,
+}) => (
   <div role="row" aria-rowindex={rowIndex} className="DatagridHeaderRow">
     {hasCheckBox && renderCheckbox(context, rowIndex)}
     {columns.map((column, colIndex) => {
@@ -59,7 +66,12 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context, hasCh
         .reduce((acc, w) => acc + w);
       const style = { width, maxWidth: width };
       return (
-        <div key={column.children[0].key} className="DatagridHeaderRow__group">
+        <div
+          key={column.children[0].key}
+          className={bemClass('DatagridHeaderRow__group', {
+            last: colIndex === columns.length - 1,
+          })}
+        >
           <div
             className={bemClass('DatagridHeaderRow__group-title', { empty: !column.title })}
             style={style}
@@ -86,6 +98,7 @@ const DatagridHeaderRow = ({ columns, rowIndex, columnIndexStart, context, hasCh
         </div>
       );
     })}
+    {!!extraCell && <div className="DatagridHeaderRow__last-cell" />}
   </div>
 );
 
@@ -111,6 +124,7 @@ DatagridHeaderRow.propTypes = {
     columnsWidth: PropTypes.object.isRequired,
   }).isRequired,
   hasCheckBox: PropTypes.bool,
+  extraCell: PropTypes.bool,
 };
 
 export default DatagridHeaderRow;
