@@ -218,7 +218,7 @@ class Datagrid extends React.PureComponent {
     const target = e.target.getBoundingClientRect();
     const parent = e.target.parentNode.getBoundingClientRect();
     const container = this.containerRef.current.getBoundingClientRect();
-    this.setState({ resizer: { column, target, parent, container } });
+    this.setState({ resizer: { column, target, parent, container, resizing: false } });
   }
 
   handleStartResize() {
@@ -232,7 +232,7 @@ class Datagrid extends React.PureComponent {
     }));
   }
 
-  renderHeaderRows(columns, hasCheckBox, columnIndexStart = 0) {
+  renderHeaderRows(columns, hasCheckBox, columnIndexStart = 0, extraCell) {
     return (
       <DatagridHeaderRow
         rowIndex={HEADER_ROW_INDEX}
@@ -240,11 +240,19 @@ class Datagrid extends React.PureComponent {
         columnIndexStart={columnIndexStart}
         context={this.getContext()}
         hasCheckBox={hasCheckBox}
+        extraCell={extraCell}
       />
     );
   }
 
-  renderSummaryRow(columns, numberOfRows, headersCount = 1, columnIndexStart = 0, hasCheckBox) {
+  renderSummaryRow(
+    columns,
+    numberOfRows,
+    headersCount = 1,
+    columnIndexStart = 0,
+    hasCheckBox,
+    extraCell
+  ) {
     const { renderSummaryCell } = this.props;
     if (!renderSummaryCell || !numberOfRows) return null;
     return (
@@ -256,6 +264,7 @@ class Datagrid extends React.PureComponent {
         context={this.getContext()}
         render={renderSummaryCell}
         columnIndexStart={columnIndexStart}
+        extraCell={extraCell}
       >
         {cells => (
           <Fragment>
@@ -267,7 +276,7 @@ class Datagrid extends React.PureComponent {
     );
   }
 
-  renderRows(columns, hasCheckBox, headersCount = 1, columnIndexStart = 0) {
+  renderRows(columns, hasCheckBox, headersCount = 1, columnIndexStart = 0, extraCell) {
     const {
       rowKeyField,
       renderSummaryCell,
@@ -304,6 +313,7 @@ class Datagrid extends React.PureComponent {
             rowIndex={rowIndex}
             onToggle={this.handleToggleGroup}
             subRows={rows.filter(r => r[groupedByColumnKey] === row[groupedByColumnKey])}
+            extraCell={extraCell}
           />
         ) : null;
 
@@ -317,6 +327,7 @@ class Datagrid extends React.PureComponent {
           key={uniqueId}
           row={row}
           rowIndex={rowIndex + groupedRowArr.length + 1}
+          extraCell={extraCell}
         >
           {cells => (
             <Fragment>
@@ -339,9 +350,7 @@ class Datagrid extends React.PureComponent {
   }
 
   renderResizer() {
-    const {
-      resizer: { target, container, parent, resizing },
-    } = this.state;
+    const { target, container, parent, resizing } = this.state.resizer;
 
     return (
       <DatagridResizer
@@ -349,7 +358,7 @@ class Datagrid extends React.PureComponent {
         top={target.top}
         handleHeight={target.height}
         height={container.bottom - target.top}
-        maxLeft={parent.left + 32}
+        maxLeft={parent.left + 64}
         maxRight={container.right}
         onStart={this.handleStartResize}
         onStop={this.handleStopResize}
@@ -399,12 +408,14 @@ class Datagrid extends React.PureComponent {
             onScroll={this.handleScrollXStaticHeader}
             className={bemClass('Datagrid__header-row', { static: true })}
           >
-            {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
+            {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length, true)}
             {this.renderSummaryRow(
               staticColumns,
               staticColumns.length,
               HEADER_ROW_INDEX + 1,
-              frozenColumns.length
+              frozenColumns.length,
+              false,
+              true
             )}
           </div>
         </div>
@@ -426,7 +437,7 @@ class Datagrid extends React.PureComponent {
                   ref={this.setStaticRowsNode}
                   onScroll={this.handleScrollStaticRows}
                 >
-                  {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
+                  {this.renderRows(staticColumns, false, headersCount, frozenColumns.length, true)}
                 </div>
               </div>
             </Fragment>

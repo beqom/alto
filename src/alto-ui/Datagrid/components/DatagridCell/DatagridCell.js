@@ -355,6 +355,7 @@ class DatagridCell extends React.Component {
             id={this.getId()}
             selected={selectedValue}
             defaultLabel="Select"
+            className="DatagridCell__content-dropdown"
             onClick={this.handleChangeDropdown}
             onOpen={() =>
               typeof context.handleStartEditing === 'function' &&
