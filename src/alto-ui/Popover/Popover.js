@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
@@ -38,25 +38,27 @@ class Popover extends React.Component {
     } = this.props;
 
     return (
-      <Overlay
-        onClose={onClose}
-        openFocusTargetId={openFocusTargetId}
-        closeFocusTargetId={closeFocusTargetId}
-        open={open}
-        render
-      >
+      <Fragment>
         {this.renderTrigger()}
-        {open && (
-          <RelativeBox
-            className={bemClass('Popover', {}, className)}
-            margin={6.4}
-            targetRef={this.targetRef}
-            {...relativeBoxProps}
-          >
-            {children}
-          </RelativeBox>
-        )}
-      </Overlay>
+        <Overlay
+          onClose={onClose}
+          openFocusTargetId={openFocusTargetId}
+          closeFocusTargetId={closeFocusTargetId}
+          open={open}
+          render
+        >
+          {open && (
+            <RelativeBox
+              className={bemClass('Popover', {}, className)}
+              margin={6.4}
+              targetRef={this.targetRef}
+              {...relativeBoxProps}
+            >
+              {children}
+            </RelativeBox>
+          )}
+        </Overlay>
+      </Fragment>
     );
   }
 }
