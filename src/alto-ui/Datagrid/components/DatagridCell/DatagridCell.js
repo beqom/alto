@@ -17,8 +17,8 @@ import './DatagridCell.scss';
 
 const IDENTITY = x => x;
 
-const getValue = (value, column, row, labels) =>
-  column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
+const getValue = (value, column, row) =>
+  column.formula ? evaluateFormula(column.formula, row) : value;
 const getType = (value, column) => (value instanceof Error ? 'error' : column.type || typeof value);
 
 const getFormatter = (context, type) => (value, column, row) => {
@@ -30,7 +30,7 @@ const getFormatter = (context, type) => (value, column, row) => {
 };
 
 const getFormattedValue = context => (value, column, row) => {
-  const val = getValue(value, column, row, context.labels);
+  const val = getValue(value, column, row);
   const type = getType(val, column);
   const format = getFormatter(context, type);
   return format(value, column, row);
@@ -111,10 +111,10 @@ class DatagridCell extends React.Component {
   }
 
   getValue() {
-    const { row, column, context, render, header } = this.props;
+    const { row, column, render, header } = this.props;
     if (render) return '';
     if (header) return this.state.value;
-    return getValue(this.state.value, column, row, context.labels);
+    return getValue(this.state.value, column, row);
   }
 
   getFormattedValue() {
@@ -309,7 +309,7 @@ class DatagridCell extends React.Component {
   renderInput() {
     const { column, row, context, editable, render, header } = this.props;
     if (render) return null;
-    const value = getValue(this.state.value, column, row, context.labels);
+    const value = getValue(this.state.value, column, row);
     const type = getType(value, column);
 
     if ((!editable && type !== 'list') || header) return null;
