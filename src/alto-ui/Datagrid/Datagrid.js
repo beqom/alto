@@ -448,7 +448,7 @@ Datagrid.defaultProps = {
   modifiers: () => {},
   showError: () => false,
   locale: 'en-US',
-  wrapHeader: () => false,
+  wrapHeader: false,
   groupedSummaryColumnKeys: [],
   onClickCellDropdownItem: () => {},
 };
@@ -488,7 +488,7 @@ Datagrid.propTypes = {
     }).isRequired
   ),
   onSelectRow: PropTypes.func,
-  wrapHeader: PropTypes.func,
+  wrapHeader: PropTypes.bool,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,

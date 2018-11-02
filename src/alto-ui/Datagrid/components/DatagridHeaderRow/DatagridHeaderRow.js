@@ -9,24 +9,11 @@ import DatagridHeaderCell from '../DatagridHeaderCell';
 import './DatagridHeaderRow.scss';
 
 const renderCheckbox = (context, rowIndex) => {
-  const {
-    columnHeaders,
-    wrapHeader,
-    labels,
-    id,
-    onSelectAllRows,
-    isDisplayedRowsSelected,
-  } = context;
+  const { columnHeaders, labels, id, onSelectAllRows, isDisplayedRowsSelected } = context;
 
   const column = columnHeaders[0] || {};
   const checkboxId = `${id || 'DatagridHeaderRow'}__${rowIndex}-checkbox`;
   if (column.children && column.children.length) {
-    const wrapped = wrapHeader(column.children[0]);
-
-    const style = {
-      ...(wrapped && wrapped !== true ? { height: `${wrapped * 1.2 + 1.8}em` } : {}),
-    };
-
     return (
       <div className="DatagridHeaderRow__group">
         <div className="DatagridHeaderRow__group-title DatagridHeaderRow__group-title--empty" />
@@ -34,7 +21,6 @@ const renderCheckbox = (context, rowIndex) => {
           <CheckBox
             id={checkboxId}
             className="DatagridHeaderRow__checkbox"
-            style={style}
             checked={isDisplayedRowsSelected}
             onChange={onSelectAllRows}
             hideLabel
@@ -121,7 +107,6 @@ DatagridHeaderRow.propTypes = {
   columnIndexStart: PropTypes.number,
   context: PropTypes.shape({
     columnHeaders: PropTypes.array,
-    wrapHeader: PropTypes.func,
     labels: PropTypes.object,
     columnsWidth: PropTypes.object.isRequired,
   }).isRequired,
