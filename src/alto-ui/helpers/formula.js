@@ -28,8 +28,7 @@ export const evaluateFormula = (formula, row, errorLabel) => {
     return res;
   }
 
-  const isDividedByZeroError = isValid(Evaluator.exec(getExpression(row, formula, 1)));
-  if (isDividedByZeroError) {
+  if (!errorLabel) {
     return '';
   }
 
