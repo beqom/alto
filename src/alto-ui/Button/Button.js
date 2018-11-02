@@ -19,21 +19,21 @@ const buttonProps = bemProps('button', [
   'disabled',
 ]);
 
-const Button = ({ buttonRef, ...props }) => {
+const Button = React.forwardRef((props, ref) => {
   if (props.tag) {
-    return <props.tag {...buttonProps(props)} disabled={props.disabled} ref={buttonRef} />;
+    return <props.tag {...buttonProps(props)} disabled={props.disabled} ref={ref} />;
   }
 
   if (props.href) {
     return (
-      <Link {...buttonProps(props)} linkRef={buttonRef} href={props.href} disabled={props.disabled}>
+      <Link {...buttonProps(props)} linkRef={ref} href={props.href} disabled={props.disabled}>
         {props.children}
       </Link>
     );
   }
 
-  return <button {...buttonProps(props)} disabled={props.disabled} ref={buttonRef} />;
-};
+  return <button {...buttonProps(props)} disabled={props.disabled} ref={ref} />;
+});
 
 Button.displayName = 'Button';
 
