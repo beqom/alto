@@ -90,14 +90,11 @@ class DatagridHeaderCell extends React.Component {
 
   render() {
     const { column, context, rowIndex, colIndex, first, last, width } = this.props;
-
-    const wrapped = context.wrapHeader(column);
-
+    const wrapped = context.wrapHeader;
     const style = {
       width,
       minWidth: '2rem',
       maxWidth: width,
-      ...(wrapped && wrapped !== true ? { height: `${wrapped * 1.2 + 1.8}em` } : {}),
     };
 
     const sorted = column.key === context.columnSorted || [1, -1].includes(column.sortDirection);
