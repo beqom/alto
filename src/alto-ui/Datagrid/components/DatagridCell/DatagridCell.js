@@ -18,8 +18,8 @@ import './DatagridCell.scss';
 
 const IDENTITY = x => x;
 
-const getValue = (value, column, row, labels) =>
-  column.formula ? evaluateFormula(column.formula, row, labels.errorFormula) : value;
+const getValue = (value, column, row) =>
+  column.formula ? evaluateFormula(column.formula, row) : value;
 const getType = (value, column) => (value instanceof Error ? 'error' : column.type || typeof value);
 
 const getFormatter = (context, type) => (value, column, row) => {
@@ -31,7 +31,7 @@ const getFormatter = (context, type) => (value, column, row) => {
 };
 
 const getFormattedValue = context => (value, column, row) => {
-  const val = getValue(value, column, row, context.labels);
+  const val = getValue(value, column, row);
   const type = getType(val, column);
   const format = getFormatter(context, type);
   return format(value, column, row);
@@ -67,7 +67,6 @@ class DatagridCell extends React.Component {
     const value = props.row[props.column.key];
     this.state = {
       editing: false,
-      width: 150,
       value,
       // eslint-disable-next-line react/no-unused-state
       originalValue: value,
@@ -112,7 +111,8 @@ class DatagridCell extends React.Component {
     return (
       diff(this.props.selectProps, nextProps.selectProps) ||
       this.props.row !== nextProps.row ||
-      this.props.selectedRowKey !== nextProps.selectedRowKey
+      this.props.selectedRowKey !== nextProps.selectedRowKey ||
+      this.props.width !== nextProps.width
     );
   }
 
@@ -125,10 +125,10 @@ class DatagridCell extends React.Component {
   }
 
   getValue() {
-    const { row, column, context, render, header } = this.props;
+    const { row, column, render, header } = this.props;
     if (render) return '';
     if (header) return this.state.value;
-    return getValue(this.state.value, column, row, context.labels);
+    return getValue(this.state.value, column, row);
   }
 
   getFormattedValue() {
@@ -140,15 +140,11 @@ class DatagridCell extends React.Component {
   }
 
   getStyle() {
-    const { column } = this.props;
     if (this.state.editing) {
       return { width: this.state.width, maxWidth: this.state.width };
     }
-    const { width } = column;
-    if (width || width === 0) {
-      return { width, minWidth: '2rem', maxWidth: width };
-    }
-    return {};
+    const { width } = this.props;
+    return { width, minWidth: '2rem', maxWidth: width };
   }
 
   getModifiers() {
@@ -340,7 +336,7 @@ class DatagridCell extends React.Component {
   renderInput() {
     const { column, row, context, editable, disabled, render, header, selectProps } = this.props;
     if (render) return null;
-    const value = getValue(this.state.value, column, row, context.labels);
+    const value = getValue(this.state.value, column, row);
     const type = getType(value, column);
 
     if ((!editable && type !== 'list') || header) return null;
@@ -359,6 +355,7 @@ class DatagridCell extends React.Component {
             id={this.getId()}
             selected={selectedValue}
             defaultLabel="Select"
+            className="DatagridCell__content-dropdown"
             onClick={this.handleChangeDropdown}
             onOpen={() =>
               typeof context.handleStartEditing === 'function' &&
@@ -442,6 +439,7 @@ DatagridCell.defaultProps = {
   editable: false,
   edited: false,
   row: {},
+  width: 150,
 };
 
 DatagridCell.propTypes = {
@@ -451,7 +449,6 @@ DatagridCell.propTypes = {
     title: PropTypes.any.isRequired,
     description: PropTypes.string,
     type: PropTypes.string,
-    width: PropTypes.number,
     formula: PropTypes.string,
     formatter: PropTypes.func,
   }),
@@ -484,6 +481,7 @@ DatagridCell.propTypes = {
   selectedRowKey: PropTypes.string,
   clickable: PropTypes.bool,
   selectProps: PropTypes.object,
+  width: PropTypes.number,
 };
 
 export default DatagridCell;

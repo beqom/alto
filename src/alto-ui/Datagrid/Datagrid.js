@@ -13,6 +13,7 @@ import Tooltip from '../Tooltip';
 import DatagridHeaderRow from './components/DatagridHeaderRow';
 import DatagridGroupedRow from './components/DatagridGroupedRow';
 import DatagridRow from './components/DatagridRow';
+import DatagridResizer from './components/DatagridResizer';
 
 import './Datagrid.scss';
 
@@ -71,6 +72,16 @@ const fakeNode = document.createElement('div');
 
 const HEADER_ROW_INDEX = 1;
 
+const emptyBoundingClientRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
+
+const initialStateResizer = {
+  column: null,
+  parent: emptyBoundingClientRect,
+  target: emptyBoundingClientRect,
+  container: emptyBoundingClientRect,
+  resizing: false,
+};
+
 class Datagrid extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -78,6 +89,8 @@ class Datagrid extends React.PureComponent {
     this.state = {
       loaded: false,
       collapsedGroups: {},
+      resizer: initialStateResizer,
+      columnsWidth: {},
     };
 
     this.scrollingElt = null;
@@ -89,8 +102,12 @@ class Datagrid extends React.PureComponent {
     this.handleScrollXStaticHeader = this.handleScrollXStaticHeader.bind(this);
     this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
     this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
-
+    this.handleMouseEnterResizeHandle = this.handleMouseEnterResizeHandle.bind(this);
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
+    this.handleStopResize = this.handleStopResize.bind(this);
+    this.handleStartResize = this.handleStartResize.bind(this);
+
+    this.containerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -128,6 +145,8 @@ class Datagrid extends React.PureComponent {
       parsers,
       formatters,
       labels,
+      onMouseEnterResizeHandle: this.handleMouseEnterResizeHandle,
+      columnsWidth: this.state.columnsWidth,
     };
   }
 
@@ -194,7 +213,26 @@ class Datagrid extends React.PureComponent {
     }, 200);
   }
 
-  renderHeaderRows(columns, hasCheckBox, columnIndexStart = 0) {
+  handleMouseEnterResizeHandle(e, column) {
+    if (this.state.resizer.resizing) return;
+    const target = e.target.getBoundingClientRect();
+    const parent = e.target.parentNode.getBoundingClientRect();
+    const container = this.containerRef.current.getBoundingClientRect();
+    this.setState({ resizer: { column, target, parent, container, resizing: false } });
+  }
+
+  handleStartResize() {
+    this.setState(({ resizer }) => ({ resizer: { ...resizer, resizing: true } }));
+  }
+
+  handleStopResize(deltaX) {
+    this.setState(({ columnsWidth, resizer }) => ({
+      resizer: initialStateResizer,
+      columnsWidth: { ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX },
+    }));
+  }
+
+  renderHeaderRows(columns, hasCheckBox, columnIndexStart = 0, extraCell) {
     return (
       <DatagridHeaderRow
         rowIndex={HEADER_ROW_INDEX}
@@ -202,11 +240,19 @@ class Datagrid extends React.PureComponent {
         columnIndexStart={columnIndexStart}
         context={this.getContext()}
         hasCheckBox={hasCheckBox}
+        extraCell={extraCell}
       />
     );
   }
 
-  renderSummaryRow(columns, numberOfRows, headersCount = 1, columnIndexStart = 0, hasCheckBox) {
+  renderSummaryRow(
+    columns,
+    numberOfRows,
+    headersCount = 1,
+    columnIndexStart = 0,
+    hasCheckBox,
+    extraCell
+  ) {
     const { renderSummaryCell } = this.props;
     if (!renderSummaryCell || !numberOfRows) return null;
     return (
@@ -218,6 +264,7 @@ class Datagrid extends React.PureComponent {
         context={this.getContext()}
         render={renderSummaryCell}
         columnIndexStart={columnIndexStart}
+        extraCell={extraCell}
       >
         {cells => (
           <Fragment>
@@ -229,7 +276,7 @@ class Datagrid extends React.PureComponent {
     );
   }
 
-  renderRows(columns, hasCheckBox, headersCount = 1, columnIndexStart = 0) {
+  renderRows(columns, hasCheckBox, headersCount = 1, columnIndexStart = 0, extraCell) {
     const {
       rowKeyField,
       renderSummaryCell,
@@ -266,6 +313,7 @@ class Datagrid extends React.PureComponent {
             rowIndex={rowIndex}
             onToggle={this.handleToggleGroup}
             subRows={rows.filter(r => r[groupedByColumnKey] === row[groupedByColumnKey])}
+            extraCell={extraCell}
           />
         ) : null;
 
@@ -279,6 +327,7 @@ class Datagrid extends React.PureComponent {
           key={uniqueId}
           row={row}
           rowIndex={rowIndex + groupedRowArr.length + 1}
+          extraCell={extraCell}
         >
           {cells => (
             <Fragment>
@@ -298,6 +347,24 @@ class Datagrid extends React.PureComponent {
         </DatagridRow>,
       ];
     }, []);
+  }
+
+  renderResizer() {
+    const { target, container, parent, resizing } = this.state.resizer;
+
+    return (
+      <DatagridResizer
+        left={target.left}
+        top={target.top}
+        handleHeight={target.height}
+        height={container.bottom - target.top}
+        maxLeft={parent.left + 64}
+        maxRight={container.right}
+        onStart={this.handleStartResize}
+        onStop={this.handleStopResize}
+        resizing={resizing}
+      />
+    );
   }
 
   render() {
@@ -321,7 +388,9 @@ class Datagrid extends React.PureComponent {
         role="grid"
         aria-rowcount={headersCount + rows.length}
         className={bemClass('Datagrid', { loaded: this.state.loaded }, className)}
+        ref={this.containerRef}
       >
+        {this.renderResizer()}
         <div role="rowgroup" className="Datagrid__head">
           <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
             {this.renderHeaderRows(frozenColumnHeaders, hasCheckbox)}
@@ -339,12 +408,14 @@ class Datagrid extends React.PureComponent {
             onScroll={this.handleScrollXStaticHeader}
             className={bemClass('Datagrid__header-row', { static: true })}
           >
-            {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
+            {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length, true)}
             {this.renderSummaryRow(
               staticColumns,
               staticColumns.length,
               HEADER_ROW_INDEX + 1,
-              frozenColumns.length
+              frozenColumns.length,
+              false,
+              true
             )}
           </div>
         </div>
@@ -366,7 +437,7 @@ class Datagrid extends React.PureComponent {
                   ref={this.setStaticRowsNode}
                   onScroll={this.handleScrollStaticRows}
                 >
-                  {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
+                  {this.renderRows(staticColumns, false, headersCount, frozenColumns.length, true)}
                 </div>
               </div>
             </Fragment>
@@ -382,12 +453,13 @@ class Datagrid extends React.PureComponent {
 Datagrid.displayName = 'Datagrid';
 
 Datagrid.defaultProps = {
+  disabled: col => col.disabled,
   editable: col => col.editable,
   edited: () => false,
   modifiers: () => {},
   showError: () => false,
   locale: 'en-US',
-  wrapHeader: () => false,
+  wrapHeader: false,
   groupedSummaryColumnKeys: [],
   onClickCellDropdownItem: () => {},
 };
@@ -427,7 +499,7 @@ Datagrid.propTypes = {
     }).isRequired
   ),
   onSelectRow: PropTypes.func,
-  wrapHeader: PropTypes.func,
+  wrapHeader: PropTypes.bool,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,

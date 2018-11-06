@@ -17,8 +17,9 @@ const DatagridRow = ({
   context,
   children,
   collapsed,
+  extraCell,
 }) => {
-  const { onRowClick, rowKeyField, selectedRowKey } = context;
+  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
   const clickable = typeof onRowClick === 'function';
   return (
     <div
@@ -62,10 +63,12 @@ const DatagridRow = ({
               aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
               selectedRowKey={selectedRowKey}
               selectProps={selectProps}
+              width={columnsWidth[column.key] || column.width}
             />
           );
         })
       )}
+      {!!extraCell && <div className="DatagridRow__last-cell" />}
     </div>
   );
 };
@@ -98,6 +101,7 @@ DatagridRow.propTypes = {
   }).isRequired,
   children: PropTypes.func,
   collapsed: PropTypes.bool,
+  extraCell: PropTypes.bool,
 };
 
 export default DatagridRow;

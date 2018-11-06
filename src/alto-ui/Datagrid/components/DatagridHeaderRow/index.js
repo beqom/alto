@@ -1,1 +1,1 @@
-export { default } from './DatagridHeaderRowContainer';
+export { default } from './DatagridHeaderRow';

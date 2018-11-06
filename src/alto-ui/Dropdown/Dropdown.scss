@@ -23,10 +23,13 @@
   overflow: auto;
 }
 
+.Dropdown__trigger {
+  max-width: 100%;
+}
+
 .Dropdown__trigger-content {
-  max-width: 20rem;
-  line-height: 1.2;
   @extend %text-ellipsis;
+  line-height: 1.2;
 }
 
 .Dropdown__trigger-spinner {

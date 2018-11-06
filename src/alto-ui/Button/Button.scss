@@ -165,7 +165,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 }
 
 .button--small {
-  font-size: $font-size-medium;
+  font-size: $font-size-small;
   padding: 0 0.5rem;
   height: 1.5rem; // Button height = 26px
   .icon {
@@ -228,19 +228,12 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 // Flat
 
 .button--flat {
-  @include button--flat(
-    $coolgrey-60,
-    $blue-60,
-    $blue-30,
-    transparent,
-    $blue-20,
-    $blue-70
-  );
+  @include button--flat($coolgrey-60, $blue-60, $blue-30, transparent, $blue-20, $blue-70);
   background: transparent;
   border-color: transparent;
   font-weight: 600;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding-left: $spacing-x-small;
+  padding-right: $spacing-x-small;
 }
 
 .button--flat.button--success {
@@ -260,4 +253,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     rgba($white, 0.3),
     $white
   );
+}
+
+.button--flat.button--muted {
+  @include button--flat($coolgrey-50, $blue-60, $blue-30, transparent, $blue-20, $blue-70);
 }

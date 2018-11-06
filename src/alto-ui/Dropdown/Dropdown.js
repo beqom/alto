@@ -76,6 +76,7 @@ class Dropdown extends React.Component {
       loadingItems,
       small,
       large,
+      className,
     } = this.props;
     const { open } = this.state;
     if (typeof renderTrigger === 'function') {
@@ -88,8 +89,16 @@ class Dropdown extends React.Component {
       defaultLabel ||
       'undefined label';
 
-    return (
-      <Button small={small} large={large} flat onClick={this.handleOpen} active={this.state.open}>
+    return ref => (
+      <Button
+        ref={ref}
+        small={small}
+        large={large}
+        flat
+        onClick={this.handleOpen}
+        active={this.state.open}
+        className={bemClass('Dropdown__trigger', {}, className ? `${className}-trigger` : '')}
+      >
         <span className="Dropdown__trigger-content">{text}</span>
         {(loading && !loadingItems) || (loadingItems && !open) ? (
           <Spinner className="Dropdown__trigger-spinner" small />

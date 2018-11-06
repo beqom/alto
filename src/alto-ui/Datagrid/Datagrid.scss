@@ -37,6 +37,11 @@
   }
 }
 
+.Datagrid__header-row {
+  display: flex;
+  flex-direction: column;
+}
+
 .Datagrid__header-row--frozen {
   margin-right: 2px;
   box-shadow: 2px 0 0 $coolgrey-20;
