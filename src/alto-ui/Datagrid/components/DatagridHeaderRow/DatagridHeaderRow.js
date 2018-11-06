@@ -8,11 +8,12 @@ import DatagridHeaderCell from '../DatagridHeaderCell';
 
 import './DatagridHeaderRow.scss';
 
-const renderCheckbox = (context, rowIndex) => {
+const renderCheckbox = context => {
   const { columnHeaders, labels, id, onSelectAllRows, isDisplayedRowsSelected } = context;
 
-  const column = columnHeaders[0] || {};
-  const checkboxId = `${id || 'DatagridHeaderRow'}__${rowIndex}-checkbox`;
+  const column = (columnHeaders || [])[0] || {};
+  const checkboxId = `${id}__header-checkbox`;
+
   if (column.children && column.children.length) {
     return (
       <div className="DatagridHeaderRow__group">
@@ -30,7 +31,16 @@ const renderCheckbox = (context, rowIndex) => {
       </div>
     );
   }
-  return <CheckBox id={checkboxId} hideLabel label={labels.checkboxLabel} />;
+  return (
+    <CheckBox
+      id={checkboxId}
+      className="DatagridHeaderRow__checkbox"
+      checked={isDisplayedRowsSelected}
+      onChange={onSelectAllRows}
+      hideLabel
+      label={labels.checkboxLabel}
+    />
+  );
 };
 
 const DatagridHeaderRow = ({
@@ -42,7 +52,7 @@ const DatagridHeaderRow = ({
   extraCell,
 }) => (
   <div role="row" aria-rowindex={rowIndex} className="DatagridHeaderRow">
-    {hasCheckBox && renderCheckbox(context, rowIndex)}
+    {hasCheckBox && renderCheckbox(context)}
     {columns.map((column, colIndex) => {
       const { columnsWidth } = context;
       if (!column.children) {
