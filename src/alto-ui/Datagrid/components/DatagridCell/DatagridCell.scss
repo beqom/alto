@@ -16,6 +16,14 @@
     }
   }
 
+  &--compact {
+    height: 2.5rem;
+  }
+
+  &--comfortable {
+    height: 3.5rem;
+  }
+
   &--number,
   &--percentage,
   &--int,
@@ -74,12 +82,12 @@
   flex: 1;
   border-radius: $border-radius-default;
 
-  .Table--compact & {
-    padding: 0.375rem 0.75rem;
+  &--compact {
+    max-height: 2.5rem;
   }
 
-  .Table--comfortable & {
-    padding: $spacing-medium;
+  &--comfortable {
+    max-height: 3.5rem;
   }
 
   &--editing {
@@ -91,16 +99,6 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     display: flex;
-
-    .Table--compact & {
-      padding-top: 0.2rem;
-      padding-bottom: 0.2rem;
-    }
-
-    .Table--comfortable & {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-    }
   }
 
   &--image {
