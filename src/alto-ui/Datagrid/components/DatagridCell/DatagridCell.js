@@ -112,7 +112,9 @@ class DatagridCell extends React.Component {
       diff(this.props.selectProps, nextProps.selectProps) ||
       this.props.row !== nextProps.row ||
       this.props.selectedRowKey !== nextProps.selectedRowKey ||
-      this.props.width !== nextProps.width
+      this.props.width !== nextProps.width ||
+      this.props.context.compact !== nextProps.context.compact ||
+      this.props.context.comfortable !== nextProps.context.comfortable
     );
   }
 
@@ -173,6 +175,8 @@ class DatagridCell extends React.Component {
       header,
       selected,
       clickable,
+      compact: context.compact,
+      comfortable: context.comfortable,
       'with-icon': context.showError(value, column, row),
       ...context.modifiers(value, column, row),
     };
@@ -468,6 +472,8 @@ DatagridCell.propTypes = {
     onStartEditing: PropTypes.func,
     getSelectProps: PropTypes.func,
     onClickCellDropdownItem: PropTypes.func.isRequired,
+    compact: PropTypes.bool,
+    comfortable: PropTypes.bool,
   }),
   render: PropTypes.func,
   editable: PropTypes.bool,
@@ -482,6 +488,8 @@ DatagridCell.propTypes = {
   clickable: PropTypes.bool,
   selectProps: PropTypes.object,
   width: PropTypes.number,
+  compact: PropTypes.bool,
+  comfortable: PropTypes.bool,
 };
 
 export default DatagridCell;

@@ -150,6 +150,13 @@ class Datagrid extends React.PureComponent {
     };
   }
 
+  getModifiers() {
+    return {
+      compact: this.props.compact,
+      comfortable: this.props.comfortable,
+    };
+  }
+
   setStaticHeaderNode(node) {
     this.staticHeaderNode = node || fakeNode;
   }
@@ -255,6 +262,9 @@ class Datagrid extends React.PureComponent {
   ) {
     const { renderSummaryCell } = this.props;
     if (!renderSummaryCell || !numberOfRows) return null;
+
+    const modifiers = this.getModifiers();
+
     return (
       <DatagridRow
         columns={columns}
@@ -268,7 +278,7 @@ class Datagrid extends React.PureComponent {
       >
         {cells => (
           <Fragment>
-            {hasCheckBox && <div className="DataGrid__row--checkbox" />}
+            {hasCheckBox && <div className={bemClass('DataGrid__row-checkbox', modifiers)} />}
             {cells}
           </Fragment>
         )}
@@ -319,6 +329,7 @@ class Datagrid extends React.PureComponent {
 
       const groupedRowArr = groupedRow ? [groupedRow] : [];
       const { labels } = this.getContext();
+      const modifiers = this.getModifiers();
       return [
         ...acc,
         ...groupedRowArr,
@@ -334,7 +345,7 @@ class Datagrid extends React.PureComponent {
               {hasCheckBox && (
                 <CheckBox
                   id={`${id || 'Datagrid'}__${key}-checkbox`}
-                  className="DataGrid__row--checkbox"
+                  className={bemClass('DataGrid__row-checkbox', modifiers)}
                   label={labels.checkboxLabel}
                   hideLabel
                   checked={(selectedRows || []).includes(key)}
@@ -500,6 +511,8 @@ Datagrid.propTypes = {
   ),
   onSelectRow: PropTypes.func,
   wrapHeader: PropTypes.bool,
+  compact: PropTypes.bool,
+  comfortable: PropTypes.bool,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,
