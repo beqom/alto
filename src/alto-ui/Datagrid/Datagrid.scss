@@ -106,13 +106,21 @@
   margin: auto;
 }
 
-.DataGrid__row--checkbox {
+.DataGrid__row-checkbox {
   display: flex;
   align-items: center;
   padding-left: $spacing-medium;
   height: 3rem;
   width: 3rem;
   border-bottom: 1px solid $coolgrey-20;
+
+  &--compact {
+    height: 2.5rem;
+  }
+
+  &--comfortable {
+    height: 3.5rem;
+  }
 }
 
 @media all and (-ms-high-contrast: none) {
