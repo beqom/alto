@@ -10,9 +10,12 @@
 .Tooltip {
   @extend %reset-styles;
   visibility: hidden;
-  padding: $spacing-small $spacing-medium;
+  padding: $spacing-x-small $spacing-small;
+  font-size: $font-size-small;
   border-radius: $border-radius-default;
   background-color: $coolgrey-80;
+  max-width: 20rem;
+  line-height: 1.25;
 
   opacity: 0;
   transition: none;
@@ -48,20 +51,17 @@
 
 // --- sizes ---
 .Tooltip {
-  &--small {
+  &--narrow {
     max-width: 10rem;
   }
-  &--medium {
-    max-width: 20rem;
-  }
-  &--large {
+  &--wide {
     max-width: 30rem;
   }
 }
 
-.Tooltip--tiny {
-  padding: $spacing-x-small $spacing-small;
-  font-size: $font-size-small;
+.Tooltip--big {
+  padding: $spacing-small $spacing-medium;
+  font-size: $font-size-medium;
 }
 
 .Tooltip__icon {
@@ -69,15 +69,12 @@
   // &--success {
   //   color: $green;
   // }
-
   // &--warning {
   //   color: $orange;
   // }
-
   // &--error {
   //   color: $red;
   // }
-
   // &--info {
   //   color: $blue;
   // }

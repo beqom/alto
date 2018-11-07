@@ -17,13 +17,12 @@ storiesOf('Tooltip', module)
       success={boolean('success', false)}
       error={boolean('error', false)}
       warning={boolean('warning', false)}
-      small={boolean('small', false)}
-      medium={boolean('medium', false)}
-      large={boolean('large', false)}
+      narrow={boolean('narrow', false)}
+      wide={boolean('wide', false)}
       top={boolean('top', false)}
       left={boolean('left', false)}
       right={boolean('right', false)}
-      tiny={boolean('tiny', false)}
+      big={boolean('big', false)}
     >
       {text('children', 'hover me')}
     </Tooltip>
@@ -36,18 +35,11 @@ storiesOf('Tooltip', module)
         <Tooltip content={longText} show>
           <div style={{ marginBottom: 80, textAlign: 'center' }}>default</div>
         </Tooltip>
-        <Tooltip content="Lorem ipsum dolor sit amet..." show small>
-          <div style={{ marginBottom: 80, textAlign: 'center' }}>small</div>
+        <Tooltip content="Lorem ipsum dolor sit amet..." show narrow>
+          <div style={{ marginBottom: 80, textAlign: 'center' }}>narrow</div>
         </Tooltip>
-        <Tooltip
-          content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean pulvinar..."
-          show
-          medium
-        >
-          <div style={{ marginBottom: 80, textAlign: 'center' }}>medium</div>
-        </Tooltip>
-        <Tooltip content={longText} show large>
-          <div style={{ marginBottom: 80, textAlign: 'center' }}>large</div>
+        <Tooltip content={longText} show wide>
+          <div style={{ marginBottom: 80, textAlign: 'center' }}>wide</div>
         </Tooltip>
       </div>
     );

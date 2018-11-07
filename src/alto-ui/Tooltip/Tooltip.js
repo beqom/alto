@@ -61,11 +61,10 @@ class Tooltip extends React.Component {
       success,
       error,
       warning,
-      small,
-      medium,
-      large,
+      narrow,
+      wide,
       show,
-      tiny,
+      big,
       ...relativeBoxProps
     } = this.props;
 
@@ -87,10 +86,9 @@ class Tooltip extends React.Component {
             success,
             error,
             warning,
-            small,
-            medium,
-            large,
-            tiny,
+            narrow,
+            wide,
+            big,
             visible,
           },
           className
@@ -150,11 +148,10 @@ Tooltip.propTypes = {
   success: PropTypes.bool,
   error: PropTypes.bool,
   warning: PropTypes.bool,
-  small: PropTypes.bool,
-  medium: PropTypes.bool,
-  large: PropTypes.bool,
+  narrow: PropTypes.bool,
+  wide: PropTypes.bool,
   show: PropTypes.bool,
-  tiny: PropTypes.bool,
+  big: PropTypes.bool,
 };
 
 export default Tooltip;
