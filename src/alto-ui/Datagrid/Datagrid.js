@@ -6,6 +6,7 @@ import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
 import { isIE11 } from '../helpers/navigator';
 import { bemClass } from '../helpers/bem';
+import { format as formatNumber } from '../helpers/number';
 import CheckBox from '../Form/CheckBox';
 import Tooltip from '../Tooltip';
 
@@ -41,26 +42,11 @@ const FORMATTERS = {
           .setLocale(locale)
           .toLocaleString(DateTime.DATE_SHORT)
       : x,
-  float: x =>
-    typeof x === 'number'
-      ? x.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })
-      : '',
-  number: x =>
-    typeof x === 'number'
-      ? x.toLocaleString(undefined, {
-          maximumFractionDigits: 2,
-        })
-      : '',
-  integer: x =>
-    typeof x === 'number'
-      ? x.toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-        })
-      : '',
-  int: x => FORMATTERS.integer(x),
+  number: (x, col, row, { locale }) =>
+    formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator),
+  integer: (...args) => FORMATTERS.number(...args),
+  float: (...args) => FORMATTERS.number(...args),
+  int: (...args) => FORMATTERS.number(...args),
 };
 
 const RENDERERS = {
