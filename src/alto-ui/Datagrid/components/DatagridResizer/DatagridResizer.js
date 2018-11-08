@@ -46,7 +46,7 @@ class DatagridResizer extends React.Component {
       <Draggable
         axis="x"
         position={{ x, y: 0 }}
-        bounds={{ left: maxLeft - left, right: maxRight - left, top: 0, bottom: 0 }}
+        bounds={{ left: maxLeft - left, right: maxRight - left - 5, top: 0, bottom: 0 }}
         onStart={this.handleStart}
         onDrag={this.handleDrag}
         onStop={this.handleStop}
