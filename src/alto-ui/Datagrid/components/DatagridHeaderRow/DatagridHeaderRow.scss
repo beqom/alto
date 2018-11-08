@@ -3,6 +3,7 @@
 .DatagridHeaderRow {
   display: flex;
   flex: 1;
+  flex-basis: auto;
 }
 
 .DatagridHeaderRow__group {
@@ -38,6 +39,7 @@
 .DatagridHeaderRow__group-columns {
   display: flex;
   flex: 1;
+  flex-basis: auto;
 }
 
 .DatagridHeaderRow__checkbox {
