@@ -76,7 +76,7 @@ class InputNumber extends React.Component {
   }
 
   render() {
-    const { forwardedRef, locale, precision, ...rest } = this.props;
+    const { forwardedRef, locale, precision, disableThousandSeparator, ...rest } = this.props;
     return (
       <TextField
         ref={forwardedRef}
