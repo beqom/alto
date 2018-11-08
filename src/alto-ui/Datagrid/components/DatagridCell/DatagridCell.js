@@ -386,6 +386,7 @@ class DatagridCell extends React.Component {
           onChange={this.handleChangeNumber}
           locale={context.locale}
           precision={column.precision}
+          disableThousandSeparator={column.disableThousandSeparator}
         />
       );
     }
