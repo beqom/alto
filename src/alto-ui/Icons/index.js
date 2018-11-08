@@ -65,6 +65,8 @@ import PlusCircle from './PlusCircle';
 import Populations from './Populations';
 import Remove from './Remove';
 import Repeat from './Repeat';
+import RowDensityComfortable from './RowDensityComfortable';
+import RowDensityCompact from './RowDensityCompact';
 import Search from './Search';
 import Sync from './Sync';
 import Tasks from './Tasks';
@@ -148,6 +150,8 @@ export default {
   Populations,
   Remove,
   Repeat,
+  RowDensityComfortable,
+  RowDensityCompact,
   Search,
   Sync,
   Tasks,
