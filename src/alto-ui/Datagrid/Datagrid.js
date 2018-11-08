@@ -2,7 +2,6 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
-import CheckIcon from '../Icons/Check';
 import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
 import { isIE11 } from '../helpers/navigator';
@@ -21,9 +20,19 @@ const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
   a11ySortLabel: 'Click to sort this column by Ascending or Descending',
   checkboxLabel: 'Check to select a row',
+  booleanTrue: 'True',
+  booleanFalse: 'False',
 };
 
-const PARSERS = {};
+const PARSERS = {
+  date: x => (x ? new Date(x) : ''),
+  boolean: x => {
+    const bool = `${x}`.toLowerCase();
+    if (['true', '1'].includes(bool)) return true;
+    if (['false', '0'].includes(bool)) return false;
+    return x;
+  },
+};
 
 const FORMATTERS = {
   date: (x, col, row, { locale }) =>
@@ -55,8 +64,6 @@ const FORMATTERS = {
 };
 
 const RENDERERS = {
-  boolean: x => (x ? <CheckIcon className="Table__cell-centered-content" /> : null),
-  bit: x => RENDERERS.boolean(x),
   image: (x, col, row, { comfortable, compact }) => (
     <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
   ),
@@ -489,6 +496,9 @@ Datagrid.propTypes = {
   labels: PropTypes.shape({
     errorFormula: PropTypes.string,
     a11ySortLabel: PropTypes.string,
+    checkboxLabel: PropTypes.string,
+    booleanTrue: PropTypes.string,
+    booleanFalse: PropTypes.string,
   }),
   renderers: PropTypes.object,
   formatters: PropTypes.object,
