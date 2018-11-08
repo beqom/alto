@@ -2,11 +2,11 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
-import CheckIcon from '../Icons/Check';
 import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
 import { isIE11 } from '../helpers/navigator';
 import { bemClass } from '../helpers/bem';
+import { format as formatNumber } from '../helpers/number';
 import CheckBox from '../Form/CheckBox';
 import Tooltip from '../Tooltip';
 
@@ -21,9 +21,19 @@ const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
   a11ySortLabel: 'Click to sort this column by Ascending or Descending',
   checkboxLabel: 'Check to select a row',
+  booleanTrue: 'True',
+  booleanFalse: 'False',
 };
 
-const PARSERS = {};
+const PARSERS = {
+  date: x => (x ? new Date(x) : ''),
+  boolean: x => {
+    const bool = `${x}`.toLowerCase();
+    if (['true', '1'].includes(bool)) return true;
+    if (['false', '0'].includes(bool)) return false;
+    return x;
+  },
+};
 
 const FORMATTERS = {
   date: (x, col, row, { locale }) =>
@@ -32,31 +42,14 @@ const FORMATTERS = {
           .setLocale(locale)
           .toLocaleString(DateTime.DATE_SHORT)
       : x,
-  float: x =>
-    typeof x === 'number'
-      ? x.toLocaleString(undefined, {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })
-      : '',
-  number: x =>
-    typeof x === 'number'
-      ? x.toLocaleString(undefined, {
-          maximumFractionDigits: 2,
-        })
-      : '',
-  integer: x =>
-    typeof x === 'number'
-      ? x.toLocaleString(undefined, {
-          maximumFractionDigits: 0,
-        })
-      : '',
-  int: x => FORMATTERS.integer(x),
+  number: (x, col, row, { locale }) =>
+    formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator),
+  integer: (...args) => FORMATTERS.number(...args),
+  float: (...args) => FORMATTERS.number(...args),
+  int: (...args) => FORMATTERS.number(...args),
 };
 
 const RENDERERS = {
-  boolean: x => (x ? <CheckIcon className="Table__cell-centered-content" /> : null),
-  bit: x => RENDERERS.boolean(x),
   image: (x, col, row, { comfortable, compact }) => (
     <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
   ),
@@ -489,6 +482,9 @@ Datagrid.propTypes = {
   labels: PropTypes.shape({
     errorFormula: PropTypes.string,
     a11ySortLabel: PropTypes.string,
+    checkboxLabel: PropTypes.string,
+    booleanTrue: PropTypes.string,
+    booleanFalse: PropTypes.string,
   }),
   renderers: PropTypes.object,
   formatters: PropTypes.object,

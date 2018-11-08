@@ -210,6 +210,13 @@ class DatagridCell extends React.Component {
     return format(value, column, row);
   }
 
+  parse(value) {
+    const { context, column, row } = this.props;
+    const type = getType(value, column);
+    const parser = context.parsers[type] || IDENTITY;
+    return parser(value, column, row, context);
+  }
+
   replaceRowValues(message) {
     if (typeof message !== 'string') return message;
     const { row, context } = this.props;
@@ -343,16 +350,17 @@ class DatagridCell extends React.Component {
     const value = getValue(this.state.value, column, row);
     const type = getType(value, column);
 
-    if ((!editable && type !== 'list') || header) return null;
+    if ((!editable && !['list', 'boolean'].includes(type)) || header) return null;
 
-    if (type === 'list') {
-      const selectedValue = this.getValue();
+    if (['list', 'boolean'].includes(type)) {
+      const selectedValue = this.parse(this.getValue());
       if (!editable || disabled) {
         const itemSelected = (selectProps.items || []).find(item => item.key === selectedValue);
         return (
           <div className="DatagridCell__content">{itemSelected ? itemSelected.title : ''}</div>
         );
       }
+
       return (
         <Fragment>
           <Dropdown
@@ -378,6 +386,7 @@ class DatagridCell extends React.Component {
           onChange={this.handleChangeNumber}
           locale={context.locale}
           precision={column.precision}
+          disableThousandSeparator={column.disableThousandSeparator}
         />
       );
     }
@@ -392,7 +401,7 @@ class DatagridCell extends React.Component {
 
     const ContentComponent = editable ? 'button' : 'div';
 
-    const content = type !== 'list' && (
+    const content = !['list', 'boolean'].includes(type) && (
       <ContentComponent
         id={editable && id ? `${id}__button` : undefined}
         ref={this.setContentNode}
@@ -423,7 +432,7 @@ class DatagridCell extends React.Component {
 
     return (
       <div
-        title={render || modifiers.error ? undefined : this.getFormattedValue()}
+        title={render || modifiers.error ? undefined : `${this.getFormattedValue()}`}
         className={bemClass('DatagridCell', modifiers)}
         ref={this.cellRef}
         style={style}
