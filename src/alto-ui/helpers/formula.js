@@ -16,7 +16,8 @@ const getExpression = (row, formula, defaulValue = 0) =>
         new RegExp(`\\[${key}\\]`, 'g'),
         !parsedValue && parsedValue !== 0 ? defaulValue : parsedValue
       )
-      .replace(/NULL/i, defaulValue);
+      .replace(/NULL/i, defaulValue)
+      .replace('\n', '');
   }, formula);
 
 const isValid = res => res === true || res === false || (isNumber(res) && Number.isFinite(res));
