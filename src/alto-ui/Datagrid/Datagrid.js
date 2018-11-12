@@ -40,7 +40,7 @@ const FORMATTERS = {
     x instanceof Date
       ? DateTime.fromJSDate(x)
           .setLocale(locale)
-          .toLocaleString(DateTime.DATE_SHORT)
+          .toFormat('dd LLL yyyy')
       : x,
   number: (x, col, row, { locale }) =>
     formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator),
