@@ -8,6 +8,8 @@ import FormElement from '../FormElement';
 
 import './TextField.scss';
 
+const DEFAULT_INPUT_MAX_LENGTH = 2048;
+
 const handleChange = (event, type, onChange) => {
   if (typeof onChange !== 'function') return;
 
@@ -55,6 +57,7 @@ const TextField = React.forwardRef((props, ref) => (
         )}
         type={getInputType(props.type)}
         onChange={event => handleChange(event, props.type, props.onChange)}
+        maxLength={props.inputMaxLength || DEFAULT_INPUT_MAX_LENGTH}
       />
     )}
   </FormElement>

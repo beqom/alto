@@ -109,7 +109,7 @@ class Dropdown extends React.Component {
     );
   }
 
-  renderItem(popoverProps) {
+  renderItem(popoverProps, inputMaxLength) {
     const { id } = this.props;
     return (item, selected) => (
       <DropdownItem
@@ -119,11 +119,12 @@ class Dropdown extends React.Component {
         dropdownProps={this.props}
         popoverProps={popoverProps}
         onClose={this.handleClose}
+        inputMaxLength={inputMaxLength}
       />
     );
   }
 
-  renderList(popoverProps) {
+  renderList(popoverProps, inputMaxLength) {
     const { items, loadingItems } = this.props;
     const hasItems = Array.isArray(items) && !!items.length;
     if (loadingItems) {
@@ -135,12 +136,12 @@ class Dropdown extends React.Component {
     }
     if (!hasItems) return null;
 
-    const renderItem = this.renderItem(popoverProps);
+    const renderItem = this.renderItem(popoverProps, inputMaxLength);
     return (
       <ul className="Dropdown__list">
         {items.map(item => (
           <li key={item.key} className="Dropdown__item">
-            {renderItem(item, this.isSelected(item.key))}
+            {renderItem(item, this.isSelected(item.key), inputMaxLength)}
           </li>
         ))}
       </ul>
@@ -165,9 +166,9 @@ class Dropdown extends React.Component {
       loadingItems,
       small,
       large,
+      inputMaxLength,
       ...popoverProps
     } = this.props;
-
     const renderContent = typeof children === 'function' ? children : list => children || list;
     return (
       <Popover
@@ -179,7 +180,7 @@ class Dropdown extends React.Component {
         target={this.renderTrigger()}
         onClose={this.handleClose}
       >
-        {renderContent(this.renderList(popoverProps), this.handleClose)}
+        {renderContent(this.renderList(popoverProps, inputMaxLength), this.handleClose)}
       </Popover>
     );
   }
@@ -219,6 +220,7 @@ Dropdown.propTypes = {
   loadingItems: PropTypes.bool,
   small: PropTypes.bool,
   large: PropTypes.bool,
+  inputMaxLength: PropTypes.number,
 };
 
 export default Dropdown;

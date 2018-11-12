@@ -139,6 +139,7 @@ class DropdownItem extends React.Component {
           onSave={dropdownProps.onSaveEdit}
           invalidate={dropdownProps.invalidateEdit}
           item={item}
+          inputMaxLength={this.props.inputMaxLength}
         />
         {items}
       </Fragment>
@@ -202,6 +203,7 @@ DropdownItem.propTypes = {
   popoverProps: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
   selected: PropTypes.bool,
+  inputMaxLength: PropTypes.number,
 };
 
 export default DropdownItem;

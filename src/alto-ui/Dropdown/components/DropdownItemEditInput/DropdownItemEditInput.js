@@ -79,7 +79,7 @@ class DropdownItemEditInput extends React.Component {
   }
 
   render() {
-    const { id, label } = this.props;
+    const { id, label, inputMaxLength } = this.props;
     const { prevValue, value, error, pending } = this.state;
     const didValueChanged = value !== prevValue;
     return (
@@ -94,6 +94,7 @@ class DropdownItemEditInput extends React.Component {
           error={!!error}
           helpText={error}
           disabled={pending}
+          inputMaxLength={inputMaxLength}
         />
         {pending && <Spinner className="DropdownItemEditInput__spinner" small />}
         {didValueChanged &&
@@ -126,6 +127,7 @@ DropdownItemEditInput.propTypes = {
   item: PropTypes.object.isRequired,
   onSave: PropTypes.func,
   invalidate: PropTypes.func,
+  inputMaxLength: PropTypes.number,
 };
 
 export default DropdownItemEditInput;
