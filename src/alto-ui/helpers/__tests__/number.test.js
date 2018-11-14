@@ -1,4 +1,4 @@
-import { round, parse, format } from '../helpers';
+import { round, parse, format } from '../number';
 
 describe('InputNumber/helpers', () => {
   it('should round correctly depending on value and precision', () => {
