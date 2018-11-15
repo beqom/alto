@@ -18,8 +18,9 @@ class Overlay extends React.PureComponent {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
-    this.setContentNode = this.setContentNode.bind(this);
     this.handleFocusOutside = this.handleFocusOutside.bind(this);
+
+    this.contentRef = React.createRef();
   }
 
   componentDidMount() {
@@ -51,8 +52,11 @@ class Overlay extends React.PureComponent {
     clearTimeout(this.closingTimeout);
   }
 
-  setContentNode(contentNode) {
-    this.contentNode = contentNode;
+  contains(node) {
+    const { include } = this.props;
+    if (this.contentRef.current && this.contentRef.current.contains(node)) return true;
+    if (include && include.current && include.current.contains(node)) return true;
+    return false;
   }
 
   open() {
@@ -90,7 +94,7 @@ class Overlay extends React.PureComponent {
   }
 
   handleFocusOutside(e) {
-    if (this.contentNode && this.props.open && !this.contentNode.contains(e.target)) {
+    if (this.contentNode && this.props.open && !this.contains(e.target)) {
       this.dispatchClose();
     }
   }
@@ -102,7 +106,7 @@ class Overlay extends React.PureComponent {
   }
 
   handleClickOutside(e) {
-    if (this.contentNode && !this.contentNode.contains(e.target)) {
+    if (!this.contains(e.target)) {
       this.dispatchClose();
     }
   }
@@ -117,7 +121,7 @@ class Overlay extends React.PureComponent {
     return (
       <Fragment>
         {open && blocking && <div className={classnames('Overlay__overlay', className)} />}
-        <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
+        <div ref={this.contentRef} aria-hidden={!open || inert} className="Overlay">
           {blocking ? (
             <FocusTrap
               active={open && !inert}
@@ -151,6 +155,7 @@ Overlay.propTypes = {
   open: PropTypes.bool.isRequired,
   blocking: PropTypes.bool,
   inert: PropTypes.bool,
+  include: PropTypes.object,
 };
 
 export default Overlay;
