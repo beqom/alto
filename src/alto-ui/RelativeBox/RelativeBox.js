@@ -107,8 +107,12 @@ class RelativeBox extends React.Component {
     const newStyle = getRelativePositionStyle(this.ref.current, target, options);
     const styleChanged = newStyle.top !== style.top || newStyle.left !== style.left;
     if (positionChanged || styleChanged) {
+      const customStyle =
+        typeof this.props.style === 'function'
+          ? this.props.style(newStyle, target, this.ref.current)
+          : this.props.style || {};
       this.setState({
-        style: newStyle,
+        style: { ...newStyle, ...customStyle },
         position: { top, bottom, right, left },
       });
     }
@@ -139,7 +143,7 @@ RelativeBox.propTypes = {
   }),
   className: PropTypes.string,
   baseClassName: PropTypes.string,
-  style: PropTypes.object,
+  style: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   children: PropTypes.any,
   watch: PropTypes.object,
   top: PropTypes.bool,

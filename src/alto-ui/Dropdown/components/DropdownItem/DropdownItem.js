@@ -102,15 +102,15 @@ class DropdownItem extends React.Component {
 
   renderItemButton(handleClick, active) {
     const { id, item, selected } = this.props;
-    const { title, items, onClick, editable, className, Icon, ...itemProps } = item;
+    const { title, className, Icon, href } = item;
     const hasItems = this.hasItems();
     const hasOnClick = this.hasOnClick();
-    const LinkOrButton = itemProps.href ? Link : 'button';
+    const LinkOrButton = href ? Link : 'button';
 
     return (
       <LinkOrButton
-        {...itemProps}
         id={id}
+        href={href}
         onClick={handleClick || this.handleClick}
         className={bemClass(
           'DropdownItem__button',
