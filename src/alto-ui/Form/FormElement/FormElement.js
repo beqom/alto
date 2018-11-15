@@ -10,7 +10,13 @@ const FormElement = props => {
   const { error, disabled, success, id, children, readOnly, style } = props;
   return (
     <div className={classnames('form-element', props.className)} style={style}>
-      <Label hidden={props.hideLabel} htmlFor={id} id={`${id}__label`} readOnly={readOnly}>
+      <Label
+        tag={props.useLabelledby ? 'div' : 'label'}
+        hidden={props.hideLabel}
+        htmlFor={id}
+        id={`${id}__label`}
+        readOnly={readOnly}
+      >
         {props.label}
       </Label>
       {children}
@@ -37,6 +43,7 @@ FormElement.propTypes = {
   hideLabel: PropTypes.bool,
   children: PropTypes.element.isRequired,
   style: PropTypes.object,
+  useLabelledby: PropTypes.bool,
 };
 
 export default FormElement;

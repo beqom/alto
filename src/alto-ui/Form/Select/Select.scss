@@ -1,16 +1,20 @@
 @import '../../scss/inc';
 
+.Select--dropdown {
+  @extend %reset-button;
+}
+
 .Select {
   @extend %focusable;
   font-size: $font-size-medium;
   font-family: $font-family;
-  outline: 0;
   background: $white;
   color: currentColor;
   border-radius: $border-radius-default;
   border: 1px solid $color-input-border;
   font-weight: 400;
   height: $height-default;
+  line-height: $height-default;
   display: block;
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -42,11 +46,13 @@
   &--large {
     font-size: $font-size-large;
     padding: 0 20px;
-    line-height: 2.67;
+    height: $height-large;
+    line-height: $height-large;
   }
   &--small {
     font-size: $font-size-small;
-    line-height: 2;
+    height: $height-small;
+    line-height: $height-small;
   }
 
   &:disabled {
@@ -72,4 +78,26 @@
     -moz-appearance: none;
     border: none;
   }
+}
+
+.Select--native {
+  outline: 0;
+  &.Select--multiple {
+    height: initial;
+  }
+}
+
+.Select--dropdown {
+  text-align: left;
+  padding: 0 $input-padding;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.Select--dropdown__label {
+  @extend %text-ellipsis;
+
+  flex: 1;
+  min-width: 0;
 }
