@@ -114,6 +114,10 @@
   width: 3rem;
   border-bottom: 1px solid $coolgrey-20;
 
+  &--header {
+    background-color: $coolgrey-10;
+  }
+
   &--compact {
     height: 2.5rem;
   }
