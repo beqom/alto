@@ -60,10 +60,6 @@ class Dropdown extends React.Component {
     }
   }
 
-  handleOpen() {
-    this.toggle(true);
-  }
-
   toggle(newState) {
     const open = typeof newState === 'boolean' ? newState : !this.state.open;
     if (open && this.props.onOpen) {

@@ -63,6 +63,7 @@ class SelectDropdown extends React.Component {
       readonly,
       defaultValue,
       multiple,
+      disabled,
       ...props
     } = this.props;
     const items = getItemsFromOptions(options);
@@ -97,7 +98,7 @@ class SelectDropdown extends React.Component {
   renderTrigger(onClick, open) {
     const { defaultLabel, selected, items } = this.getProps();
 
-    const { success, error, large, small, readonly, selectRef } = this.props;
+    const { success, error, large, small, readonly, selectRef, disabled } = this.props;
     const flattenedItems = flattenItems(items);
     const selectedTitles = selected
       .map(key => flattenedItems.find(x => x.key === key))
@@ -111,6 +112,7 @@ class SelectDropdown extends React.Component {
         aria-labelledby={`${this.props.id}__label`}
         ref={selectRef || this.triggerRef}
         onClick={onClick}
+        disabled={disabled}
         className={bemClass('Select', {
           dropdown: true,
           open,
@@ -119,6 +121,7 @@ class SelectDropdown extends React.Component {
           large,
           small,
           readonly,
+          disabled,
         })}
       >
         <span className="Select--dropdown__label">{selectedTitles || defaultLabel}</span>
@@ -170,6 +173,7 @@ SelectDropdown.propTypes = {
   readonly: PropTypes.bool,
   defaultValue: PropTypes.string,
   multiple: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 
 export default SelectDropdown;
