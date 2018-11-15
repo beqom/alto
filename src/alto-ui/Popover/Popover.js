@@ -34,6 +34,7 @@ class Popover extends React.Component {
       closeFocusTargetId,
       open,
       target,
+      includeTarget,
       ...relativeBoxProps
     } = this.props;
 
@@ -45,7 +46,7 @@ class Popover extends React.Component {
           openFocusTargetId={openFocusTargetId}
           closeFocusTargetId={closeFocusTargetId}
           open={open}
-          render
+          include={includeTarget ? this.props.targetRef || this.targetRef : undefined}
         >
           {open && (
             <RelativeBox
@@ -74,7 +75,7 @@ Popover.propTypes = {
     PropTypes.element,
     PropTypes.object,
     PropTypes.func,
-  ]).isRequired,
+  ]),
   targetRef: PropTypes.shape({
     current: PropTypes.object,
   }),
@@ -89,6 +90,7 @@ Popover.propTypes = {
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
   open: PropTypes.bool,
+  includeTarget: PropTypes.bool,
 };
 
 export default Popover;
