@@ -55,7 +55,8 @@
     line-height: $height-small;
   }
 
-  &:disabled {
+  &:disabled,
+  &--disabled {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
