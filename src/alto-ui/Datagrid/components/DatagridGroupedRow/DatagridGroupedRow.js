@@ -36,13 +36,15 @@ const DatagridGroupedRow = ({
   const value = firstRowInGroup[groupedByColumnKey];
   const column = columns.find(col => col.key === groupedByColumnKey);
 
-  const row = columns.filter(col => groupedSummaryColumnKeys.includes(col.key)).reduce(
-    (acc, col) => ({
-      ...acc,
-      [col.key]: getGroupColumnSummary(col, subRows, labels),
-    }),
-    {}
-  );
+  const row = columns
+    .filter(col => groupedSummaryColumnKeys.includes(col.key))
+    .reduce(
+      (acc, col) => ({
+        ...acc,
+        [col.key]: getGroupColumnSummary(col, subRows, labels),
+      }),
+      {}
+    );
 
   return (
     <DatagridRow
@@ -59,7 +61,6 @@ const DatagridGroupedRow = ({
               id={id ? `${id}__${key}-grouped` : undefined}
               className="DatagridGroupedRow__button"
               onClick={() => onToggle(value)}
-              style={{ width: column.width, maxWidth: column.width }}
             >
               <ChevronDownIcon
                 className={bemClass('DatagridGroupedRow__toggle-icon', { collapsed })}
