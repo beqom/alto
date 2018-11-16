@@ -2,7 +2,7 @@
 
 .DatagridResizer {
   position: fixed;
-  z-index: 100000;
+  z-index: $z-index-default;
   cursor: col-resize;
   opacity: 0;
 
