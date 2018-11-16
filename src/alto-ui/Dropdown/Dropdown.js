@@ -23,7 +23,6 @@ class Dropdown extends React.Component {
     this.close = this.close.bind(this);
     this.toggle = this.toggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
-    this.handleOpen = this.handleOpen.bind(this);
 
     this.triggerRef = React.createRef();
   }
@@ -94,7 +93,7 @@ class Dropdown extends React.Component {
         small={small}
         large={large}
         flat
-        onClick={this.handleOpen}
+        onClick={this.toggle}
         active={this.state.open}
         className={bemClass('Dropdown__trigger', {}, className ? `${className}-trigger` : '')}
       >
