@@ -96,7 +96,7 @@ class Tooltip extends React.Component {
         baseClassName="Tooltip"
         bottom
         middle
-        target={this.wrapperRef.current}
+        target={children ? this.wrapperRef.current : undefined}
         watch={{ visible }}
         margin={6.4}
         {...relativeBoxProps}

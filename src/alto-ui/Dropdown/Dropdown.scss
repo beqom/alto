@@ -40,3 +40,17 @@
   min-width: 10rem;
   height: 6rem;
 }
+
+.Dropdown__section {
+  .Dropdown__item:not(:first-child) > & {
+    margin-top: $spacing-small;
+  }
+}
+
+.Dropdown__section-title {
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-small;
+  padding: $spacing-small;
+  padding: $spacing-x-small $spacing-small;
+  color: $color-text-muted;
+}
