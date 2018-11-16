@@ -364,7 +364,7 @@ class Datagrid extends React.PureComponent {
   }
 
   renderResizer() {
-    const { target, container, parent, resizing } = this.state.resizer;
+    const { target, container, parent, resizing, column } = this.state.resizer;
 
     return (
       <DatagridResizer
@@ -373,7 +373,7 @@ class Datagrid extends React.PureComponent {
         handleHeight={target.height}
         height={container.bottom - target.top}
         maxLeft={parent.left + 64}
-        maxRight={container.right}
+        maxRight={column && column.frozen ? container.right - 64 : container.right}
         onStart={this.handleStartResize}
         onStop={this.handleStopResize}
         resizing={resizing}
