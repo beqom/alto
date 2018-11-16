@@ -5,11 +5,10 @@ import isEqual from 'lodash.isequal';
 
 import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
 import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
-import TextField from '../../../Form/TextField';
-import InputNumber from '../../../Form/InputNumber';
 import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
 import Tooltip from '../../../Tooltip';
+import DatagridCellInput from '../DatagridCellInput/DatagridCellInput';
 
 import { evaluateFormula } from '../../../helpers/formula';
 import { bemClass } from '../../../helpers/bem';
@@ -37,25 +36,10 @@ const getFormattedValue = context => (value, column, row) => {
   return format(value, column, row);
 };
 
-const getInputProps = type => {
-  switch (type) {
-    case 'number':
-    case 'float':
-    case 'int':
-    case 'integer':
-    case 'percentage':
-      return {
-        type: 'number',
-      };
-    default:
-      return {};
-  }
-};
-
 const diff = (a, b) => {
   const aEntries = Object.entries(a || {});
   return (
-    aEntries.some(([key, value]) => value !== b[key]) ||
+    aEntries.some(([key, value]) => typeof value !== 'function' && value !== b[key]) ||
     aEntries.length !== Object.values(b || {}).length
   );
 };
@@ -77,16 +61,13 @@ class DatagridCell extends React.Component {
     this.startEditing = this.startEditing.bind(this);
     this.stopEditing = this.stopEditing.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeNumber = this.handleChangeNumber.bind(this);
-    this.handleChangeDropdown = this.handleChangeDropdown.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.format = this.format.bind(this);
+    this.handleClickEditButton = this.handleClickEditButton.bind(this);
     const propagateChange = this.propagateChange.bind(this);
     this.propagateChange = onChangeDebounceTime
       ? debounce(propagateChange, onChangeDebounceTime)
       : propagateChange;
-    this.inputRef = React.createRef();
+
     this.cellRef = React.createRef();
   }
 
@@ -109,21 +90,13 @@ class DatagridCell extends React.Component {
       return true;
     }
     return (
-      diff(this.props.selectProps, nextProps.selectProps) ||
+      diff(this.props.inputProps, nextProps.inputProps) ||
       this.props.row !== nextProps.row ||
       this.props.selectedRowKey !== nextProps.selectedRowKey ||
       this.props.width !== nextProps.width ||
       this.props.context.compact !== nextProps.context.compact ||
       this.props.context.comfortable !== nextProps.context.comfortable
     );
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const becameEditing = !prevState.editing && this.state.editing;
-
-    if (becameEditing) {
-      this.focus();
-    }
   }
 
   getValue() {
@@ -142,9 +115,6 @@ class DatagridCell extends React.Component {
   }
 
   getStyle() {
-    if (this.state.editing) {
-      return { width: this.state.width, maxWidth: this.state.width };
-    }
     const { width } = this.props;
     return { width, minWidth: '2rem', maxWidth: width };
   }
@@ -182,35 +152,14 @@ class DatagridCell extends React.Component {
     };
   }
 
-  getId() {
-    const { id, row, column, context } = this.props;
-    return id ? `${id}__input` : `DatagridCell__input--${row[context.rowId]}--${column.key}`;
-  }
-
-  getSharedFieldProps() {
-    const value = this.getValue();
-    const { context } = this.props;
-    return {
-      ref: this.inputRef,
-      id: this.getId(),
-      label: 'edit cell',
-      hideLabel: true,
-      small: context.compact,
-      value: value || '',
-      onChange: this.handleChange,
-      onBlur: this.handleBlur,
-      onKeyDown: this.handleKeyDown,
-      className: bemClass('DatagridCell__input', this.getModifiers()),
-    };
-  }
-
   format(value, column, row) {
     const { context } = this.props;
     const format = getFormattedValue(context);
     return format(value, column, row);
   }
 
-  parse(value) {
+  parse() {
+    const value = this.getValue();
     const { context, column, row } = this.props;
     const type = getType(value, column);
     const parser = context.parsers[type] || IDENTITY;
@@ -231,49 +180,30 @@ class DatagridCell extends React.Component {
     );
   }
 
-  startEditing() {
-    const width = this.cellRef.current.offsetWidth;
+  startEditing(value) {
     const { row, column, context } = this.props;
-    const { onStartEditing } = context || {};
-    if (onStartEditing && typeof onStartEditing === 'function') {
-      onStartEditing(column, row);
-    }
-
-    this.setState({ editing: true, width });
-  }
-  stopEditing() {
-    this.setState({ editing: false });
-  }
-
-  focus() {
-    if (this.inputRef.current) this.inputRef.current.focus();
-  }
-
-  handleChange(e) {
-    const { value } = e.target;
-    this.setState({ value });
-    this.propagateChange(value);
-  }
-
-  handleChangeDropdown(row) {
-    const { key } = row;
-    this.setState({ value: key });
-    this.propagateChange(key);
-  }
-
-  handleChangeNumber(e, value) {
-    this.setState({ value });
-    this.propagateChange(value);
-  }
-
-  handleBlur(e) {
-    this.stopEditing();
-    const { value } = e.target;
-    const { column, row, context } = this.props;
-    if (context.onBlur) {
+    if (typeof context.onStartEditing === 'function') {
       const error = context.showError(value, column, row);
-      context.onBlur(value, column, row, this.replaceRowValues(error));
+      context.onStartEditing(value, column, row, this.replaceRowValues(error));
     }
+  }
+
+  stopEditing(value) {
+    this.setState({ editing: false });
+    const { column, row, context } = this.props;
+    if (typeof context.onStopEditing === 'function') {
+      const error = context.showError(value, column, row);
+      context.onStopEditing(value, column, row, this.replaceRowValues(error));
+    }
+  }
+
+  handleClickEditButton() {
+    this.setState({ editing: true });
+  }
+
+  handleChange(value) {
+    this.setState({ value });
+    this.propagateChange(value);
   }
 
   propagateChange(value) {
@@ -284,18 +214,12 @@ class DatagridCell extends React.Component {
     }
   }
 
-  handleKeyDown(e) {
-    if (e.key === 'Escape' || e.key === 'Esc' || e.key === 'Enter') {
-      this.stopEditing();
-    }
-  }
-
   renderDropdown() {
-    const { column, header, context } = this.props;
+    const { id, column, header, context } = this.props;
     if (header || !column.cellDropdownItems || !column.cellDropdownItems.length) return null;
     return (
       <Dropdown
-        id={this.getId()}
+        id={`${id}__column-dropdown`}
         items={column.cellDropdownItems}
         end
         onClick={item =>
@@ -345,52 +269,39 @@ class DatagridCell extends React.Component {
   }
 
   renderInput() {
-    const { column, row, context, editable, disabled, render, header, selectProps } = this.props;
+    const { id, column, render, editable, header, disabled, inputProps } = this.props;
     if (render) return null;
-    const value = getValue(this.state.value, column, row);
-    const type = getType(value, column);
 
+    const value = this.getValue();
+    const type = getType(value, column);
     if ((!editable && !['list', 'boolean'].includes(type)) || header) return null;
 
+    const parsedValue = this.parse(value);
+
     if (['list', 'boolean'].includes(type)) {
-      const selectedValue = this.parse(this.getValue());
       if (!editable || disabled) {
-        const itemSelected = (selectProps.items || []).find(item => item.key === selectedValue);
+        const itemSelected = (inputProps.items || []).find(item => item.key === parsedValue);
         return (
           <div className="DatagridCell__content">{itemSelected ? itemSelected.title : ''}</div>
         );
       }
+    }
 
-      return (
-        <Fragment>
-          <Dropdown
-            id={this.getId()}
-            selected={selectedValue}
-            defaultLabel="Select"
-            className="DatagridCell__content-dropdown"
-            onClick={this.handleChangeDropdown}
-            onOpen={() =>
-              typeof context.handleStartEditing === 'function' &&
-              context.handleStartEditing(column, row)
-            }
-            {...selectProps}
-          />
-        </Fragment>
-      );
-    }
-    const inputType = getInputProps(type);
-    if (inputType.type && inputType.type === 'number' && context.locale) {
-      return (
-        <InputNumber
-          {...this.getSharedFieldProps()}
-          onChange={this.handleChangeNumber}
-          locale={context.locale}
-          precision={column.precision}
-          disableThousandSeparator={column.disableThousandSeparator}
-        />
-      );
-    }
-    return <TextField {...this.getSharedFieldProps()} {...inputType} />;
+    return (
+      <DatagridCellInput
+        id={`${id}__input`}
+        context={this.props.context}
+        column={column}
+        value={parsedValue}
+        type={type}
+        inputProps={inputProps}
+        onChange={this.handleChange}
+        onStartEditing={this.startEditing}
+        onStopEditing={this.stopEditing}
+        modifiers={this.getModifiers()}
+        editing={this.state.editing}
+      />
+    );
   }
 
   renderContent() {
@@ -407,7 +318,7 @@ class DatagridCell extends React.Component {
         ref={this.setContentNode}
         disabled={disabled}
         className={bemClass('DatagridCell__content', modifiers)}
-        onClick={editable ? this.startEditing : undefined}
+        onClick={editable ? this.handleClickEditButton : undefined}
       >
         {this.renderValue()}
       </ContentComponent>
@@ -466,8 +377,6 @@ DatagridCell.propTypes = {
     formatter: PropTypes.func,
   }),
   row: PropTypes.object,
-  rowIndex: PropTypes.number.isRequired,
-  colIndex: PropTypes.number.isRequired,
   context: PropTypes.shape({
     onChangeDebounceTime: PropTypes.number,
     onChange: PropTypes.func,
@@ -479,7 +388,6 @@ DatagridCell.propTypes = {
     }),
     locale: PropTypes.string,
     onStartEditing: PropTypes.func,
-    getSelectProps: PropTypes.func,
     onClickCellDropdownItem: PropTypes.func.isRequired,
     compact: PropTypes.bool,
     comfortable: PropTypes.bool,
@@ -495,7 +403,7 @@ DatagridCell.propTypes = {
   }).isRequired,
   selectedRowKey: PropTypes.string,
   clickable: PropTypes.bool,
-  selectProps: PropTypes.object,
+  inputProps: PropTypes.object,
   width: PropTypes.number,
   compact: PropTypes.bool,
   comfortable: PropTypes.bool,

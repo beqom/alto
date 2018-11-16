@@ -21,8 +21,6 @@ const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
   a11ySortLabel: 'Click to sort this column by Ascending or Descending',
   checkboxLabel: 'Check to select a row',
-  booleanTrue: 'True',
-  booleanFalse: 'False',
 };
 
 const PARSERS = {
@@ -478,10 +476,11 @@ Datagrid.defaultProps = {
   wrapHeader: false,
   groupedSummaryColumnKeys: [],
   onClickCellDropdownItem: () => {},
+  getInputProps: () => ({}),
 };
 
 Datagrid.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
   className: PropTypes.string,
   columns: PropTypes.arrayOf(
     PropTypes.shape({
@@ -530,6 +529,7 @@ Datagrid.propTypes = {
   columnSorted: PropTypes.object,
   // eslint-disable-next-line react/no-unused-prop-types
   onClickCellDropdownItem: PropTypes.func,
+  getInputProps: PropTypes.func,
 };
 
 export default Datagrid;

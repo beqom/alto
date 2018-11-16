@@ -19,11 +19,8 @@ const DatagridRow = ({
   collapsed,
   extraCell,
 }) => {
-  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth, labels } = context;
+  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
   const clickable = typeof onRowClick === 'function';
-  const BOOLEAN_PROPS = {
-    items: [{ title: labels.booleanTrue, key: true }, { title: labels.booleanFalse, key: false }],
-  };
   return (
     <div
       role="row"
@@ -48,7 +45,6 @@ const DatagridRow = ({
               ? `${context.id}__cell--${column.key}-${rowKeyField(row)}`
               : undefined;
 
-          const selectProps = column.type === 'list' ? context.getSelectProps(column, row) : null;
           return (
             <DatagridCell
               id={id}
@@ -65,7 +61,7 @@ const DatagridRow = ({
               context={context}
               aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
               selectedRowKey={selectedRowKey}
-              selectProps={column.type === 'boolean' ? BOOLEAN_PROPS : selectProps}
+              inputProps={context.getInputProps(column, row)}
               width={columnsWidth[column.key] || column.width}
             />
           );
