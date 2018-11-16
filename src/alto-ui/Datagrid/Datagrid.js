@@ -307,6 +307,8 @@ class Datagrid extends React.PureComponent {
         index,
       };
 
+      const modifiers = this.getModifiers();
+
       const groupedRow =
         groupedByColumnKey && isPrecededByDifferentGroup ? (
           <DatagridGroupedRow
@@ -317,12 +319,22 @@ class Datagrid extends React.PureComponent {
             onToggle={this.handleToggleGroup}
             subRows={rows.filter(r => r[groupedByColumnKey] === row[groupedByColumnKey])}
             extraCell={extraCell}
-          />
+          >
+            {cells => (
+              <Fragment>
+                {cells}
+                {hasCheckBox && (
+                  <div
+                    className={bemClass('DataGrid__row-checkbox', { ...modifiers, header: true })}
+                  />
+                )}
+              </Fragment>
+            )}
+          </DatagridGroupedRow>
         ) : null;
 
       const groupedRowArr = groupedRow ? [groupedRow] : [];
       const { labels } = this.getContext();
-      const modifiers = this.getModifiers();
       return [
         ...acc,
         ...groupedRowArr,

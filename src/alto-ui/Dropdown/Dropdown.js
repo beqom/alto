@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
@@ -24,6 +24,8 @@ class Dropdown extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleOpen = this.handleOpen.bind(this);
+
+    this.triggerRef = React.createRef();
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -34,6 +36,10 @@ class Dropdown extends React.Component {
       };
     }
     return null;
+  }
+
+  getTriggerRef() {
+    return this.props.triggerRef || this.triggerRef;
   }
 
   isSelected(key) {
@@ -55,15 +61,15 @@ class Dropdown extends React.Component {
   }
 
   handleOpen() {
-    const { onOpen } = this.props;
-    if (onOpen) {
-      onOpen();
-    }
-    this.toggle();
+    this.toggle(true);
   }
 
-  toggle(open) {
-    this.setState({ open: typeof open === 'boolean' ? open : !this.state.open });
+  toggle(newState) {
+    const open = typeof newState === 'boolean' ? newState : !this.state.open;
+    if (open && this.props.onOpen) {
+      this.props.onOpen();
+    }
+    this.setState({ open });
   }
 
   renderTrigger() {
@@ -80,18 +86,15 @@ class Dropdown extends React.Component {
     } = this.props;
     const { open } = this.state;
     if (typeof renderTrigger === 'function') {
-      return renderTrigger(this.toggle, this.state.open);
+      return renderTrigger(this.toggle, this.state.open, this.getTriggerRef());
     }
 
     const text =
-      label ||
-      ((items || []).find(({ key }) => this.isSelected(key)) || {}).title ||
-      defaultLabel ||
-      'undefined label';
+      label || ((items || []).find(({ key }) => this.isSelected(key)) || {}).title || defaultLabel;
 
-    return ref => (
+    return (
       <Button
-        ref={ref}
+        ref={this.getTriggerRef()}
         small={small}
         large={large}
         flat
@@ -111,16 +114,37 @@ class Dropdown extends React.Component {
 
   renderItem(popoverProps) {
     const { id } = this.props;
-    return (item, selected) => (
-      <DropdownItem
-        id={`${id}__item--${item.key}`}
-        item={item}
-        selected={selected}
-        dropdownProps={this.props}
-        popoverProps={popoverProps}
-        onClose={this.handleClose}
-      />
-    );
+    return (item, selected) => {
+      if (item.items && item.section) {
+        return (
+          <div className="Dropdown__section">
+            <div className="Dropdown__section-title">{item.title}</div>
+            <ul className="Dropdown__section-items">
+              {this.renderItems(popoverProps, item.items)}
+            </ul>
+          </div>
+        );
+      }
+      return (
+        <DropdownItem
+          id={`${id}__item--${item.key}`}
+          item={item}
+          selected={selected}
+          dropdownProps={this.props}
+          popoverProps={popoverProps}
+          onClose={this.handleClose}
+        />
+      );
+    };
+  }
+
+  renderItems(popoverProps, items) {
+    const renderItem = this.renderItem(popoverProps);
+    return items.map(item => (
+      <li key={item.key} className="Dropdown__item">
+        {renderItem(item, this.isSelected(item.key))}
+      </li>
+    ));
   }
 
   renderList(popoverProps) {
@@ -135,16 +159,7 @@ class Dropdown extends React.Component {
     }
     if (!hasItems) return null;
 
-    const renderItem = this.renderItem(popoverProps);
-    return (
-      <ul className="Dropdown__list">
-        {items.map(item => (
-          <li key={item.key} className="Dropdown__item">
-            {renderItem(item, this.isSelected(item.key))}
-          </li>
-        ))}
-      </ul>
-    );
+    return <ul className="Dropdown__list">{this.renderItems(popoverProps, items)}</ul>;
   }
 
   render() {
@@ -165,22 +180,26 @@ class Dropdown extends React.Component {
       loadingItems,
       small,
       large,
+      triggerRef,
       ...popoverProps
     } = this.props;
 
     const renderContent = typeof children === 'function' ? children : list => children || list;
     return (
-      <Popover
-        start={!renderTrigger && !popoverProps.middle && !popoverProps.end}
-        {...popoverProps}
-        className={bemClass('Dropdown', { small, large }, className)}
-        baseClassName="Dropdown"
-        open={this.state.open}
-        target={this.renderTrigger()}
-        onClose={this.handleClose}
-      >
-        {renderContent(this.renderList(popoverProps), this.handleClose)}
-      </Popover>
+      <Fragment>
+        {this.renderTrigger()}
+        <Popover
+          start={!renderTrigger && !popoverProps.middle && !popoverProps.end}
+          targetRef={this.getTriggerRef()}
+          {...popoverProps}
+          className={bemClass('Dropdown', { small, large }, className)}
+          baseClassName="Dropdown"
+          open={this.state.open}
+          onClose={this.handleClose}
+        >
+          {renderContent(this.renderList(popoverProps), this.handleClose)}
+        </Popover>
+      </Fragment>
     );
   }
 }
@@ -219,6 +238,7 @@ Dropdown.propTypes = {
   loadingItems: PropTypes.bool,
   small: PropTypes.bool,
   large: PropTypes.bool,
+  triggerRef: PropTypes.object,
 };
 
 export default Dropdown;

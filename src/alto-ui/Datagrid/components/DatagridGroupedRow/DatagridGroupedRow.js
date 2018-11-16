@@ -28,6 +28,7 @@ const DatagridGroupedRow = ({
   context,
   columns,
   subRows,
+  children,
   ...datagridRowProps
 }) => {
   const { id, rowKeyField, groupedByColumnKey, groupedSummaryColumnKeys, labels } = context;
@@ -52,31 +53,35 @@ const DatagridGroupedRow = ({
       columns={columns.filter(col => col.key !== groupedByColumnKey)}
       context={context}
     >
-      {cells => (
-        <Fragment>
-          {column && (
-            <button
-              id={id ? `${id}__${key}-grouped` : undefined}
-              className="DatagridGroupedRow__button"
-              onClick={() => onToggle(value)}
-              style={{ width: column.width, maxWidth: column.width }}
-            >
-              <ChevronDownIcon
-                className={bemClass('DatagridGroupedRow__toggle-icon', { collapsed })}
-              />
-              {value}
-            </button>
-          )}
-          {cells}
-        </Fragment>
-      )}
+      {cells =>
+        children(
+          <Fragment>
+            {column && (
+              <button
+                id={id ? `${id}__${key}-grouped` : undefined}
+                className="DatagridGroupedRow__button"
+                onClick={() => onToggle(value)}
+                style={{ width: column.width, maxWidth: column.width }}
+              >
+                <ChevronDownIcon
+                  className={bemClass('DatagridGroupedRow__toggle-icon', { collapsed })}
+                />
+                {value}
+              </button>
+            )}
+            {cells}
+          </Fragment>
+        )
+      }
     </DatagridRow>
   );
 };
 
 DatagridGroupedRow.displayName = 'DatagridGroupedRow';
 
-DatagridGroupedRow.defaultProps = {};
+DatagridGroupedRow.defaultProps = {
+  children: x => x,
+};
 
 DatagridGroupedRow.propTypes = {
   firstRowInGroup: PropTypes.object.isRequired,
@@ -96,6 +101,7 @@ DatagridGroupedRow.propTypes = {
     }).isRequired
   ).isRequired,
   subRows: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.func,
   // ... and other DatagridRow Props
 };
 

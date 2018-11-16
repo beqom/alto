@@ -1,19 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { bemProps } from '../../helpers/bem';
+import { bemClass } from '../../helpers/bem';
 import './Label.scss';
 
-const labelProps = bemProps('label', ['readOnly', 'hidden']);
-
-const Label = props => <label {...labelProps(props)} htmlFor={props.htmlFor} />;
+const Label = ({ tag, htmlFor, readOnly, hidden, ...props }) =>
+  React.createElement(tag, {
+    ...props,
+    className: bemClass('label', { readOnly, hidden }),
+    htmlFor: tag === 'label' ? htmlFor : undefined,
+  });
 
 Label.displayName = 'Label';
 
-Label.defaultProps = {};
+Label.defaultProps = {
+  tag: 'label',
+};
 
 Label.propTypes = {
+  tag: PropTypes.string,
   htmlFor: PropTypes.string,
+  readOnly: PropTypes.bool,
+  hidden: PropTypes.bool,
 };
 
 export default Label;
