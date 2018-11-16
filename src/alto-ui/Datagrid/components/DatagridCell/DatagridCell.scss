@@ -74,20 +74,24 @@
   width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: $spacing-x-small 0.625rem;
-  min-height: 2rem;
-  line-height: $line-height-input;
+  padding: 0 $input-padding;
+  height: $height-default;
+  line-height: $height-default;
   overflow: hidden;
   max-width: 100%;
   flex: 1;
   border-radius: $border-radius-default;
 
   &--compact {
-    max-height: 2.5rem;
+    height: $height-small;
+    line-height: $height-small;
+    font-size: $font-size-small;
   }
 
   &--comfortable {
-    max-height: 3.5rem;
+    height: $height-large;
+    line-height: $height-large;
+    font-size: $font-size-large;
   }
 
   &--editing {
@@ -160,34 +164,6 @@
   .DatagridCell--danger &,
   .DatagridCell--danger &:hover {
     box-shadow: inset 0 0 0 1px $color-input-border-disabled;
-  }
-}
-
-.DatagridCell__input {
-  display: none;
-  margin: 0;
-  flex: 1;
-
-  &--number,
-  &--percentage,
-  &--int,
-  &--integer,
-  &--float {
-    .textfield {
-      text-align: right;
-    }
-  }
-
-  &--editing {
-    display: block;
-  }
-
-  &--list {
-    display: block;
-
-    &.DatagridCell__input--edited select {
-      font-weight: bold;
-    }
   }
 }
 

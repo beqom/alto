@@ -1,0 +1,31 @@
+@import '../../../scss/inc';
+
+.DatagridCellInput {
+  display: none;
+  margin: 0;
+  flex: 1;
+
+  &--number,
+  &--percentage,
+  &--int,
+  &--integer,
+  &--float {
+    .textfield {
+      text-align: right;
+    }
+  }
+
+  &--editing {
+    display: block;
+  }
+
+  &--list,
+  &--select,
+  &--boolean {
+    display: block;
+
+    &.DatagridCellInput--edited .Select {
+      font-weight: bold;
+    }
+  }
+}
