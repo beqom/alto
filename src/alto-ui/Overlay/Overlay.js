@@ -51,6 +51,7 @@ class Overlay extends React.PureComponent {
   componentWillUnmount() {
     this.removeCloseEventListener();
     clearTimeout(this.closingTimeout);
+    this.props.removeOverlay();
   }
 
   contains(node) {
@@ -61,6 +62,7 @@ class Overlay extends React.PureComponent {
   }
 
   open() {
+    this.props.pushOverlay();
     this.addCloseEventListener();
     if (this.props.openFocusTargetId) {
       focusId(this.props.openFocusTargetId);
@@ -68,6 +70,7 @@ class Overlay extends React.PureComponent {
   }
 
   close() {
+    this.props.removeOverlay();
     this.removeCloseEventListener();
     if (this.props.closeFocusTargetId) {
       focusId(this.props.closeFocusTargetId);
@@ -144,7 +147,6 @@ Overlay.displayName = 'Overlay';
 
 Overlay.defaultProps = {
   blocking: false,
-  inert: false,
 };
 
 Overlay.propTypes = {
@@ -155,8 +157,10 @@ Overlay.propTypes = {
   closeFocusTargetId: PropTypes.string,
   open: PropTypes.bool.isRequired,
   blocking: PropTypes.bool,
-  inert: PropTypes.bool,
+  inert: PropTypes.bool.isRequired,
   include: PropTypes.object,
+  pushOverlay: PropTypes.func.isRequired,
+  removeOverlay: PropTypes.func.isRequired,
 };
 
 export default Overlay;
