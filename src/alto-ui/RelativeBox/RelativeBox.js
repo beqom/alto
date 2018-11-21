@@ -30,10 +30,10 @@ class RelativeBox extends React.Component {
     if (targetChanged || targetRefChanged) {
       this.updateStyle();
     } else if (prevProps.watch) {
-      const indexOfPropChanged = Object.entries(prevProps.watch).findIndex(
+      const propsChanged = Object.entries(prevProps.watch).some(
         ([key, value]) => this.props.watch[key] !== value
       );
-      if (indexOfPropChanged > -1) {
+      if (propsChanged) {
         this.updateStyle();
       }
     } else {
