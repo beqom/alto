@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
+import Portal from '../Portal';
 
 import './Overlay.scss';
 
@@ -119,7 +120,7 @@ class Overlay extends React.PureComponent {
   render() {
     const { open, children, blocking, inert, className } = this.props;
     return (
-      <Fragment>
+      <Portal display={open}>
         {open && blocking && <div className={classnames('Overlay__overlay', className)} />}
         <div ref={this.contentRef} aria-hidden={!open || inert} className="Overlay">
           {blocking ? (
@@ -134,7 +135,7 @@ class Overlay extends React.PureComponent {
             children
           )}
         </div>
-      </Fragment>
+      </Portal>
     );
   }
 }
