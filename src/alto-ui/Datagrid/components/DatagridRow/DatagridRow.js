@@ -17,38 +17,60 @@ const DatagridRow = ({
   context,
   children,
   collapsed,
-}) => (
-  <div role="row" aria-rowindex={rowIndex} className={bemClass('DatagridRow', { collapsed })}>
-    {children(
-      columns.map((column, colIndex) => {
-        const editable = !header && !render && context.editable(column, row) && !column.formula;
-        const edited =
-          !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
+  extraCell,
+}) => {
+  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
+  const clickable = typeof onRowClick === 'function';
+  return (
+    <div
+      role="row"
+      aria-rowindex={rowIndex}
+      className={bemClass('DatagridRow', { collapsed, clickable })}
+      {...(clickable ? { onClick: () => onRowClick(row), tabIndex: '0' } : {})}
+    >
+      {children(
+        columns.map((column, colIndex) => {
+          const editable =
+            !clickable && !header && !render && context.editable(column, row) && !column.formula;
+          const edited =
+            !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
+          const disabled =
+            !header &&
+            !render &&
+            typeof context.disabled === 'function' &&
+            context.disabled(column, row);
 
-        const id =
-          context.id && row
-            ? `${context.id}__cell--${column.key}-${context.rowKeyField(row)}`
-            : undefined;
-        return (
-          <DatagridCell
-            id={id}
-            key={column.key}
-            row={row}
-            rowIndex={index}
-            column={column}
-            colIndex={colIndex + columnIndexStart}
-            editable={editable}
-            edited={edited}
-            render={render}
-            header={header}
-            context={context}
-            aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
-          />
-        );
-      })
-    )}
-  </div>
-);
+          const id =
+            context.id && row
+              ? `${context.id}__cell--${column.key}-${rowKeyField(row)}`
+              : undefined;
+
+          return (
+            <DatagridCell
+              id={id}
+              key={column.key}
+              row={row}
+              rowIndex={index}
+              column={column}
+              colIndex={colIndex + columnIndexStart}
+              editable={editable}
+              edited={edited}
+              disabled={disabled}
+              render={render}
+              header={header}
+              context={context}
+              aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
+              selectedRowKey={selectedRowKey}
+              inputProps={context.getInputProps(column, row)}
+              width={columnsWidth[column.key] || column.width}
+            />
+          );
+        })
+      )}
+      {!!extraCell && <div className="DatagridRow__last-cell" />}
+    </div>
+  );
+};
 
 DatagridRow.displayName = 'DatagridRow';
 
@@ -78,6 +100,7 @@ DatagridRow.propTypes = {
   }).isRequired,
   children: PropTypes.func,
   collapsed: PropTypes.bool,
+  extraCell: PropTypes.bool,
 };
 
 export default DatagridRow;

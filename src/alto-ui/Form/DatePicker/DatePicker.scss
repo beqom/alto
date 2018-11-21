@@ -1,23 +1,9 @@
 @import '../../scss/inc';
 
-.DatePicker {
-  position: relative;
-}
-
 .DayPicker__a11y-day-button {
   @extend %reset-button;
   color: inherit;
   width: 2.2rem;
-}
-
-.DatePicker__day-picker {
-  display: none;
-  position: absolute;
-  z-index: $z-index-datepicker;
-
-  &--open {
-    display: block;
-  }
 }
 
 .DatePicker__month-form {

@@ -36,7 +36,7 @@ const Icon = props => {
       {...omit(otherProps, 'outline')}
       className={bemClass(
         'Icon',
-        { baseline, left, right, button: props.onClick },
+        { baseline, left, right, button: props.onClick, disabled: otherProps.disabled },
         props.className
       )}
       style={getStyle(!!props.onClick, size)}

@@ -75,7 +75,14 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 }
 
 // Flat Buttons
-@mixin button--flat($color-default, $color-hover-text, $color-focus, $color-hover-bkgd) {
+@mixin button--flat(
+  $color-default,
+  $color-hover-text,
+  $color-focus,
+  $color-hover-bkgd,
+  $color-active-bkgd,
+  $color-active-text
+) {
   color: $color-default;
 
   &,
@@ -98,8 +105,9 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
     background: $color-hover-bkgd;
   }
 
-  &:active {
-    color: $color-default;
+  &.button--active {
+    background: $color-active-bkgd;
+    color: $color-active-text;
   }
 
   &:disabled,
@@ -115,12 +123,13 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  font-weight: $font-weight-regular;
+  font-weight: $font-weight-semibold;
   font-size: $font-size-medium;
   font-family: $font-family-alt;
-  padding: 0.4375rem 0.75rem; // Button height = 32px
+  padding: 0 0.75rem;
+  height: $height-default; // Button height = 32px
   line-height: $line-height-button;
-  border: 1px solid transparent;
+  border: none;
   border-radius: $border-radius-default;
   text-decoration: none;
   text-align: center;
@@ -157,7 +166,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 
 .button--small {
   font-size: $font-size-small;
-  padding: 0.25rem 0.5rem; // Button height = 26px
+  padding: 0 0.5rem;
+  height: 1.5rem; // Button height = 26px
   .icon {
     font-size: $font-size-medium; // Keeps icons in small buttons readable
   }
@@ -165,7 +175,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 
 .button--large {
   font-size: $font-size-large;
-  padding: 0.625rem 1.25rem; // Button height = 38px
+  padding: 0 1.25rem;
+  height: 2rem; // Button height = 36px
 }
 
 .button--nowrap {
@@ -217,21 +228,33 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 // Flat
 
 .button--flat {
-  @include button--flat($blue, $blue-80, $blue-20, $blue-20);
+  @include button--flat($coolgrey-60, $blue-60, $blue-30, transparent, $blue-20, $blue-70);
   background: transparent;
   border-color: transparent;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  font-weight: 600;
+  padding-left: $spacing-x-small;
+  padding-right: $spacing-x-small;
 }
 
 .button--flat.button--success {
-  @include button--flat($green, $green-80, $green-20, $green-20);
+  @include button--flat($green, $green-80, $green-20, $green-20, $green-30, $green);
 }
 
 .button--flat.button--danger {
-  @include button--flat($red, $red-80, $red-20, $red-20);
+  @include button--flat($red, $red-80, $red-20, $red-20, $red-30, $red);
 }
 
 .button--flat.button--white {
-  @include button--flat($white, rgba($white, 0.8), $color-white-button-focus, rgba($white, 0.2));
+  @include button--flat(
+    $white,
+    rgba($white, 0.8),
+    $color-white-button-focus,
+    rgba($white, 0.2),
+    rgba($white, 0.3),
+    $white
+  );
+}
+
+.button--flat.button--muted {
+  @include button--flat($coolgrey-50, $blue-60, $blue-30, transparent, $blue-20, $blue-70);
 }

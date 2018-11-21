@@ -5,7 +5,7 @@ import Button from '../Button';
 import Link from '../../Link';
 
 describe('<Button />', () => {
-  it('should render a button component', () => {
+  it('should render a buttons component', () => {
     const wrapper = shallow(<Button />);
     expect(wrapper.type()).toBe('button');
   });

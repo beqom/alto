@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import TextField from '../TextField';
 
-import { parse, format } from './helpers';
+import { parse, format } from '../../helpers/number';
 
 class InputNumber extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class InputNumber extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { value, locale, precision, currency } = props;
+    const { value, locale, precision, currency, disableThousandSeparator } = props;
     if (
       state.prev.value !== value ||
       state.prev.precision !== precision ||
@@ -32,7 +32,9 @@ class InputNumber extends React.Component {
     ) {
       return {
         prev: props,
-        display: state.editing ? state.display : format(value, locale, precision, currency),
+        display: state.editing
+          ? state.display
+          : format(value, locale, precision, currency, disableThousandSeparator),
       };
     }
     return null;
@@ -69,17 +71,18 @@ class InputNumber extends React.Component {
   }
 
   format(value) {
-    const { locale, precision, currency } = this.props;
-    return format(value, locale, precision, currency);
+    const { locale, precision, currency, disableThousandSeparator } = this.props;
+    return format(value, locale, precision, currency, disableThousandSeparator);
   }
 
   render() {
-    const { forwardedRef, locale, precision, ...rest } = this.props;
+    const { forwardedRef, locale, precision, disableThousandSeparator, ...rest } = this.props;
     return (
       <TextField
         ref={forwardedRef}
         {...rest}
         type="text"
+        right
         value={this.state.display}
         onChange={this.handleChange}
         onFocus={this.handleFocus}
@@ -91,6 +94,7 @@ class InputNumber extends React.Component {
 
 InputNumber.defaultProps = {
   precision: 0,
+  locale: navigator.language,
 };
 
 InputNumber.propTypes = {
@@ -102,6 +106,7 @@ InputNumber.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  disableThousandSeparator: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => <InputNumber {...props} forwardedRef={ref} />);

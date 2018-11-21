@@ -25,7 +25,14 @@ const handleChange = (event, type, onChange) => {
 // IE for ever <3
 const getInputType = type => (isIE11() && type === 'number' ? 'text' : type);
 
-const texfieldProps = bemProps('textfield', ['large', 'small', 'success', 'error', 'area']);
+const texfieldProps = bemProps('textfield', [
+  'large',
+  'small',
+  'success',
+  'error',
+  'area',
+  'right',
+]);
 
 const TextField = React.forwardRef((props, ref) => (
   <FormElement {...props}>

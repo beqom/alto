@@ -3,5 +3,5 @@
 ## Usage
 
 ```js
-<Dropdown></Dropdown>
+<Dropdown />
 ```

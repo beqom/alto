@@ -5,12 +5,10 @@ import 'react-day-picker/lib/style.css';
 import { DateTime } from 'luxon';
 import classnames from 'classnames';
 
-import { bemClass } from '../../helpers/bem';
 import TextField from '../TextField';
-import Overlay from '../../Overlay';
 import VisuallyHidden from '../../VisuallyHidden';
-import Card from '../../Card';
 import DatePickerHeader from './DatePickerHeader';
+import Popover from '../../Popover';
 
 import './DatePicker.scss';
 
@@ -40,10 +38,16 @@ class DatePicker extends React.Component {
     this.handleBlur = this.handleBlur.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChangeMonth = this.handleChangeMonth.bind(this);
+
+    this.inputRef = React.createRef();
   }
 
   getDate() {
     return this.props.value ? DateTime.fromJSDate(this.props.value) : null;
+  }
+
+  getInputRef() {
+    return this.props.inputRef || this.inputRef;
   }
 
   setDate(date) {
@@ -52,22 +56,25 @@ class DatePicker extends React.Component {
 
   handleFocus(e) {
     if (this.props.readOnly) return;
-    if (this.props.inputProps.focus) {
-      this.props.inputProps.focus(e);
+    if (this.props.inputProps.onFocus) {
+      this.props.inputProps.onFocus(e);
     }
 
     this.setState({ open: true });
   }
 
   handleBlur(e) {
-    if (this.props.inputProps.focus) {
-      this.props.inputProps.focus(e);
+    if (this.props.inputProps.onBlur) {
+      this.props.inputProps.onBlur(e);
     }
 
     this.setState({ open: false });
   }
 
   handleClose() {
+    if (this.props.onClose) {
+      this.props.onClose();
+    }
     this.setState({ open: false });
   }
 
@@ -82,34 +89,40 @@ class DatePicker extends React.Component {
 
     return (
       <div className={classnames('DatePicker', this.props.className)}>
-        <Overlay onClose={this.handleClose} open={open}>
-          <TextField
-            placeholder={this.props.format}
-            label={this.props.label}
-            {...this.props.inputProps}
-            readOnly={this.props.readOnly}
-            onFocus={this.handleFocus}
-            onChange={() => {}}
-            value={date ? date.toFormat(this.props.format) : ''}
-            id={`${id}__input`}
+        <TextField
+          ref={this.getInputRef()}
+          placeholder={this.props.format}
+          label={this.props.label}
+          hideLabel={this.props.hideLabel}
+          {...this.props.inputProps}
+          readOnly={this.props.readOnly}
+          onFocus={this.handleFocus}
+          onChange={() => {}}
+          value={date ? date.toFormat(this.props.format) : ''}
+          id={`${id}__input`}
+        />
+        <Popover
+          className="DatePicker__day-picker"
+          onClose={this.handleClose}
+          open={open}
+          start
+          targetRef={this.getInputRef()}
+          includeTarget
+        >
+          <DatePickerHeader date={this.state.month} id={id} onChange={this.handleChangeMonth} />
+          <DayPicker
+            month={this.state.month.toJSDate()}
+            canChangeMonth={false}
+            captionElement={() => null}
+            onDayClick={d => {
+              this.setDate(d);
+              this.setState({ open: false });
+            }}
+            localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
+            selectedDays={date ? date.toJSDate() : null}
+            renderDay={renderDay(id)}
           />
-
-          <Card className={bemClass('DatePicker__day-picker', { open })}>
-            <DatePickerHeader date={this.state.month} id={id} onChange={this.handleChangeMonth} />
-            <DayPicker
-              month={this.state.month.toJSDate()}
-              canChangeMonth={false}
-              captionElement={() => null}
-              onDayClick={d => {
-                this.setDate(d);
-                this.setState({ open: false });
-              }}
-              localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
-              selectedDays={date ? date.toJSDate() : null}
-              renderDay={renderDay(id)}
-            />
-          </Card>
-        </Overlay>
+        </Popover>
       </div>
     );
   }
@@ -119,7 +132,7 @@ DatePicker.displayName = 'DatePicker';
 
 DatePicker.defaultProps = {
   inputProps: {},
-  format: 'yyyy-MM-dd',
+  format: 'dd/MM/yyyy',
 };
 
 DatePicker.propTypes = {
@@ -132,8 +145,12 @@ DatePicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.object,
   inputProps: PropTypes.shape({
-    focus: PropTypes.func,
+    onBlur: PropTypes.func,
+    onFocus: PropTypes.func,
   }),
+  inputRef: PropTypes.object,
+  onClose: PropTypes.func,
+  hideLabel: PropTypes.bool,
 };
 
-export default DatePicker;
+export default React.forwardRef((props, ref) => <DatePicker inputRef={ref} {...props} />);

@@ -3,6 +3,7 @@ import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
 import ArrowUp from './ArrowUp';
+import Balance from './Balance';
 import Bars from './Bars';
 import Bell from './Bell';
 import Bolt from './Bolt';
@@ -22,6 +23,7 @@ import Copy from './Copy';
 import CopyToClipboard from './CopyToClipboard';
 import Delete from './Delete';
 import Download from './Download';
+import DragHandle from './DragHandle';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
@@ -36,6 +38,7 @@ import File from './File';
 import FileGroup from './FileGroup';
 import FileSettings from './FileSettings';
 import Filter from './Filter';
+import Floppy from './Floppy';
 import Folder from './Folder';
 import FolderOpen from './FolderOpen';
 import Globe from './Globe';
@@ -61,10 +64,15 @@ import Plus from './Plus';
 import PlusCircle from './PlusCircle';
 import Populations from './Populations';
 import Remove from './Remove';
+import Repeat from './Repeat';
+import RowDensityComfortable from './RowDensityComfortable';
+import RowDensityCompact from './RowDensityCompact';
 import Search from './Search';
+import Sync from './Sync';
 import Tasks from './Tasks';
 import Times from './Times';
 import Trash from './Trash';
+import Undo from './Undo';
 import Unknown from './Unknown';
 import Upload from './Upload';
 import User from './User';
@@ -80,6 +88,7 @@ export default {
   ArrowLeft,
   ArrowUp,
   ArrowRight,
+  Balance,
   Bars,
   Bell,
   Bolt,
@@ -99,6 +108,7 @@ export default {
   Config,
   Delete,
   Download,
+  DragHandle,
   Edit,
   EllipsisHorizontal,
   EllipsisVertical,
@@ -113,6 +123,7 @@ export default {
   FileGroup,
   FileSettings,
   Filter,
+  Floppy,
   Folder,
   FolderOpen,
   Globe,
@@ -138,10 +149,15 @@ export default {
   PlusCircle,
   Populations,
   Remove,
+  Repeat,
+  RowDensityComfortable,
+  RowDensityCompact,
   Search,
+  Sync,
   Tasks,
   Times,
   Trash,
+  Undo,
   Unknown,
   Upload,
   User,
