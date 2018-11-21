@@ -267,17 +267,17 @@ $size-touch: 3rem !default;
 // Z-index
 
 $z-index-focusable-focused: 20000 !default;
+$z-index-tooltip: 15000 !default;
 $z-index-toast: 12000 !default;
 $z-index-alert: 12000 !default;
-$z-index-dialog: 11000 !default;
-$z-index-modal: 10000 !default;
 $z-index-overlay: 9000 !default;
+$z-index-dialog: $z-index-overlay !default;
+$z-index-modal: $z-index-overlay !default;
+$z-index-popover: $z-index-overlay !default;
+$z-index-datepicker: $z-index-overlay !default;
+$z-index-popup: $z-index-overlay !default;
 $z-index-navbar: 7000 !default;
 $z-index-sidebar: 6000 !default;
-$z-index-popover: 5000 !default;
-$z-index-datepicker: 5000 !default;
-$z-index-popup: 3000 !default;
-$z-index-tooltip: 3000 !default;
 $z-index-content: 1000 !default;
 $z-index-default: 1 !default;
 
