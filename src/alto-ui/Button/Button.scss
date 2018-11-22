@@ -144,6 +144,10 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   &.button--disabled {
     cursor: not-allowed;
   }
+
+  > .Icon:not(.Icon--left):not(.Icon--right) {
+    font-size: 1.5em;
+  }
 }
 
 .button--success {
@@ -168,7 +172,7 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   font-size: $font-size-small;
   padding: 0 0.5rem;
   height: 1.5rem; // Button height = 26px
-  .icon {
+  .Icon {
     font-size: $font-size-medium; // Keeps icons in small buttons readable
   }
 }
