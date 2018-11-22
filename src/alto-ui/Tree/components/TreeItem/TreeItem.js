@@ -44,16 +44,15 @@ const TreeItem = props => {
   return (
     <li id={id} className="TreeItem">
       <div className={bemClass('TreeItem__title', { final: !hasChildren(item) })}>
-        {!state.fetching &&
-          !!hasChildren(item) && (
-            <button
-              id={id ? `${id}__toggle-button` : undefined}
-              className={bemClass('TreeItem__toggle-button', { open: state.open })}
-              onClick={handleToggle}
-            >
-              <ChevronRightIcon />
-            </button>
-          )}
+        {!state.fetching && !!hasChildren(item) && (
+          <button
+            id={id ? `${id}__toggle-button` : undefined}
+            className={bemClass('TreeItem__toggle-button', { open: state.open })}
+            onClick={handleToggle}
+          >
+            <ChevronRightIcon />
+          </button>
+        )}
         <div>{state.fetching && <Spinner className="TreeItem__spinner" small />}</div>
         {Icon && (
           <div className={bemClass('TreeItem__icon', { isSelected })}>
@@ -97,7 +96,7 @@ TreeItem.propTypes = {
   renderItem: PropTypes.func,
   href: PropTypes.any,
   onClick: PropTypes.func,
-  isClickable: PropTypes.func,
+  isClickable: PropTypes.bool,
 };
 
 export default TreeItem;
