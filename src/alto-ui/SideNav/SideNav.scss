@@ -349,8 +349,12 @@ $nav-btn-hover-text-dark: $white;
   @include on-medium-and-wide {
     top: 0;
     margin-left: 1px;
-    left: 100%;
+    left: 200px;
     bottom: 0;
+
+    &--collapsed {
+      left: 3.125rem;
+    }
   }
 
   @include on-narrow {

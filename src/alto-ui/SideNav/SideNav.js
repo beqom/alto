@@ -14,6 +14,8 @@ const DEFAULT_LABELS = {
   a11yLogo: 'Company logo',
 };
 
+export const SideNavContext = React.createContext();
+
 class SideNav extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -100,61 +102,63 @@ class SideNav extends React.PureComponent {
       ...this.props.labels,
     };
     return (
-      <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
-        <header className="sidenav__header">
-          <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl} title={labels.a11yLogo}>
-            {collapsed ? logoSmall : logo}
-          </a>
-          <a
-            id={`${id}__logo--narrow`}
-            className="sidenav__logo sidenav__logo--narrow"
-            href={logoUrl}
-            title={labels.a11yLogo}
+      <SideNavContext.Provider value={{ open, collapsed }}>
+        <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
+          <header className="sidenav__header">
+            <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl} title={labels.a11yLogo}>
+              {collapsed ? logoSmall : logo}
+            </a>
+            <a
+              id={`${id}__logo--narrow`}
+              className="sidenav__logo sidenav__logo--narrow"
+              href={logoUrl}
+              title={labels.a11yLogo}
+            >
+              {logo}
+            </a>
+          </header>
+          <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
+          <div
+            className={bemClass('sidenav__sections-list-narrow-container', {
+              open,
+            })}
+            aria-hidden={!open}
           >
-            {logo}
-          </a>
-        </header>
-        <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
-        <div
-          className={bemClass('sidenav__sections-list-narrow-container', {
-            open,
-          })}
-          aria-hidden={!open}
-        >
-          <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
-            {this.renderNavItems()}
-          </ul>
-        </div>
-        {!!children && (
-          <div className="sidenav__content">
-            {typeof children === 'function' ? children(open) : children}
+            <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
+              {this.renderNavItems()}
+            </ul>
           </div>
-        )}
-        <Button
-          id={`${id}__menu-button`}
-          flat
-          white={dark}
-          onClick={this.handleToggleOpen}
-          className="sidenav__menu-button"
-        >
-          {open ? closeMenuButtonLabel : openMenuButtonLabel}
-        </Button>
-        {onToggle && (
-          <button
-            id={`${id}__collapse-button`}
-            className={bemClass(
-              'sidenav__icon-container',
-              { reverse: collapsed },
-              'sidenav__toggle-button'
-            )}
-            onClick={onToggle}
-            aria-expanded={collapsed}
+          {!!children && (
+            <div className="sidenav__content">
+              {typeof children === 'function' ? children(open) : children}
+            </div>
+          )}
+          <Button
+            id={`${id}__menu-button`}
+            flat
+            white={dark}
+            onClick={this.handleToggleOpen}
+            className="sidenav__menu-button"
           >
-            {collapsed ? <ExpandIcon /> : <CollapseIcon />}
-            <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
-          </button>
-        )}
-      </aside>
+            {open ? closeMenuButtonLabel : openMenuButtonLabel}
+          </Button>
+          {onToggle && (
+            <button
+              id={`${id}__collapse-button`}
+              className={bemClass(
+                'sidenav__icon-container',
+                { reverse: collapsed },
+                'sidenav__toggle-button'
+              )}
+              onClick={onToggle}
+              aria-expanded={collapsed}
+            >
+              {collapsed ? <ExpandIcon /> : <CollapseIcon />}
+              <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
+            </button>
+          )}
+        </aside>
+      </SideNavContext.Provider>
     );
   }
 }

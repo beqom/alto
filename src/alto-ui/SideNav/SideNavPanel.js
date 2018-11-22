@@ -6,6 +6,8 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import Overlay from '../Overlay';
 import CloseButton from '../CloseButton';
+import { SideNavContext } from './SideNav';
+import { bemClass } from '../helpers/bem';
 
 const SideNavPanel = ({
   open,
@@ -17,35 +19,39 @@ const SideNavPanel = ({
   panelClassName,
   inert,
 }) => (
-  <Overlay
-    open={open}
-    openFocusTargetId={`${closeFocusTargetId}__open`}
-    onClose={onClose}
-    closeFocusTargetId={closeFocusTargetId}
-    inert={!!inert}
-  >
-    <TransitionGroup>
-      {open && (
-        <CSSTransition classNames="sidenav__panel--transition" in={open} timeout={350}>
-          <div className="sidenav__panel">
-            <div className={classnames('sidenav__panel-container', panelClassName)}>
-              <header className="sidenav__panel-header">
-                <div className="sidenav__panel-title">{title}</div>
-                {!inert && (
-                  <CloseButton
-                    id={`${closeFocusTargetId}__open`}
-                    onClick={onClose}
-                    a11yLabel="Close Panel"
-                  />
-                )}
-              </header>
-              <div className={classnames('sidenav__panel-body', className)}>{children}</div>
-            </div>
-          </div>
-        </CSSTransition>
-      )}
-    </TransitionGroup>
-  </Overlay>
+  <SideNavContext.Consumer>
+    {sidenavContext => (
+      <Overlay
+        open={open}
+        openFocusTargetId={`${closeFocusTargetId}__open`}
+        onClose={onClose}
+        closeFocusTargetId={closeFocusTargetId}
+        inert={!!inert}
+      >
+        <TransitionGroup>
+          {open && (
+            <CSSTransition classNames="sidenav__panel--transition" in={open} timeout={350}>
+              <div className={bemClass('sidenav__panel', { collapsed: sidenavContext.collapsed })}>
+                <div className={classnames('sidenav__panel-container', panelClassName)}>
+                  <header className="sidenav__panel-header">
+                    <div className="sidenav__panel-title">{title}</div>
+                    {!inert && (
+                      <CloseButton
+                        id={`${closeFocusTargetId}__open`}
+                        onClick={onClose}
+                        a11yLabel="Close Panel"
+                      />
+                    )}
+                  </header>
+                  <div className={classnames('sidenav__panel-body', className)}>{children}</div>
+                </div>
+              </div>
+            </CSSTransition>
+          )}
+        </TransitionGroup>
+      </Overlay>
+    )}
+  </SideNavContext.Consumer>
 );
 
 SideNavPanel.displayName = 'SideNavPanel';
