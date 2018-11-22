@@ -23,8 +23,9 @@ const getPopoverProps = propoverProps => {
   return { ...otherProps, right: true, start: true };
 };
 
-const renderMoreTriggerIcon = (handleClick, active) => (
+const renderMoreTriggerIcon = (handleClick, active, ref) => (
   <button
+    ref={ref}
     className={bemClass('DropdownItem__button', { active, more: true })}
     onClick={handleClick}
   >

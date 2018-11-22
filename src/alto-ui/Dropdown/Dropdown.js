@@ -78,6 +78,7 @@ class Dropdown extends React.Component {
       small,
       large,
       className,
+      icon: Icon,
     } = this.props;
     const { open } = this.state;
     if (typeof renderTrigger === 'function') {
@@ -97,11 +98,12 @@ class Dropdown extends React.Component {
         active={this.state.open}
         className={bemClass('Dropdown__trigger', {}, className ? `${className}-trigger` : '')}
       >
+        {Icon && <Icon />}
         <span className="Dropdown__trigger-content">{text}</span>
         {(loading && !loadingItems) || (loadingItems && !open) ? (
           <Spinner className="Dropdown__trigger-spinner" small />
         ) : (
-          <ChevronDown right />
+          !Icon && <ChevronDown right />
         )}
       </Button>
     );
@@ -176,6 +178,7 @@ class Dropdown extends React.Component {
       small,
       large,
       triggerRef,
+      icon,
       ...popoverProps
     } = this.props;
 
@@ -234,6 +237,7 @@ Dropdown.propTypes = {
   small: PropTypes.bool,
   large: PropTypes.bool,
   triggerRef: PropTypes.object,
+  icon: PropTypes.func,
 };
 
 export default Dropdown;
