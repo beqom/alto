@@ -1,7 +1,0 @@
-# Popover
-
-## Usage
-
-```js
-<Popover />
-```

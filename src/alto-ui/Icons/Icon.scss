@@ -1,4 +1,4 @@
-@import '../scss/inc';
+@import "../scss/inc";
 
 .Icon {
   display: inline-block;
@@ -19,11 +19,11 @@
 }
 
 .Icon--left {
-  margin-right: $spacing-xx-small;
+  margin-right: 0.25em;
 }
 
 .Icon--right {
-  margin-left: $spacing-xx-small;
+  margin-left: 0.25em;
 }
 
 .Icon--button {
@@ -43,12 +43,6 @@
   &:hover {
     color: $coolgrey-80;
   }
-}
-
-.Icon--disabled,
-.Icon--disabled:hover {
-  color: $coolgrey-30;
-  cursor: default;
 }
 
 .Icon__badge {

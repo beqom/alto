@@ -1,6 +1,6 @@
 // ===========================
 // Alto
-$alto-version: '0.12.10' !default;
+$alto-version: '0.10.30' !default;
 $deprecate-mode: 'sensible' !default;
 
 // ===================================
@@ -129,12 +129,12 @@ $pink: $pink-60 !default;
 
 $coolgrey-90: #192328 !default;
 $coolgrey-80: #333c48 !default;
-$coolgrey-70: #495866 !default;
-$coolgrey-60: #66778a !default;
-$coolgrey-50: #8398a8 !default;
+$coolgrey-70: #3f4f5e !default;
+$coolgrey-60: #4f6376 !default;
+$coolgrey-50: #758fa3 !default;
 $coolgrey-40: #a3b5c6 !default;
-$coolgrey-30: #c2d0de !default;
-$coolgrey-20: #e0e9f1 !default;
+$coolgrey-30: #bfcedd !default;
+$coolgrey-20: #dae4ed !default;
 $coolgrey-10: #f8f9fb !default;
 
 $grey-90: #242424 !default;
@@ -267,17 +267,17 @@ $size-touch: 3rem !default;
 // Z-index
 
 $z-index-focusable-focused: 20000 !default;
-$z-index-tooltip: 15000 !default;
 $z-index-toast: 12000 !default;
 $z-index-alert: 12000 !default;
+$z-index-dialog: 11000 !default;
+$z-index-modal: 10000 !default;
 $z-index-overlay: 9000 !default;
-$z-index-dialog: $z-index-overlay !default;
-$z-index-modal: $z-index-overlay !default;
-$z-index-popover: $z-index-overlay !default;
-$z-index-datepicker: $z-index-overlay !default;
-$z-index-popup: $z-index-overlay !default;
 $z-index-navbar: 7000 !default;
 $z-index-sidebar: 6000 !default;
+$z-index-dropdown: 5000 !default;
+$z-index-datepicker: 5000 !default;
+$z-index-popup: 3000 !default;
+$z-index-tooltip: 3000 !default;
 $z-index-content: 1000 !default;
 $z-index-default: 1 !default;
 
@@ -302,10 +302,9 @@ $line-height-button-large: 2.875rem !default;
 // ===================================
 // Height
 
-$height-small: 1.5rem;
-$height-default: 1.75rem;
-$height-large: 2rem;
-$input-padding: 0.625rem;
+$height-small: 1.75rem;
+$height-default: 2rem;
+$height-large: 2.25rem;
 
 // ===================================
 // Border Radius
@@ -357,4 +356,3 @@ $focusable-out-box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue !important;
 // Forms
 
 $color-input-border: $coolgrey-40 !default;
-$color-input-border-disabled: transparent !default;

@@ -1,12 +1,7 @@
 @import '../../scss/inc';
 
 .Switch {
-  //padding: $spacing-small 0;
-  height: $height-default;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+  padding: $spacing-small 0;
 }
 
 .Switch__input {
@@ -18,11 +13,6 @@
   outline: 0;
   display: flex;
   align-items: center;
-  font-weight: $font-weight-semibold;
-  font-family: $font-family-alt;
-  user-select: none;
-  color: $coolgrey-60;
-  cursor: pointer;
 
   .Switch__input:disabled + & {
     cursor: not-allowed;
@@ -36,9 +26,9 @@
   height: 1rem;
   position: relative;
   overflow: hidden;
-  background-color: $coolgrey-60;
+  background-color: $coolgrey-50;
   border-radius: 0.5rem;
-  margin-right: 0.25em;
+  margin-right: 0.5em;
 
   .Switch__input:focus + .Switch__label & {
     box-shadow: 0 0 0 3px $blue-20;
@@ -74,7 +64,7 @@
     height: 1rem;
     border-radius: $border-radius-circle;
     background-color: $white;
-    box-shadow: inset 0 0 0 2px $coolgrey-60;
+    box-shadow: inset 0 0 0 2px $coolgrey-50;
     left: 0;
 
     .Switch__input:checked + .Switch__label & {

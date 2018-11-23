@@ -48,7 +48,7 @@ class CopyToClipboard extends React.Component {
   render() {
     return (
       <Button
-        ref={this.buttonRef}
+        buttonRef={this.buttonRef}
         {...omit(this.props, ['succesLabel', 'label'])}
         onClick={this.handleClick}
       >

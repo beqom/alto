@@ -7,10 +7,6 @@ class StateProvider extends React.Component {
 
     this.state = props.state;
     this.setState = this.setState.bind(this);
-    this.refsMap = props.refs.reduce(
-      (acc, refName) => ({ ...acc, [refName]: React.createRef() }),
-      {}
-    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -20,19 +16,17 @@ class StateProvider extends React.Component {
   }
 
   render() {
-    return this.props.children(this.state, this.setState, this.refsMap);
+    return this.props.children(this.state, this.setState);
   }
 }
 
 StateProvider.defaultProps = {
   state: {},
-  refs: [],
 };
 
 StateProvider.propTypes = {
   state: PropTypes.object,
   children: PropTypes.func.isRequired,
-  refs: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default StateProvider;

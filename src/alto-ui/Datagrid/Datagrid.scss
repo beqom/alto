@@ -37,11 +37,6 @@
   }
 }
 
-.Datagrid__header-row {
-  display: flex;
-  flex-direction: column;
-}
-
 .Datagrid__header-row--frozen {
   margin-right: 2px;
   box-shadow: 2px 0 0 $coolgrey-20;
@@ -104,27 +99,6 @@
   text-align: center;
   padding: 0;
   margin: auto;
-}
-
-.DataGrid__row-checkbox {
-  display: flex;
-  align-items: center;
-  padding-left: $spacing-medium;
-  height: 3rem;
-  width: 3rem;
-  border-bottom: 1px solid $coolgrey-20;
-
-  &--header {
-    background-color: $coolgrey-10;
-  }
-
-  &--compact {
-    height: 2.5rem;
-  }
-
-  &--comfortable {
-    height: 3.5rem;
-  }
 }
 
 @media all and (-ms-high-contrast: none) {

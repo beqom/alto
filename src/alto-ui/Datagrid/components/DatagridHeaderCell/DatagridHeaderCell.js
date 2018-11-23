@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/aria-role */
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import isEqual from 'lodash.isequal';
 
 import ChevronUpIcon from '../../../Icons/ChevronUp';
@@ -12,20 +13,9 @@ import { bemClass } from '../../../helpers/bem';
 import './DatagridHeaderCell.scss';
 
 class DatagridHeaderCell extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleMouseEnterResizeHandle = this.handleMouseEnterResizeHandle.bind(this);
-  }
-
   shouldComponentUpdate(nextProps) {
-    return !isEqual(this.props.column, nextProps.column) || this.props.width !== nextProps.width;
+    return !isEqual(this.props.column, nextProps.column);
   }
-
-  handleMouseEnterResizeHandle(e) {
-    this.props.context.onMouseEnterResizeHandle(e, this.props.column);
-  }
-
   renderContent(style, sorted, wrapped) {
     const { context, column } = this.props;
 
@@ -89,12 +79,14 @@ class DatagridHeaderCell extends React.Component {
   }
 
   render() {
-    const { column, context, rowIndex, colIndex, first, last, width } = this.props;
-    const wrapped = context.wrapHeader;
+    const { column, context, rowIndex, colIndex, first, last } = this.props;
+
+    const wrapped = context.wrapHeader(column);
+    const { width } = column;
+
     const style = {
-      width,
-      minWidth: '2rem',
-      maxWidth: width,
+      ...(width || width === 0 ? { width, minWidth: '2rem', maxWidth: width } : {}),
+      ...(wrapped && wrapped !== true ? { height: `${wrapped * 1.2 + 1.8}em` } : {}),
     };
 
     const sorted = column.key === context.columnSorted || [1, -1].includes(column.sortDirection);
@@ -116,10 +108,6 @@ class DatagridHeaderCell extends React.Component {
         aria-colindex={colIndex}
       >
         {this.renderContent(style, sorted, wrapped)}
-        <div
-          className="DatagridHeaderCell__resize-handle"
-          onMouseEnter={this.handleMouseEnterResizeHandle}
-        />
       </div>
     );
   }
@@ -128,7 +116,6 @@ class DatagridHeaderCell extends React.Component {
 DatagridHeaderCell.defaultProps = {
   first: false,
   last: false,
-  width: 150,
 };
 
 DatagridHeaderCell.propTypes = {
@@ -136,7 +123,6 @@ DatagridHeaderCell.propTypes = {
     labels: PropTypes.shape({
       a11ySortLabel: PropTypes.string.isRequired,
     }).isRequired,
-    onMouseEnterResizeHandle: PropTypes.func.isRequired,
     sortDirection: PropTypes.number,
     onSort: PropTypes.func,
     columnSorted: PropTypes.arrayOf(
@@ -162,7 +148,6 @@ DatagridHeaderCell.propTypes = {
   colIndex: PropTypes.number.isRequired,
   first: PropTypes.bool,
   last: PropTypes.bool,
-  width: PropTypes.number,
 };
 
 export default DatagridHeaderCell;

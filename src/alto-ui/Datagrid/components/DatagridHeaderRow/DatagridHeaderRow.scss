@@ -2,13 +2,10 @@
 
 .DatagridHeaderRow {
   display: flex;
-  flex: 1;
-  flex-basis: auto;
 }
 
 .DatagridHeaderRow__group {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
 .DatagridHeaderRow__group-title {
@@ -25,10 +22,9 @@
   color: $coolgrey-60;
   text-align: left;
   background-color: $white;
-  box-shadow: inset -1px 0 0 0 $coolgrey-20;
 
-  .DatagridHeaderRow__group--last & {
-    box-shadow: none;
+  .DatagridHeaderRow__group:not(:last-child) & {
+    box-shadow: inset -1px 0 0 0 $coolgrey-20;
   }
 
   &--empty {
@@ -38,27 +34,5 @@
 
 .DatagridHeaderRow__group-columns {
   display: flex;
-  flex: 1;
-  flex-basis: auto;
-}
-
-.DatagridHeaderRow__checkbox {
-  background-color: $white;
-  border-bottom: 1px solid $coolgrey-20;
-  display: flex;
-  align-items: center;
-  font-size: $font-size-small;
-  width: 3rem;
-  padding-left: $spacing-medium;
-  box-shadow: inset -1px 0 0 0 $coolgrey-20;
-
-  .DatagridHeaderRow__group--last & {
-    box-shadow: none;
-  }
-}
-
-.DatagridHeaderRow__last-cell {
-  border-left: 1px solid $coolgrey-20;
-  min-width: 8rem;
-  flex: 1;
+  height: calc(100% - 1.5rem);
 }

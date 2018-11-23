@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 import FocusTrap from 'focus-trap-react';
-import Portal from '../Portal';
 
 import './Overlay.scss';
 
@@ -19,9 +18,8 @@ class Overlay extends React.PureComponent {
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
+    this.setContentNode = this.setContentNode.bind(this);
     this.handleFocusOutside = this.handleFocusOutside.bind(this);
-
-    this.contentRef = React.createRef();
   }
 
   componentDidMount() {
@@ -49,20 +47,14 @@ class Overlay extends React.PureComponent {
   }
 
   componentWillUnmount() {
-    this.removeCloseEventListener();
-    clearTimeout(this.closingTimeout);
-    this.props.removeOverlay();
+    this.close();
   }
 
-  contains(node) {
-    const { include } = this.props;
-    if (this.contentRef.current && this.contentRef.current.contains(node)) return true;
-    if (include && include.current && include.current.contains(node)) return true;
-    return false;
+  setContentNode(contentNode) {
+    this.contentNode = contentNode;
   }
 
   open() {
-    this.props.pushOverlay();
     this.addCloseEventListener();
     if (this.props.openFocusTargetId) {
       focusId(this.props.openFocusTargetId);
@@ -70,7 +62,6 @@ class Overlay extends React.PureComponent {
   }
 
   close() {
-    this.props.removeOverlay();
     this.removeCloseEventListener();
     if (this.props.closeFocusTargetId) {
       focusId(this.props.closeFocusTargetId);
@@ -98,34 +89,29 @@ class Overlay extends React.PureComponent {
   }
 
   handleFocusOutside(e) {
-    if (this.contentNode && this.props.open && !this.contains(e.target)) {
-      this.dispatchClose();
+    if (this.contentNode && this.props.open && !this.contentNode.contains(e.target)) {
+      this.props.onClose();
     }
   }
 
   handleKeyDown(e) {
     if (e.key === 'Escape' || e.key === 'Esc') {
-      this.dispatchClose();
+      this.props.onClose();
     }
   }
 
   handleClickOutside(e) {
-    if (!this.contains(e.target)) {
-      this.dispatchClose();
+    if (this.contentNode && !this.contentNode.contains(e.target)) {
+      this.props.onClose();
     }
-  }
-
-  dispatchClose() {
-    clearTimeout(this.closingTimeout);
-    this.closingTimeout = setTimeout(this.props.onClose, 0);
   }
 
   render() {
     const { open, children, blocking, inert, className } = this.props;
     return (
-      <Portal display={open}>
+      <Fragment>
         {open && blocking && <div className={classnames('Overlay__overlay', className)} />}
-        <div ref={this.contentRef} aria-hidden={!open || inert} className="Overlay">
+        <div ref={this.setContentNode} aria-hidden={!open || inert} className="Overlay">
           {blocking ? (
             <FocusTrap
               active={open && !inert}
@@ -138,7 +124,7 @@ class Overlay extends React.PureComponent {
             children
           )}
         </div>
-      </Portal>
+      </Fragment>
     );
   }
 }
@@ -147,6 +133,7 @@ Overlay.displayName = 'Overlay';
 
 Overlay.defaultProps = {
   blocking: false,
+  inert: false,
 };
 
 Overlay.propTypes = {
@@ -157,10 +144,7 @@ Overlay.propTypes = {
   closeFocusTargetId: PropTypes.string,
   open: PropTypes.bool.isRequired,
   blocking: PropTypes.bool,
-  inert: PropTypes.bool.isRequired,
-  include: PropTypes.object,
-  pushOverlay: PropTypes.func.isRequired,
-  removeOverlay: PropTypes.func.isRequired,
+  inert: PropTypes.bool,
 };
 
 export default Overlay;

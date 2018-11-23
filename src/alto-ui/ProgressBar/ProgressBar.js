@@ -43,7 +43,13 @@ class ProgressBar extends React.Component {
     const tooltipElement = tooltip &&
       hasValue && (
         <div className="ProgressBar__tooltip" style={{ marginLeft: width }}>
-          <Tooltip content={tooltip(value, ratio)} show={this.state.hover} top {...tooltipProps} />
+          <Tooltip
+            content={tooltip(value, ratio)}
+            show={this.state.hover}
+            top
+            tiny
+            {...tooltipProps}
+          />
         </div>
       );
     const tooltipTop = !(tooltipProps && tooltipProps.top === false);

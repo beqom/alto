@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import centered from '@storybook/addon-centered';
 
 import Select from './Select';
-import StateProvider from '../../StateProvider';
 
 const SimpleWrapper = styled.div`
   text-align: center;
@@ -20,7 +19,7 @@ const SimpleWrapper = styled.div`
 
 SimpleWrapper.displayName = 'Story';
 
-const modifierNames = ['success', 'error', 'large', 'small', 'disabled', 'native'];
+const modifierNames = ['success', 'error', 'large', 'small', 'disabled'];
 
 const getModifiers = (...modifiersExcluded) =>
   modifierNames
@@ -57,7 +56,6 @@ storiesOf('Form/Select', module)
           id="customizable"
           helpText={text('helpText', 'Help text')}
           options={object('options', options)}
-          placeholder={text('placeholder', 'customizable')}
         />
       </SimpleWrapper>
     );
@@ -72,7 +70,7 @@ storiesOf('Form/Select', module)
           id="default"
           options={options}
           {...modifiers}
-          placeholder="default"
+          defaultValue="default"
           helpText="Default text"
         />
         <Select
@@ -81,7 +79,7 @@ storiesOf('Form/Select', module)
           options={options}
           {...modifiers}
           success
-          placeholder="success"
+          defaultValue="success"
           helpText="Success, you did it right"
         />
         <Select
@@ -90,7 +88,7 @@ storiesOf('Form/Select', module)
           options={options}
           {...modifiers}
           error
-          placeholder="error"
+          defaultValue="error"
           helpText="Oops, something is wrong"
         />
       </SimpleWrapper>
@@ -107,14 +105,14 @@ storiesOf('Form/Select', module)
           options={options}
           {...modifiers}
           small
-          placeholder="small"
+          defaultValue="small"
         />
         <Select
           label="Default"
           id="default"
           options={options}
           {...modifiers}
-          placeholder="default"
+          defaultValue="default"
         />
         <Select
           label="Large"
@@ -122,7 +120,7 @@ storiesOf('Form/Select', module)
           options={options}
           {...modifiers}
           large
-          placeholder="large"
+          defaultValue="large"
         />
       </SimpleWrapper>
     );
@@ -137,7 +135,7 @@ storiesOf('Form/Select', module)
           id="default"
           options={options}
           {...modifiers}
-          placeholder="default"
+          defaultValue="default"
         />
         <Select
           label="Disabled"
@@ -145,30 +143,8 @@ storiesOf('Form/Select', module)
           options={options}
           {...modifiers}
           disabled
-          placeholder="disabled"
+          defaultValue="disabled"
         />
       </SimpleWrapper>
-    );
-  })
-  .addWithJSX('multiple', () => {
-    const modifiers = getModifiers('disabled');
-
-    return (
-      <StateProvider state={{ value: ['First', 'Second'] }}>
-        {(state, setState) => (
-          <SimpleWrapper>
-            <Select
-              label="Default"
-              id="disabled"
-              options={options}
-              {...modifiers}
-              placeholder="default"
-              value={state.value}
-              onChange={modifiers.native ? () => undefined : value => setState({ value })}
-              multiple
-            />
-          </SimpleWrapper>
-        )}
-      </StateProvider>
     );
   });

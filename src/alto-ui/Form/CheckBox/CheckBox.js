@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
-import { bemClass } from '../../helpers/bem';
 
 import './CheckBox.scss';
 
 const CheckBox = props => {
-  const { label, className, hideLabel, style, ...inputProps } = props;
+  const { label, ...inputProps } = props;
   return (
-    <div className={classnames('CheckBox', className)} style={style}>
+    <div className="CheckBox">
       <input {...inputProps} className="CheckBox__input" type="checkbox" />
       <label
         htmlFor={props.id}
@@ -17,7 +15,7 @@ const CheckBox = props => {
         title={label}
         className="CheckBox__label"
       >
-        <div className={bemClass('CheckBox__label-text', { hidden: hideLabel })}>{props.label}</div>
+        <span className="CheckBox__label-wrapper">{props.label}</span>
       </label>
     </div>
   );
@@ -31,11 +29,8 @@ CheckBox.defaultProps = {
 CheckBox.propTypes = {
   label: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  style: PropTypes.object,
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
-  hideLabel: PropTypes.bool,
 };
 
 export default CheckBox;

@@ -1,5 +1,4 @@
 import React from 'react';
-import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
 import TreeItem from './components/TreeItem';
@@ -8,7 +7,7 @@ import { getKey } from './helpers';
 import './Tree.scss';
 
 const Tree = props => (
-  <ul id={props.id} className={classnames('Tree', props.className)}>
+  <ul id={props.id} className="Tree">
     {props.items.map((child, index) => (
       <TreeItem
         {...props}
@@ -38,7 +37,6 @@ Tree.propTypes = {
   ]).isRequired,
   keyField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   noCache: PropTypes.bool,
-  className: PropTypes.string,
 };
 
 export default Tree;
