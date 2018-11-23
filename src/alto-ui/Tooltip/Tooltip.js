@@ -7,6 +7,7 @@ import ExclamationTriangleIcon from '../Icons/ExclamationTriangle';
 import ExclamationCircleIcon from '../Icons/ExclamationCircle';
 import InfoCircleIcon from '../Icons/InfoCircle';
 import RelativeBox from '../RelativeBox';
+import Portal from '../Portal';
 
 import './Tooltip.scss';
 
@@ -78,43 +79,45 @@ class Tooltip extends React.Component {
     });
 
     return (
-      <RelativeBox
-        className={bemClass(
-          'Tooltip',
-          {
-            info,
-            success,
-            error,
-            warning,
-            narrow,
-            wide,
-            big,
-            visible,
-          },
-          className
-        )}
-        baseClassName="Tooltip"
-        bottom
-        middle
-        target={children ? this.wrapperRef.current : undefined}
-        watch={{ visible }}
-        margin={6.4}
-        {...relativeBoxProps}
-      >
-        {Icon && (
-          <Icon
-            left
-            baseline
-            className={bemClass('Tooltip__icon', {
+      <Portal>
+        <RelativeBox
+          className={bemClass(
+            'Tooltip',
+            {
               info,
               success,
               error,
               warning,
-            })}
-          />
-        )}
-        <div className="Tooltip__content">{content}</div>
-      </RelativeBox>
+              narrow,
+              wide,
+              big,
+              visible,
+            },
+            className
+          )}
+          baseClassName="Tooltip"
+          bottom
+          middle
+          target={children ? this.wrapperRef.current : undefined}
+          watch={{ visible }}
+          margin={6.4}
+          {...relativeBoxProps}
+        >
+          {Icon && (
+            <Icon
+              left
+              baseline
+              className={bemClass('Tooltip__icon', {
+                info,
+                success,
+                error,
+                warning,
+              })}
+            />
+          )}
+          <div className="Tooltip__content">{content}</div>
+        </RelativeBox>
+      </Portal>
     );
   }
 
