@@ -27,7 +27,7 @@ const FORMATTERS = {
       ? DateTime.fromJSDate(x)
           .setLocale(locale)
           .toFormat('dd LLL yyyy')
-      : x,
+      : '',
   float: x =>
     typeof x === 'number'
       ? x.toLocaleString(undefined, {
