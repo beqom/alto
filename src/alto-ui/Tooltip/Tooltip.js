@@ -78,6 +78,8 @@ class Tooltip extends React.Component {
       warning,
     });
 
+    if (!visible) return null;
+
     return (
       <Portal>
         <RelativeBox
@@ -99,7 +101,6 @@ class Tooltip extends React.Component {
           bottom
           middle
           target={children ? this.wrapperRef.current : undefined}
-          watch={{ visible }}
           margin={6.4}
           {...relativeBoxProps}
         >
