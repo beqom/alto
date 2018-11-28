@@ -109,7 +109,7 @@ class DatePicker extends React.Component {
           readOnly={this.props.readOnly}
           onFocus={this.handleFocus}
           onChange={() => {}}
-          value={this.formatTextfieldDate}
+          value={this.formatTextfieldDate()}
           id={`${id}__input`}
         />
         <Popover
