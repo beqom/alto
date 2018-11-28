@@ -82,6 +82,17 @@ class DatePicker extends React.Component {
     this.setState(({ month }) => ({ month: month.set(obj) }));
   }
 
+  formatTextfieldDate() {
+    const { open } = this.state;
+    const { format, displayFormat } = this.props;
+    const date = this.getDate();
+
+    if (!date) return '';
+    if (open) return date.toFormat(format);
+
+    return date.toFormat(displayFormat || format);
+  }
+
   render() {
     const { id } = this.props;
     const { open } = this.state;
@@ -98,7 +109,7 @@ class DatePicker extends React.Component {
           readOnly={this.props.readOnly}
           onFocus={this.handleFocus}
           onChange={() => {}}
-          value={date ? date.toFormat(this.props.format) : ''}
+          value={this.formatTextfieldDate}
           id={`${id}__input`}
         />
         <Popover
@@ -133,6 +144,7 @@ DatePicker.displayName = 'DatePicker';
 DatePicker.defaultProps = {
   inputProps: {},
   format: 'dd/MM/yyyy',
+  displayFormat: 'dd LLL yyyy',
 };
 
 DatePicker.propTypes = {
@@ -141,6 +153,7 @@ DatePicker.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
   format: PropTypes.string,
+  displayFormat: PropTypes.string,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.object,
