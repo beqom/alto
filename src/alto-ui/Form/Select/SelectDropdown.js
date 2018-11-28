@@ -84,10 +84,11 @@ class SelectDropdown extends React.Component {
 
   handleClick(item) {
     const { onChange } = this.props;
-    const { selected } = this.getProps();
-    const selection = selected.includes(item.value)
-      ? selected.filter(x => x !== item.value)
-      : [...selected, item.value];
+    const { selected, items } = this.getProps();
+    const selection = (selected.includes(item.key)
+      ? selected.filter(x => x !== item.key)
+      : [...selected, item.key]
+    ).map(key => items.find(x => x.key === key).value);
     if (this.props.multiple) {
       onChange(selection, item.value, item.option);
     } else {
@@ -102,7 +103,7 @@ class SelectDropdown extends React.Component {
     const flattenedItems = flattenItems(items);
     const selectedTitles = selected
       .map(key => flattenedItems.find(x => x.key === key))
-      .filter(x => !!x)
+      .filter(x => x !== undefined)
       .map(({ title }) => title)
       .join(', ');
 
@@ -159,9 +160,16 @@ SelectDropdown.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.oneOfType([
       PropTypes.string,
+      PropTypes.number,
+      PropTypes.bool,
       PropTypes.shape({
         title: PropTypes.string,
-        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+        value: PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.number,
+          PropTypes.bool,
+          PropTypes.array,
+        ]),
       }),
     ])
   ),
