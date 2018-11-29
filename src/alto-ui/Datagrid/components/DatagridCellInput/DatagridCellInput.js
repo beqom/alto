@@ -12,7 +12,6 @@ class DatagridCellInput extends React.Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeNumber = this.handleChangeNumber.bind(this);
     this.handleChangeFromOverlay = this.handleChangeFromOverlay.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
@@ -67,7 +66,6 @@ class DatagridCellInput extends React.Component {
       case 'float':
         return {
           ...sharedProps,
-          onChange: this.handleChangeNumber,
           locale: context.locale,
           precision: column.precision,
           disableThousandSeparator: column.disableThousandSeparator,
@@ -89,18 +87,13 @@ class DatagridCellInput extends React.Component {
     }
   }
 
-  handleChange(e) {
-    const { value } = e.target;
+  handleChange(value) {
     this.props.onChange(value);
   }
 
   handleChangeFromOverlay(value) {
     this.props.onChange(value);
     this.props.onStopEditing(value);
-  }
-
-  handleChangeNumber(e, value) {
-    this.props.onChange(value);
   }
 
   handleBlur() {

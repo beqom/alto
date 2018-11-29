@@ -26,29 +26,66 @@ const BOOLEAN_DEFAULT_PROPS = {
   options: [true, false],
 };
 
-const Input = React.forwardRef(({ type, ...props }, ref) => {
-  switch (type) {
-    case 'integer':
-    case 'number':
-    case 'float':
-      return <InputNumber ref={ref} {...props} />;
-    case 'date':
-    case 'datetime':
-      return <DatePicker ref={ref} {...props} />;
-    case 'list':
-    case 'dropdown':
-    case 'select':
-      return <Select ref={ref} {...props} />;
-    case 'boolean':
-      return <Select ref={ref} {...BOOLEAN_DEFAULT_PROPS} {...props} />;
-    case 'textarea':
-      return <TextArea ref={ref} {...props} />;
-    case 'string':
-    case 'text':
-    default:
-      return <TextField ref={ref} {...props} type={type} />;
+class Input extends React.Component {
+  constructor() {
+    super();
+
+    this.handleChange = this.handleChange.bind(this);
   }
-});
+
+  handleChange(...args) {
+    const { type, onChange } = this.props;
+    if (onChange) {
+      switch (type) {
+        case 'date':
+        case 'datetime':
+        case 'list':
+        case 'dropdown':
+        case 'select':
+        case 'boolean':
+          return onChange(args[0], ...args);
+        case 'integer':
+        case 'number':
+        case 'float':
+          return onChange(args[1], ...args);
+        default:
+          return onChange(args[0].target.value, ...args);
+      }
+    }
+    return null;
+  }
+
+  render() {
+    const { type, inputRef, ...props } = this.props;
+
+    const sharedProps = {
+      ref: inputRef,
+      onChange: this.handleChange,
+    };
+
+    switch (type) {
+      case 'integer':
+      case 'number':
+      case 'float':
+        return <InputNumber {...props} {...sharedProps} />;
+      case 'date':
+      case 'datetime':
+        return <DatePicker {...props} {...sharedProps} value={props.value || undefined} />;
+      case 'list':
+      case 'dropdown':
+      case 'select':
+        return <Select {...props} {...sharedProps} />;
+      case 'boolean':
+        return <Select {...BOOLEAN_DEFAULT_PROPS} {...props} {...sharedProps} />;
+      case 'textarea':
+        return <TextArea {...props} {...sharedProps} />;
+      case 'string':
+      case 'text':
+      default:
+        return <TextField {...props} type={type} {...sharedProps} />;
+    }
+  }
+}
 
 Input.displayName = 'Input';
 
@@ -56,6 +93,9 @@ Input.defaultProps = {};
 
 Input.propTypes = {
   type: PropTypes.string,
+  inputRef: PropTypes.object,
+  onChange: PropTypes.func,
+  value: PropTypes.any,
 };
 
-export default Input;
+export default React.forwardRef((props, ref) => <Input {...props} inputRef={ref} />);
