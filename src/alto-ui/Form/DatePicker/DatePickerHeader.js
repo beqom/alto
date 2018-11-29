@@ -19,21 +19,21 @@ class DatePickerHeader extends React.Component {
   constructor() {
     super();
 
-    this.handleClickPrevMounth = this.handleClickPrevMounth.bind(this);
-    this.handleClickNextMounth = this.handleClickNextMounth.bind(this);
+    this.handleClickPrevMonth = this.handleClickPrevMonth.bind(this);
+    this.handleClickNextMonth = this.handleClickNextMonth.bind(this);
     this.handleChangeMonth = this.handleChangeMonth.bind(this);
     this.handleChangeYear = this.handleChangeYear.bind(this);
     this.handleClickToday = this.handleClickToday.bind(this);
   }
 
-  handleClickPrevMounth() {
+  handleClickPrevMonth() {
     const { date } = this.props;
     const newDate =
       date.month === 1 ? { year: date.year - 1, month: 12 } : { month: date.month - 1 };
     this.props.onChange(newDate);
   }
 
-  handleClickNextMounth() {
+  handleClickNextMonth() {
     const { date } = this.props;
     const newDate =
       date.month === 12 ? { year: date.year + 1, month: 1 } : { month: date.month + 1 };
@@ -88,7 +88,7 @@ class DatePickerHeader extends React.Component {
             id={`${id}__button--previous-month`}
             flat
             small
-            onClick={this.handleClickPrevMounth}
+            onClick={this.handleClickPrevMonth}
           >
             <ChevronLeftIcon />
           </Button>
@@ -101,7 +101,7 @@ class DatePickerHeader extends React.Component {
           >
             Today
           </Button>
-          <Button id={`${id}__button--next-month`} flat small onClick={this.handleClickPrevMounth}>
+          <Button id={`${id}__button--next-month`} flat small onClick={this.handleClickNextMonth}>
             <ChevronRightIcon />
           </Button>
         </div>
