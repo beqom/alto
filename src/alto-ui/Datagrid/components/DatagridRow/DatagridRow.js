@@ -20,7 +20,7 @@ const DatagridRow = ({
   extraCell,
 }) => {
   const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
-  const clickable = false; // typeof onRowClick === 'function';
+  const clickable = typeof onRowClick === 'function';
   return (
     <div
       role="row"
