@@ -21,6 +21,11 @@ const getGroupColumnSummary = (column, rows, labels) => {
   return sum(rows.map(r => parseFloat(r[column.key] || 0)));
 };
 
+const getModifiers = context => ({
+  compact: context.compact,
+  comfortable: context.comfortable,
+});
+
 const DatagridGroupedRow = ({
   firstRowInGroup,
   collapsed,
@@ -37,13 +42,17 @@ const DatagridGroupedRow = ({
   const value = firstRowInGroup[groupedByColumnKey];
   const column = columns.find(col => col.key === groupedByColumnKey);
 
-  const row = columns.filter(col => groupedSummaryColumnKeys.includes(col.key)).reduce(
-    (acc, col) => ({
-      ...acc,
-      [col.key]: getGroupColumnSummary(col, subRows, labels),
-    }),
-    {}
-  );
+  const row = columns
+    .filter(col => groupedSummaryColumnKeys.includes(col.key))
+    .reduce(
+      (acc, col) => ({
+        ...acc,
+        [col.key]: getGroupColumnSummary(col, subRows, labels),
+      }),
+      {}
+    );
+
+  const modifiers = getModifiers(context);
 
   return (
     <DatagridRow
@@ -59,7 +68,7 @@ const DatagridGroupedRow = ({
             {column && (
               <button
                 id={id ? `${id}__${key}-grouped` : undefined}
-                className="DatagridGroupedRow__button"
+                className={bemClass('DatagridGroupedRow__button', modifiers)}
                 onClick={() => onToggle(value)}
                 style={{ width: column.width, maxWidth: column.width }}
               >

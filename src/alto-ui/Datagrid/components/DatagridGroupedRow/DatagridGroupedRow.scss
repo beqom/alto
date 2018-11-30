@@ -11,6 +11,14 @@
   background-color: $coolgrey-10;
   padding: $spacing-x-small 0.625rem;
   align-items: center;
+
+  &--compact {
+    height: 2.5rem;
+  }
+
+  &--comfortable {
+    height: 3.5rem;
+  }
 }
 
 .DatagridGroupedRow__toggle-icon {
