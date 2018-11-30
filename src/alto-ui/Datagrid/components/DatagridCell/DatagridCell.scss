@@ -82,6 +82,8 @@
   flex: 1;
   border-radius: $border-radius-default;
 
+  @extend %text-ellipsis;
+
   &--compact {
     height: $height-small;
     line-height: $height-small;
