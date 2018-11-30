@@ -309,6 +309,7 @@ class DatagridCell extends React.Component {
     const value = this.getValue();
     const type = getType(value, column);
     const modifiers = this.getModifiers();
+    const style = this.getStyle();
 
     const ContentComponent = editable ? 'button' : 'div';
 
@@ -319,6 +320,7 @@ class DatagridCell extends React.Component {
         disabled={disabled}
         className={bemClass('DatagridCell__content', modifiers)}
         onClick={editable ? this.handleClickEditButton : undefined}
+        style={style}
       >
         {this.renderValue()}
       </ContentComponent>
