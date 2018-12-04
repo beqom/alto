@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 
 import TreeItem from './TreeItem';
 
+const LABELS = {
+  loadMore: 'Load more nodes',
+};
+
 class TreeItemContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -11,12 +15,20 @@ class TreeItemContainer extends React.Component {
 
     this.state = {
       open,
+      // eslint-disable-next-line react/no-unused-state
+      page: 1,
       children: null,
       fetching: false,
     };
 
+    this.labels = {
+      ...LABELS,
+      ...props.labels,
+    };
+
     this.toggle = this.toggle.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleLoadMore = this.handleLoadMore.bind(this);
   }
 
   componentDidMount() {
@@ -59,6 +71,10 @@ class TreeItemContainer extends React.Component {
     this.props.onClick(this.props.item);
   }
 
+  handleLoadMore() {
+    this.setState(({ page }) => ({ page: page + 1 }));
+  }
+
   toggle() {
     const open = !this.state.open;
     this.setState(() => ({ open }));
@@ -75,6 +91,8 @@ class TreeItemContainer extends React.Component {
         handleToggle={this.toggle}
         handleClick={this.handleClick}
         isClickable={clickable(item) && (onClick || href)}
+        loadMore={this.handleLoadMore}
+        labels={this.labels}
       />
     );
   }
@@ -114,6 +132,7 @@ TreeItemContainer.propTypes = {
   ]),
   onToggle: PropTypes.func,
   clickable: PropTypes.func,
+  labels: PropTypes.object,
 };
 
 export default TreeItemContainer;

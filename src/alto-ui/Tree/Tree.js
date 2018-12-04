@@ -37,6 +37,10 @@ Tree.propTypes = {
   ]).isRequired,
   keyField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   noCache: PropTypes.bool,
+  // eslint-disable-next-line react/no-unused-prop-types
+  childrenPerPage: PropTypes.number,
+  // eslint-disable-next-line react/no-unused-prop-types
+  labels: PropTypes.object,
 };
 
 export default Tree;
