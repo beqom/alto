@@ -2,6 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
+import { number } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 import StateProvider from '../StateProvider';
@@ -13,6 +14,17 @@ import Tree from './Tree';
 import { items } from './data.json';
 
 const delay = (ms, cb) => new Promise(res => setTimeout(() => res(cb()), ms));
+
+const getChildren = (min, max) => item =>
+  item.last
+    ? null
+    : [...Array(Math.round(Math.random() * (max - min)) + min).keys()].map(i => ({
+        title: `${item.title}-${i + 1}`,
+        last: !!(Math.round(Math.random() + 1) % 2),
+      }));
+
+const getChildrenWithDelay = time => (min, max) => item =>
+  item.last ? null : delay(time, () => getChildren(min, max)(item));
 
 storiesOf('Tree', module)
   .addDecorator(story => (
@@ -42,16 +54,7 @@ storiesOf('Tree', module)
           selected={state.selected}
           keyField="title"
           hasChildren={item => !item.last}
-          getChildren={item =>
-            item.last
-              ? null
-              : delay(1000, () =>
-                  [...Array(Math.round(Math.random() * 2) + 1).keys()].map(i => ({
-                    title: `${item.title}-${i + 1}`,
-                    last: !!(Math.round(Math.random() + 1) % 2),
-                  }))
-                )
-          }
+          getChildren={getChildrenWithDelay(1000)(1, 3)}
           renderIcon={item => (!item.last ? ObjectsIcon : ImageIcon)}
           onToggle={action('onToggle')}
         />
@@ -65,5 +68,17 @@ storiesOf('Tree', module)
       selected="5aabf8b8965960c3349c4c80"
       renderIcon={item => (item.children.length ? ObjectsIcon : ImageIcon)}
       onToggle={action('onToggle')}
+    />
+  ))
+  .addWithJSX('Children limit', () => (
+    <Tree
+      items={[{ title: '1' }, { title: '2' }, { title: '3' }]}
+      hasChildren={item => !item.last}
+      keyField="title"
+      getChildren={getChildren(10, 100)}
+      onClick={action('onClick')}
+      onToggle={action('onToggle')}
+      renderIcon={item => (!item.last ? ObjectsIcon : ImageIcon)}
+      childrenPerPage={number('childrenPerPage', 5, { min: 0 })}
     />
   ));

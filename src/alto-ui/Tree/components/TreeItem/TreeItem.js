@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
 import ChevronRightIcon from '../../../Icons/ChevronRight';
+import Button from '../../../Button';
 import Spinner from '../../../Spinner';
 import Tree from '../../Tree';
 import { getKey } from '../../helpers';
@@ -10,13 +11,29 @@ import Link from '../../../Link';
 
 import './TreeItem.scss';
 
-const renderChildren = (open, children, props) => {
+const renderChildren = (open, children, itemProps) => {
   if (!open) return null;
   if (!children || !children.length) return null;
 
+  const { id, loadMore, labels, childrenPerPage } = itemProps;
+  const items = childrenPerPage
+    ? children.slice(0, itemProps.state.page * childrenPerPage)
+    : children;
+
   return (
     <div className={bemClass('TreeItem__subtree', { close: !open })}>
-      <Tree {...props} items={children} />
+      <Tree {...itemProps} items={items} />
+      {items.length < children.length && (
+        <Button
+          flat
+          small
+          id={id ? `${id}__load-more` : undefined}
+          onClick={loadMore}
+          className="TreeItem__button-load-more"
+        >
+          {labels.loadMore}
+        </Button>
+      )}
     </div>
   );
 };
