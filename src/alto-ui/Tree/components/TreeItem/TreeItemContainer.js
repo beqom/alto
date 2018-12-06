@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import TreeItem from './TreeItem';
 
 const LABELS = {
-  loadMore: 'Load more nodes',
+  loadMore: 'Load more',
 };
 
 class TreeItemContainer extends React.Component {

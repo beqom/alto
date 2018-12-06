@@ -26,6 +26,7 @@ Tree.displayName = 'Tree';
 Tree.defaultProps = {
   keyField: 'id',
   noCache: false,
+  childrenPerPage: 100,
 };
 
 Tree.propTypes = {

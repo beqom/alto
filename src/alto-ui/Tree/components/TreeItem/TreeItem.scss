@@ -79,7 +79,17 @@
 }
 
 .TreeItem__button-load-more {
-  margin: $spacing-x-small;
+  margin: $spacing-x-small $spacing-x-small 0;
+  font-size: $font-size-x-small;
+  font-weight: $font-weight-semibold;
+  color: $color-text-default;
   margin-left: 2rem;
   border-radius: 1em;
+
+  &:hover {
+    background-color: $coolgrey-20;
+  }
+  &:active {
+    color: $color-text-default;
+  }
 }
