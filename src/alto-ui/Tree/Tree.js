@@ -27,6 +27,7 @@ Tree.displayName = 'Tree';
 Tree.defaultProps = {
   keyField: 'id',
   noCache: false,
+  childrenPerPage: 100,
 };
 
 Tree.propTypes = {
@@ -39,6 +40,10 @@ Tree.propTypes = {
   keyField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   noCache: PropTypes.bool,
   className: PropTypes.string,
+  // eslint-disable-next-line react/no-unused-prop-types
+  childrenPerPage: PropTypes.number,
+  // eslint-disable-next-line react/no-unused-prop-types
+  labels: PropTypes.object,
 };
 
 export default Tree;
