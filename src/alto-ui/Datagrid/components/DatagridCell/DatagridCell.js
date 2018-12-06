@@ -10,31 +10,11 @@ import OptionsIcon from '../../../Icons/Options';
 import Tooltip from '../../../Tooltip';
 import DatagridCellInput from '../DatagridCellInput/DatagridCellInput';
 
-import { evaluateFormula } from '../../../helpers/formula';
+import { getFormattedValue, getValue, getFormatter, getType, IDENTITY } from '../../helpers';
+
 import { bemClass } from '../../../helpers/bem';
 
 import './DatagridCell.scss';
-
-const IDENTITY = x => x;
-
-const getValue = (value, column, row) =>
-  column.formula ? evaluateFormula(column.formula, row) : value;
-const getType = (value, column) => (value instanceof Error ? 'error' : column.type || typeof value);
-
-const getFormatter = (context, type) => (value, column, row) => {
-  const parser = context.parsers[type] || IDENTITY;
-  const formatter = column.formatter || context.formatters[type] || IDENTITY;
-  const args = [column, row, context];
-
-  return formatter(parser(value, ...args), ...args);
-};
-
-const getFormattedValue = context => (value, column, row) => {
-  const val = getValue(value, column, row);
-  const type = getType(val, column);
-  const format = getFormatter(context, type);
-  return format(value, column, row);
-};
 
 const diff = (a, b) => {
   const aEntries = Object.entries(a || {});
