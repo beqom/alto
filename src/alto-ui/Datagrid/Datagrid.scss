@@ -110,8 +110,8 @@
   display: flex;
   align-items: center;
   padding-left: $spacing-medium;
-  height: 3rem;
-  width: 3rem;
+  height: $height-datagrid-default;
+  width: $height-datagrid-default;
   border-bottom: 1px solid $coolgrey-20;
 
   &--header {
@@ -119,11 +119,11 @@
   }
 
   &--compact {
-    height: 2.5rem;
+    height: $height-datagrid-compact;
   }
 
   &--comfortable {
-    height: 3.5rem;
+    height: $height-datagrid-comfortable;
   }
 }
 

@@ -302,10 +302,14 @@ $line-height-button-large: 2.875rem !default;
 // ===================================
 // Height
 
-$height-small: 1.5rem;
-$height-default: 1.75rem;
-$height-large: 2rem;
-$input-padding: 0.625rem;
+$height-small: 1.5rem !default;
+$height-default: 1.75rem !default;
+$height-large: 2rem !default;
+$input-padding: 0.625rem !default;
+
+$height-datagrid-compact: 1.75rem !default; // 28px
+$height-datagrid-default: 2.5rem !default; // 40px
+$height-datagrid-comfortable: 3rem !default; // 48px
 
 // ===================================
 // Border Radius
