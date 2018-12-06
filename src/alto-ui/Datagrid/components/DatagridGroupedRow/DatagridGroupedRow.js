@@ -36,7 +36,14 @@ const DatagridGroupedRow = ({
   children,
   ...datagridRowProps
 }) => {
-  const { id, rowKeyField, groupedByColumnKey, groupedSummaryColumnKeys, labels } = context;
+  const {
+    id,
+    rowKeyField,
+    groupedByColumnKey,
+    groupedSummaryColumnKeys,
+    labels,
+    columnsWidth,
+  } = context;
 
   const key = rowKeyField(firstRowInGroup);
   const value = firstRowInGroup[groupedByColumnKey];
@@ -53,6 +60,8 @@ const DatagridGroupedRow = ({
     );
 
   const modifiers = getModifiers(context);
+  const width = columnsWidth[(column || {}).key] || (column || {}).width;
+  const style = { width, maxWidth: width };
 
   return (
     <DatagridRow
@@ -70,7 +79,7 @@ const DatagridGroupedRow = ({
                 id={id ? `${id}__${key}-grouped` : undefined}
                 className={bemClass('DatagridGroupedRow__button', modifiers)}
                 onClick={() => onToggle(value)}
-                style={{ width: column.width, maxWidth: column.width }}
+                style={style}
               >
                 <ChevronDownIcon
                   className={bemClass('DatagridGroupedRow__toggle-icon', { collapsed })}
