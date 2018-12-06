@@ -82,13 +82,10 @@
     height: $height-small;
     line-height: $height-small;
     font-size: $font-size-small;
-    .Avatar {
-      font-size: 1.5rem; //Nested because we need to add a class to this avatar on density change
-    }
   }
 
   .Avatar {
-    font-size: 1.5rem; //Nested because we need to add a class to this avatar on density change
+    font-size: 1.5rem;
   }
 
   &--comfortable {
