@@ -1,7 +1,7 @@
 @import '../../../scss/inc';
 
 .DatagridCell {
-  height: 3rem;
+  height: $height-datagrid-default;
   flex-shrink: 0;
   text-align: left;
   display: flex;
@@ -17,11 +17,11 @@
   }
 
   &--compact {
-    height: 2.5rem;
+    height: $height-datagrid-compact;
   }
 
   &--comfortable {
-    height: 3.5rem;
+    height: $height-datagrid-comfortable;
   }
 
   &--number,
@@ -45,6 +45,7 @@
   &--header {
     background-color: $coolgrey-10;
     font-weight: $font-weight-semibold;
+    padding: 0;
   }
 
   &--selected {
@@ -52,21 +53,13 @@
   }
 }
 
-.DatagridCell--editable {
-  padding-top: $spacing-x-small;
-  padding-bottom: $spacing-x-small;
-}
-
 .DatagridCell__container {
   width: 100%;
   display: flex;
   align-items: center;
   margin: auto;
-
-  .DatagridCell--editable & {
-    padding-left: $spacing-x-small;
-    padding-right: $spacing-x-small;
-  }
+  padding-left: $spacing-x-small;
+  padding-right: $spacing-x-small;
 }
 
 .DatagridCell__content {
@@ -77,6 +70,7 @@
   padding: 0 $input-padding;
   height: $height-default;
   line-height: $height-default;
+  font-size: $font-size-small;
   overflow: hidden;
   max-width: 100%;
   flex: 1;
@@ -90,10 +84,14 @@
     font-size: $font-size-small;
   }
 
+  .Avatar {
+    font-size: 1.5rem;
+  }
+
   &--comfortable {
     height: $height-large;
     line-height: $height-large;
-    font-size: $font-size-large;
+    font-size: $font-size-medium;
   }
 
   &--editing {
@@ -102,8 +100,6 @@
 
   &--image,
   &--avatar {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
     display: flex;
   }
 
