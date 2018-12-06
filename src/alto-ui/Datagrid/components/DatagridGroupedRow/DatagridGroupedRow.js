@@ -7,6 +7,8 @@ import { bemClass } from '../../../helpers/bem';
 import DatagridRow from '../DatagridRow';
 import ChevronDownIcon from '../../../Icons/ChevronDown';
 
+import { getFormattedValue } from '../../helpers';
+
 import './DatagridGroupedRow.scss';
 
 const sum = xs => xs.reduce((a, b) => a + b);
@@ -54,6 +56,8 @@ const DatagridGroupedRow = ({
 
   const modifiers = getModifiers(context);
 
+  const formatValue = getFormattedValue(context);
+
   return (
     <DatagridRow
       {...datagridRowProps}
@@ -75,7 +79,7 @@ const DatagridGroupedRow = ({
                 <ChevronDownIcon
                   className={bemClass('DatagridGroupedRow__toggle-icon', { collapsed })}
                 />
-                {value}
+                {formatValue(value, column, row)}
               </button>
             )}
             {cells}
