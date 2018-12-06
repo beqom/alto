@@ -1,26 +1,35 @@
 const decimalSeparatorByLocale = {
-  'en-US': '.',
-  en: '.',
+  it: ',',
+  'it-IT': ',',
+  pt: ',',
+  'pt-BR': ',',
   'fr-FR': ',.',
   fr: ',.',
+  es: ',',
+  'es-ES': ',',
+  tr: ',',
+  'tr-TR': ',',
 };
 
-const DEFAULT_DECIMAL_SEPARATOR = ',';
+const DEFAULT_DECIMAL_SEPARATOR = '.';
 
 export const round = (n, precision) => Math.round(n * 10 ** precision) / 10 ** precision;
 
 export const parse = (value, locale, precision = 0) => {
+  const parsedValue = parseFloat(value);
+
   const decimalSeparator = decimalSeparatorByLocale[locale] || DEFAULT_DECIMAL_SEPARATOR;
 
-  return round(
-    parseFloat(
-      `${value}`
-        .replace(new RegExp(`[^0-9${decimalSeparator}-]`, 'g'), '')
-        .replace(new RegExp(`[${decimalSeparator}]`, 'g'), '.')
-        .replace(/(.+)-/g, '$1')
-    ),
-    precision
-  );
+  const num =
+    `${parsedValue}` === `${value}`
+      ? parsedValue
+      : parseFloat(
+          `${value}`
+            .replace(new RegExp(`[^0-9${decimalSeparator}-]`, 'g'), '')
+            .replace(new RegExp(`[${decimalSeparator}]`, 'g'), '.')
+            .replace(/(.+)-/g, '$1')
+        );
+  return round(num, precision);
 };
 
 export const format = (value, locale, precision = 0, currency, disableThousandSeparator) => {

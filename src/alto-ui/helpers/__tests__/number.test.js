@@ -15,23 +15,6 @@ describe('InputNumber/helpers', () => {
     expect(round(secondValue, 3)).toBe(100.42);
   });
 
-  it('should parse correctly depending on value, locale and precision', () => {
-    const value = '100,55';
-    const en = 'en-US';
-    expect(parse('', en, 0)).toBe(NaN);
-    expect(parse(undefined, en, 0)).toBe(NaN);
-    expect(parse(value, en, 0)).toBe(10055);
-    expect(parse(value, en, 1)).toBe(10055);
-    expect(parse(value, en, 2)).toBe(10055);
-    expect(parse(value, en, 3)).toBe(10055);
-
-    const de = 'de-DE';
-    expect(parse(value, de, 0)).toBe(101);
-    expect(parse(value, de, 1)).toBe(100.6);
-    expect(parse(value, de, 2)).toBe(100.55);
-    expect(parse(value, de, 3)).toBe(100.55);
-  });
-
   it('should format correctly depending on value, locale and precision', () => {
     const en = 'en-US';
     expect(format('', en, 2)).toBe('');
@@ -45,5 +28,94 @@ describe('InputNumber/helpers', () => {
     expect(format('$5,000.25', en, 0)).toBe('5,000');
     expect(format('5000.76', en, 0)).toBe('5,001');
     expect(format('5 400 000', en, 0)).toBe('5,400,000');
+  });
+
+  describe('parse', () => {
+    const EN = 'en-US';
+    const DE = 'de-DE';
+    const IT = 'it-IT';
+    const FR = 'fr-FR';
+
+    it('should return NaN for non string and number', () => {
+      expect(parse()).toBe(NaN);
+      expect(parse('')).toBe(NaN);
+      expect(parse(null)).toBe(NaN);
+      expect(parse([])).toBe(NaN);
+    });
+
+    it('should parse correctly a number', () => {
+      const value = 1600.55;
+      expect(parse(value, EN)).toBe(1601);
+      expect(parse(value, EN, 1)).toBe(1600.6);
+
+      expect(parse(value, DE, 0)).toBe(1601);
+      expect(parse(value, DE, 1)).toBe(1600.6);
+
+      expect(parse(value, IT, 0)).toBe(1601);
+      expect(parse(value, IT, 1)).toBe(1600.6);
+
+      expect(parse(value, FR, 0)).toBe(1601);
+      expect(parse(value, FR, 1)).toBe(1600.6);
+    });
+
+    it('should parse correctly a stringified number', () => {
+      const value = '1600.55';
+      expect(parse(value, EN)).toBe(1601);
+      expect(parse(value, EN, 1)).toBe(1600.6);
+
+      expect(parse(value, DE, 0)).toBe(1601);
+      expect(parse(value, DE, 1)).toBe(1600.6);
+
+      expect(parse(value, IT, 0)).toBe(1601);
+      expect(parse(value, IT, 1)).toBe(1600.6);
+
+      expect(parse(value, FR, 0)).toBe(1601);
+      expect(parse(value, FR, 1)).toBe(1600.6);
+    });
+
+    it('should parse correctly a DE formatted number', () => {
+      const value = '$1,600.55';
+      expect(parse(value, EN)).toBe(1601);
+      expect(parse(value, EN, 1)).toBe(1600.6);
+
+      expect(parse(value, DE, 0)).toBe(1601);
+      expect(parse(value, DE, 1)).toBe(1600.6);
+
+      expect(parse(value, IT, 0)).toBe(2);
+      expect(parse(value, IT, 1)).toBe(1.6);
+
+      expect(parse(value, FR, 0)).toBe(2);
+      expect(parse(value, FR, 1)).toBe(1.6);
+    });
+
+    it('should parse correctly a IT formatted number', () => {
+      const value = '1.600,55';
+      expect(parse(value, EN)).toBe(2);
+      expect(parse(value, EN, 1)).toBe(1.6);
+
+      expect(parse(value, DE, 0)).toBe(2);
+      expect(parse(value, DE, 1)).toBe(1.6);
+
+      expect(parse(value, IT, 0)).toBe(1601);
+      expect(parse(value, IT, 1)).toBe(1600.6);
+
+      expect(parse(value, FR, 0)).toBe(2);
+      expect(parse(value, FR, 1)).toBe(1.6);
+    });
+
+    it('should parse correctly a FR formatted number', () => {
+      const value = '1 600,55';
+      expect(parse(value, EN)).toBe(160055);
+      expect(parse(value, EN, 1)).toBe(160055);
+
+      expect(parse(value, DE, 0)).toBe(160055);
+      expect(parse(value, DE, 1)).toBe(160055);
+
+      expect(parse(value, IT, 0)).toBe(1601);
+      expect(parse(value, IT, 1)).toBe(1600.6);
+
+      expect(parse(value, FR, 0)).toBe(1601);
+      expect(parse(value, FR, 1)).toBe(1600.6);
+    });
   });
 });
