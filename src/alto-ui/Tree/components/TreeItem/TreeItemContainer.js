@@ -90,7 +90,7 @@ class TreeItemContainer extends React.Component {
         state={this.state}
         handleToggle={this.toggle}
         handleClick={this.handleClick}
-        isClickable={clickable(item) && (onClick || href)}
+        isClickable={clickable(item) && !!(onClick || href)}
         loadMore={this.handleLoadMore}
         labels={this.labels}
       />
