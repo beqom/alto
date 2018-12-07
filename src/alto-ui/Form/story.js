@@ -63,6 +63,7 @@ require('./CheckBox/story');
 require('./ColorPicker/story');
 require('./DatePicker/story');
 require('./FileInput/story');
+require('./InputNumber/story');
 require('./Label/story');
 require('./Radio/story');
 require('./Select/story');
