@@ -1,10 +1,11 @@
 @import '../../../scss/inc';
 
 .DatagridGroupedRow__button {
-  height: 3rem;
+  height: $height-datagrid-default;
   overflow: hidden;
   flex-shrink: 0;
   text-align: left;
+  font-size: $font-size-small;
   border-bottom: 1px solid $coolgrey-20;
   font-weight: $font-weight-semibold;
   display: flex;
@@ -13,11 +14,11 @@
   align-items: center;
 
   &--compact {
-    height: 2.5rem;
+    height: $height-datagrid-compact;
   }
 
   &--comfortable {
-    height: 3.5rem;
+    height: $height-datagrid-comfortable;
   }
 }
 
