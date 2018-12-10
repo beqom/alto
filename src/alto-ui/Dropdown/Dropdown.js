@@ -79,6 +79,7 @@ class Dropdown extends React.Component {
       large,
       className,
       icon: Icon,
+      active,
     } = this.props;
     const { open } = this.state;
     if (typeof renderTrigger === 'function') {
@@ -95,7 +96,7 @@ class Dropdown extends React.Component {
         large={large}
         flat
         onClick={this.toggle}
-        active={this.state.open}
+        active={this.state.open || active}
         className={bemClass('Dropdown__trigger', {}, className ? `${className}-trigger` : '')}
       >
         {Icon && <Icon />}
@@ -179,6 +180,7 @@ class Dropdown extends React.Component {
       large,
       triggerRef,
       icon,
+      active,
       ...popoverProps
     } = this.props;
 
@@ -238,6 +240,7 @@ Dropdown.propTypes = {
   large: PropTypes.bool,
   triggerRef: PropTypes.object,
   icon: PropTypes.func,
+  active: PropTypes.bool,
 };
 
 export default Dropdown;
