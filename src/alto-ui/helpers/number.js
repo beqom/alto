@@ -3,12 +3,14 @@ const decimalSeparatorByLocale = {
   'it-IT': ',',
   pt: ',',
   'pt-BR': ',',
-  'fr-FR': ',.',
   fr: ',.',
+  'fr-FR': ',.',
   es: ',',
   'es-ES': ',',
   tr: ',',
   'tr-TR': ',',
+  de: ',',
+  'de-DE': ',',
 };
 
 const DEFAULT_DECIMAL_SEPARATOR = '.';

@@ -28,7 +28,8 @@ class InputNumber extends React.Component {
       state.prev.value !== value ||
       state.prev.precision !== precision ||
       state.prev.locale !== locale ||
-      state.prev.currency !== currency
+      state.prev.currency !== currency ||
+      state.prev.disableThousandSeparator !== disableThousandSeparator
     ) {
       return {
         prev: props,
