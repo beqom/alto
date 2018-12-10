@@ -33,7 +33,6 @@ describe('InputNumber/helpers', () => {
   describe('parse', () => {
     const EN = 'en-US';
     const DE = 'de-DE';
-    const IT = 'it-IT';
     const FR = 'fr-FR';
 
     it('should return NaN for non string and number', () => {
@@ -51,9 +50,6 @@ describe('InputNumber/helpers', () => {
       expect(parse(value, DE, 0)).toBe(1601);
       expect(parse(value, DE, 1)).toBe(1600.6);
 
-      expect(parse(value, IT, 0)).toBe(1601);
-      expect(parse(value, IT, 1)).toBe(1600.6);
-
       expect(parse(value, FR, 0)).toBe(1601);
       expect(parse(value, FR, 1)).toBe(1600.6);
     });
@@ -66,38 +62,29 @@ describe('InputNumber/helpers', () => {
       expect(parse(value, DE, 0)).toBe(1601);
       expect(parse(value, DE, 1)).toBe(1600.6);
 
-      expect(parse(value, IT, 0)).toBe(1601);
-      expect(parse(value, IT, 1)).toBe(1600.6);
-
       expect(parse(value, FR, 0)).toBe(1601);
       expect(parse(value, FR, 1)).toBe(1600.6);
     });
 
-    it('should parse correctly a DE formatted number', () => {
+    it('should parse correctly a EN formatted number', () => {
       const value = '$1,600.55';
       expect(parse(value, EN)).toBe(1601);
       expect(parse(value, EN, 1)).toBe(1600.6);
 
-      expect(parse(value, DE, 0)).toBe(1601);
-      expect(parse(value, DE, 1)).toBe(1600.6);
-
-      expect(parse(value, IT, 0)).toBe(2);
-      expect(parse(value, IT, 1)).toBe(1.6);
+      expect(parse(value, DE, 0)).toBe(2);
+      expect(parse(value, DE, 1)).toBe(1.6);
 
       expect(parse(value, FR, 0)).toBe(2);
       expect(parse(value, FR, 1)).toBe(1.6);
     });
 
-    it('should parse correctly a IT formatted number', () => {
+    it('should parse correctly a DE formatted number', () => {
       const value = '1.600,55';
       expect(parse(value, EN)).toBe(2);
       expect(parse(value, EN, 1)).toBe(1.6);
 
-      expect(parse(value, DE, 0)).toBe(2);
-      expect(parse(value, DE, 1)).toBe(1.6);
-
-      expect(parse(value, IT, 0)).toBe(1601);
-      expect(parse(value, IT, 1)).toBe(1600.6);
+      expect(parse(value, DE, 0)).toBe(1601);
+      expect(parse(value, DE, 1)).toBe(1600.6);
 
       expect(parse(value, FR, 0)).toBe(2);
       expect(parse(value, FR, 1)).toBe(1.6);
@@ -108,11 +95,8 @@ describe('InputNumber/helpers', () => {
       expect(parse(value, EN)).toBe(160055);
       expect(parse(value, EN, 1)).toBe(160055);
 
-      expect(parse(value, DE, 0)).toBe(160055);
-      expect(parse(value, DE, 1)).toBe(160055);
-
-      expect(parse(value, IT, 0)).toBe(1601);
-      expect(parse(value, IT, 1)).toBe(1600.6);
+      expect(parse(value, DE, 0)).toBe(1601);
+      expect(parse(value, DE, 1)).toBe(1600.6);
 
       expect(parse(value, FR, 0)).toBe(1601);
       expect(parse(value, FR, 1)).toBe(1600.6);
