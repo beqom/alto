@@ -10,23 +10,46 @@
   font-weight: $font-weight-semibold;
   display: flex;
   background-color: $coolgrey-10;
-  padding: $spacing-x-small 0.625rem;
   align-items: center;
-
-  &--compact {
-    height: $height-datagrid-compact;
-  }
+  cursor: pointer;
 
   &--comfortable {
     height: $height-datagrid-comfortable;
   }
 }
 
+.DatagridGroupedRow__toggle-wrapper {
+  display: flex;
+  width: 40px;
+  flex-shrink: 0;
+}
+
 .DatagridGroupedRow__toggle-icon {
-  margin-right: $spacing-small;
   transition: all $transition;
+  margin: auto;
 }
 
 .DatagridGroupedRow__toggle-icon--collapsed {
   transform: rotate(-90deg);
+}
+
+.DatagridGroupedRow__toggle-content {
+  flex: 1;
+  min-width: 0;
+  margin-right: $spacing-x-small;
+}
+
+.DatagridGroupedRow__toggle-name {
+  @extend %text-ellipsis;
+  font-size: $font-size-x-small;
+  color: $color-text-muted;
+  margin-bottom: $spacing-xx-small;
+  font-weight: $font-weight-regular;
+  text-transform: uppercase;
+}
+
+.DatagridGroupedRow__toggle-value {
+  @extend %text-ellipsis;
+
+  font-size: $font-size-medium;
 }

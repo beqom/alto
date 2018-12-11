@@ -118,7 +118,7 @@
     background-color: $coolgrey-10;
   }
 
-  &--compact {
+  &--compact:not(.DataGrid__row-checkbox--header) {
     height: $height-datagrid-compact;
   }
 

@@ -319,13 +319,12 @@ class DatagridCell extends React.Component {
   }
 
   render() {
-    const { aria, render } = this.props;
+    const { aria } = this.props;
     const style = this.getStyle();
     const modifiers = this.getModifiers();
 
     return (
       <div
-        title={render || modifiers.error ? undefined : `${this.getFormattedValue()}`}
         className={bemClass('DatagridCell', modifiers)}
         ref={this.cellRef}
         style={style}

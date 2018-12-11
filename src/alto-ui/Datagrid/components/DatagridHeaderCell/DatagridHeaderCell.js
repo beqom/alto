@@ -35,11 +35,7 @@ class DatagridHeaderCell extends React.Component {
 
     if (!context.onSort) {
       return (
-        <div
-          className={bemClass('DatagridHeaderCell__content', { wrapped })}
-          title={column.title}
-          style={style}
-        >
+        <div className={bemClass('DatagridHeaderCell__content', { wrapped })} style={style}>
           <span className={bemClass('DatagridHeaderCell__title', { wrapped })} style={titleStyle}>
             {column.title}
           </span>
