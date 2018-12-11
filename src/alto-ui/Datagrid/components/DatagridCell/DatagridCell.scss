@@ -16,7 +16,7 @@
     }
   }
 
-  &--compact {
+  &--compact:not(.DatagridCell--header) {
     height: $height-datagrid-compact;
   }
 
@@ -78,7 +78,7 @@
 
   @extend %text-ellipsis;
 
-  &--compact {
+  &--compact:not(.DatagridCell__content--header) {
     height: $height-small;
     line-height: $height-small;
     font-size: $font-size-small;
