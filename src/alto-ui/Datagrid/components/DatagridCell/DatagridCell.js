@@ -234,13 +234,14 @@ class DatagridCell extends React.Component {
 
   renderValue() {
     const { render, column, row, context } = this.props;
+    const value = this.getValue();
+    const type = getType(value, column);
+
     if (render) {
-      const formatter = column.formatter || IDENTITY;
+      const formatter = getFormatter(context, type);
       const format = x => formatter(x, column, row, context);
       return render(column, row, format);
     }
-    const value = this.getValue();
-    const type = getType(value, column);
     const renderer = context.renderers[type] || IDENTITY;
     if (type === 'error') {
       return renderer(value, column, row, context);
