@@ -41,15 +41,23 @@
 
 .DatagridGroupedRow__toggle-name {
   @extend %text-ellipsis;
-  font-size: $font-size-x-small;
+  font-size: 0.6875rem;
+  line-height: 1.25;
   color: $color-text-muted;
-  margin-bottom: $spacing-xx-small;
   font-weight: $font-weight-regular;
   text-transform: uppercase;
+
+  .DatagridGroupedRow__button--comfortable & {
+    font-size: $font-size-x-small;
+  }
 }
 
 .DatagridGroupedRow__toggle-value {
   @extend %text-ellipsis;
+  font-size: $font-size-small;
+  line-height: 1.25;
 
-  font-size: $font-size-medium;
+  .DatagridGroupedRow__button--comfortable & {
+    font-size: $font-size-medium;
+  }
 }
