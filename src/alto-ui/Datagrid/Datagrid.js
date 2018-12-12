@@ -226,6 +226,11 @@ class Datagrid extends React.PureComponent {
   }
 
   handleStopResize(deltaX) {
+    const { onChangeWidth } = this.props;
+    if (typeof onChangeWidth === 'function') {
+      const value = this.state.resizer.parent.width + deltaX;
+      onChangeWidth(value, this.state.resizer.column);
+    }
     this.setState(({ columnsWidth, resizer }) => ({
       resizer: initialStateResizer,
       columnsWidth: { ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX },
@@ -523,6 +528,7 @@ Datagrid.propTypes = {
   wrapHeader: PropTypes.bool,
   compact: PropTypes.bool,
   comfortable: PropTypes.bool,
+  onChangeWidth: PropTypes.func,
   // --- implicit props => context ---
   // eslint-disable-next-line react/no-unused-prop-types
   locale: PropTypes.string,
