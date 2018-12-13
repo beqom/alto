@@ -265,9 +265,13 @@ class DatagridCell extends React.Component {
 
     if (['list', 'boolean'].includes(type)) {
       if (!editable || disabled) {
-        const itemSelected = (inputProps.items || []).find(item => item.key === parsedValue);
+        const itemSelected = (inputProps.options || []).find(
+          option => option.value === parsedValue
+        );
         return (
-          <div className="DatagridCell__content">{itemSelected ? itemSelected.title : ''}</div>
+          <div className={bemClass('DatagridCell__content', this.getModifiers())}>
+            {itemSelected ? itemSelected.title : inputProps.placeholder || ''}
+          </div>
         );
       }
     }
