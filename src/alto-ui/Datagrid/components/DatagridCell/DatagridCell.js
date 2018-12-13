@@ -205,7 +205,11 @@ class DatagridCell extends React.Component {
         onClick={item =>
           context.onClickCellDropdownItem(item, this.getValue(), this.props.row, this.props.column)
         }
-        renderTrigger={onClick => <OptionsIcon onClick={onClick} />}
+        renderTrigger={(onClick, open, ref) => (
+          <span ref={ref}>
+            <OptionsIcon onClick={onClick} />
+          </span>
+        )}
       />
     );
   }
@@ -261,9 +265,13 @@ class DatagridCell extends React.Component {
 
     if (['list', 'boolean'].includes(type)) {
       if (!editable || disabled) {
-        const itemSelected = (inputProps.items || []).find(item => item.key === parsedValue);
+        const itemSelected = (inputProps.options || []).find(
+          option => option.value === parsedValue
+        );
         return (
-          <div className="DatagridCell__content">{itemSelected ? itemSelected.title : ''}</div>
+          <div className={bemClass('DatagridCell__content', this.getModifiers())}>
+            {itemSelected ? itemSelected.title : inputProps.placeholder || ''}
+          </div>
         );
       }
     }

@@ -81,4 +81,19 @@ storiesOf('Tree', module)
       renderIcon={item => (!item.last ? ObjectsIcon : ImageIcon)}
       childrenPerPage={number('childrenPerPage', 5, { min: 0 })}
     />
-  ));
+  ))
+  .addWithJSX('Stress test', () => {
+    const childrenNumber = number('children nodes number', 10000);
+    return (
+      <Tree
+        items={[{ title: '1' }, { title: '2' }, { title: '3' }]}
+        hasChildren={item => !item.last}
+        keyField="title"
+        getChildren={getChildren(childrenNumber, childrenNumber)}
+        onClick={action('onClick')}
+        onToggle={action('onToggle')}
+        renderIcon={item => (!item.last ? ObjectsIcon : ImageIcon)}
+        childrenPerPage={number('childrenPerPage', 1000, { min: 0 })}
+      />
+    );
+  });
