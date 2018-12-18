@@ -33,7 +33,7 @@ class DatagridHeaderCell extends React.Component {
       ...(wrapped && wrapped !== true ? { maxHeight: `${wrapped * 1.2}em` } : {}),
     };
 
-    if (!context.onSort) {
+    if (!context.onSort || column.sortable === false) {
       return (
         <div className={bemClass('DatagridHeaderCell__content', { wrapped })} style={style}>
           <span className={bemClass('DatagridHeaderCell__title', { wrapped })} style={titleStyle}>
@@ -99,7 +99,7 @@ class DatagridHeaderCell extends React.Component {
       <div
         key={column.key}
         className={bemClass('DatagridHeaderCell', {
-          sortable: !!context.onSort,
+          sortable: !!context.onSort && column.sortable !== false,
           sorted,
           filtered: column.filtered,
           first,
