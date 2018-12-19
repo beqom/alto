@@ -159,13 +159,35 @@ storiesOf('Form/Select', module)
           <SimpleWrapper>
             <Select
               label="Default"
-              id="disabled"
+              id="multiple"
               options={options}
               {...modifiers}
               placeholder="default"
               value={state.value}
               onChange={modifiers.native ? () => undefined : value => setState({ value })}
               multiple
+            />
+          </SimpleWrapper>
+        )}
+      </StateProvider>
+    );
+  })
+  .addWithJSX('clearable', () => {
+    const modifiers = getModifiers('disabled');
+
+    return (
+      <StateProvider state={{ value: 'First' }}>
+        {(state, setState) => (
+          <SimpleWrapper>
+            <Select
+              label="Can be clear"
+              id="clerable"
+              options={options}
+              {...modifiers}
+              placeholder="default"
+              value={state.value}
+              onChange={modifiers.native ? () => undefined : value => setState({ value })}
+              clearable
             />
           </SimpleWrapper>
         )}
