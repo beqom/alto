@@ -101,7 +101,7 @@ class Datagrid extends React.PureComponent {
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
     this.handleStopResize = this.handleStopResize.bind(this);
     this.handleStartResize = this.handleStartResize.bind(this);
-    this.trackDimensions = this.trackDimensions.bind(this);
+    this.trackDimensions = debounce(this.trackDimensions.bind(this), WINDOW_RESIZE_DEBOUNCE);
 
     this.containerRef = React.createRef();
   }
@@ -117,10 +117,10 @@ class Datagrid extends React.PureComponent {
         this.staticRowsNode.scrollLeft = 0;
         this.staticRowsNode.scrollTop = 0;
         this.trackDimensions();
-        this.handleWindowResize();
       }
       this.setState({ loaded: true });
     }, 0);
+    this.handleWindowResize();
   }
 
   componentDidUpdate() {
@@ -180,7 +180,7 @@ class Datagrid extends React.PureComponent {
   }
 
   handleWindowResize() {
-    window.addEventListener('resize', debounce(this.trackDimensions, WINDOW_RESIZE_DEBOUNCE));
+    window.addEventListener('resize', this.trackDimensions);
   }
 
   handleToggleGroup(groupId) {
