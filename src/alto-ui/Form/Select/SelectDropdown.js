@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import ChevronDown from '../../Icons/ChevronDown';
+import CloseIcon from '../../Icons/Close';
 import Dropdown from '../../Dropdown';
 import { bemClass } from '../../helpers/bem';
 
@@ -43,6 +44,7 @@ class SelectDropdown extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.renderTrigger = this.renderTrigger.bind(this);
+    this.handleClear = this.handleClear.bind(this);
 
     this.triggerRef = React.createRef();
   }
@@ -64,6 +66,7 @@ class SelectDropdown extends React.Component {
       defaultValue,
       multiple,
       disabled,
+      clearable,
       ...props
     } = this.props;
     const items = getItemsFromOptions(options);
@@ -82,13 +85,23 @@ class SelectDropdown extends React.Component {
     };
   }
 
+  handleClear() {
+    const { onChange } = this.props;
+    if (this.props.multiple) {
+      onChange([], '', {});
+    } else {
+      onChange('', {}, []);
+    }
+  }
+
   handleClick(item) {
     const { onChange } = this.props;
     const { selected, items } = this.getProps();
+    const flattenedItems = flattenItems(items);
     const selection = (selected.includes(item.key)
       ? selected.filter(x => x !== item.key)
       : [...selected, item.key]
-    ).map(key => items.find(x => x.key === key).value);
+    ).map(key => flattenedItems.find(x => x.key === key).value);
     if (this.props.multiple) {
       onChange(selection, item.value, item.option);
     } else {
@@ -99,7 +112,7 @@ class SelectDropdown extends React.Component {
   renderTrigger(onClick, open) {
     const { defaultLabel, selected, items } = this.getProps();
 
-    const { success, error, large, small, readonly, selectRef, disabled } = this.props;
+    const { success, error, large, small, readonly, selectRef, disabled, clearable } = this.props;
     const flattenedItems = flattenItems(items);
     const selectedTitles = selected
       .map(key => flattenedItems.find(x => x.key === key))
@@ -108,12 +121,9 @@ class SelectDropdown extends React.Component {
       .join(', ');
 
     return (
-      <button
+      <div
         id={this.props.id}
-        aria-labelledby={`${this.props.id}__label`}
         ref={selectRef || this.triggerRef}
-        onClick={onClick}
-        disabled={disabled}
         className={bemClass('Select', {
           dropdown: true,
           open,
@@ -125,9 +135,31 @@ class SelectDropdown extends React.Component {
           disabled,
         })}
       >
-        <span className="Select--dropdown__label">{selectedTitles || defaultLabel}</span>
-        <ChevronDown right />
-      </button>
+        <button
+          className="Select--dropdown__button Select--dropdown__button--label"
+          aria-labelledby={`${this.props.id}__label`}
+          onClick={onClick}
+          disabled={disabled}
+        >
+          {selectedTitles || defaultLabel}
+        </button>
+        {clearable && !!selectedTitles && (
+          <button
+            disabled={disabled}
+            onClick={this.handleClear}
+            className="Select--dropdown__button Select--dropdown__button--clear"
+          >
+            <CloseIcon />
+          </button>
+        )}
+        <button
+          onClick={onClick}
+          disabled={disabled}
+          className="Select--dropdown__button Select--dropdown__button--chevron"
+        >
+          <ChevronDown />
+        </button>
+      </div>
     );
   }
 
@@ -182,6 +214,7 @@ SelectDropdown.propTypes = {
   defaultValue: PropTypes.string,
   multiple: PropTypes.bool,
   disabled: PropTypes.bool,
+  clearable: PropTypes.bool,
 };
 
 export default SelectDropdown;

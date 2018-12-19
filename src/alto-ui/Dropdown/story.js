@@ -3,6 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
 import { boolean, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
 
 import StateProvider from '../StateProvider';
 import Dropdown from './Dropdown';
@@ -49,6 +50,13 @@ const items = [
   },
 ];
 
+const langages = [
+  { key: 'js', title: 'javascript' },
+  { key: 'rb', title: 'ruby' },
+  { key: 'py', title: 'python' },
+  { key: 'hs', title: 'haskell' },
+];
+
 storiesOf('Dropdown', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
@@ -66,16 +74,28 @@ storiesOf('Dropdown', module)
     <StateProvider state={{ selected: [] }}>
       {(state, setState) => (
         <Dropdown
-          id="favourite-language"
-          items={[
-            { key: 'js', title: 'javascript' },
-            { key: 'rb', title: 'ruby' },
-            { key: 'py', title: 'python' },
-            { key: 'hs', title: 'haskell' },
-          ]}
+          id="known-language"
+          items={langages}
           onSelect={selected => setState({ selected })}
           selected={state.selected}
-          label="Favourite language"
+          label="Known langages"
+        />
+      )}
+    </StateProvider>
+  ))
+  .addWithJSX('Clear value', () => (
+    <StateProvider state={{ selected: null }}>
+      {(state, setState) => (
+        <Dropdown
+          id="dropdown-clear"
+          items={langages}
+          onClick={item => setState({ selected: item.key })}
+          selected={state.selected}
+          defaultLabel="Favourite language"
+          onClear={(...args) => {
+            setState({ selected: null });
+            action('onClear', ...args);
+          }}
         />
       )}
     </StateProvider>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
 import ChevronDown from '../Icons/ChevronDown';
+import CloseIcon from '../Icons/Close';
 import Button from '../Button';
 import Spinner from '../Spinner';
 import { bemClass } from '../helpers/bem';
@@ -78,8 +79,10 @@ class Dropdown extends React.Component {
       small,
       large,
       className,
+      selected,
       icon: Icon,
       active,
+      onClear,
     } = this.props;
     const { open } = this.state;
     if (typeof renderTrigger === 'function') {
@@ -89,22 +92,41 @@ class Dropdown extends React.Component {
     const text =
       label || ((items || []).find(({ key }) => this.isSelected(key)) || {}).title || defaultLabel;
 
+    const selectedKeys = Array.isArray(selected) ? selected : [selected];
+    const hasValue = (items || []).some(({ key }) => selectedKeys.includes(key));
+    const clearable = hasValue && onClear;
+
     return (
       <Button
         ref={this.getTriggerRef()}
         small={small}
         large={large}
         flat
-        onClick={this.toggle}
+        tag="div"
         active={this.state.open || active}
         className={bemClass('Dropdown__trigger', {}, className ? `${className}-trigger` : '')}
       >
-        {Icon && <Icon />}
-        <span className="Dropdown__trigger-content">{text}</span>
-        {(loading && !loadingItems) || (loadingItems && !open) ? (
-          <Spinner className="Dropdown__trigger-spinner" small />
-        ) : (
-          !Icon && <ChevronDown right />
+        <button className="Dropdown__button-trigger" onClick={this.toggle}>
+          {Icon && <Icon left={!!text} />}
+          <span className="Dropdown__trigger-content">{text}</span>
+          {(loading && !loadingItems) || (loadingItems && !open) ? (
+            <Spinner className="Dropdown__trigger-spinner" small />
+          ) : (
+            !!text &&
+            !clearable && (
+              <div className="Dropdown__icon-trigger">
+                <ChevronDown />
+              </div>
+            )
+          )}
+        </button>
+        {!!text && clearable && (
+          <button
+            className="Dropdown__icon-trigger Dropdown__icon-trigger--button"
+            onClick={onClear}
+          >
+            <CloseIcon />
+          </button>
         )}
       </Button>
     );
@@ -181,6 +203,7 @@ class Dropdown extends React.Component {
       triggerRef,
       icon,
       active,
+      onClear,
       ...popoverProps
     } = this.props;
 
@@ -241,6 +264,7 @@ Dropdown.propTypes = {
   triggerRef: PropTypes.object,
   icon: PropTypes.func,
   active: PropTypes.bool,
+  onClear: PropTypes.func,
 };
 
 export default Dropdown;

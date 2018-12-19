@@ -54,3 +54,22 @@
   padding: $spacing-x-small $spacing-small;
   color: $color-text-muted;
 }
+
+.Dropdown__button-trigger {
+  @extend %reset-button;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.Dropdown__icon-trigger {
+  margin-left: $spacing-x-small;
+  padding: $spacing-x-small;
+  line-height: 0;
+}
+
+.Dropdown__icon-trigger--button {
+  @extend %reset-button;
+  cursor: pointer;
+  color: currentColor;
+}
