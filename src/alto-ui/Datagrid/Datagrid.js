@@ -1,3 +1,4 @@
+import debounce from 'lodash.debounce';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
@@ -18,6 +19,7 @@ import DatagridResizer from './components/DatagridResizer';
 import './Datagrid.scss';
 
 const CHECKBOX_WIDTH = 40;
+const WINDOW_RESIZE_DEBOUNCE = 100;
 
 const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
@@ -99,6 +101,7 @@ class Datagrid extends React.PureComponent {
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
     this.handleStopResize = this.handleStopResize.bind(this);
     this.handleStartResize = this.handleStartResize.bind(this);
+    this.trackDimensions = this.trackDimensions.bind(this);
 
     this.containerRef = React.createRef();
   }
@@ -114,6 +117,7 @@ class Datagrid extends React.PureComponent {
         this.staticRowsNode.scrollLeft = 0;
         this.staticRowsNode.scrollTop = 0;
         this.trackDimensions();
+        this.handleWindowResize();
       }
       this.setState({ loaded: true });
     }, 0);
@@ -121,6 +125,10 @@ class Datagrid extends React.PureComponent {
 
   componentDidUpdate() {
     this.trackDimensions();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.trackDimensions);
   }
 
   getContext() {
@@ -170,6 +178,11 @@ class Datagrid extends React.PureComponent {
       }
     }
   }
+
+  handleWindowResize() {
+    window.addEventListener('resize', debounce(this.trackDimensions, WINDOW_RESIZE_DEBOUNCE));
+  }
+
   handleToggleGroup(groupId) {
     const stateGroupId = this.state.collapsedGroups[groupId];
     const collapsedGroups = {

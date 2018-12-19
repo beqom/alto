@@ -11,6 +11,7 @@ module.exports = {
       "exports": 'always-multiline',
       "functions": "ignore",
     }],
+    "linebreak-style": 0,
     "import/prefer-default-export": 0,
     "react/forbid-prop-types": 0,
     "react/no-danger": 0,
