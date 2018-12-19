@@ -3,6 +3,7 @@
 .DatagridCell {
   height: $height-datagrid-default;
   flex-shrink: 0;
+  min-width: 2rem;
   text-align: left;
   display: flex;
   border-bottom: 1px solid $coolgrey-20;
@@ -36,7 +37,9 @@
   &--error {
     text-align: center;
   }
-
+  &--editable {
+    min-width: 4.625rem;
+  }
   &--error {
     color: $red;
     font-size: $font-size-large;

@@ -96,7 +96,7 @@ class DatagridCell extends React.Component {
 
   getStyle() {
     const { width } = this.props;
-    return { width, minWidth: '2rem', maxWidth: width };
+    return { width, maxWidth: width };
   }
 
   getModifiers() {
