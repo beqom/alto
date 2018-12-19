@@ -120,7 +120,7 @@ class Datagrid extends React.PureComponent {
       }
       this.setState({ loaded: true });
     }, 0);
-    this.handleWindowResize();
+    this.addWindowResizeListener();
   }
 
   componentDidUpdate() {
@@ -179,7 +179,7 @@ class Datagrid extends React.PureComponent {
     }
   }
 
-  handleWindowResize() {
+  addWindowResizeListener() {
     window.addEventListener('resize', this.trackDimensions);
   }
 
