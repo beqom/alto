@@ -135,7 +135,8 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   text-align: center;
   letter-spacing: 0.04em;
   cursor: pointer;
-  transition: $duration-quick $timing-function all;
+  transition: all $duration-quick $timing-function, padding 0s;
+
   &:focus {
     outline: none;
   }
