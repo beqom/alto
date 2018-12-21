@@ -89,7 +89,7 @@ class DatagridHeaderCell extends React.Component {
     const wrapped = context.wrapHeader;
     const style = {
       width,
-      minWidth: '2rem',
+      minWidth: column.editable ? '4.625rem' : '2rem',
       maxWidth: width,
     };
 
