@@ -71,10 +71,6 @@ const DatagridHeaderRow = ({
       }
 
       if (!column.children.length) return null;
-      const width = column.children
-        .map(col => columnsWidth[col.key] || col.width || 150)
-        .reduce((acc, w) => acc + w);
-      const style = { width, maxWidth: width };
       return (
         <div
           key={column.children[0].key}
@@ -84,7 +80,6 @@ const DatagridHeaderRow = ({
         >
           <div
             className={bemClass('DatagridHeaderRow__group-title', { empty: !column.title })}
-            style={style}
             title={column.title}
           >
             {column.title}

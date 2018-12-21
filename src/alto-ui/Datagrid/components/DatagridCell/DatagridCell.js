@@ -95,8 +95,9 @@ class DatagridCell extends React.Component {
   }
 
   getStyle() {
-    const { width } = this.props;
-    return { width, maxWidth: width };
+    const { width, column } = this.props;
+    const minWidth = column.editable ? '4.625rem' : '2rem';
+    return { width, minWidth, maxWidth: width };
   }
 
   getModifiers() {
@@ -115,6 +116,7 @@ class DatagridCell extends React.Component {
     const value = this.getValue();
     const type = getType(value, column);
     const selected = selectedRowKey && context.rowKeyField(row) === selectedRowKey;
+
     return {
       [type]: true,
       formula: !!column.formula,
