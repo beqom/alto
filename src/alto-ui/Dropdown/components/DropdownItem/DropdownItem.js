@@ -89,7 +89,7 @@ class DropdownItem extends React.Component {
       return (
         <CheckBox
           className={bemClass('DropdownItem__checkbox', {}, className)}
-          id={`${id}__checkbox`}
+          id={id}
           label={title}
           checked={selected}
           disabled={disabled}

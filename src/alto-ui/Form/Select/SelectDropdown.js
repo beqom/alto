@@ -112,7 +112,7 @@ class SelectDropdown extends React.Component {
   renderTrigger(onClick, open) {
     const { defaultLabel, selected, items } = this.getProps();
 
-    const { success, error, large, small, readonly, selectRef, disabled, clearable } = this.props;
+    const { success, error, large, small, readonly, selectRef, disabled } = this.props;
     const flattenedItems = flattenItems(items);
     const selectedTitles = selected
       .map(key => flattenedItems.find(x => x.key === key))
@@ -120,45 +120,44 @@ class SelectDropdown extends React.Component {
       .map(({ title }) => title)
       .join(', ');
 
+    const clearable = this.props.clearable && !!selectedTitles;
+
     return (
-      <div
-        id={this.props.id}
-        ref={selectRef || this.triggerRef}
-        className={bemClass('Select', {
-          dropdown: true,
-          open,
-          success,
-          error,
-          large,
-          small,
-          readonly,
-          disabled,
-        })}
-      >
+      <div className={bemClass('Select--dropdown__wrapper', { clearable })}>
         <button
-          className="Select--dropdown__button Select--dropdown__button--label"
+          id={this.props.id}
+          ref={selectRef || this.triggerRef}
+          className={bemClass('Select', {
+            dropdown: true,
+            open,
+            success,
+            error,
+            large,
+            small,
+            readonly,
+            disabled,
+          })}
           aria-labelledby={`${this.props.id}__label`}
           onClick={onClick}
           disabled={disabled}
         >
-          {selectedTitles || defaultLabel}
+          <div className={bemClass('Select--dropdown__label', { clearable })}>
+            {selectedTitles || defaultLabel}
+          </div>
+
+          <div className="Select--dropdown__icon Select--dropdown__icon--chevron">
+            <ChevronDown />
+          </div>
         </button>
-        {clearable && !!selectedTitles && (
+        {clearable && (
           <button
             disabled={disabled}
             onClick={this.handleClear}
-            className="Select--dropdown__button Select--dropdown__button--clear"
+            className="Select--dropdown__icon Select--dropdown__icon--clear"
           >
             <CloseIcon />
           </button>
         )}
-        <button
-          onClick={onClick}
-          disabled={disabled}
-          className="Select--dropdown__button Select--dropdown__button--chevron"
-        >
-          <ChevronDown />
-        </button>
       </div>
     );
   }
@@ -169,6 +168,7 @@ class SelectDropdown extends React.Component {
         {...this.getProps()}
         id={`${this.props.id}__dropdown`}
         renderTrigger={this.renderTrigger}
+        closeFocusTargetId={this.props.id}
       />
     );
   }
