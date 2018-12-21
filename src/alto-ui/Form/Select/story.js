@@ -10,7 +10,7 @@ import StateProvider from '../../StateProvider';
 
 const SimpleWrapper = styled.div`
   text-align: center;
-  width: 600px;
+  width: 400px;
   ${p => (p.width ? `width: ${p.width}` : '')};
 
   > * {
@@ -35,7 +35,12 @@ const getModifiers = (...modifiersExcluded) =>
 const options = [
   {
     title: 'HEADING ONE',
-    value: ['First', 'Second', 'Third'],
+    value: [
+      'First',
+      'Second',
+      'Third',
+      'Fourth: The very very long long extra giga mega long text, isnt it ?',
+    ],
   },
   {
     title: 'HEADING TWO',
@@ -181,7 +186,7 @@ storiesOf('Form/Select', module)
           <SimpleWrapper>
             <Select
               label="Can be clear"
-              id="clerable"
+              id="clearable"
               options={options}
               {...modifiers}
               placeholder="default"

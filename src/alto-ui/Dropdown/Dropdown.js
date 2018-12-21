@@ -11,6 +11,8 @@ import { bemClass } from '../helpers/bem';
 import DropdownItem from './components/DropdownItem';
 import './Dropdown.scss';
 
+const getFirstItem = ([item]) => (item.items ? getFirstItem(item.items) : item);
+
 class Dropdown extends React.Component {
   constructor(props) {
     super(props);
@@ -38,8 +40,28 @@ class Dropdown extends React.Component {
     return null;
   }
 
+  componentDidUpdate(prevProps) {
+    const stopLoading = prevProps.loadingItems && !this.props.loadingItems;
+    const openFocusTargetId = this.getOpenFocusTriggerId();
+    if (this.state.open && stopLoading && openFocusTargetId) {
+      const node = document.getElementById(openFocusTargetId);
+      if (node) node.focus();
+    }
+  }
+
   getTriggerRef() {
     return this.props.triggerRef || this.triggerRef;
+  }
+
+  getItemId(item) {
+    return `${this.props.id}__item--${item.key}`;
+  }
+
+  getOpenFocusTriggerId() {
+    const { openFocusTargetId, items } = this.props;
+    if (openFocusTargetId) return openFocusTargetId;
+    if (!items || !items.length) return null;
+    return this.getItemId(getFirstItem(items));
   }
 
   isSelected(key) {
@@ -70,6 +92,7 @@ class Dropdown extends React.Component {
 
   renderTrigger() {
     const {
+      id,
       renderTrigger,
       defaultLabel,
       label,
@@ -85,8 +108,10 @@ class Dropdown extends React.Component {
       onClear,
     } = this.props;
     const { open } = this.state;
+    const triggerId = `${id}__trigger`;
+
     if (typeof renderTrigger === 'function') {
-      return renderTrigger(this.toggle, this.state.open, this.getTriggerRef());
+      return renderTrigger(this.toggle, this.state.open, this.getTriggerRef(), triggerId);
     }
 
     const text =
@@ -94,46 +119,49 @@ class Dropdown extends React.Component {
 
     const selectedKeys = Array.isArray(selected) ? selected : [selected];
     const hasValue = (items || []).some(({ key }) => selectedKeys.includes(key));
-    const clearable = hasValue && onClear;
+    const clearable = hasValue && onClear && !!text;
 
     return (
-      <Button
-        ref={this.getTriggerRef()}
-        small={small}
-        large={large}
-        flat
-        tag="div"
-        active={this.state.open || active}
-        className={bemClass('Dropdown__trigger', {}, className ? `${className}-trigger` : '')}
-      >
-        <button className="Dropdown__button-trigger" onClick={this.toggle}>
+      <div className={bemClass('Dropdown__wrapper-trigger', { clearable })}>
+        <Button
+          id={triggerId}
+          ref={this.getTriggerRef()}
+          small={small}
+          large={large}
+          flat
+          active={this.state.open || active}
+          className={bemClass(
+            'Dropdown__trigger',
+            { clearable },
+            className ? `${className}-trigger` : ''
+          )}
+          onClick={this.toggle}
+        >
           {Icon && <Icon left={!!text} />}
           <span className="Dropdown__trigger-content">{text}</span>
           {(loading && !loadingItems) || (loadingItems && !open) ? (
             <Spinner className="Dropdown__trigger-spinner" small />
           ) : (
-            !!text &&
             !clearable && (
               <div className="Dropdown__icon-trigger">
                 <ChevronDown />
               </div>
             )
           )}
-        </button>
-        {!!text && clearable && (
+        </Button>
+        {clearable && (
           <button
-            className="Dropdown__icon-trigger Dropdown__icon-trigger--button"
+            className="Dropdown__icon-trigger Dropdown__icon-trigger--clear"
             onClick={onClear}
           >
             <CloseIcon />
           </button>
         )}
-      </Button>
+      </div>
     );
   }
 
   renderItem(popoverProps) {
-    const { id } = this.props;
     return (item, selected) => {
       if (item.items && item.section) {
         return (
@@ -147,7 +175,7 @@ class Dropdown extends React.Component {
       }
       return (
         <DropdownItem
-          id={`${id}__item--${item.key}`}
+          id={this.getItemId(item)}
           item={item}
           selected={selected}
           dropdownProps={this.props}
@@ -204,6 +232,7 @@ class Dropdown extends React.Component {
       icon,
       active,
       onClear,
+      closeFocusTargetId,
       ...popoverProps
     } = this.props;
 
@@ -219,6 +248,8 @@ class Dropdown extends React.Component {
           baseClassName="Dropdown"
           open={this.state.open}
           onClose={this.handleClose}
+          openFocusTargetId={this.getOpenFocusTriggerId()}
+          closeFocusTargetId={closeFocusTargetId || `${this.props.id}__trigger`}
         >
           {renderContent(this.renderList(popoverProps), this.handleClose)}
         </Popover>
@@ -265,6 +296,8 @@ Dropdown.propTypes = {
   icon: PropTypes.func,
   active: PropTypes.bool,
   onClear: PropTypes.func,
+  openFocusTargetId: PropTypes.string,
+  closeFocusTargetId: PropTypes.string,
 };
 
 export default Dropdown;

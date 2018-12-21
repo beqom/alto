@@ -20,6 +20,7 @@ class Overlay extends React.PureComponent {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
     this.handleFocusOutside = this.handleFocusOutside.bind(this);
+    this.dispatchClose = this.dispatchClose.bind(this);
 
     this.contentRef = React.createRef();
   }
@@ -87,6 +88,7 @@ class Overlay extends React.PureComponent {
 
       if (!blocking) {
         document.addEventListener('focusin', this.handleFocusOutside);
+        window.addEventListener('blur', this.handleWindowBlur);
       }
     }
   }
@@ -98,7 +100,7 @@ class Overlay extends React.PureComponent {
   }
 
   handleFocusOutside(e) {
-    if (this.contentNode && this.props.open && !this.contains(e.target)) {
+    if (!this.contains(e.target)) {
       this.dispatchClose();
     }
   }
@@ -138,6 +140,14 @@ class Overlay extends React.PureComponent {
             children
           )}
         </div>
+        {open && !blocking && !inert && (
+          <div
+            aria-hidden="true"
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex="0"
+            onFocus={this.dispatchClose}
+          />
+        )}
       </Portal>
     );
   }
