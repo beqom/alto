@@ -83,7 +83,6 @@ class InputNumber extends React.Component {
         ref={forwardedRef}
         {...rest}
         type="text"
-        right
         value={this.state.display}
         onChange={this.handleChange}
         onFocus={this.handleFocus}
