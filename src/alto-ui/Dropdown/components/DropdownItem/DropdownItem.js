@@ -23,16 +23,6 @@ const getPopoverProps = propoverProps => {
   return { ...otherProps, right: true, start: true };
 };
 
-const renderMoreTriggerIcon = (handleClick, active, ref) => (
-  <button
-    ref={ref}
-    className={bemClass('DropdownItem__button', { active, more: true })}
-    onClick={handleClick}
-  >
-    <MoreIcon />
-  </button>
-);
-
 class DropdownItem extends React.Component {
   constructor(props) {
     super(props);
@@ -40,11 +30,32 @@ class DropdownItem extends React.Component {
     this.handleClick = this.handleClick.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.renderFullItem = this.renderFullItem.bind(this);
+    this.renderMoreTriggerIcon = this.renderMoreTriggerIcon.bind(this);
   }
 
   getItems() {
     const { item, dropdownProps } = this.props;
     return item.items !== undefined ? item.items : dropdownProps.getItems(item);
+  }
+
+  getEditableInputId() {
+    return `${this.props.id}__editable-input`;
+  }
+
+  getMoreTriggerIconId() {
+    return `${this.props.id}__more-icon`;
+  }
+
+  getOpenFocusTargetId() {
+    return this.props.item.editable ? this.getEditableInputId() : undefined;
+  }
+
+  getCloseFocusTargetId() {
+    const hasItems = this.hasItems();
+    const hasOnClick = this.hasOnClick();
+
+    if (hasItems && (hasOnClick || this.props.item.editable)) return this.getMoreTriggerIconId();
+    return this.props.id;
   }
 
   handleClick(e) {
@@ -81,7 +92,7 @@ class DropdownItem extends React.Component {
     return <div className="DropdownItem">{this.renderItem(...args)}</div>;
   }
 
-  renderItem(handleClick, active) {
+  renderItem(handleClick, active, ref) {
     const { id, item, selected, dropdownProps } = this.props;
     const { title, className, disabled } = item;
 
@@ -98,10 +109,10 @@ class DropdownItem extends React.Component {
       );
     }
 
-    return this.renderItemButton(handleClick, active);
+    return this.renderItemButton(handleClick, active, ref);
   }
 
-  renderItemButton(handleClick, active) {
+  renderItemButton(handleClick, active, ref) {
     const { id, item, selected } = this.props;
     const { title, className, Icon, href } = item;
     const hasItems = this.hasItems();
@@ -111,6 +122,7 @@ class DropdownItem extends React.Component {
     return (
       <LinkOrButton
         id={id}
+        ref={ref}
         href={href}
         onClick={handleClick || this.handleClick}
         className={bemClass(
@@ -127,6 +139,19 @@ class DropdownItem extends React.Component {
     );
   }
 
+  renderMoreTriggerIcon(handleClick, active, ref) {
+    return (
+      <button
+        id={this.getMoreTriggerIconId()}
+        ref={ref}
+        className={bemClass('DropdownItem__button', { active, more: true })}
+        onClick={handleClick}
+      >
+        <MoreIcon />
+      </button>
+    );
+  }
+
   renderEditableInput() {
     const { item, dropdownProps } = this.props;
     if (!item.editable) return null;
@@ -134,7 +159,7 @@ class DropdownItem extends React.Component {
     return items => (
       <Fragment>
         <DropdownItemEditInput
-          id={`${this.props.id}__editable-input`}
+          id={this.getEditableInputId()}
           label="Edit"
           value={item.title}
           onSave={dropdownProps.onSaveEdit}
@@ -157,6 +182,8 @@ class DropdownItem extends React.Component {
         items={this.getItems()}
         onClose={undefined}
         renderTrigger={renderTrigger}
+        openFocusTargetId={this.getOpenFocusTargetId()}
+        closeFocusTargetId={this.getCloseFocusTargetId()}
       >
         {this.renderEditableInput()}
       </Dropdown>
@@ -173,7 +200,7 @@ class DropdownItem extends React.Component {
         return (
           <div className="DropdownItem">
             {this.renderItem()}
-            {this.renderDropdown(renderMoreTriggerIcon)}
+            {this.renderDropdown(this.renderMoreTriggerIcon)}
           </div>
         );
       }
