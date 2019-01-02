@@ -36,6 +36,7 @@ class SideNav extends React.PureComponent {
       <Link
         id={`${this.props.id}__${item.id}__link`}
         href={item.url}
+        onClick={!!this.state.open && this.handleToggleOpen}
         className={bemClass('sidenav__route-link', {
           active: this.props.currentUrl.indexOf(item.url) === 0,
         })}
