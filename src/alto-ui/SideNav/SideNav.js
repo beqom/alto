@@ -46,7 +46,7 @@ class SideNav extends React.PureComponent {
               <item.icon outline />
             </div>
           )}
-          {this.props.collapsed ? (
+          {this.props.collapsed && !this.state.open ? (
             <VisuallyHidden> {item.title} </VisuallyHidden>
           ) : (
             <div className="sidenav__section-item-title">{item.title}</div>
