@@ -27,12 +27,11 @@
 .Datagrid__body {
   flex: 1 1 0;
   background-color: $white;
-  height: 90%;
+  height: 100%;
 }
 
 .Datagrid__head {
   border-bottom: 1px solid $coolgrey-20;
-
   .ps__rail-x {
     display: none;
   }
@@ -144,5 +143,15 @@
   .Datagrid__rows--frozen {
     overflow-x: hidden;
     -ms-overflow-style: none;
+  }
+}
+
+/* Hack for Edge Scrolling */
+@supports (-ms-ime-align: auto) {
+  .Datagrid__head {
+    height: 25.5%;
+  }
+  .Datagrid__body {
+    height: 74.5%;
   }
 }
