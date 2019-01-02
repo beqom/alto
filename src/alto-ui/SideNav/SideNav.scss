@@ -362,7 +362,7 @@ $nav-btn-hover-text-dark: $white;
     right: 0;
     bottom: 100%;
     height: 100%;
-    position: fixed;
+    position: static;
   }
 }
 
@@ -406,6 +406,8 @@ $nav-btn-hover-text-dark: $white;
 
   @include on-narrow {
     left: 0;
+    background: $white;
+    z-index: 1;
   }
 }
 
