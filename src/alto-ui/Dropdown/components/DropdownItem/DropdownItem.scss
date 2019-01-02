@@ -8,6 +8,7 @@
 .DropdownItem__button {
   @extend %reset-button;
   @extend %focusable;
+  @extend %text-ellipsis;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -35,6 +36,10 @@
     text-decoration: line-through;
     background-color: $white;
   }
+
+  &--more {
+    flex-shrink: 0;
+  }
 }
 .DropdownItem__button--main {
   flex-grow: 1;
@@ -45,5 +50,6 @@
 }
 
 .DropdownItem__button-title {
+  @extend %text-ellipsis;
   flex-grow: 1;
 }
