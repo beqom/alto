@@ -42,6 +42,7 @@ class Overlay extends React.PureComponent {
 
     if (prevProps.inert !== this.props.inert) {
       if (this.props.inert) {
+        clearTimeout(this.closingTimeout);
         this.removeCloseEventListener();
       } else {
         this.addCloseEventListener();
@@ -97,6 +98,7 @@ class Overlay extends React.PureComponent {
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('click', this.handleClickOutside, true);
     document.removeEventListener('focusin', this.handleFocusOutside);
+    window.removeEventListener('blur', this.handleWindowBlur);
   }
 
   handleFocusOutside(e) {
