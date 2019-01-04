@@ -69,6 +69,7 @@ class DatagridCellInput extends React.Component {
           ...sharedProps,
           locale: context.locale,
           precision: column.precision,
+          right: true,
           disableThousandSeparator: column.disableThousandSeparator,
           ...inputProps,
         };
