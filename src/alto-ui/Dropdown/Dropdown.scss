@@ -43,13 +43,14 @@
 }
 
 .Dropdown__wrapper-trigger {
+  max-width: inherit;
   &--clearable {
     position: relative;
   }
 }
 
 .Dropdown__trigger {
-  max-width: 100%;
+  max-width: inherit;
 
   &--clearable {
     padding-right: 1.5rem;
