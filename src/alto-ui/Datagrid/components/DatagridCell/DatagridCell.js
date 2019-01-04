@@ -300,8 +300,6 @@ class DatagridCell extends React.Component {
     const value = this.getValue();
     const type = getType(value, column);
     const modifiers = this.getModifiers();
-    const style = this.getStyle();
-
     const ContentComponent = editable ? 'button' : 'div';
 
     const content = !['list', 'boolean'].includes(type) && (
@@ -311,7 +309,6 @@ class DatagridCell extends React.Component {
         disabled={disabled}
         className={bemClass('DatagridCell__content', modifiers)}
         onClick={editable ? this.handleClickEditButton : undefined}
-        style={style}
       >
         {this.renderValue()}
       </ContentComponent>
@@ -343,7 +340,7 @@ class DatagridCell extends React.Component {
         aria-rowindex={aria.rowIndex}
         aria-colindex={aria.colIndex}
       >
-        <div className="DatagridCell__container">{this.renderContent()}</div>
+        <div className="DatagridCell__container" style={style}>{this.renderContent()}</div>
       </div>
     );
   }
