@@ -42,8 +42,9 @@ class InputNumber extends React.Component {
   }
 
   handleFocus(e) {
+    const { value } = this.props;
     // eslint-disable-next-line react/no-unused-state
-    this.setState({ editing: true });
+    this.setState({ editing: true, display: value });
     if (typeof this.props.onFocus === 'function') {
       this.props.onFocus(e);
     }
