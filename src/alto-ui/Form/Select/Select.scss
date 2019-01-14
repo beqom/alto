@@ -100,6 +100,14 @@
   &--clearable {
     position: relative;
   }
+  &:hover .Select--dropdown__icon--clear,
+  .Select--dropdown:focus + .Select--dropdown__icon--clear {
+    opacity: 1;
+  }
+  &:hover .Select--dropdown__label--clearable,
+  .Select--dropdown:focus + .Select--dropdown__label--clearable {
+    padding-right: 1.5rem;
+  }
 }
 
 .Select--dropdown__label {
@@ -110,10 +118,6 @@
   min-width: 0;
   padding-left: $input-padding;
   line-height: 1.2;
-
-  &--clearable {
-    padding-right: 1.5rem;
-  }
 }
 
 .Select--dropdown__icon {
@@ -133,6 +137,7 @@
 }
 
 .Select--dropdown__icon--clear {
+  opacity: 0;
   position: absolute;
   right: 2rem;
   top: 50%;
@@ -146,6 +151,9 @@
     bottom: $spacing-x-small;
     width: 0;
     border-right: 1px solid $coolgrey-20;
+  }
+  &:focus {
+    opacity: 1;
   }
 }
 
