@@ -44,6 +44,7 @@ const FORMATTERS = {
           .setLocale(locale)
           .toFormat('dd LLL yyyy')
       : '',
+  boolean: x => `${x}`,
   number: (x, col, row, { locale }) =>
     formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator),
   integer: (...args) => FORMATTERS.number(...args),
