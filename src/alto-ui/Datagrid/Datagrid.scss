@@ -59,7 +59,7 @@
 .Datagrid__header-row--static {
   position: relative;
   overflow-x: auto;
-  overflow-y: scroll;
+  overflow-y: hidden;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     height: 0;
