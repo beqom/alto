@@ -272,7 +272,7 @@ class DatagridCell extends React.Component {
         );
         return (
           <div className={bemClass('DatagridCell__content', this.getModifiers())}>
-            {itemSelected ? itemSelected.title : inputProps.placeholder || ''}
+            {itemSelected ? itemSelected.title : inputProps.placeholder || `${parsedValue}` || ''}
           </div>
         );
       }
@@ -340,7 +340,9 @@ class DatagridCell extends React.Component {
         aria-rowindex={aria.rowIndex}
         aria-colindex={aria.colIndex}
       >
-        <div className="DatagridCell__container" style={style}>{this.renderContent()}</div>
+        <div className="DatagridCell__container" style={style}>
+          {this.renderContent()}
+        </div>
       </div>
     );
   }
