@@ -227,8 +227,10 @@ class DatagridCell extends React.Component {
     const { value } = e.target;
     const { column, row, context } = this.props;
     if (context.onBlur) {
-      const error = context.showError(value, column, row);
-      context.onBlur(value, column, row, this.replaceRowValues(error));
+      // onChange is debounced so row is not updated yet
+      const currentRow = { ...row, [column.key]: value };
+      const error = context.showError(value, column, currentRow);
+      context.onBlur(value, column, currentRow, this.replaceRowValues(error));
     }
   }
 
