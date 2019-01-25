@@ -17,7 +17,6 @@
   padding: 0 0.625rem;
   display: block;
   width: 100%;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   transition: all $transition;
 
   &::placeholder {
@@ -25,12 +24,14 @@
   }
 
   &:hover {
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    border-color: $blue;
+    box-shadow: 0 0 0 1px $blue;
   }
 
-  &:focus {
-    border-color: $blue;
-    box-shadow: 0 0 0 3px $blue-20;
+  &:focus,
+  &:focus:hover {
+    border-color: $color-input-border;
+    box-shadow: $drop-shadow;
   }
 
   &:disabled {
@@ -67,7 +68,6 @@
 }
 
 .textfield--large {
-  font-size: $font-size-large;
   //padding: 0 1rem/10;
   line-height: $height-large;
   height: $height-large;
