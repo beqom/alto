@@ -68,6 +68,8 @@ import Repeat from './Repeat';
 import RowDensityComfortable from './RowDensityComfortable';
 import RowDensityCompact from './RowDensityCompact';
 import Search from './Search';
+import SortAZ from './SortAZ';
+import SortZA from './SortZA';
 import Sync from './Sync';
 import Tasks from './Tasks';
 import Times from './Times';
@@ -153,6 +155,8 @@ export default {
   RowDensityComfortable,
   RowDensityCompact,
   Search,
+  SortAZ,
+  SortZA,
   Sync,
   Tasks,
   Times,
