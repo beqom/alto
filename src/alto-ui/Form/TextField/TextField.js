@@ -62,6 +62,7 @@ const TextField = React.forwardRef((props, ref) => (
 
 TextField.defaultProps = {
   type: 'text',
+  autocomplete: 'off',
 };
 
 TextField.propTypes = {
