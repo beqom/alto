@@ -17,16 +17,17 @@
   line-height: $height-default;
   display: block;
   width: 100%;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   transition: box-shadow $transition, border-color $transition;
 
   &:hover {
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
+    border-color: $blue;
+    box-shadow: 0 0 0 1px $blue;
   }
 
-  &:focus {
-    border-color: $blue;
-    box-shadow: 0 0 0 3px $blue-20;
+  &:focus,
+  &:focus:hover {
+    border-color: $color-input-border;
+    box-shadow: $drop-shadow;
   }
 
   &--success {
@@ -45,7 +46,6 @@
   }
 
   &--large {
-    font-size: $font-size-large;
     height: $height-large;
     line-height: $height-large;
   }
@@ -94,6 +94,14 @@
   display: flex;
   align-items: center;
   width: 100%;
+
+  &.Select--open {
+    &,
+    &:hover {
+      border-color: $color-input-border;
+      box-shadow: $drop-shadow;
+    }
+  }
 }
 
 .Select--dropdown__wrapper {
@@ -123,6 +131,7 @@
 .Select--dropdown__icon {
   line-height: 0;
   height: 100%;
+  color: $color-input-border;
 }
 
 .Select--dropdown__icon--chevron,
