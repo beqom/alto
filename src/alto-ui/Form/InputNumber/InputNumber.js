@@ -69,8 +69,8 @@ class InputNumber extends React.Component {
   }
 
   format(value) {
-    const { locale, precision, currency } = this.props;
-    return format(value, locale, precision, currency);
+    const { locale, precision, currency, disableThousandSeparator } = this.props;
+    return format(value, locale, precision, currency, disableThousandSeparator);
   }
 
   render() {
@@ -102,6 +102,7 @@ InputNumber.propTypes = {
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
+  disableThousandSeparator: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => <InputNumber {...props} forwardedRef={ref} />);
