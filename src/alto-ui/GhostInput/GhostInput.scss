@@ -1,0 +1,26 @@
+@import '../scss/inc';
+
+.GhostInput {
+  @extend %focusable;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  &:hover,
+  &:focus {
+    color: $color-text-default;
+    border-radius: 4px;
+    &::placeholder {
+      color: $coolgrey-80;
+    }
+  }
+
+  &::placeholder {
+    color: $coolgrey-50;
+  }
+}
+
+.GhostInput--area {
+  height: 8em;
+  resize: none;
+}
