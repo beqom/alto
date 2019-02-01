@@ -2,8 +2,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { text, select, boolean } from '@storybook/addon-knobs';
+import { text, select } from '@storybook/addon-knobs';
 
+import StateProvider from '../StateProvider';
 import GhostInput from './GhostInput';
 
 storiesOf('GhostInput', module)
@@ -11,14 +12,19 @@ storiesOf('GhostInput', module)
   .addWithJSX('overview', () => {
     const type = select('type', ['text', 'textarea'], 'text');
     return (
-      <div style={{ width: 600 }}>
-        <GhostInput
-          id="ghostinput-id"
-          area={boolean('area', false)}
-          type={type}
-          label={text('label', 'my input')}
-          placeholder={text('placeholder', 'placeholder')}
-        />
-      </div>
+      <StateProvider state={{ value: '' }}>
+        {(state, setState) => (
+          <div style={{ width: 600 }}>
+            <GhostInput
+              id="ghostinput-id"
+              type={type}
+              label={text('label', 'my input')}
+              placeholder={text('placeholder', 'Type something here...')}
+              onChange={(_, value) => setState({ value })}
+              value={state.value}
+            />
+          </div>
+        )}
+      </StateProvider>
     );
   });

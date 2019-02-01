@@ -42,7 +42,7 @@ const TextField = React.forwardRef((props, ref) => {
     ...remainingProps
   } = props;
 
-  if (ghost) return <GhostInput {...props} area={area} />;
+  if (ghost) return <GhostInput {...props} />;
 
   const className = bemClass(
     'textfield',
