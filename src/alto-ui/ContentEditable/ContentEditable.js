@@ -34,7 +34,7 @@ class ContentEditable extends React.Component {
   }
 
   render() {
-    const { tag, value, disabled, onChange, onInput, ...otherProps } = this.props;
+    const { tag, value, disabled, onChange, onInput, innerRef, ...otherProps } = this.props;
 
     const Tag = tag;
 
