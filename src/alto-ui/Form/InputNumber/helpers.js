@@ -16,7 +16,7 @@ export const parse = (value, locale, precision) =>
     precision
   );
 
-export const format = (value, locale, precision, currency) => {
+export const format = (value, locale, precision, currency, disableThousandSeparator) => {
   if (!value && value !== 0) return '';
 
   const valueParsed = parse(value, locale, precision);
@@ -25,6 +25,7 @@ export const format = (value, locale, precision, currency) => {
   const valueFormatted = valueParsed.toLocaleString(locale, {
     minimumFractionDigits: precision,
     maximumFractionDigits: precision,
+    useGrouping: !disableThousandSeparator,
   });
 
   return currency ? `${currency} ${valueFormatted}` : valueFormatted;
