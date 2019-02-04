@@ -39,6 +39,8 @@ const TextField = React.forwardRef((props, ref) => {
     area,
     right,
     ghost,
+    frozen,
+    disabled,
     ...remainingProps
   } = props;
 
@@ -53,6 +55,7 @@ const TextField = React.forwardRef((props, ref) => {
       error,
       area,
       right,
+      frozen,
     },
     props.className
   );
@@ -60,13 +63,19 @@ const TextField = React.forwardRef((props, ref) => {
   return (
     <FormElement {...props}>
       {area ? (
-        <textarea ref={ref} {...remainingProps} className={className} />
+        <textarea
+          ref={ref}
+          {...remainingProps}
+          className={className}
+          disabled={disabled || frozen}
+        />
       ) : (
         <input
           ref={ref}
           {...remainingProps}
           className={className}
           type={getInputType(props.type)}
+          disabled={disabled || frozen}
           onChange={event => handleChange(event, props.type, props.onChange)}
         />
       )}

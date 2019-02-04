@@ -23,7 +23,7 @@
     color: $coolgrey-20;
   }
 
-  &:hover {
+  &:hover:not(.textfield--frozen) {
     border-color: $blue;
     box-shadow: 0 0 0 1px $blue;
   }
@@ -34,7 +34,7 @@
     box-shadow: $drop-shadow;
   }
 
-  &:disabled {
+  &:disabled:not(.textfield--frozen) {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
