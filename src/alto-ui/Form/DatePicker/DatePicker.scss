@@ -1,9 +1,5 @@
 @import '../../scss/inc';
 
-.DatePicker {
-  width: 12rem;
-}
-
 .DayPicker__a11y-day-button {
   @extend %reset-button;
   color: inherit;

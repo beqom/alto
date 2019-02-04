@@ -41,6 +41,7 @@ const TextField = React.forwardRef((props, ref) => {
     ghost,
     frozen,
     disabled,
+    smallWidth,
     ...remainingProps
   } = props;
 
@@ -56,6 +57,7 @@ const TextField = React.forwardRef((props, ref) => {
       area,
       right,
       frozen,
+      smallWidth,
     },
     props.className
   );

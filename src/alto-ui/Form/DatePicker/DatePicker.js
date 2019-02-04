@@ -113,6 +113,7 @@ class DatePicker extends React.Component {
           id={`${id}__input`}
           small={small}
           large={large}
+          smallWidth
         />
         <Popover
           className="DatePicker__day-picker"
