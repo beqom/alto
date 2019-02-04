@@ -28,6 +28,7 @@ const modifierNames = [
   'disabled',
   'readOnly',
   'ghost',
+  'frozen',
 ];
 
 const getModifiers = (...modifiersExcluded) =>
