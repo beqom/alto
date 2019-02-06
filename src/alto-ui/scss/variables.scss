@@ -1,6 +1,6 @@
 // ===========================
 // Alto
-$alto-version: '0.13.17' !default;
+$alto-version: '0.14.1' !default;
 $deprecate-mode: 'sensible' !default;
 
 // ===================================
@@ -362,3 +362,6 @@ $focusable-out-box-shadow: 0 0 0 2px $white, 0 0 0 4px $blue !important;
 
 $color-input-border: $coolgrey-40 !default;
 $color-input-border-disabled: transparent !default;
+
+// shadow
+$drop-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);

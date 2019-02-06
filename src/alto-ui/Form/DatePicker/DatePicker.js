@@ -94,7 +94,7 @@ class DatePicker extends React.Component {
   }
 
   render() {
-    const { id } = this.props;
+    const { id, small, large } = this.props;
     const { open } = this.state;
     const date = this.getDate();
 
@@ -111,6 +111,8 @@ class DatePicker extends React.Component {
           onChange={() => {}}
           value={this.formatTextfieldDate()}
           id={`${id}__input`}
+          small={small}
+          large={large}
         />
         <Popover
           className="DatePicker__day-picker"
@@ -164,6 +166,8 @@ DatePicker.propTypes = {
   inputRef: PropTypes.object,
   onClose: PropTypes.func,
   hideLabel: PropTypes.bool,
+  small: PropTypes.bool,
+  large: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => <DatePicker inputRef={ref} {...props} />);

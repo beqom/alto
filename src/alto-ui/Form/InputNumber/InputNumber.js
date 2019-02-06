@@ -5,6 +5,8 @@ import TextField from '../TextField';
 
 import { parse, format } from '../../helpers/number';
 
+import './InputNumber.scss';
+
 class InputNumber extends React.Component {
   constructor(props) {
     super(props);
@@ -80,6 +82,7 @@ class InputNumber extends React.Component {
     const { forwardedRef, locale, precision, disableThousandSeparator, ...rest } = this.props;
     return (
       <TextField
+        className="InputNumber"
         ref={forwardedRef}
         {...rest}
         type="text"

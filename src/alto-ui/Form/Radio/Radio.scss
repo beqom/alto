@@ -1,5 +1,9 @@
 @import '../../scss/inc';
 
+.Radio {
+  position: relative;
+}
+
 .Radio__input {
   @extend %visually-hidden;
 }

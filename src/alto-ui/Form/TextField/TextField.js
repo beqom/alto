@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash.omit';
 
-import { bemProps } from '../../helpers/bem';
+import { bemClass } from '../../helpers/bem';
 import { isIE11 } from '../../helpers/navigator';
 import FormElement from '../FormElement';
+import GhostInput from '../../GhostInput/GhostInput';
 
 import './TextField.scss';
 
@@ -25,43 +25,66 @@ const handleChange = (event, type, onChange) => {
 // IE for ever <3
 const getInputType = type => (isIE11() && type === 'number' ? 'text' : type);
 
-const texfieldProps = bemProps('textfield', [
-  'large',
-  'small',
-  'success',
-  'error',
-  'area',
-  'right',
-]);
+const TextField = React.forwardRef((props, ref) => {
+  const {
+    hideLabel,
+    label,
+    style,
+    type,
+    helpText,
+    large,
+    small,
+    success,
+    error,
+    area,
+    right,
+    ghost,
+    frozen,
+    disabled,
+    ...remainingProps
+  } = props;
 
-const TextField = React.forwardRef((props, ref) => (
-  <FormElement {...props}>
-    {props.area ? (
-      <textarea
-        ref={ref}
-        {...texfieldProps(
-          omit(props, ['className', 'hideLabel', 'label', 'style']),
-          'helpText',
-          'type'
-        )}
-        type={null}
-      />
-    ) : (
-      <input
-        ref={ref}
-        {...texfieldProps(
-          omit(props, ['className', 'hideLabel', 'label', 'style', 'onChange', 'type']),
-          'helpText'
-        )}
-        type={getInputType(props.type)}
-        onChange={event => handleChange(event, props.type, props.onChange)}
-      />
-    )}
-  </FormElement>
-));
+  if (ghost) return <GhostInput {...props} />;
 
+  const className = bemClass(
+    'textfield',
+    {
+      large,
+      small,
+      success,
+      error,
+      area,
+      right,
+      frozen,
+    },
+    props.className
+  );
+
+  return (
+    <FormElement {...props}>
+      {area ? (
+        <textarea
+          ref={ref}
+          {...remainingProps}
+          className={className}
+          disabled={disabled || frozen}
+        />
+      ) : (
+        <input
+          ref={ref}
+          {...remainingProps}
+          className={className}
+          type={getInputType(props.type)}
+          disabled={disabled || frozen}
+          onChange={event => handleChange(event, props.type, props.onChange)}
+        />
+      )}
+    </FormElement>
+  );
+});
 TextField.defaultProps = {
   type: 'text',
+  autoComplete: 'off',
 };
 
 TextField.propTypes = {

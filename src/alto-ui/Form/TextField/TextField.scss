@@ -17,23 +17,24 @@
   padding: 0 0.625rem;
   display: block;
   width: 100%;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   transition: all $transition;
 
   &::placeholder {
     color: $coolgrey-20;
   }
 
-  &:hover {
-    box-shadow: 0 2px 1px rgba(0, 0, 0, 0.1);
-  }
-
-  &:focus {
+  &:hover:not(.textfield--frozen) {
     border-color: $blue;
-    box-shadow: 0 0 0 3px $blue-20;
+    box-shadow: 0 0 0 1px $blue;
   }
 
-  &:disabled {
+  &:focus,
+  &:focus:hover {
+    border-color: $color-input-border;
+    box-shadow: $drop-shadow;
+  }
+
+  &:disabled:not(.textfield--frozen) {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
@@ -67,7 +68,6 @@
 }
 
 .textfield--large {
-  font-size: $font-size-large;
   //padding: 0 1rem/10;
   line-height: $height-large;
   height: $height-large;
@@ -81,6 +81,7 @@
 
 .textfield--area {
   height: 8em;
+  resize: none;
 }
 
 .textfield--right {
