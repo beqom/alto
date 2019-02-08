@@ -34,6 +34,7 @@
   }
 
   &:focus {
+    cursor: text;
     &::before,
     &::after {
       content: ' ';
