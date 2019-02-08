@@ -23,7 +23,7 @@ class InputNumber extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { value, locale, precision, currency } = props;
+    const { value, locale, precision, currency, disableThousandSeparator } = props;
     if (
       state.prev.value !== value ||
       state.prev.precision !== precision ||
@@ -32,7 +32,9 @@ class InputNumber extends React.Component {
     ) {
       return {
         prev: props,
-        display: state.editing ? state.display : format(value, locale, precision, currency),
+        display: state.editing
+          ? state.display
+          : format(value, locale, precision, currency, disableThousandSeparator),
       };
     }
     return null;
@@ -74,7 +76,7 @@ class InputNumber extends React.Component {
   }
 
   render() {
-    const { forwardedRef, locale, precision, ...rest } = this.props;
+    const { forwardedRef, locale, precision, disableThousandSeparator, ...rest } = this.props;
     return (
       <TextField
         ref={forwardedRef}
