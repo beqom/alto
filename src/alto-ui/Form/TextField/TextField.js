@@ -44,6 +44,8 @@ const TextField = React.forwardRef((props, ref) => {
     ...remainingProps
   } = props;
 
+  const visibilityProps = frozen ? { 'aria-hidden': true, tabindex: '-1' } : {};
+
   if (ghost) return <GhostInput {...props} />;
 
   const className = bemClass(
@@ -67,6 +69,7 @@ const TextField = React.forwardRef((props, ref) => {
           ref={ref}
           {...remainingProps}
           className={className}
+          {...visibilityProps}
           disabled={disabled || frozen}
         />
       ) : (
@@ -76,6 +79,7 @@ const TextField = React.forwardRef((props, ref) => {
           className={className}
           type={getInputType(props.type)}
           disabled={disabled || frozen}
+          {...visibilityProps}
           onChange={event => handleChange(event, props.type, props.onChange)}
         />
       )}
