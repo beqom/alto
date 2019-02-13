@@ -1,0 +1,16 @@
+@import '../scss/inc';
+
+.Sortable {
+  list-style: none;
+}
+
+.Sortable__handle {
+  cursor: grab;
+  color: $coolgrey-60;
+
+  &:active,
+  &--dragging {
+    cursor: grabbing;
+    color: $coolgrey-90;
+  }
+}
