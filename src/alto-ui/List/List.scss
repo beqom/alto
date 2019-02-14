@@ -1,4 +1,4 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
 .list {
   background: $white;
@@ -10,6 +10,7 @@
   border: 1px solid $coolgrey-20;
   border-top: 0;
   overflow: hidden;
+  padding: 0.75rem 1.25rem;
 
   &:first-child {
     border-top: 1px solid $coolgrey-20;
@@ -21,11 +22,15 @@
     border-bottom-left-radius: $border-radius-default;
     border-bottom-right-radius: $border-radius-default;
   }
+  &--active,
+  &:hover {
+    background: $blue-10;
+    color: $color-text-default;
+    text-decoration: none;
+  }
 }
 
-
 .list__item-content {
-  padding: .75rem 1.25rem;
   display: flex;
   flex-direction: row;
   text-decoration: none;
@@ -37,12 +42,6 @@
 
 .list__item-content--link {
   transition: $duration-quick $timing-function background;
-
-  &:hover {
-    background: $blue-10;
-    color: $color-text-default;
-    text-decoration: none;
-  }
 
   &:focus {
     box-shadow: inset 0 0 0 3px $blue-20;
@@ -59,4 +58,43 @@
       border-color: $white;
     }
   }
+}
+
+.list__item-item--icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list__item-item-text {
+  max-width: 100%;
+  &--active {
+    max-width: 85%;
+  }
+}
+
+.list__item-item-icons {
+  display: none;
+  &--active {
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
+  }
+}
+
+.list_item-item-icons {
+  &--active,
+  &:hover {
+    color: $blue;
+  }
+}
+
+.list__item-item--icons:hover > .list__item-item-icons {
+  display: flex;
+  width: 15%;
+  justify-content: space-between;
+}
+
+.list__item-item--icons:hover > .list__item-item-text {
+  max-width: 85%;
 }

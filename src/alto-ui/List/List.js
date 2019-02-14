@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 import Link from '../Link';
+
+import CopyIcon from '../Icons/Copy';
+import CogIcon from '../Icons/Cog';
+import DeleteIcon from '../Icons/Delete';
+
 import { bemClass } from '../helpers/bem';
 
 import './List.scss';
@@ -23,11 +28,55 @@ const renderItemContent = (listId, item, selected, render) => {
   );
 };
 
-const List = ({ id, items, children, selected, className }) => (
+const List = ({
+  id,
+  items,
+  children,
+  selected,
+  className,
+  onCloneItem,
+  onCustomizeItem,
+  onCustomizeItemSelected,
+  onDeleteItem,
+}) => (
   <ul id={id} className={classnames('list', className)}>
     {items.map(item => (
-      <li key={item.id || item} className="list__item">
-        {renderItemContent(id, item, selected, children)}
+      <li
+        key={item.id || item}
+        className={bemClass('list__item', { active: onCustomizeItemSelected === item.id })}
+      >
+        <div
+          className={bemClass('list__item-item', {
+            icons: onDeleteItem || onCloneItem || onCustomizeItem,
+          })}
+        >
+          <div
+            className={bemClass('list__item-item-text', {
+              active: onCustomizeItemSelected === item.id,
+            })}
+          >
+            {renderItemContent(id, item, selected, children)}
+          </div>
+          {(onDeleteItem || onCloneItem || onCustomizeItem) && (
+            <div
+              className={bemClass('list__item-item-icons', {
+                active: onCustomizeItemSelected === item.id,
+              })}
+            >
+              {onCloneItem && <CopyIcon outline />}
+              {onCustomizeItem && (
+                <CogIcon
+                  className={bemClass('list_item-item-icons', {
+                    active: onCustomizeItemSelected === item.id,
+                  })}
+                  onClick={() => onCustomizeItem(item.id)}
+                  outline
+                />
+              )}
+              {onDeleteItem && <DeleteIcon outline />}
+            </div>
+          )}
+        </div>
       </li>
     ))}
   </ul>
@@ -56,6 +105,10 @@ List.propTypes = {
       }),
     ])
   ).isRequired,
+  onCloneItem: PropTypes.func,
+  onCustomizeItem: PropTypes.func,
+  onCustomizeItemSelected: PropTypes.string,
+  onDeleteItem: PropTypes.func,
 };
 
 export default List;
