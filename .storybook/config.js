@@ -56,11 +56,13 @@ function loadStories() {
   require('../src/alto-ui/Button/story');
   require('../src/alto-ui/Card/story');
   require('../src/alto-ui/CloseButton/story');
+  require('../src/alto-ui/ContentEditable/story');
   require('../src/alto-ui/CopyToClipboard/story');
   require('../src/alto-ui/Datagrid/story');
   require('../src/alto-ui/Dialog/story');
   require('../src/alto-ui/Dropdown/story');
   require('../src/alto-ui/Form/story');
+  require('../src/alto-ui/GhostInput/story');
   require('../src/alto-ui/Header/story');
   require('../src/alto-ui/Icons/story');
   require('../src/alto-ui/Input/story');

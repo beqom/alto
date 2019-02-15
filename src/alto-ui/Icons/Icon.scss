@@ -54,3 +54,8 @@
 .Icon__badge {
   fill: $red;
 }
+
+.Icon--active,
+.Icon--active:hover {
+  color: $blue-60;
+}

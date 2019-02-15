@@ -29,13 +29,13 @@ export const getRelativePosition = (node, target, options) => {
   if (left) {
     if (isLeftOK) return { left: true };
     if (isBottomOK) return { bottom: true };
-    if (isRightOK) return { right: true };
     if (isTopOK) return { top: true };
+    if (isRightOK) return { right: true };
   }
 
   if (isBottomOK) return { bottom: true };
-  if (isRightOK) return { right: true };
   if (isTopOK) return { top: true };
+  if (isRightOK) return { right: true };
   if (isLeftOK) return { left: true };
   return { left, right, top, bottom };
 };
