@@ -1,3 +1,4 @@
+import debounce from 'lodash.debounce';
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
@@ -13,6 +14,8 @@ import DatagridGroupedRow from './components/DatagridGroupedRow';
 import DatagridRow from './components/DatagridRow';
 
 import './Datagrid.scss';
+
+const WINDOW_RESIZE_DEBOUNCE = 100;
 
 const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
@@ -84,6 +87,10 @@ class Datagrid extends React.PureComponent {
     this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
 
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
+    this.trackDimensions = debounce(
+      this.trackDimensions.bind(this),
+      WINDOW_RESIZE_DEBOUNCE
+    );
   }
 
   componentDidMount() {
@@ -100,10 +107,15 @@ class Datagrid extends React.PureComponent {
       }
       this.setState({ loaded: true });
     }, 0);
+    this.addWindowResizeListener();
   }
 
   componentDidUpdate() {
     this.trackDimensions();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.trackDimensions);
   }
 
   getContext() {
@@ -144,6 +156,11 @@ class Datagrid extends React.PureComponent {
       }
     }
   }
+
+  addWindowResizeListener() {
+    window.addEventListener('resize', this.trackDimensions);
+  }
+
   handleToggleGroup(groupId) {
     const stateGroupId = this.state.collapsedGroups[groupId];
     const collapsedGroups = {
@@ -274,7 +291,6 @@ class Datagrid extends React.PureComponent {
     const headersCount = 1;
 
     const { labels } = this.getContext();
-
     return (
       <div
         id={id}
@@ -391,6 +407,7 @@ Datagrid.propTypes = {
   onSort: PropTypes.func,
   // eslint-disable-next-line react/no-unused-prop-types
   columnSorted: PropTypes.object,
+  subPaneHeight: PropTypes.number
 };
 
 export default Datagrid;
