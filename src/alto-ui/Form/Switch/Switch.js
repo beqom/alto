@@ -17,8 +17,8 @@ const Switch = props => {
         type="checkbox"
       />
       <label className="Switch__label" htmlFor={props.id}>
-        <div className="Switch__element" />
         {label}
+        <div className="Switch__element" />
       </label>
     </div>
   );
