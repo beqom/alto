@@ -19,11 +19,11 @@
 }
 
 .Icon--left {
-  margin-right: $spacing-xx-small;
+  margin-right: $spacing-x-small;
 }
 
 .Icon--right {
-  margin-left: $spacing-xx-small;
+  margin-left: $spacing-x-small;
 }
 
 .Icon--button {
@@ -36,7 +36,7 @@
   line-height: 0;
   transition: all $transition;
   border-radius: 50%;
-  font-size: 1.25rem;
+  font-size: 1rem;
   border: 1px solid transparent;
   color: $coolgrey-60;
 

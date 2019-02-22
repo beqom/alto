@@ -44,7 +44,7 @@ const TextField = React.forwardRef((props, ref) => {
     ...remainingProps
   } = props;
 
-  const visibilityProps = frozen ? { 'aria-hidden': true, tabindex: '-1' } : {};
+  const visibilityProps = frozen ? { 'aria-hidden': true, tabIndex: '-1' } : {};
 
   if (ghost) return <GhostInput {...props} />;
 
@@ -98,6 +98,7 @@ TextField.propTypes = {
   small: PropTypes.bool,
   success: PropTypes.bool,
   error: PropTypes.bool,
+  frozen: PropTypes.bool,
 };
 
 TextField.displayName = 'TextField';
