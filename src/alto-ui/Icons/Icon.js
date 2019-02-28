@@ -56,6 +56,7 @@ const Icon = props => {
         height="1em"
         xmlns="http://www.w3.org/2000/svg"
         role="presentation"
+        focusable="false"
       >
         {children({ fill: color })}
         {badged && <circle className="Icon__badge" cx="30" cy="6" r="5" />}
