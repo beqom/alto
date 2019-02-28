@@ -77,6 +77,7 @@ function loadStories() {
   require('../src/alto-ui/RelativeBox/story');
   require('../src/alto-ui/ShowMore/story');
   require('../src/alto-ui/SideNav/story');
+  require('../src/alto-ui/Sortable/story');
   require('../src/alto-ui/Spinner/story');
   require('../src/alto-ui/Table/story');
   require('../src/alto-ui/Tabs/story');
