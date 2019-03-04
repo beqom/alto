@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash.omit';
 
 import VisuallyHidden from '../VisuallyHidden';
 import { bemClass } from '../helpers/bem';
@@ -29,11 +28,13 @@ const Icon = props => {
     children,
     a11yLabel,
     badged,
+    outline,
+    active,
     ...otherProps
   } = props;
   return (
     <Container
-      {...omit(otherProps, 'outline')}
+      {...otherProps}
       className={bemClass(
         'Icon',
         {
@@ -55,6 +56,7 @@ const Icon = props => {
         height="1em"
         xmlns="http://www.w3.org/2000/svg"
         role="presentation"
+        focusable="false"
       >
         {children({ fill: color })}
         {badged && <circle className="Icon__badge" cx="30" cy="6" r="5" />}
@@ -87,6 +89,7 @@ Icon.propTypes = {
   a11yLabel: PropTypes.string,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  active: PropTypes.bool,
 };
 
 export default Icon;
