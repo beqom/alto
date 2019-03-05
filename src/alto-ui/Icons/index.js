@@ -27,6 +27,7 @@ import Copy from './Copy';
 import CopyToClipboard from './CopyToClipboard';
 import Dashboard from './Dashboard';
 import Delete from './Delete';
+import Details from './Details';
 import Download from './Download';
 import DragHandle from './DragHandle';
 import DropdownIcon from './DropdownIcon';
@@ -128,6 +129,7 @@ export default {
   CopyToClipboard,
   Dashboard,
   Delete,
+  Details,
   Download,
   DragHandle,
   DropdownIcon,
