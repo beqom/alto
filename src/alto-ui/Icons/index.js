@@ -19,13 +19,14 @@ import ChevronRight from './ChevronRight';
 import ChevronUp from './ChevronUp';
 import Close from './Close';
 import Cog from './Cog';
-import Config from './Config';
 import Collapse from './Collapse';
 import Column from './Column';
+import Config from './Config';
+import Content from './Content';
 import Copy from './Copy';
 import CopyToClipboard from './CopyToClipboard';
-import Delete from './Delete';
 import Dashboard from './Dashboard';
+import Delete from './Delete';
 import Download from './Download';
 import DragHandle from './DragHandle';
 import DropdownIcon from './DropdownIcon';
@@ -59,10 +60,10 @@ import List from './List';
 import LongText from './LongText';
 import Menu from './Menu';
 import Minus from './Minus';
+import MinusCircle from './MinusCircle';
 import More from './More';
 import Note from './Note';
 import Numeric from './Numeric';
-import MinusCircle from './MinusCircle';
 import Objects from './Objects';
 import Options from './Options';
 import Organization from './Organization';
@@ -84,6 +85,7 @@ import Tasks from './Tasks';
 import Templates from './Templates';
 import Text from './Text';
 import Times from './Times';
+import Tool from './Tool';
 import Trash from './Trash';
 import Undo from './Undo';
 import Unknown from './Unknown';
@@ -93,15 +95,14 @@ import ViewCards from './ViewCards';
 import ViewColumns from './ViewColumns';
 import ViewList from './ViewList';
 import World from './World';
-import Tool from './Tool';
 
 
 export default {
   Add,
   ArrowDown,
   ArrowLeft,
-  ArrowUp,
   ArrowRight,
+  ArrowUp,
   Balance,
   Bars,
   Bell,
@@ -114,17 +115,18 @@ export default {
   CheckList,
   ChevronDown,
   ChevronLeft,
-  ChevronUp,
   ChevronRight,
+  ChevronUp,
   Close,
   Cog,
   Collapse,
   Column,
+  Config,
+  Content,
   Copy,
   CopyToClipboard,
-  Config,
-  Delete,
   Dashboard,
+  Delete,
   Download,
   DragHandle,
   DropdownIcon,
@@ -183,6 +185,7 @@ export default {
   Templates,
   Text,
   Times,
+  Tool,
   Trash,
   Undo,
   Unknown,
@@ -192,5 +195,4 @@ export default {
   ViewColumns,
   ViewList,
   World,
-  Tool,
 };
