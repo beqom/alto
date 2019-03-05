@@ -55,6 +55,7 @@ import Image from './Image';
 import ImportFile from './ImportFile';
 import InfoCircle from './InfoCircle';
 import InfoStandard from './InfoStandard';
+import Insight from './Insight';
 import Lightbulb from './Lightbulb';
 import List from './List';
 import LongText from './LongText';
@@ -155,6 +156,7 @@ export default {
   ImportFile,
   InfoCircle,
   InfoStandard,
+  Insight,
   Lightbulb,
   List,
   LongText,
