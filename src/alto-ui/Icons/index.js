@@ -83,6 +83,7 @@ import SortAZ from './SortAZ';
 import SortZA from './SortZA';
 import Sync from './Sync';
 import Tasks from './Tasks';
+import Templates from './Templates';
 import Text from './Text';
 import Times from './Times';
 import Tool from './Tool';
@@ -95,6 +96,7 @@ import ViewCards from './ViewCards';
 import ViewColumns from './ViewColumns';
 import ViewList from './ViewList';
 import World from './World';
+
 
 export default {
   Add,
@@ -182,6 +184,7 @@ export default {
   SortZA,
   Sync,
   Tasks,
+  Templates,
   Text,
   Times,
   Tool,
