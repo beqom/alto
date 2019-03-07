@@ -31,6 +31,7 @@ import Details from './Details';
 import Download from './Download';
 import DragHandle from './DragHandle';
 import DropdownIcon from './DropdownIcon';
+import Duplicate from './Duplicate';
 import Edit from './Edit';
 import EllipsisHorizontal from './EllipsisHorizontal';
 import EllipsisVertical from './EllipsisVertical';
@@ -49,6 +50,7 @@ import Floppy from './Floppy';
 import Folder from './Folder';
 import FolderOpen from './FolderOpen';
 import Globe from './Globe';
+import GoTo from './GoTo';
 import Help from './Help';
 import HelpInfo from './HelpInfo';
 import Home from './Home';
@@ -98,7 +100,6 @@ import ViewColumns from './ViewColumns';
 import ViewList from './ViewList';
 import World from './World';
 
-
 export default {
   Add,
   ArrowDown,
@@ -133,6 +134,7 @@ export default {
   Download,
   DragHandle,
   DropdownIcon,
+  Duplicate,
   Edit,
   EllipsisHorizontal,
   EllipsisVertical,
@@ -151,6 +153,7 @@ export default {
   Folder,
   FolderOpen,
   Globe,
+  GoTo,
   Help,
   HelpInfo,
   Home,
