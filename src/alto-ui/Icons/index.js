@@ -1,4 +1,5 @@
 import Add from './Add';
+import AngleArrow from './AngleArrow';
 import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
@@ -102,6 +103,7 @@ import World from './World';
 
 export default {
   Add,
+  AngleArrow,
   ArrowDown,
   ArrowLeft,
   ArrowRight,
