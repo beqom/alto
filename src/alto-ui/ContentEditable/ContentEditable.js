@@ -8,6 +8,7 @@ class ContentEditable extends React.Component {
     this.value = props.value;
     this.ref = props.innerRef || React.createRef();
     this.handleChange = this.handleChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   componentDidMount() {
@@ -27,10 +28,16 @@ class ContentEditable extends React.Component {
 
   handleChange(e) {
     const { onChange, onInput } = this.props;
-    const value = e.target.innerHTML;
+    const value = e.target.innerText;
     this.value = value;
     if (typeof onChange === 'function') onChange(e, value);
     if (typeof onInput === 'function') onInput(e);
+  }
+
+  handleBlur(e) {
+    const { onBlur } = this.props;
+    if (typeof onBlur === 'function') onBlur(e);
+    if (e.target.innerHTML !== this.value) this.update();
   }
 
   render() {
@@ -39,7 +46,13 @@ class ContentEditable extends React.Component {
     const Tag = tag;
 
     return (
-      <Tag {...otherProps} ref={this.ref} onInput={this.handleChange} contentEditable={!disabled} />
+      <Tag
+        {...otherProps}
+        ref={this.ref}
+        onInput={this.handleChange}
+        contentEditable={!disabled}
+        onBlur={this.handleBlur}
+      />
     );
   }
 }
@@ -55,6 +68,7 @@ ContentEditable.propTypes = {
   tag: PropTypes.string,
   onChange: PropTypes.func,
   onInput: PropTypes.func,
+  onBlur: PropTypes.func,
   value: PropTypes.string,
   disabled: PropTypes.bool,
   innerRef: PropTypes.object,
