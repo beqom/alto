@@ -83,18 +83,18 @@ class DatePicker extends React.Component {
   }
 
   formatTextfieldDate() {
-    const { open } = this.state;
+    // const { open } = this.state; // Uncomment when we enhance for typing in datefield
     const { format, displayFormat } = this.props;
     const date = this.getDate();
 
     if (!date) return '';
-    if (open) return date.toFormat(format);
+    //if (open) return date.toFormat(format); // Uncomment when we enhance for typing in datefield
 
     return date.toFormat(displayFormat || format);
   }
 
   render() {
-    const { id, small, large, frozen } = this.props;
+    const { id, small, large, frozen, placeholder } = this.props;
     const { open } = this.state;
     const date = this.getDate();
 
@@ -102,7 +102,7 @@ class DatePicker extends React.Component {
       <div className={classnames('DatePicker', this.props.className)}>
         <TextField
           ref={this.getInputRef()}
-          placeholder={this.props.format}
+          placeholder={placeholder}
           label={this.props.label}
           hideLabel={this.props.hideLabel}
           {...this.props.inputProps}
@@ -147,6 +147,7 @@ DatePicker.displayName = 'DatePicker';
 DatePicker.defaultProps = {
   inputProps: {},
   format: 'dd/MM/yyyy',
+  placeholder: '',
   displayFormat: 'dd LLL yyyy',
 };
 
@@ -156,6 +157,7 @@ DatePicker.propTypes = {
   className: PropTypes.string,
   children: PropTypes.any,
   format: PropTypes.string,
+  placeholder: PropTypes.string,
   displayFormat: PropTypes.string,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
