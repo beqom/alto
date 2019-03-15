@@ -88,7 +88,7 @@ class DatePicker extends React.Component {
     const date = this.getDate();
 
     if (!date) return '';
-    //if (open) return date.toFormat(format); // Uncomment when we enhance for typing in datefield
+    // if (open) return date.toFormat(format); // Uncomment when we enhance for typing in datefield
 
     return date.toFormat(displayFormat || format);
   }
