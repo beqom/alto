@@ -1,0 +1,49 @@
+@import '../../scss/inc';
+
+.TagInput__tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $spacing-x-small;
+
+  &--value {
+    position: relative;
+    border: 1px solid $color-input-border;
+    border-radius: 4px;
+    background-color: white;
+  }
+}
+
+.TagInput__button {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.TagInput__tag {
+  margin: $spacing-x-small;
+}
+
+.TagInput__input,
+.TagInput__tag--value {
+  position: relative;
+  z-index: 2;
+}
+
+.TagInput__input {
+  @extend %reset-input;
+  //outline: 1px solid blue;
+  padding: 0 0.25rem;
+
+  &--empty {
+    width: 1px;
+    padding: 0;
+  }
+
+  &--valid {
+    color: $blue;
+  }
+}
