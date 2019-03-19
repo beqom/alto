@@ -16,6 +16,114 @@ const sliceArr = (xs, i, j) =>
     return acc;
   }, []);
 
+function useSelectionKeyboardNav(state, onRemoveTag) {
+  const { value, selection, position } = state;
+
+  // create a mutable ref
+  const instance = useRef({}).current;
+  // store state in instance in order to use it in listener
+  instance.state = state;
+
+  useEventListener(useRef(document), 'keyup', e => {
+    if (e.key === 'Backspace' || e.key === 'Delete') {
+      onRemoveTag(instance.state.selection.get());
+
+      selection.reset();
+      position.set(null);
+    }
+    if (e.key === 'Escape') {
+      e.nativeEvent.stopImmediatePropagation();
+      selection.reset();
+      position.set(null);
+    }
+
+    const isAlphaNum = /^[a-zA-Z0-9-_ ]$/.test(e.key);
+    if (isAlphaNum) {
+      value.set(e.key);
+      selection.reset();
+      position.set(null);
+    }
+  })(!!selection.get().length);
+}
+
+function useResettableState(initialState) {
+  const [state, setState] = useState(initialState);
+  return {
+    get: () => state,
+    set: x => setState(x),
+    reset: () => setState(initialState),
+  };
+}
+
+function usePosition(tags) {
+  const position = useResettableState(undefined);
+  const pos = position.get();
+  return {
+    ...position,
+    moveLeft() {
+      if (pos === 0 || pos === undefined) return null;
+      if (pos === null) return position.set(tags.length - 1);
+      return position.set(pos - 1);
+    },
+    moveRight() {
+      if (pos === null || pos === undefined) return null;
+      return position.set(pos + 1);
+    },
+  };
+}
+
+function useTagInputStateAndRefs(tags, ref) {
+  const mainRefDefault = useRef();
+  const mainRef = ref || mainRefDefault;
+  const inputRef = useRef();
+  const valueRef = useRef();
+  const isActive = useFocusInOut(null, mainRef);
+
+  const value = useResettableState('');
+  const selection = useResettableState([]);
+  const position = usePosition(tags);
+
+  // --- EFFECTS ---
+
+  // reset value if tags length change
+  useEffect(() => {
+    if (value) value.reset();
+  }, [tags.length]);
+
+  // reset value, position and selection if focus out value area
+  useFocusInOut(focused => {
+    if (!focused) {
+      value.reset();
+      position.reset();
+      selection.reset();
+    }
+  }, valueRef);
+
+  // when position change, or if the component become "active"
+  // then focus the input
+  useEffect(() => {
+    if (position !== undefined && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [position.get(), isActive]);
+
+  return [
+    // STATE
+    {
+      value,
+      selection,
+      position,
+      isActive,
+    },
+    // REFS
+    {
+      main: mainRef,
+      value: valueRef,
+      input: inputRef,
+    },
+  ];
+}
+
 const TagInput = React.forwardRef(
   (
     {
@@ -30,101 +138,62 @@ const TagInput = React.forwardRef(
     },
     ref
   ) => {
-    const [value, setValue] = useState('');
-    const [position, setPosition] = useState(undefined);
-    const [selection, setSelection] = useState([]);
+    const [state, refs] = useTagInputStateAndRefs(tags, ref);
+    const { value, selection, position } = state;
 
-    const inputRef = useRef();
-    const tagInputValueRef = useRef();
-    const mainRef = useRef();
-    const tagInputRef = ref || mainRef;
-    const isActive = useFocusInOut(null, tagInputRef);
+    console.log(selection.get());
 
     const isTagEqual = a => b => getTagValue(a) === getTagValue(b);
     const isTagDiff = a => b => !isTagEqual(a)(b);
-    const isTagActive = tag => selection.some(isTagEqual(tag));
+    const isTagActive = tag => selection.get().some(isTagEqual(tag));
 
-    const availableTags = props.availableTags(value);
+    const availableTags = props.availableTags(value.get());
+    // remainingTags is the diff between available tags and current tags
     const remainingTags = (availableTags || []).filter(t => !tags.some(isTagEqual(t)));
-    const match =
-      props.match ||
-      (v =>
-        availableTags
-          ? remainingTags.some(t => getTagValue(t) === v)
-          : !tags.some(t => getTagValue(t) === v));
+
+    // used to defined if a value is valid and ready to be added as new tag
+    function match() {
+      if (props.match) return props.match(value.get(), tags);
+
+      return availableTags
+        ? // availableTags ? let's check if one of them match the value
+          remainingTags.some(t => getTagValue(t) === value.get())
+        : // no availableTags ? let's check that this tags does already not exist
+          !tags.some(t => getTagValue(t) === value.get());
+    }
 
     const addToSelection = (...xs) =>
-      setSelection([...selection, ...xs].filter((t, i, ts) => i === ts.findIndex(isTagEqual(t))));
-    const removeFromSelection = tag => setSelection(selection.filter(isTagDiff(tag)));
+      selection.set(
+        [...selection.get(), ...xs].filter((t, i, ts) => i === ts.findIndex(isTagEqual(t)))
+      );
+    const removeFromSelection = tag => selection.set(selection.get().filter(isTagDiff(tag)));
 
     const renderTag =
       props.renderTag || ((tag, tagProps) => <Tag {...tagProps}>{getTagTitle(tag)}</Tag>);
 
-    const onNewTag = props.onNewTag || ((tag, add) => add(tag));
-
-    const onRemoveTag = props.onRemoveTag || ((t, ts) => ts.filter(isTagDiff(t)));
-
-    const instance = useRef({
-      keyupOnDocumentListener(e) {
-        if (e.key === 'Backspace' || e.key === 'Delete') {
-          instance.removeTagsInSelection();
-          setSelection([]);
-          setPosition(null);
-        }
-        if (e.key === 'Escape') {
-          e.nativeEvent.stopImmediatePropagation();
-          setSelection([]);
-          setPosition(null);
-        }
-
-        const isAlphaNum = /^[a-zA-Z0-9-_ ]$/.test(e.key);
-        if (isAlphaNum) {
-          setSelection([]);
-          setValue(e.key);
-          setPosition(null);
-        }
-      },
-    }).current;
-
-    instance.removeTagsInSelection = () => {
-      const newTags = selection.reduce((acc, tag) => onRemoveTag(tag, acc), tags);
+    // function trigger when user press Backspace or Delete with a selection
+    function handleRemoveTags(tagsToRemove) {
+      const onRemoveTag = props.onRemoveTag || ((t, ts) => ts.filter(isTagDiff(t)));
+      const newTags = tagsToRemove.reduce((acc, tag) => onRemoveTag(tag, acc), tags);
       if (newTags !== tags) {
         onChange(newTags);
       }
-    };
+    }
+    useSelectionKeyboardNav(state, handleRemoveTags);
 
-    useFocusInOut(focused => {
-      if (!focused) {
-        setValue('');
-        setPosition(undefined);
-        setSelection([]);
-      }
-    }, tagInputValueRef);
-
-    useEffect(() => {
-      if (position !== undefined && inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, [position, isActive]);
-
-    useEffect(() => {
-      if (value) setValue('');
-    }, [tags.length]);
-
-    useEventListener(useRef(document), 'keyup', instance.keyupOnDocumentListener)(
-      !!selection.length
-    );
+    const onNewTag = props.onNewTag || ((tag, add) => add(tag));
 
     function handleNewTag(tag) {
-      const index = position === null || position === undefined ? tags.length : position;
+      const pos = position.get();
+      const index = pos === null || pos === undefined ? tags.length : pos;
       const add = t => [...tags.slice(0, index), t, ...tags.slice(index)];
       const newTags = onNewTag(tag, add, index, tags);
       if (newTags !== tags) {
-        const focused = position !== undefined;
+        const focused = pos !== undefined;
         if (focused) {
-          setValue('');
-          if (position !== null && newTags.length > tags.length) {
-            setPosition(position + 1);
+          value.reset();
+          if (pos !== null && newTags.length > tags.length) {
+            position.set(pos + 1);
           }
         }
         onChange(newTags);
@@ -132,23 +201,21 @@ const TagInput = React.forwardRef(
     }
 
     function handleKeyDownInput(e) {
-      if (value) {
-        if (e.key === 'Enter' && match(value, tags)) {
-          handleNewTag(value);
+      const val = value.get();
+      const pos = position.get();
+      if (val) {
+        if (e.key === 'Enter' && match()) {
+          handleNewTag(val);
         }
         return undefined;
       }
-      if (e.key === 'ArrowLeft' && position !== 0)
-        return setPosition((position || tags.length) - 1);
-      if (e.key === 'ArrowRight' && position !== null) {
-        if (position < tags.length - 1) return setPosition(position + 1);
-        return setPosition(null);
-      }
-      if (e.key === 'Backspace' && tags.length && position !== 0) {
-        const indexToRemove = position === null ? tags.length - 1 : position - 1;
+      if (e.key === 'ArrowLeft') return position.moveLeft();
+      if (e.key === 'ArrowRight') return position.moveRight();
+      if (e.key === 'Backspace' && tags.length && pos !== 0) {
+        const indexToRemove = pos === null ? tags.length - 1 : pos - 1;
         const newTags = tags.filter((_, index) => index !== indexToRemove);
         onChange(newTags);
-        if (position !== null) setPosition(indexToRemove);
+        if (pos !== null) position.set(indexToRemove);
       }
       return undefined;
     }
@@ -158,8 +225,8 @@ const TagInput = React.forwardRef(
         removeFromSelection(tag);
       } else {
         const tagsToAdd =
-          e.shiftKey && selection.length
-            ? sliceArr(tags, tags.findIndex(isTagEqual(selection.slice(-1)[0])), index)
+          e.shiftKey && selection.get().length
+            ? sliceArr(tags, tags.findIndex(isTagEqual(selection.get().slice(-1)[0])), index)
             : [tag];
         addToSelection(...tagsToAdd);
       }
@@ -167,38 +234,38 @@ const TagInput = React.forwardRef(
 
     const input = (
       <input
-        ref={inputRef}
+        ref={refs.input}
         type="text"
         className={bemClass('TagInput__input', {
-          empty: !value,
-          valid: match(value, tags),
+          empty: !value.get(),
+          valid: match(),
         })}
-        value={value}
-        onChange={e => setValue(e.target.value)}
-        size={value ? value.length : 0}
-        onFocus={() => {
-          setSelection([]);
-        }}
+        value={value.get()}
+        onChange={e => value.set(e.target.value)}
+        size={value.get() ? value.get().length : 0}
+        onFocus={selection.reset}
         onBlur={() => {
-          setValue('');
-          setPosition(undefined);
+          value.reset();
+          position.reset();
         }}
         onKeyDown={handleKeyDownInput}
         disabled={disabled}
       />
     );
 
+    const pos = position.get();
+
     return (
-      <div ref={tagInputRef} className={bemClass('TagInput', {}, className)}>
-        <div className="TagInput__tags-list TagInput__tags-list--value" ref={tagInputValueRef}>
+      <div ref={refs.main} className={bemClass('TagInput', {}, className)}>
+        <div className="TagInput__tags-list TagInput__tags-list--value" ref={refs.value}>
           <button
             disabled={disabled}
             className="TagInput__button"
-            onClick={() => setPosition(null)}
+            onClick={() => position.set(null)}
           />
           {tags.map((tag, index) => (
             <Fragment key={getTagValue(tag)}>
-              {position === index ? input : <div style={{ width: 1 }} />}
+              {pos === index ? input : <div style={{ width: 1 }} />}
               <div className="TagInput__tag TagInput__tag--value">
                 {renderTag(tag, {
                   rounded,
@@ -209,25 +276,23 @@ const TagInput = React.forwardRef(
               </div>
             </Fragment>
           ))}
-          {position === null || position === undefined ? input : <div style={{ width: 1 }} />}
+          {pos === null || pos === undefined ? input : <div style={{ width: 1 }} />}
         </div>
-        <div style={{ display: !disabled && isActive ? 'block' : 'none' }}>
-          {!!remainingTags.length && (
-            <div className="TagInput__tags-list">
-              {remainingTags.map(tag => (
-                <div key={getTagValue(tag)} className="TagInput__tag">
-                  {renderTag(tag, {
-                    disabled: !getTagValue(tag).includes(value),
-                    onClick: () => {
-                      handleNewTag(tag);
-                      setTimeout(() => setPosition(null), 0);
-                    },
-                  })}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        {!disabled && state.isActive && !!remainingTags.length && (
+          <div className="TagInput__tags-list">
+            {remainingTags.map(tag => (
+              <div key={getTagValue(tag)} className="TagInput__tag">
+                {renderTag(tag, {
+                  disabled: !getTagValue(tag).includes(value.get()),
+                  onClick: () => {
+                    handleNewTag(tag);
+                    setTimeout(() => position.set(null), 0);
+                  },
+                })}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
   }
