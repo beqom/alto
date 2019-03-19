@@ -1,0 +1,48 @@
+@import '../scss/inc';
+
+.Tag {
+  background-color: $blue-10;
+  border: 1px solid $blue-20;
+  color: $blue;
+  border-radius: $border-radius-default;
+  padding: $spacing-x-small $spacing-small;
+  display: flex;
+  align-items: center;
+  line-height: 1;
+
+  &--button {
+    @extend %reset-button;
+    transition: all $transition;
+    cursor: pointer;
+
+    &:focus,
+    &:hover {
+      border-color: $blue;
+    }
+  }
+
+  &--rounded {
+    border-radius: 0.5rem + $spacing-x-small;
+  }
+
+  &--button:active,
+  &--active {
+    background-color: $blue;
+    color: $white;
+  }
+
+  &--disabled {
+    &,
+    &.Tag__button {
+      &,
+      &:focus,
+      &:hover,
+      &.Tag--active {
+        background-color: $coolgrey-10;
+        color: $coolgrey-50;
+        border-color: $coolgrey-20;
+        cursor: default;
+      }
+    }
+  }
+}
