@@ -1,128 +1,14 @@
-import React, { Fragment, useState, useRef, useEffect } from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../helpers/bem';
-
-import useEventListener from '../../hooks/useEventListener';
-import useFocusInOut from '../../hooks/useFocusInOut';
 import Tag from '../../Tag';
 
+import useTagInputStateAndRefs from './hooks/useTagInputStateAndRefs';
+import useSelectionKeyboardNav from './hooks/useSelectionKeyboardNav';
+import { sliceArr } from './helpers';
+
 import './TagInput.scss';
-
-const sliceArr = (xs, i, j) =>
-  xs.reduce((acc, x, k) => {
-    if (k >= i && k <= j && i < j) return [...acc, x];
-    if (k <= i && k >= j && i > j) return [x, ...acc];
-    return acc;
-  }, []);
-
-function useSelectionKeyboardNav(state, onRemoveTag) {
-  const [, setValue] = state.value;
-  const [selection, , resetSelection] = state.selection;
-  const [, setPosition] = state.position;
-
-  // create a mutable ref
-  const instance = useRef({}).current;
-  // store state in instance in order to use it in listener
-  instance.state = state;
-
-  useEventListener(useRef(document), 'keyup', e => {
-    if (e.key === 'Backspace' || e.key === 'Delete') {
-      onRemoveTag(instance.state.selection[0]);
-
-      resetSelection();
-      setPosition(null);
-    }
-    if (e.key === 'Escape') {
-      e.stopImmediatePropagation();
-      resetSelection();
-      setPosition(null);
-    }
-
-    const isAlphaNum = /^[a-zA-Z0-9-_ ]$/.test(e.key);
-    if (isAlphaNum) {
-      setValue(e.key);
-      resetSelection();
-      setPosition(null);
-    }
-  })(!!selection.length);
-}
-
-function useResettableState(initialState) {
-  const [state, setState] = useState(initialState);
-  const resetState = () => setState(initialState);
-  return [state, setState, resetState];
-}
-
-function usePosition(tags) {
-  const [position, setPosition, resetPosition] = useResettableState(undefined);
-
-  function movePositionLeft() {
-    if (position === 0 || position === undefined) return null;
-    if (position === null) return setPosition(tags.length - 1);
-    return setPosition(position - 1);
-  }
-
-  function movePositionRight() {
-    if (position === null || position === undefined) return null;
-    return setPosition(position + 1);
-  }
-
-  return [position, setPosition, resetPosition, movePositionLeft, movePositionRight];
-}
-
-function useTagInputStateAndRefs(tags, ref) {
-  const mainRefDefault = useRef();
-  const mainRef = ref || mainRefDefault;
-  const inputRef = useRef();
-  const valueRef = useRef();
-  const isActive = useFocusInOut(null, mainRef);
-
-  const state = {
-    value: useResettableState(''),
-    selection: useResettableState([]),
-    position: usePosition(tags),
-    isActive,
-  };
-
-  const [value, , resetValue] = state.value;
-  const [, , resetSelection] = state.selection;
-  const [position, , resetPosition] = state.position;
-
-  // --- EFFECTS ---
-
-  // reset value if tags length change
-  useEffect(() => {
-    if (value) resetValue();
-  }, [tags.length]);
-
-  // reset value, position and selection if focus out value area
-  useFocusInOut(focused => {
-    if (!focused) {
-      resetValue();
-      resetPosition();
-      resetSelection();
-    }
-  }, valueRef);
-
-  // when position change, or if the component become "active"
-  // then focus the input
-  useEffect(() => {
-    if (position !== undefined && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [position, isActive]);
-
-  return [
-    state,
-    // REFS
-    {
-      main: mainRef,
-      value: valueRef,
-      input: inputRef,
-    },
-  ];
-}
 
 const TagInput = React.forwardRef(
   (
