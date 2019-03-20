@@ -173,7 +173,7 @@ const TagInput = React.forwardRef(
                   disabled: !getTagValue(tag).includes(value),
                   onClick: () => {
                     handleNewTag(tag);
-                    setTimeout(() => setPosition(null), 0);
+                    setPosition(null);
                   },
                 })}
               </div>
