@@ -62,12 +62,13 @@ storiesOf('Form/Overview', module)
 require('./CheckBox/story');
 require('./ColorPicker/story');
 require('./DatePicker/story');
+require('./Fieldset/story');
 require('./FileInput/story');
 require('./InputNumber/story');
 require('./Label/story');
 require('./Radio/story');
 require('./Select/story');
 require('./Switch/story');
+require('./TagInput/story');
 require('./TextArea/story');
 require('./TextField/story');
-require('./Fieldset/story');

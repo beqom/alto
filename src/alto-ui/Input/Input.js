@@ -6,6 +6,7 @@ import TextField from '../Form/TextField';
 import DatePicker from '../Form/DatePicker';
 import Select from '../Form/Select';
 import TextArea from '../Form/TextArea';
+import TagInput from '../Form/TagInput';
 
 import './Input.scss';
 
@@ -43,6 +44,7 @@ class Input extends React.Component {
         case 'dropdown':
         case 'select':
         case 'boolean':
+        case 'tags':
           return onChange(args[0], ...args);
         case 'integer':
         case 'number':
@@ -64,6 +66,8 @@ class Input extends React.Component {
     };
 
     switch (type) {
+      case 'tags':
+        return <TagInput {...props} {...sharedProps} />;
       case 'integer':
       case 'number':
       case 'float':
