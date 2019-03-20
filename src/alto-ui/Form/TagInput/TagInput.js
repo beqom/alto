@@ -152,7 +152,7 @@ const TagInput = React.forwardRef(
           />
           {tags.map((tag, index) => (
             <Fragment key={getTagValue(tag)}>
-              {position === index ? input : <div style={{ width: 1 }} />}
+              {position === index ? input : <div className="TagInput__caret-placeholder" />}
               <div className="TagInput__tag TagInput__tag--value">
                 {renderTag(tag, {
                   rounded,
