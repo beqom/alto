@@ -25,15 +25,16 @@ const TagInput = React.forwardRef(
     ref
   ) => {
     const [state, refs] = useTagInputStateAndRefs(tags, ref);
-    const [value, setValue, resetValue] = state.value;
-    const [selection, setSelection, resetSelection] = state.selection;
-    const [
-      position,
-      setPosition,
-      resetPosition,
-      movePositionLeft,
-      movePositionRight,
-    ] = state.position;
+
+    const { state: value, set: setValue, reset: resetValue } = state.value;
+    const { state: selection, set: setSelection, reset: resetSelection } = state.selection;
+    const {
+      state: position,
+      set: setPosition,
+      reset: resetPosition,
+      moveLeft: movePositionLeft,
+      moveRight: movePositionRight,
+    } = state.position;
 
     const isTagEqual = a => b => getTagValue(a) === getTagValue(b);
     const isTagDiff = a => b => !isTagEqual(a)(b);
@@ -81,8 +82,8 @@ const TagInput = React.forwardRef(
         const focused = position !== undefined;
         if (focused) {
           resetValue();
-          if (position !== null && newTags.length > tags.length) {
-            setPosition(position + 1);
+          if (newTags.length > tags.length) {
+            movePositionRight();
           }
         }
         onChange(newTags);

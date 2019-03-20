@@ -11,16 +11,11 @@ export default function useTagInputStateAndRefs(tags, ref) {
   const valueRef = useRef();
   const isActive = useFocusInOut(null, mainRef);
 
-  const state = {
-    value: useResettableState(''),
-    selection: useResettableState([]),
-    position: usePosition(tags),
-    isActive,
-  };
-
-  const [value, , resetValue] = state.value;
-  const [, , resetSelection] = state.selection;
-  const [position, , resetPosition] = state.position;
+  const [value, setValue, resetValue] = useResettableState('');
+  const [selection, setSelection, resetSelection] = useResettableState([]);
+  const [position, setPosition, resetPosition, movePositionLeft, movePositionRight] = usePosition(
+    tags
+  );
 
   // --- EFFECTS ---
 
@@ -47,7 +42,19 @@ export default function useTagInputStateAndRefs(tags, ref) {
   }, [position, isActive]);
 
   return [
-    state,
+    // STATE
+    {
+      value: { state: value, set: setValue, reset: resetValue },
+      selection: { state: selection, set: setSelection, reset: resetSelection },
+      position: {
+        state: position,
+        set: setPosition,
+        reset: resetPosition,
+        moveLeft: movePositionLeft,
+        moveRight: movePositionRight,
+      },
+      isActive,
+    },
     // REFS
     {
       main: mainRef,
