@@ -43,7 +43,7 @@ const Icon = props => {
           right,
           button: props.onClick,
           disabled: otherProps.disabled,
-          active: otherProps.active,
+          active,
         },
         props.className
       )}
