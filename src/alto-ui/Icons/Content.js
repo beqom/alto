@@ -4,31 +4,14 @@ import Icon from './Icon';
 const Content = props => (
   <Icon {...props}>
     {ownProps => (
-      <g {...ownProps} fill="none" fillRule="evenodd">
-        <rect x="0.5" y="0.5" width="35" height="35" rx="3" stroke={ownProps.fill} />
+      <g>
+        <path {...ownProps} d="M31,10H13a1,1,0,0,1,0-2H31a1,1,0,0,1,0,2Z" />
+        <path {...ownProps} d="M31,16H13a1,1,0,0,1,0-2H31a1,1,0,0,1,0,2Z" />
+        <path {...ownProps} d="M31,22H5a1,1,0,0,1,0-2H31a1,1,0,0,1,0,2Z" />
+        <path {...ownProps} d="M31,28H5a1,1,0,0,1,0-2H31a1,1,0,0,1,0,2Z" />
         <path
           {...ownProps}
-          stroke={ownProps.fill}
-          strokeWidth="2"
-          d="M30.5958135,29.5 L5.85723818,29.5 L30.5958135,29.5 Z"
-        />
-        <path
-          {...ownProps}
-          stroke={ownProps.fill}
-          strokeWidth="2"
-          d="M30.5958135,21.5 L5.85723818,21.5 L30.5958135,21.5 Z"
-        />
-        <path
-          {...ownProps}
-          stroke={ownProps.fill}
-          strokeWidth="2"
-          d="M30.7385754,13.5 L6,13.5 L30.7385754,13.5 Z"
-        />
-        <path
-          {...ownProps}
-          stroke={ownProps.fill}
-          strokeWidth="2"
-          d="M19.7385754,5.5 L6,5.5 L19.7385754,5.5 Z"
+          d="M8.39,8H6.73L4.12,16H5.57l.63-2.17H8.88L9.5,16H11ZM6.52,12.72l.28-1c.25-.84.49-1.75.71-2.63h0c.23.87.47,1.79.72,2.63l.28,1Z"
         />
       </g>
     )}
