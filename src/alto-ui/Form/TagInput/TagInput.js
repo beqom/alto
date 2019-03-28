@@ -14,7 +14,8 @@ const TagInput = React.forwardRef(
   (
     {
       className,
-      value: tags = [],
+      value: selectedTags = [],
+      tags: allTags,
       onChange,
       rounded,
       getTagValue,
@@ -24,6 +25,11 @@ const TagInput = React.forwardRef(
     },
     ref
   ) => {
+    const allTagsByValue = (allTags || []).reduce(
+      (acc, t) => ({ ...acc, [getTagValue(t)]: t }),
+      {}
+    );
+    const tags = allTags ? selectedTags.map(t => allTagsByValue[t]) : selectedTags;
     const [state, refs] = useTagInputStateAndRefs(tags, ref);
 
     const { state: value, set: setValue, reset: resetValue } = state.value;
@@ -67,7 +73,7 @@ const TagInput = React.forwardRef(
       const onRemoveTag = props.onRemoveTag || ((t, ts) => ts.filter(isTagDiff(t)));
       const newTags = tagsToRemove.reduce((acc, tag) => onRemoveTag(tag, acc), tags);
       if (newTags !== tags) {
-        onChange(newTags);
+        onChange(newTags.map(getTagValue));
       }
     }
     useSelectionKeyboardNav(state, handleRemoveTags);
@@ -86,7 +92,7 @@ const TagInput = React.forwardRef(
             movePositionRight();
           }
         }
-        onChange(newTags);
+        onChange(newTags.map(getTagValue));
       }
     }
 
@@ -103,7 +109,7 @@ const TagInput = React.forwardRef(
       if (e.key === 'Backspace' && tags.length && position !== 0) {
         const indexToRemove = position === null ? tags.length - 1 : position - 1;
         const newTags = tags.filter((_, index) => index !== indexToRemove);
-        onChange(newTags);
+        onChange(newTags.map(getTagValue));
         if (position !== null) setPosition(indexToRemove);
       }
       return undefined;
@@ -170,7 +176,7 @@ const TagInput = React.forwardRef(
             {remainingTags.map(tag => (
               <div key={getTagValue(tag)} className="TagInput__tag">
                 {renderTag(tag, {
-                  disabled: !getTagValue(tag).includes(value),
+                  disabled: !getTagTitle(tag).includes(value),
                   onClick: () => {
                     handleNewTag(tag);
                     setPosition(null);
