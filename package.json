@@ -88,6 +88,7 @@
     "bigeval": "^3.1.0",
     "classnames": "^2.2.5",
     "focus-trap-react": "^3.1.2",
+    "lodash.compose": "^2.4.1",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lodash.isequal": "^4.5.0",
