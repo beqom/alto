@@ -42,8 +42,14 @@ class DatePicker extends React.Component {
     this.inputRef = React.createRef();
   }
 
-  getDate() {
-    return this.props.value ? DateTime.fromJSDate(this.props.value) : null;
+  getDate(value) {
+    const dateToParse = value || this.props.value;
+    // iso or timestamp ?
+    const date =
+      ['number', 'string'].includes(typeof dateToParse) && dateToParse
+        ? new Date(dateToParse)
+        : dateToParse;
+    return date ? DateTime.fromJSDate(date) : null;
   }
 
   getInputRef() {
@@ -51,7 +57,10 @@ class DatePicker extends React.Component {
   }
 
   setDate(date) {
-    this.props.onChange(date);
+    const { timestamp, iso, onChange } = this.props;
+    if (timestamp) onChange(date.getTime());
+    else if (iso) onChange(date.toISOString());
+    else onChange(date);
   }
 
   handleFocus(e) {
@@ -82,10 +91,10 @@ class DatePicker extends React.Component {
     this.setState(({ month }) => ({ month: month.set(obj) }));
   }
 
-  formatTextfieldDate() {
+  formatTextfieldDate(value) {
     // const { open } = this.state; // Uncomment when we enhance for typing in datefield
     const { format, displayFormat } = this.props;
-    const date = this.getDate();
+    const date = this.getDate(value);
 
     if (!date) return '';
     // if (open) return date.toFormat(format); // Uncomment when we enhance for typing in datefield
@@ -161,7 +170,16 @@ DatePicker.propTypes = {
   displayFormat: PropTypes.string,
   readOnly: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.object,
+  timestamp: PropTypes.bool,
+  iso: PropTypes.bool,
+  value: PropTypes.oneOfType([
+    // iso
+    PropTypes.string,
+    // timestamp
+    PropTypes.number,
+    // date
+    PropTypes.object,
+  ]),
   inputProps: PropTypes.shape({
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
