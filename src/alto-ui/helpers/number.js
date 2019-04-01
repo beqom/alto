@@ -1,3 +1,5 @@
+import compose from 'lodash.compose';
+
 const decimalSeparatorByLocale = {
   it: ',',
   'it-IT': ',',
@@ -15,9 +17,9 @@ const decimalSeparatorByLocale = {
 
 const DEFAULT_DECIMAL_SEPARATOR = '.';
 
-export const round = (n, precision) => Math.round(n * 10 ** precision) / 10 ** precision;
+export const round = precision => n => Math.round(n * 10 ** precision) / 10 ** precision;
 
-export const parse = (value, locale, precision = 0) => {
+export const parse = (value, locale, precision = 0, { min, max } = {}) => {
   const parsedValue = parseFloat(value);
 
   const decimalSeparator = decimalSeparatorByLocale[locale] || DEFAULT_DECIMAL_SEPARATOR;
@@ -31,13 +33,25 @@ export const parse = (value, locale, precision = 0) => {
             .replace(new RegExp(`[${decimalSeparator}]`, 'g'), '.')
             .replace(/(.+)-/g, '$1')
         );
-  return round(num, precision);
+
+  return compose(
+    round(precision),
+    x => (min || min === 0 ? Math.max(min, x) : x),
+    x => (max || max === 0 ? Math.min(max, x) : x)
+  )(num);
 };
 
-export const format = (value, locale, precision = 0, currency, disableThousandSeparator) => {
+export const format = (
+  value,
+  locale,
+  precision = 0,
+  currency,
+  disableThousandSeparator,
+  options
+) => {
   if (!value && value !== 0) return '';
 
-  const valueParsed = parse(value, locale, precision);
+  const valueParsed = parse(value, locale, precision, options);
   if (Number.isNaN(valueParsed)) return '';
 
   const valueFormatted = valueParsed.toLocaleString(locale, {

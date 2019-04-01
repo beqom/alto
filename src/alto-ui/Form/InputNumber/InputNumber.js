@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import TextField from '../TextField';
 
@@ -25,19 +26,21 @@ class InputNumber extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { value, locale, precision, currency, disableThousandSeparator } = props;
+    const { value, locale, precision, currency, disableThousandSeparator, max, min } = props;
     if (
       state.prev.value !== value ||
       state.prev.precision !== precision ||
       state.prev.locale !== locale ||
       state.prev.currency !== currency ||
-      state.prev.disableThousandSeparator !== disableThousandSeparator
+      state.prev.disableThousandSeparator !== disableThousandSeparator ||
+      state.prev.min !== min ||
+      state.prev.max !== max
     ) {
       return {
         prev: props,
         display: state.editing
           ? state.display
-          : format(value, locale, precision, currency, disableThousandSeparator),
+          : format(value, locale, precision, currency, disableThousandSeparator, { min, max }),
       };
     }
     return null;
@@ -68,23 +71,30 @@ class InputNumber extends React.Component {
   }
 
   parse(value) {
-    const { locale, precision } = this.props;
-    const res = parse(value, locale, precision);
+    const { locale, precision, min, max } = this.props;
+    const res = parse(value, locale, precision, { min, max });
     return Number.isNaN(res) ? '' : res;
   }
 
   format(value) {
-    const { locale, precision, currency, disableThousandSeparator } = this.props;
-    return format(value, locale, precision, currency, disableThousandSeparator);
+    const { locale, precision, currency, disableThousandSeparator, min, max } = this.props;
+    return format(value, locale, precision, currency, disableThousandSeparator, { min, max });
   }
 
   render() {
-    const { forwardedRef, locale, precision, disableThousandSeparator, ...rest } = this.props;
+    const {
+      forwardedRef,
+      locale,
+      precision,
+      disableThousandSeparator,
+      className,
+      ...rest
+    } = this.props;
     return (
       <TextField
-        className="InputNumber"
         ref={forwardedRef}
         {...rest}
+        className={classnames('InputNumber', className)}
         type="text"
         value={this.state.display}
         onChange={this.handleChange}
@@ -101,6 +111,7 @@ InputNumber.defaultProps = {
 };
 
 InputNumber.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   precision: PropTypes.number,
   locale: PropTypes.string,
@@ -110,6 +121,8 @@ InputNumber.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   disableThousandSeparator: PropTypes.bool,
+  min: PropTypes.number,
+  max: PropTypes.number,
 };
 
 export default React.forwardRef((props, ref) => <InputNumber {...props} forwardedRef={ref} />);

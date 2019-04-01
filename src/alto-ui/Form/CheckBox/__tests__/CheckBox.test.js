@@ -36,8 +36,6 @@ describe('<CheckBox />', () => {
     const label = wrapper.childAt(1);
     expect(label.type()).toBe('label');
     expect(label.prop('htmlFor')).toBe('my-checkbox');
-    expect(label.prop('checked')).toBe(true);
-    expect(label.prop('disabled')).toBe(true);
     expect(label.text()).toBe('Are you still alive');
   });
 });
