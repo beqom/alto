@@ -75,6 +75,7 @@
   @extend %text-ellipsis;
   line-height: 2em;
   height: 2em;
+  position: relative;
 
   &--hidden {
     @extend %visually-hidden;

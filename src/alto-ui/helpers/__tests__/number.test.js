@@ -3,16 +3,16 @@ import { round, parse, format } from '../number';
 describe('InputNumber/helpers', () => {
   it('should round correctly depending on value and precision', () => {
     const firstValue = 100.55;
-    expect(round(firstValue, 0)).toBe(101);
-    expect(round(firstValue, 1)).toBe(100.6);
-    expect(round(firstValue, 2)).toBe(100.55);
-    expect(round(firstValue, 3)).toBe(100.55);
+    expect(round(0)(firstValue)).toBe(101);
+    expect(round(1)(firstValue)).toBe(100.6);
+    expect(round(2)(firstValue)).toBe(100.55);
+    expect(round(3)(firstValue)).toBe(100.55);
 
     const secondValue = 100.42;
-    expect(round(secondValue, 0)).toBe(100);
-    expect(round(secondValue, 1)).toBe(100.4);
-    expect(round(secondValue, 2)).toBe(100.42);
-    expect(round(secondValue, 3)).toBe(100.42);
+    expect(round(0)(secondValue)).toBe(100);
+    expect(round(1)(secondValue)).toBe(100.4);
+    expect(round(2)(secondValue)).toBe(100.42);
+    expect(round(3)(secondValue)).toBe(100.42);
   });
 
   it('should format correctly depending on value, locale and precision', () => {
