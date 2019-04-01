@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 
 import TextField from '../TextField';
 
@@ -79,12 +80,19 @@ class InputNumber extends React.Component {
   }
 
   render() {
-    const { forwardedRef, locale, precision, disableThousandSeparator, ...rest } = this.props;
+    const {
+      forwardedRef,
+      locale,
+      precision,
+      disableThousandSeparator,
+      className,
+      ...rest
+    } = this.props;
     return (
       <TextField
-        className="InputNumber"
         ref={forwardedRef}
         {...rest}
+        className={classnames('InputNumber', className)}
         type="text"
         value={this.state.display}
         onChange={this.handleChange}
@@ -101,6 +109,7 @@ InputNumber.defaultProps = {
 };
 
 InputNumber.propTypes = {
+  className: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   precision: PropTypes.number,
   locale: PropTypes.string,
