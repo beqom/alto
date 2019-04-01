@@ -2,6 +2,7 @@
 
 .Radio {
   position: relative;
+  line-height: 1;
 }
 
 .Radio__input {
@@ -10,13 +11,12 @@
 
 .Radio__label {
   font-size: $font-size-medium;
-  line-height: 2em;
-  height: 2em;
   padding-left: 1.5em;
   cursor: pointer;
   position: relative;
   outline: 0;
-  display: block;
+  display: inline-block;
+  max-width: 100%;
 
   &::before,
   &::after {
@@ -68,5 +68,15 @@
     input:checked:disabled + & {
       background: $coolgrey-30;
     }
+  }
+}
+
+.Radio__label-text {
+  @extend %text-ellipsis;
+  line-height: 2em;
+  height: 2em;
+
+  &--hidden {
+    @extend %visually-hidden;
   }
 }

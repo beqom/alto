@@ -1,32 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { bemClass } from '../../helpers/bem';
 
 import './CheckBox.scss';
 
-const CheckBox = props => {
-  const { label, className, hideLabel, style, ...inputProps } = props;
+function CheckBox({ label, className, hideLabel, style, ...props }) {
   return (
-    <div className={classnames('CheckBox', className)} style={style}>
-      <input {...inputProps} className="CheckBox__input" type="checkbox" />
-      <label
-        htmlFor={props.id}
-        checked={props.checked}
-        disabled={props.disabled}
-        title={label}
-        className="CheckBox__label"
-      >
-        <div className={bemClass('CheckBox__label-text', { hidden: hideLabel })}>{props.label}</div>
+    <div className={bemClass('CheckBox', {}, className)} style={style}>
+      <input
+        {...(props.readOnly ? { tabIndex: -1 } : null)}
+        {...props}
+        className="CheckBox__input"
+        type="checkbox"
+      />
+      <label htmlFor={props.id} className="CheckBox__label">
+        <div className={bemClass('CheckBox__label-text', { hidden: hideLabel })}>{label}</div>
       </label>
     </div>
   );
-};
+}
 
-CheckBox.defaultProps = {
-  checked: false,
-  disabled: false,
-};
+CheckBox.defaultProps = {};
 
 CheckBox.propTypes = {
   label: PropTypes.string.isRequired,
@@ -36,6 +30,7 @@ CheckBox.propTypes = {
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
   hideLabel: PropTypes.bool,
+  readOnly: PropTypes.bool,
 };
 
 export default CheckBox;

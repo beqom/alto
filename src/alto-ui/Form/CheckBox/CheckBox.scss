@@ -2,6 +2,7 @@
 
 .CheckBox {
   position: relative;
+  line-height: 1;
 }
 
 .CheckBox__input {
@@ -10,12 +11,12 @@
 
 .CheckBox__label {
   font-size: $font-size-medium;
-  line-height: 2em;
-  height: 2em;
+  padding-left: 1.5em;
   cursor: pointer;
   position: relative;
   outline: 0;
-  display: block;
+  display: inline-block;
+  max-width: 100%;
 
   &::before,
   &::after {
@@ -74,12 +75,12 @@
 
 .CheckBox__label-text {
   @extend %text-ellipsis;
+  line-height: 2em;
+  height: 2em;
 
-  margin-left: 1.5em;
-}
+  &--hidden {
+    @extend %visually-hidden;
 
-.CheckBox__label-text--hidden {
-  @extend %visually-hidden;
-
-  margin: 0;
+    margin: 0;
+  }
 }
