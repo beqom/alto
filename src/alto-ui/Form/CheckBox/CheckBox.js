@@ -10,8 +10,9 @@ function CheckBox({ label, className, hideLabel, style, ...props }) {
       <input
         {...(props.readOnly ? { tabIndex: -1 } : null)}
         {...props}
-        className="CheckBox__input"
+        className={bemClass('CheckBox__input', { readOnly: props.readOnly })}
         type="checkbox"
+        disabled={props.disabled || props.readOnly}
       />
       <label htmlFor={props.id} className="CheckBox__label">
         <div className={bemClass('CheckBox__label-text', { hidden: hideLabel })}>{label}</div>

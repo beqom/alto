@@ -103,7 +103,7 @@ class DatePicker extends React.Component {
   }
 
   render() {
-    const { id, small, large, frozen, placeholder } = this.props;
+    const { id, small, large, placeholder } = this.props;
     const { open } = this.state;
     const date = this.getDate();
 
@@ -122,7 +122,6 @@ class DatePicker extends React.Component {
           id={`${id}__input`}
           small={small}
           large={large}
-          frozen={frozen}
         />
         <Popover
           className="DatePicker__day-picker"
@@ -189,7 +188,6 @@ DatePicker.propTypes = {
   hideLabel: PropTypes.bool,
   small: PropTypes.bool,
   large: PropTypes.bool,
-  frozen: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => <DatePicker inputRef={ref} {...props} />);

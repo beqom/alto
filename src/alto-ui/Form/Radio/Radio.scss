@@ -40,11 +40,11 @@
       background-color: $blue;
     }
 
-    input:disabled + & {
+    input:disabled:not(.Radio__input--readOnly) + & {
       background-color: $blue-10;
     }
 
-    input:checked:disabled + & {
+    input:checked:disabled:not(.Radio__input--readOnly) + & {
       border-color: $coolgrey-20;
       background-color: $blue-10;
     }
@@ -65,7 +65,7 @@
       border-radius: 10rem;
     }
 
-    input:checked:disabled + & {
+    input:checked:disabled:not(.Radio__input--readOnly) + & {
       background: $coolgrey-30;
     }
   }

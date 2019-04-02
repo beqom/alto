@@ -39,12 +39,11 @@ const TextField = React.forwardRef((props, ref) => {
     area,
     right,
     ghost,
-    frozen,
     disabled,
     ...remainingProps
   } = props;
 
-  const visibilityProps = frozen ? { 'aria-hidden': true, tabIndex: '-1' } : {};
+  const visibilityProps = props.readOnly ? { 'aria-hidden': true, tabIndex: '-1' } : {};
 
   if (ghost) return <GhostInput {...props} />;
 
@@ -57,7 +56,6 @@ const TextField = React.forwardRef((props, ref) => {
       error,
       area,
       right,
-      frozen,
     },
     props.className
   );
@@ -70,7 +68,7 @@ const TextField = React.forwardRef((props, ref) => {
           {...remainingProps}
           className={className}
           {...visibilityProps}
-          disabled={disabled || frozen}
+          disabled={disabled}
         />
       ) : (
         <input
@@ -78,7 +76,7 @@ const TextField = React.forwardRef((props, ref) => {
           {...remainingProps}
           className={className}
           type={getInputType(props.type)}
-          disabled={disabled || frozen}
+          disabled={disabled}
           {...visibilityProps}
           onChange={event => handleChange(event, props.type, props.onChange)}
         />
@@ -98,7 +96,6 @@ TextField.propTypes = {
   small: PropTypes.bool,
   success: PropTypes.bool,
   error: PropTypes.bool,
-  frozen: PropTypes.bool,
 };
 
 TextField.displayName = 'TextField';

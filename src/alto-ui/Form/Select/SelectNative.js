@@ -37,7 +37,7 @@ const SelectNative = React.forwardRef((props, ref) => {
     className,
     hideLabel,
     options,
-    readonly,
+    readOnly,
     multiple,
     ...otherProps
   } = props;
@@ -45,7 +45,7 @@ const SelectNative = React.forwardRef((props, ref) => {
     <select
       ref={ref}
       {...otherProps}
-      disabled={readonly || otherProps.disabled}
+      disabled={readOnly || otherProps.disabled}
       multiple={multiple}
       className={bemClass('Select', {
         native: true,
@@ -53,7 +53,7 @@ const SelectNative = React.forwardRef((props, ref) => {
         error,
         large,
         small,
-        readonly,
+        readOnly,
         multiple,
       })}
     >
