@@ -56,8 +56,8 @@
     line-height: $height-small;
   }
 
-  &:disabled,
-  &--disabled {
+  &:disabled:not(.Select--readOnly),
+  &--disabled:not(.Select--readOnly) {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
@@ -65,20 +65,13 @@
     box-shadow: none;
   }
 
-  &--readonly,
-  &--readonly:hover,
-  &--readonly:focus,
-  &--readonly:disabled {
-    cursor: default;
-    color: currentColor;
-    background: transparent;
-    box-shadow: none;
+  &--readOnly,
+  &--readOnly:hover,
+  &--readOnly:focus,
+  &--readOnly:disabled {
     &::-ms-expand {
       display: none;
     }
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: none;
   }
 }
 

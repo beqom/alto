@@ -10,8 +10,9 @@ function Radio({ label, className, hideLabel, style, ...props }) {
       <input
         {...(props.readOnly ? { tabIndex: -1 } : null)}
         {...props}
-        className="Radio__input"
+        className={bemClass('Radio__input', { readOnly: props.readOnly })}
         type="radio"
+        disabled={props.disabled || props.readOnly}
       />
       <label htmlFor={props.id} className="Radio__label">
         <div className={bemClass('Radio__label-text', { hidden: hideLabel })}>{label}</div>
