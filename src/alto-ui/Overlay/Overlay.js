@@ -83,11 +83,11 @@ class Overlay extends React.PureComponent {
     const { blocking, onClose, inert } = this.props;
     if (onClose && !inert) {
       document.addEventListener('keydown', this.handleKeyDown);
-      // using capture will allow to detect the click on a node that will disapear
-      // after this click -> remove an item of list for example by clicking on this item
-      document.addEventListener('click', this.handleClickOutside, true);
 
       if (!blocking) {
+        // using capture will allow to detect the click on a node that will disapear
+        // after this click -> remove an item of list for example by clicking on this item
+        document.addEventListener('click', this.handleClickOutside, true);
         document.addEventListener('focusin', this.handleFocusOutside);
         window.addEventListener('blur', this.handleWindowBlur);
       }
