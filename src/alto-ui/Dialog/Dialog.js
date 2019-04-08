@@ -62,25 +62,24 @@ const Dialog = props => {
           )}
           {!!title && <hr className="Dialog__header-stroke" />}
           <div className="Dialog__body">{children}</div>
-          {!!buttons &&
-            !!buttons.length && (
-              <footer className="Dialog__footer">
-                {buttons
-                  .map(btn => (typeof btn === 'string' ? { children: btn } : btn))
-                  .map((btn, index) => (
-                    <li key={btn.children}>
-                      <Button
-                        id={`${id}__button--${index + 1}`}
-                        className="Dialog__button"
-                        flat={index < buttons.length - 1}
-                        onClick={onClose}
-                        {...btn}
-                        disabled={inert || btn.disabled}
-                      />
-                    </li>
-                  ))}
-              </footer>
-            )}
+          {!!buttons && !!buttons.length && (
+            <footer className="Dialog__footer">
+              {buttons
+                .map(btn => (typeof btn === 'string' ? { children: btn } : btn))
+                .map((btn, index) => (
+                  <li key={btn.children}>
+                    <Button
+                      id={`${id}__button--${index + 1}`}
+                      className="Dialog__button"
+                      flat={index < buttons.length - 1}
+                      onClick={onClose}
+                      {...btn}
+                      disabled={inert || btn.disabled}
+                    />
+                  </li>
+                ))}
+            </footer>
+          )}
         </div>
       )}
     </Overlay>
@@ -97,7 +96,7 @@ Dialog.defaultProps = {
 Dialog.propTypes = {
   id: PropTypes.string.isRequired,
   openFocusTargetId: PropTypes.string,
-  closeFocusTargetId: PropTypes.string.isRequired,
+  closeFocusTargetId: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.any,
   open: PropTypes.bool,
