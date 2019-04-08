@@ -14,7 +14,7 @@ const TagInput = React.forwardRef(
   (
     {
       className,
-      value: selectedTags = [],
+      value: selectedTags,
       tags: allTags,
       onChange,
       rounded,
@@ -29,7 +29,10 @@ const TagInput = React.forwardRef(
       (acc, t) => ({ ...acc, [getTagValue(t)]: t }),
       {}
     );
-    const tags = allTags ? selectedTags.map(t => allTagsByValue[t]) : selectedTags;
+    const tags =
+      allTags && selectedTags
+        ? selectedTags.map(t => allTagsByValue[t]).filter(x => !!x)
+        : selectedTags || [];
     const [state, refs] = useTagInputStateAndRefs(tags, ref);
 
     const { state: value, set: setValue, reset: resetValue } = state.value;
