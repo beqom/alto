@@ -22,7 +22,12 @@ function Sortable({ className, children, items, itemIdKey, onChange }) {
 
         const newItems = moveByIndex(items, result.source.index, result.destination.index);
 
-        onChange(newItems);
+        onChange(
+          newItems,
+          items[result.source.index],
+          result.source.index,
+          result.destination.index
+        );
       }}
     >
       <Droppable droppableId="droppable">
@@ -81,7 +86,7 @@ Sortable.propTypes = {
   children: PropTypes.func.isRequired,
   itemIdKey: PropTypes.string,
   items: PropTypes.array,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
 };
 
 export default Sortable;
