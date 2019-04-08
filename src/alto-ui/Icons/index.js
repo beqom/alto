@@ -63,6 +63,7 @@ import InfoStandard from './InfoStandard';
 import Insight from './Insight';
 import Lightbulb from './Lightbulb';
 import List from './List';
+import Lock from './Lock';
 import LongText from './LongText';
 import Menu from './Menu';
 import Minus from './Minus';
@@ -168,6 +169,7 @@ export default {
   Insight,
   Lightbulb,
   List,
+  Lock,
   LongText,
   Menu,
   Minus,
