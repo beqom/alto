@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
+import { action } from '@storybook/addon-actions';
 
 import Sortable from './Sortable';
 import DragHandleIcon from '../Icons/DragHandle';
@@ -24,7 +25,18 @@ function SortableDemo() {
   const [list, setList] = useState(fruits);
 
   return (
-    <Sortable items={list} onChange={setList}>
+    <Sortable
+      items={list}
+      onChange={(newList, item, from, to) => {
+        setList(newList);
+        action(`move ${item.icon} ${item.name} from ${from} to ${to}. onChange params:`)(
+          newList,
+          item,
+          from,
+          to
+        );
+      }}
+    >
       {({ name, icon }, handleProps) => (
         <div style={{ padding: '0.25rem' }}>
           <Card small>
