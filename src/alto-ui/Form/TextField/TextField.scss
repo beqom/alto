@@ -23,13 +23,13 @@
     color: $coolgrey-20;
   }
 
-  &:hover {
+  &:hover:not(.textfield--readOnly):not([disabled]) {
     border-color: $blue;
     box-shadow: 0 0 0 1px $blue;
   }
 
-  &:focus,
-  &:focus:hover {
+  &:focus:not(.textfield--readOnly),
+  &:focus:hover:not(.textfield--readOnly) {
     border-color: $color-input-border;
     box-shadow: $drop-shadow;
   }

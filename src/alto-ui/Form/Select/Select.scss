@@ -19,7 +19,7 @@
   width: 100%;
   transition: box-shadow $transition, border-color $transition;
 
-  &:hover {
+  &:hover:not(.Select--readOnly) {
     border-color: $blue;
     box-shadow: 0 0 0 1px $blue;
   }
