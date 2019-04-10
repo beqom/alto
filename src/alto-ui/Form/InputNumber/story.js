@@ -27,6 +27,7 @@ storiesOf('Form/InputNumber', module)
               setState({ value: args[1] });
             }}
             disableThousandSeparator={boolean('disableThousandSeparator', false)}
+            percent={boolean('percent', false)}
           />
         )}
       </StateProvider>
