@@ -40,6 +40,7 @@ const TextField = React.forwardRef((props, ref) => {
     right,
     ghost,
     disabled,
+    percent,
     ...remainingProps
   } = props;
 
