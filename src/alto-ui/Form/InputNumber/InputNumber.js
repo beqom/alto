@@ -26,13 +26,23 @@ class InputNumber extends React.Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    const { value, locale, precision, currency, disableThousandSeparator, max, min } = props;
+    const {
+      value,
+      locale,
+      precision,
+      currency,
+      disableThousandSeparator,
+      percent,
+      max,
+      min,
+    } = props;
     if (
       state.prev.value !== value ||
       state.prev.precision !== precision ||
       state.prev.locale !== locale ||
       state.prev.currency !== currency ||
       state.prev.disableThousandSeparator !== disableThousandSeparator ||
+      state.prev.percent !== percent ||
       state.prev.min !== min ||
       state.prev.max !== max
     ) {
@@ -40,7 +50,11 @@ class InputNumber extends React.Component {
         prev: props,
         display: state.editing
           ? state.display
-          : format(value, locale, precision, currency, disableThousandSeparator, { min, max }),
+          : format(value, locale, precision, currency, disableThousandSeparator, {
+              percent,
+              min,
+              max,
+            }),
       };
     }
     return null;
@@ -71,14 +85,19 @@ class InputNumber extends React.Component {
   }
 
   parse(value) {
-    const { locale, precision, min, max } = this.props;
-    const res = parse(value, locale, precision, { min, max });
+    const { locale, precision, percent, min, max } = this.props;
+    const res = parse(value, locale, precision, { percent, min, max });
+
     return Number.isNaN(res) ? '' : res;
   }
 
   format(value) {
-    const { locale, precision, currency, disableThousandSeparator, min, max } = this.props;
-    return format(value, locale, precision, currency, disableThousandSeparator, { min, max });
+    const { locale, precision, currency, disableThousandSeparator, min, max, percent } = this.props;
+    return format(value, locale, precision, currency, disableThousandSeparator, {
+      percent,
+      min,
+      max,
+    });
   }
 
   render() {
@@ -88,6 +107,7 @@ class InputNumber extends React.Component {
       precision,
       disableThousandSeparator,
       className,
+      percent,
       ...rest
     } = this.props;
     return (
@@ -121,6 +141,7 @@ InputNumber.propTypes = {
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   disableThousandSeparator: PropTypes.bool,
+  percent: PropTypes.bool,
   min: PropTypes.number,
   max: PropTypes.number,
 };

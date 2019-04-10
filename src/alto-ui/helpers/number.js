@@ -19,7 +19,7 @@ const DEFAULT_DECIMAL_SEPARATOR = '.';
 
 export const round = precision => n => Math.round(n * 10 ** precision) / 10 ** precision;
 
-export const parse = (value, locale, precision = 0, { min, max } = {}) => {
+export const parse = (value, locale, precision = 0, { percent, min, max } = {}) => {
   const parsedValue = parseFloat(value);
 
   const decimalSeparator = decimalSeparatorByLocale[locale] || DEFAULT_DECIMAL_SEPARATOR;
@@ -35,6 +35,7 @@ export const parse = (value, locale, precision = 0, { min, max } = {}) => {
         );
 
   return compose(
+    x => (percent ? x / 100 : x),
     round(precision),
     x => (min || min === 0 ? Math.max(min, x) : x),
     x => (max || max === 0 ? Math.min(max, x) : x)
@@ -47,18 +48,22 @@ export const format = (
   precision = 0,
   currency,
   disableThousandSeparator,
-  options
+  { percent } = {}
 ) => {
   if (!value && value !== 0) return '';
 
-  const valueParsed = parse(value, locale, precision, options);
+  const valueParsed = parse(value, locale, precision, { percent });
   if (Number.isNaN(valueParsed)) return '';
 
-  const valueFormatted = valueParsed.toLocaleString(locale, {
-    minimumFractionDigits: precision,
-    maximumFractionDigits: precision,
-    useGrouping: !disableThousandSeparator,
-  });
-
-  return currency ? `${currency} ${valueFormatted}` : valueFormatted;
+  return compose(
+    x => (percent ? `${x}%` : x),
+    x => (currency && !percent ? `${currency}${x}` : x),
+    x =>
+      x.toLocaleString(locale, {
+        minimumFractionDigits: precision,
+        maximumFractionDigits: precision,
+        useGrouping: !disableThousandSeparator,
+      }),
+    x => (percent ? x * 100 : x)
+  )(valueParsed);
 };
