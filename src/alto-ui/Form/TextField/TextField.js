@@ -57,6 +57,7 @@ const TextField = React.forwardRef((props, ref) => {
       error,
       area,
       right,
+      readOnly: props.readOnly,
     },
     props.className
   );
