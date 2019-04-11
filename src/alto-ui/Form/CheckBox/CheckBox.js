@@ -32,7 +32,6 @@ CheckBox.propTypes = {
   disabled: PropTypes.bool,
   hideLabel: PropTypes.bool,
   readOnly: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
 };
 
 export default CheckBox;

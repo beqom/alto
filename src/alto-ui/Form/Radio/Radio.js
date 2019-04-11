@@ -32,7 +32,6 @@ Radio.propTypes = {
   disabled: PropTypes.bool,
   readOnly: PropTypes.bool,
   hideLabel: PropTypes.bool,
-  defaultChecked: PropTypes.bool,
 };
 
 export default Radio;
