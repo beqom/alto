@@ -1,9 +1,10 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean, select } from '@storybook/addon-knobs';
-import styled from 'styled-components';
+import { text, boolean, select, number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
+
+import styled from 'styled-components';
 
 import TextField from './TextField';
 
@@ -64,6 +65,7 @@ storiesOf('Form/TextField', module)
           id="customizable"
           placeholder={text('placeholder', 'Type something here...')}
           helpText={text('helpText', 'Help text')}
+          debounced={number('debounced', 200)}
         />
       </SimpleWrapper>
     );

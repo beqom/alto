@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
+import isNumber from 'lodash.isnumber';
 
 import { bemClass } from '../../helpers/bem';
 import { isIE11 } from '../../helpers/navigator';
@@ -41,9 +43,12 @@ const TextField = React.forwardRef((props, ref) => {
     ghost,
     disabled,
     percent,
+    debounced,
     ...remainingProps
   } = props;
 
+  const onChangeDebounceTime = isNumber(debounced) ? debounced : 200;
+  const propagateChange = debounced ? debounce(handleChange, onChangeDebounceTime) : handleChange;
   const visibilityProps = props.readOnly ? { 'aria-hidden': true, tabIndex: '-1' } : {};
 
   if (ghost) return <GhostInput {...props} />;
@@ -80,7 +85,7 @@ const TextField = React.forwardRef((props, ref) => {
           type={getInputType(props.type)}
           disabled={disabled}
           {...visibilityProps}
-          onChange={event => handleChange(event, props.type, props.onChange)}
+          onChange={event => propagateChange(event, type, props.onChange)}
         />
       )}
     </FormElement>
@@ -89,10 +94,12 @@ const TextField = React.forwardRef((props, ref) => {
 TextField.defaultProps = {
   type: 'text',
   autoComplete: 'off',
+  debounced: false,
 };
 
 TextField.propTypes = {
   type: PropTypes.string,
+  debounced: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
   area: PropTypes.bool,
   large: PropTypes.bool,
   small: PropTypes.bool,
