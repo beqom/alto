@@ -10,10 +10,10 @@ storiesOf('Form/Radio', module)
   .addWithJSX('overview', () => (
     <div>
       <Radio id="inactive" label="Inactive" name="overview" />
-      <Radio id="checked" label="Checked" name="overview" checked />
+      <Radio id="checked" label="Checked" name="overview" defaultChecked />
       <Radio id="readonly" label="Read-only" readOnly />
-      <Radio id="readonly-checked" label="Read-only checked" readOnly checked />
+      <Radio id="readonly-checked" label="Read-only checked" readOnly defaultChecked />
       <Radio id="disabled" label="Disabled" disabled />
-      <Radio id="disabled-checked" label="Disabled checked" disabled checked />
+      <Radio id="disabled-checked" label="Disabled checked" disabled defaultChecked />
     </div>
   ));
