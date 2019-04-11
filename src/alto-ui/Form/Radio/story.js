@@ -11,6 +11,8 @@ storiesOf('Form/Radio', module)
     <div>
       <Radio id="inactive" label="Inactive" name="overview" />
       <Radio id="checked" label="Checked" name="overview" checked />
+      <Radio id="readonly" label="Read-only" readOnly />
+      <Radio id="readonly-checked" label="Read-only checked" readOnly checked />
       <Radio id="disabled" label="Disabled" disabled />
       <Radio id="disabled-checked" label="Disabled checked" disabled checked />
     </div>
