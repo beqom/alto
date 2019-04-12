@@ -5,9 +5,10 @@
   font-weight: $font-weight-semibold;
   color: $coolgrey-80;
   text-align: left;
-  padding-bottom: $spacing-xx-small;
+  padding-bottom: $spacing-xxx-small;
   display: block;
   border-bottom: 1px solid transparent;
+  text-transform: uppercase;
 
   &--read-only {
     border-bottom-color: $coolgrey-20;
