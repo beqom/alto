@@ -23,13 +23,13 @@
     color: $coolgrey-40;
   }
 
-  &:hover:not(.textfield--readOnly):not([disabled]) {
+  &:hover:not(.textfield--readOnly):not([disabled]):not(.DatagridCellInput) {
     border-color: $blue;
     box-shadow: 0 0 0 1px $blue;
   }
 
-  &:focus:not(.textfield--readOnly),
-  &:focus:hover:not(.textfield--readOnly) {
+  &:focus:not(.textfield--readOnly):not(.DatagridCellInput),
+  &:focus:hover:not(.textfield--readOnly):not(.DatagridCellInput) {
     border-color: $color-input-border;
     box-shadow: $drop-shadow;
   }

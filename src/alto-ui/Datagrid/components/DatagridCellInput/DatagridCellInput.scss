@@ -13,11 +13,34 @@
   &--float {
     .textfield {
       text-align: right;
+      height: $height-default;
+      line-height: $height-default;
+      font-size: $font-size-small;
+      box-shadow: none;
+    }
+  }
+
+  &--comfortable {
+    .textfield {
+      height: $height-large;
+      line-height: $height-large;
+      font-size: $font-size-medium;
+    }
+  }
+
+  &--compact {
+    .textfield {
+      height: $height-small;
+      line-height: $height-small;
     }
   }
 
   &--editing {
     display: block;
+    border-color: $blue-60;
+    box-shadow: 0 0 0 1px $blue;
+    border-radius: $border-radius-default;
+    font-size: $font-size-small;
   }
 
   &--list,
