@@ -20,7 +20,7 @@
   transition: all $transition;
 
   &::placeholder {
-    color: $coolgrey-20;
+    color: $coolgrey-40;
   }
 
   &:hover:not(.textfield--readOnly):not([disabled]) {
