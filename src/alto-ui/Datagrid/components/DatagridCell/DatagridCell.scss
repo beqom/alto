@@ -25,9 +25,19 @@
     height: $height-datagrid-comfortable;
   }
 
-  &--header.DatagridCell--compact {
-    border: 1px solid blue;
+
+  &--header:not(.DatagridCell--summary) {
+    height: $height-datagrid-header-default;
+    background-color: $row-header-bkgd;
+    &.DatagridCell--compact {
+      height: $height-datagrid-header-compact;
+    }
+    &.DatagridCell--comfortable {
+      height: $height-datagrid-header-comfortable;
+    }
   }
+
+
 
   &--number,
   &--percentage,
@@ -51,7 +61,10 @@
     background-color: $coolgrey-10;
     font-weight: $font-weight-semibold;
     padding: 0;
-    border: 1px solid red;
+  }
+
+  &--summary {
+    background: $white;
   }
 
   &--selected {
