@@ -18,6 +18,14 @@
   display: inline-block;
   max-width: 100%;
 
+  &--readOnly {
+    cursor: default;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+  }
+
   &::before,
   &::after {
     position: absolute;
