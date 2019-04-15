@@ -28,7 +28,7 @@
 
   &--header:not(.DatagridCell--summary) {
     height: $height-datagrid-header-default;
-    background-color: $row-header-bkgd;
+    background-color: $color-row-header-bkgd;
     &.DatagridCell--compact {
       height: $height-datagrid-header-compact;
     }
