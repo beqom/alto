@@ -25,6 +25,10 @@
     height: $height-datagrid-comfortable;
   }
 
+  &--header.DatagridCell--compact {
+    border: 1px solid blue;
+  }
+
   &--number,
   &--percentage,
   &--int,
@@ -47,6 +51,7 @@
     background-color: $coolgrey-10;
     font-weight: $font-weight-semibold;
     padding: 0;
+    border: 1px solid red;
   }
 
   &--selected {

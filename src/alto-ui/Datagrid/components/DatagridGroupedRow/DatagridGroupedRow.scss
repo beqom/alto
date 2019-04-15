@@ -54,7 +54,7 @@
 
 .DatagridGroupedRow__toggle-value {
   @extend %text-ellipsis;
-  font-size: $font-size-small;
+  font-size: $font-size-large;
   line-height: 1.25;
 
   .DatagridGroupedRow__button--comfortable & {
