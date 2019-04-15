@@ -9,7 +9,7 @@
   border-bottom: 1px solid $coolgrey-20;
   font-weight: $font-weight-semibold;
   display: flex;
-  background-color: $row-header-bkgd;
+  background-color: $color-row-header-bkgd;
   align-items: center;
   cursor: pointer;
 
@@ -47,7 +47,7 @@
   @extend %text-ellipsis;
   font-size: 0.6875rem;
   line-height: 1.25;
-  color: $coolgrey-60;
+  color: $color-text-muted;
   font-weight: $font-weight-regular;
   text-transform: uppercase;
 }

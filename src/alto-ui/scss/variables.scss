@@ -199,6 +199,8 @@ $color-text-link: $blue-60 !default;
 $color-text-link-hover: $blue-70 !default;
 $color-text-link-visited: $purple-60 !default;
 
+$color-row-header-bkgd: $white !default;
+
 // ===========================
 // Typography
 
@@ -315,7 +317,6 @@ $height-datagrid-header-compact: 2.25rem !default; // 28px
 $height-datagrid-header-default: 2.75rem !default; // 40px
 $height-datagrid-header-comfortable: 3rem !default; // 48px
 
-
 // ===================================
 // Border Radius
 
@@ -370,7 +371,3 @@ $color-input-border-disabled: transparent !default;
 
 // shadow
 $drop-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
-$group-header-bkgd: $coolgrey-20;
-
-
-$row-header-bkgd: $white !default;
