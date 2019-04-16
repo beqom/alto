@@ -132,7 +132,7 @@ class DropdownItem extends React.Component {
         )}
         title={title}
       >
-        {Icon && <Icon left outline />}
+        {Icon && <Icon className="DropdownItem__button-icon" left outline />}
         <span className="DropdownItem__button-title">{title}</span>
         {hasItems && !hasOnClick && <ChevronRightIcon right />}
       </LinkOrButton>
