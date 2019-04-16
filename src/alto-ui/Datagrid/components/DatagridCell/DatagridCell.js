@@ -340,7 +340,9 @@ class DatagridCell extends React.Component {
         aria-rowindex={aria.rowIndex}
         aria-colindex={aria.colIndex}
       >
-        <div className="DatagridCell__container" style={style}>{this.renderContent()}</div>
+        <div className="DatagridCell__container" style={style}>
+          {this.renderContent()}
+        </div>
       </div>
     );
   }

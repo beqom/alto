@@ -71,6 +71,7 @@ class DatagridCellInput extends React.Component {
           precision: column.precision,
           right: true,
           disableThousandSeparator: column.disableThousandSeparator,
+          percent: column.percent,
           ...inputProps,
         };
       case 'date':
@@ -144,6 +145,7 @@ DatagridCellInput.propTypes = {
   column: PropTypes.shape({
     precision: PropTypes.number,
     disableThousandSeparator: PropTypes.bool,
+    percent: PropTypes.bool,
     title: PropTypes.string.isRequired,
   }).isRequired,
   type: PropTypes.string.isRequired,
