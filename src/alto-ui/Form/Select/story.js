@@ -20,7 +20,7 @@ const SimpleWrapper = styled.div`
 
 SimpleWrapper.displayName = 'Story';
 
-const modifierNames = ['success', 'error', 'large', 'small', 'disabled', 'native'];
+const modifierNames = ['success', 'error', 'large', 'small', 'disabled', 'native', 'readOnly'];
 
 const getModifiers = (...modifiersExcluded) =>
   modifierNames
