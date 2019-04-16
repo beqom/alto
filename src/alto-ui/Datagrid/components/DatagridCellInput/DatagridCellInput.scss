@@ -6,6 +6,16 @@
   flex: 1;
   min-width: 0;
 
+  // TODO Refactor this to not nest
+  .Select--dropdown__label {
+    font-size: $font-size-small;
+  }
+  &--comfortable {
+    .Select--dropdown__label {
+      font-size: $font-size-medium;
+    }
+  }
+
   &--number,
   &--percentage,
   &--int,
@@ -18,6 +28,7 @@
       font-size: $font-size-small;
       box-shadow: none;
     }
+
   }
 
   &--comfortable {
