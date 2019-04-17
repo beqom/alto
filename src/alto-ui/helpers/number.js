@@ -17,7 +17,12 @@ const decimalSeparatorByLocale = {
 
 const DEFAULT_DECIMAL_SEPARATOR = '.';
 
-export const round = precision => n => Math.round(n * 10 ** precision) / 10 ** precision;
+export const round = precision => n => {
+  const valueWithFloatingPointPrecision = Math.round(n * 10 ** precision) / 10 ** precision;
+  const croppedToPrecisionValue = parseFloat(valueWithFloatingPointPrecision.toFixed(precision));
+
+  return croppedToPrecisionValue;
+};
 
 export const parse = (value, locale, precision = 0, { percent, min, max } = {}) => {
   const parsedValue = parseFloat(value);
@@ -35,8 +40,7 @@ export const parse = (value, locale, precision = 0, { percent, min, max } = {}) 
         );
 
   return compose(
-    x => (percent ? x / 100 : x),
-    round(precision),
+    round(percent ? precision + 2 : precision),
     x => (min || min === 0 ? Math.max(min, x) : x),
     x => (max || max === 0 ? Math.min(max, x) : x)
   )(num);

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import compose from 'lodash.compose';
 
 import TextField from '../TextField';
 
@@ -70,7 +71,7 @@ class InputNumber extends React.Component {
 
   handleBlur(e) {
     // eslint-disable-next-line react/no-unused-state
-    this.setState({ editing: false, display: this.format(e.target.value) });
+    this.setState({ editing: false, display: this.format(this.parse(e.target.value)) });
     if (typeof this.props.onBlur === 'function') {
       this.props.onBlur(e);
     }
@@ -86,9 +87,12 @@ class InputNumber extends React.Component {
 
   parse(value) {
     const { locale, precision, percent, min, max } = this.props;
-    const res = parse(value, locale, precision, { percent, min, max });
 
-    return Number.isNaN(res) ? '' : res;
+    return compose(
+      x => (percent && typeof x === 'number' ? x / 100 : x),
+      x => (Number.isNaN(x) ? '' : x),
+      x => parse(x, locale, precision, { percent, min, max })
+    )(value);
   }
 
   format(value) {
