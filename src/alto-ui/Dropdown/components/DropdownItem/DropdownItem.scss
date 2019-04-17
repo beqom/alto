@@ -50,10 +50,6 @@
   margin: 0 $spacing-small;
 }
 
-.DropdownItem__button-icon {
-  margin-right: $spacing-small;
-}
-
 .DropdownItem__button-title {
   @extend %text-ellipsis;
   flex-grow: 1;
