@@ -30,6 +30,7 @@ import CopyToClipboard from './CopyToClipboard';
 import Dashboard from './Dashboard';
 import Delete from './Delete';
 import Details from './Details';
+import Divider from './Divider';
 import Download from './Download';
 import DragHandle from './DragHandle';
 import DropdownIcon from './DropdownIcon';
@@ -136,6 +137,7 @@ export default {
   Dashboard,
   Delete,
   Details,
+  Divider,
   Download,
   DragHandle,
   DropdownIcon,
