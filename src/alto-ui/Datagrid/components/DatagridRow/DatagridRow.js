@@ -14,6 +14,7 @@ const DatagridRow = ({
   row,
   render,
   header,
+  summary,
   context,
   children,
   collapsed,
@@ -58,6 +59,7 @@ const DatagridRow = ({
               disabled={disabled}
               render={render}
               header={header}
+              summary={summary}
               context={context}
               aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
               selectedRowKey={selectedRowKey}
@@ -94,6 +96,7 @@ DatagridRow.propTypes = {
   ).isRequired,
   columnIndexStart: PropTypes.number,
   header: PropTypes.bool,
+  summary: PropTypes.bool,
   context: PropTypes.shape({
     id: PropTypes.string,
     rowKeyField: PropTypes.func.isRequired,
