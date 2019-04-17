@@ -1,7 +1,7 @@
 @import '../../../scss/inc';
 
 .DatagridGroupedRow__button {
-  height: $height-datagrid-default;
+  height: $height-datagrid-header-default;
   overflow: hidden;
   flex-shrink: 0;
   text-align: left;
@@ -9,12 +9,16 @@
   border-bottom: 1px solid $coolgrey-20;
   font-weight: $font-weight-semibold;
   display: flex;
-  background-color: $coolgrey-10;
+  background-color: $color-row-header-bkgd;
   align-items: center;
   cursor: pointer;
 
+  &--compact {
+    height: $height-datagrid-header-compact;
+  }
+
   &--comfortable {
-    height: $height-datagrid-comfortable;
+    height: $height-datagrid-header-comfortable;
   }
 }
 
@@ -46,18 +50,14 @@
   color: $color-text-muted;
   font-weight: $font-weight-regular;
   text-transform: uppercase;
-
-  .DatagridGroupedRow__button--comfortable & {
-    font-size: $font-size-x-small;
-  }
 }
 
 .DatagridGroupedRow__toggle-value {
   @extend %text-ellipsis;
-  font-size: $font-size-small;
+  font-size: $font-size-medium;
   line-height: 1.25;
 
-  .DatagridGroupedRow__button--comfortable & {
+  .DatagridGroupedRow__button--compact & {
     font-size: $font-size-medium;
   }
 }
