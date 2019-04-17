@@ -32,12 +32,14 @@ class DatePicker extends React.Component {
     this.state = {
       open: false,
       month: this.getDate() || DateTime.local(),
+      value: null,
     };
 
     this.handleFocus = this.handleFocus.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChangeMonth = this.handleChangeMonth.bind(this);
+    this.handleChangeInput = this.handleChangeInput.bind(this);
 
     this.inputRef = React.createRef();
   }
@@ -73,11 +75,26 @@ class DatePicker extends React.Component {
   }
 
   handleBlur(e) {
+    const { value } = this.state;
+    const { format } = this.props;
+
+    if (!value) return null;
+
     if (this.props.inputProps.onBlur) {
       this.props.inputProps.onBlur(e);
     }
 
-    this.setState({ open: false });
+    const date = DateTime.fromFormat(value, format);
+
+    if (date.isValid) {
+      this.setState({ value: null, month: date });
+      this.setDate(date.toJSDate());
+    } else {
+      this.setState({ value: null });
+      this.setDate('');
+    }
+
+    return this.setState({ open: false });
   }
 
   handleClose() {
@@ -91,9 +108,14 @@ class DatePicker extends React.Component {
     this.setState(({ month }) => ({ month: month.set(obj) }));
   }
 
+  handleChangeInput(e) {
+    this.setState({ value: e.target.value });
+  }
+
   formatTextfieldDate(value) {
     // const { open } = this.state; // Uncomment when we enhance for typing in datefield
     const { format, displayFormat } = this.props;
+
     const date = this.getDate(value);
 
     if (!date) return '';
@@ -104,7 +126,7 @@ class DatePicker extends React.Component {
 
   render() {
     const { id, small, large, placeholder } = this.props;
-    const { open } = this.state;
+    const { open, value } = this.state;
     const date = this.getDate();
 
     return (
@@ -117,8 +139,9 @@ class DatePicker extends React.Component {
           {...this.props.inputProps}
           readOnly={this.props.readOnly}
           onFocus={this.handleFocus}
-          onChange={() => {}}
-          value={this.formatTextfieldDate()}
+          onChange={this.handleChangeInput}
+          onBlur={this.handleBlur}
+          value={value || this.formatTextfieldDate()}
           id={`${id}__input`}
           small={small}
           large={large}
