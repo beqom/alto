@@ -82,10 +82,7 @@
 }
 
 .CheckBox__label-text {
-  @extend %text-ellipsis;
-  line-height: 2em;
-  height: 2em;
-  position: relative;
+  @extend %multiline-label;
 
   &--hidden {
     @extend %visually-hidden;

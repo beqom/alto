@@ -71,3 +71,10 @@
   max-width: 100%;
   white-space: nowrap;
 }
+
+%multiline-label {
+  line-height: 2em;
+  height: 2em;
+  position: relative;
+  word-break: break-word;
+}
