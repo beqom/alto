@@ -34,6 +34,10 @@
     box-shadow: $drop-shadow;
   }
 
+  &--readOnly:hover {
+    cursor: default;
+  }
+
   &:disabled {
     cursor: not-allowed;
     color: $coolgrey-40;
