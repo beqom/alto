@@ -279,6 +279,7 @@ class Datagrid extends React.PureComponent {
         columns={columns}
         index={0}
         header
+        summary
         rowIndex={headersCount + 1}
         context={this.getContext()}
         render={renderSummaryCell}
