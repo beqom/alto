@@ -16,6 +16,11 @@
     }
   }
 
+  //TODO refactor this to not nest
+  &.InputNumber {
+    max-width: none;
+  }
+
   &--number,
   &--percentage,
   &--int,
@@ -28,8 +33,9 @@
       font-size: $font-size-small;
       box-shadow: none;
     }
-
   }
+
+
 
   &--comfortable {
     .textfield {
