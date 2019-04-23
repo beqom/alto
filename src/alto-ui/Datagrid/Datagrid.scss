@@ -127,7 +127,7 @@
   &--header {
     background-color: $white;
     height: $height-datagrid-header-default;
-    
+
     &.DataGrid__row-checkbox--compact {
       height: $height-datagrid-header-compact;
     }
@@ -136,6 +136,19 @@
       height: $height-datagrid-header-comfortable;
     }
   }
+
+  &--summary {
+    height: $height-datagrid-default;
+
+    &.DataGrid__row-checkbox--compact {
+      height: $height-datagrid-default;
+    }
+
+    &.DataGrid__row-checkbox--comfortable {
+      height: $height-datagrid-comfortable;
+    }
+  }
+
 }
 
 @media all and (-ms-high-contrast: none) {

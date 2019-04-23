@@ -289,7 +289,7 @@ class Datagrid extends React.PureComponent {
         {cells => (
           <Fragment>
             {hasCheckbox && (
-              <div className={bemClass('DataGrid__row-checkbox', { ...modifiers, header: true })} />
+              <div className={bemClass('DataGrid__row-checkbox', { ...modifiers, header: true, summary: true })} />
             )}
             {cells}
           </Fragment>
