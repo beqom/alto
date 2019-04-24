@@ -57,6 +57,7 @@ import GoTo from './GoTo';
 import Help from './Help';
 import HelpInfo from './HelpInfo';
 import Home from './Home';
+import Horizontal from './Horizontal';
 import Image from './Image';
 import ImportFile from './ImportFile';
 import InfoCircle from './InfoCircle';
@@ -99,6 +100,7 @@ import Undo from './Undo';
 import Unknown from './Unknown';
 import Upload from './Upload';
 import User from './User';
+import Vertical from './Vertical';
 import ViewCards from './ViewCards';
 import ViewColumns from './ViewColumns';
 import ViewList from './ViewList';
@@ -164,6 +166,7 @@ export default {
   Help,
   HelpInfo,
   Home,
+  Horizontal,
   Image,
   ImportFile,
   InfoCircle,
@@ -206,6 +209,7 @@ export default {
   Unknown,
   Upload,
   User,
+  Vertical,
   ViewCards,
   ViewColumns,
   ViewList,
