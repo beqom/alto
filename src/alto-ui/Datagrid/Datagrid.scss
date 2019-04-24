@@ -26,7 +26,7 @@
 
 .Datagrid__body {
   flex: 1 1 0;
-  height: 100%;
+  min-height: 0;
 }
 
 .Datagrid__head {
@@ -148,7 +148,6 @@
       height: $height-datagrid-comfortable;
     }
   }
-
 }
 
 @media all and (-ms-high-contrast: none) {
