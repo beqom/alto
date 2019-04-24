@@ -25,7 +25,6 @@
     height: $height-datagrid-comfortable;
   }
 
-
   &--header:not(.DatagridCell--summary) {
     height: $height-datagrid-header-default;
     background-color: $color-row-header-bkgd;
@@ -36,8 +35,6 @@
       height: $height-datagrid-header-comfortable;
     }
   }
-
-
 
   &--number,
   &--percentage,
