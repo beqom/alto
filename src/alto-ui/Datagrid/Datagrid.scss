@@ -116,17 +116,39 @@
   width: $height-datagrid-default;
   border-bottom: 1px solid $coolgrey-20;
 
-  &--header {
-    background-color: $white;
-  }
-
-  &--compact:not(.DataGrid__row-checkbox--header) {
+  &--compact {
     height: $height-datagrid-compact;
   }
 
   &--comfortable {
     height: $height-datagrid-comfortable;
   }
+
+  &--header {
+    background-color: $white;
+    height: $height-datagrid-header-default;
+
+    &.DataGrid__row-checkbox--compact {
+      height: $height-datagrid-header-compact;
+    }
+
+    &.DataGrid__row-checkbox--comfortable {
+      height: $height-datagrid-header-comfortable;
+    }
+  }
+
+  &--summary {
+    height: $height-datagrid-default;
+
+    &.DataGrid__row-checkbox--compact {
+      height: $height-datagrid-default;
+    }
+
+    &.DataGrid__row-checkbox--comfortable {
+      height: $height-datagrid-comfortable;
+    }
+  }
+
 }
 
 @media all and (-ms-high-contrast: none) {
