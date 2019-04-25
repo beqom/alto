@@ -1,4 +1,5 @@
 # Alto Design System
+[![CircleCI](https://circleci.com/gh/beqom/alto.svg?style=svg)](https://circleci.com/gh/beqom/alto)
 
 UX guidelines, HTML/CSS framework, and React components working together to craft exceptional experiences at beqom.
 
