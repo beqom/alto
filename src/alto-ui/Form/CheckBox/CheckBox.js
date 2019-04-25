@@ -4,10 +4,11 @@ import { bemClass } from '../../helpers/bem';
 
 import './CheckBox.scss';
 
-function CheckBox({ label, className, hideLabel, style, ...props }) {
-  return (
+const CheckBox = React.forwardRef(
+  ({ label, className, hideLabel, style, ...props }, forwardedRef) => (
     <div className={bemClass('CheckBox', {}, className)} style={style}>
       <input
+        ref={forwardedRef}
         {...(props.readOnly ? { tabIndex: -1 } : null)}
         {...props}
         className={bemClass('CheckBox__input', { readOnly: props.readOnly })}
@@ -24,8 +25,8 @@ function CheckBox({ label, className, hideLabel, style, ...props }) {
         <div className={bemClass('CheckBox__label-text', { hidden: hideLabel })}>{label}</div>
       </label>
     </div>
-  );
-}
+  )
+);
 
 CheckBox.defaultProps = {};
 
@@ -38,6 +39,6 @@ CheckBox.propTypes = {
   disabled: PropTypes.bool,
   hideLabel: PropTypes.bool,
   readOnly: PropTypes.bool,
+  forwardedRef: PropTypes.object,
 };
-
 export default CheckBox;

@@ -31,7 +31,8 @@
     { "key": "picture_large", "title": "Picture large" },
     { "key": "picture_medium", "title": "Picture medium" },
     { "key": "picture_thumbnail", "title": "Picture thumbnail" },
-    { "key": "nat", "title": "Nat" }
+    { "key": "nat", "title": "Nat" },
+    { "key": "bool", "title": "Boolean" }
   ],
   "rows": [
     {
@@ -66,7 +67,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/37.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/37.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/37.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": true
     },
     {
       "gender": "male",
@@ -100,7 +102,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/55.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/55.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/55.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "female",
@@ -134,7 +137,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/96.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/96.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/96.jpg",
-      "nat": "NO"
+      "nat": "NO",
+      "bool": true
     },
     {
       "gender": "male",
@@ -168,7 +172,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/11.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/11.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/11.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": true
     },
     {
       "gender": "female",
@@ -202,7 +207,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/35.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/35.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/35.jpg",
-      "nat": "FR"
+      "nat": "FR",
+      "bool": true
     },
     {
       "gender": "male",
@@ -236,7 +242,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/81.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/81.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/81.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -270,7 +277,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/80.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/80.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/80.jpg",
-      "nat": "CH"
+      "nat": "CH",
+      "bool": false
     },
     {
       "gender": "male",
@@ -304,7 +312,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/5.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/5.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/5.jpg",
-      "nat": "CH"
+      "nat": "CH",
+      "bool": false
     },
     {
       "gender": "female",
@@ -338,7 +347,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/3.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/3.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/3.jpg",
-      "nat": "DK"
+      "nat": "DK",
+      "bool": false
     },
     {
       "gender": "male",
@@ -372,7 +382,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/38.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/38.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/38.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "male",
@@ -406,7 +417,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/37.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/37.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/37.jpg",
-      "nat": "TR"
+      "nat": "TR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -440,7 +452,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/18.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/18.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/18.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "female",
@@ -474,7 +487,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/27.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/27.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/27.jpg",
-      "nat": "CA"
+      "nat": "CA",
+      "bool": false
     },
     {
       "gender": "female",
@@ -508,7 +522,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/7.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/7.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/7.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "male",
@@ -542,7 +557,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/8.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/8.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/8.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "male",
@@ -576,7 +592,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/5.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/5.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/5.jpg",
-      "nat": "US"
+      "nat": "US",
+      "bool": false
     },
     {
       "gender": "male",
@@ -610,7 +627,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/53.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/53.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/53.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "female",
@@ -644,7 +662,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/73.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/73.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/73.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "female",
@@ -678,7 +697,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/73.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/73.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/73.jpg",
-      "nat": "TR"
+      "nat": "TR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -712,7 +732,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/49.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/49.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/49.jpg",
-      "nat": "NO"
+      "nat": "NO",
+      "bool": false
     },
     {
       "gender": "female",
@@ -746,7 +767,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/22.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/22.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/22.jpg",
-      "nat": "NZ"
+      "nat": "NZ",
+      "bool": false
     },
     {
       "gender": "female",
@@ -780,7 +802,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/53.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/53.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/53.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "male",
@@ -814,7 +837,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/15.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/15.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/15.jpg",
-      "nat": "IE"
+      "nat": "IE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -848,7 +872,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/18.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/18.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/18.jpg",
-      "nat": "IR"
+      "nat": "IR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -882,7 +907,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/94.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/94.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/94.jpg",
-      "nat": "IR"
+      "nat": "IR",
+      "bool": false
     },
     {
       "gender": "male",
@@ -916,7 +942,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/94.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/94.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/94.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -950,7 +977,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/33.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/33.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/33.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "female",
@@ -984,7 +1012,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/6.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/6.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/6.jpg",
-      "nat": "IR"
+      "nat": "IR",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1018,7 +1047,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/78.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/78.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/78.jpg",
-      "nat": "TR"
+      "nat": "TR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1052,7 +1082,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/96.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/96.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/96.jpg",
-      "nat": "US"
+      "nat": "US",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1086,7 +1117,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/23.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/23.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/23.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1120,7 +1152,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/87.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/87.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/87.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1154,7 +1187,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/63.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/63.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/63.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1188,7 +1222,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/12.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/12.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/12.jpg",
-      "nat": "FR"
+      "nat": "FR",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1222,7 +1257,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/80.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/80.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/80.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1256,7 +1292,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/17.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/17.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/17.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1290,7 +1327,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/44.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/44.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/44.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1324,7 +1362,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/97.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/97.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/97.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1358,7 +1397,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/4.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/4.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/4.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1392,7 +1432,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/80.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/80.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/80.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1426,7 +1467,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/7.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/7.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/7.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1460,7 +1502,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/85.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/85.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/85.jpg",
-      "nat": "DK"
+      "nat": "DK",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1494,7 +1537,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/45.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/45.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/45.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1528,7 +1572,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/57.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/57.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/57.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1562,7 +1607,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/81.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/81.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/81.jpg",
-      "nat": "CA"
+      "nat": "CA",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1596,7 +1642,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/86.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/86.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/86.jpg",
-      "nat": "CH"
+      "nat": "CH",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1630,7 +1677,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/28.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/28.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/28.jpg",
-      "nat": "IE"
+      "nat": "IE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1664,7 +1712,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/0.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/0.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/0.jpg",
-      "nat": "IE"
+      "nat": "IE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1698,7 +1747,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/80.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/80.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/80.jpg",
-      "nat": "TR"
+      "nat": "TR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1732,7 +1782,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/58.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/58.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/58.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1766,7 +1817,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/35.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/35.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/35.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1800,7 +1852,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/47.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/47.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/47.jpg",
-      "nat": "NZ"
+      "nat": "NZ",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1834,7 +1887,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/45.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/45.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/45.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1868,7 +1922,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/11.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/11.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/11.jpg",
-      "nat": "IE"
+      "nat": "IE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1902,7 +1957,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/72.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/72.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/72.jpg",
-      "nat": "IR"
+      "nat": "IR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -1936,7 +1992,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/90.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/90.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/90.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "male",
@@ -1970,7 +2027,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/27.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/27.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/27.jpg",
-      "nat": "CA"
+      "nat": "CA",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2004,7 +2062,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/78.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/78.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/78.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2038,7 +2097,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/6.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/6.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/6.jpg",
-      "nat": "DK"
+      "nat": "DK",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2072,7 +2132,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/82.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/82.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/82.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2106,7 +2167,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/24.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/24.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/24.jpg",
-      "nat": "NO"
+      "nat": "NO",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2140,7 +2202,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/93.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/93.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/93.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2174,7 +2237,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/47.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/47.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/47.jpg",
-      "nat": "CH"
+      "nat": "CH",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2208,7 +2272,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/93.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/93.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/93.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2242,7 +2307,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/62.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/62.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/62.jpg",
-      "nat": "DK"
+      "nat": "DK",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2276,7 +2342,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/9.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/9.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/9.jpg",
-      "nat": "FR"
+      "nat": "FR",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2310,7 +2377,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/49.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/49.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/49.jpg",
-      "nat": "NO"
+      "nat": "NO",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2344,7 +2412,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/78.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/78.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/78.jpg",
-      "nat": "US"
+      "nat": "US",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2378,7 +2447,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/83.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/83.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/83.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2412,7 +2482,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/88.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/88.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/88.jpg",
-      "nat": "TR"
+      "nat": "TR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2446,7 +2517,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/7.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/7.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/7.jpg",
-      "nat": "TR"
+      "nat": "TR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2480,7 +2552,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/79.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/79.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/79.jpg",
-      "nat": "DK"
+      "nat": "DK",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2514,7 +2587,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/36.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/36.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/36.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2548,7 +2622,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/42.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/42.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/42.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2582,7 +2657,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/66.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/66.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/66.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2616,7 +2692,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/52.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/52.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/52.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2650,7 +2727,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/7.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/7.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/7.jpg",
-      "nat": "CA"
+      "nat": "CA",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2684,7 +2762,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/94.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/94.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/94.jpg",
-      "nat": "US"
+      "nat": "US",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2718,7 +2797,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/81.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/81.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/81.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2752,7 +2832,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/35.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/35.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/35.jpg",
-      "nat": "DK"
+      "nat": "DK",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2786,7 +2867,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/73.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/73.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/73.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2820,7 +2902,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/89.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/89.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/89.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2854,7 +2937,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/19.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/19.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/19.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2888,7 +2972,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/17.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/17.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/17.jpg",
-      "nat": "NZ"
+      "nat": "NZ",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2922,7 +3007,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/58.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/58.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/58.jpg",
-      "nat": "IR"
+      "nat": "IR",
+      "bool": false
     },
     {
       "gender": "male",
@@ -2956,7 +3042,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/61.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/61.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/61.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "female",
@@ -2990,7 +3077,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/49.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/49.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/49.jpg",
-      "nat": "FR"
+      "nat": "FR",
+      "bool": false
     },
     {
       "gender": "female",
@@ -3024,7 +3112,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/70.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/70.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/70.jpg",
-      "nat": "FI"
+      "nat": "FI",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3058,7 +3147,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/8.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/8.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/8.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3092,7 +3182,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/91.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/91.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/91.jpg",
-      "nat": "NL"
+      "nat": "NL",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3126,7 +3217,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/6.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/6.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/6.jpg",
-      "nat": "GB"
+      "nat": "GB",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3160,7 +3252,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/82.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/82.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/82.jpg",
-      "nat": "CA"
+      "nat": "CA",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3194,7 +3287,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/8.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/8.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/8.jpg",
-      "nat": "FR"
+      "nat": "FR",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3228,7 +3322,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/98.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/98.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/98.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3262,7 +3357,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/12.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/12.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/12.jpg",
-      "nat": "AU"
+      "nat": "AU",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3296,7 +3392,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/96.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/96.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/96.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "female",
@@ -3330,7 +3427,8 @@
       "picture_large": "https://randomuser.me/api/portraits/women/59.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/women/59.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/women/59.jpg",
-      "nat": "DE"
+      "nat": "DE",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3364,7 +3462,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/1.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/1.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/1.jpg",
-      "nat": "ES"
+      "nat": "ES",
+      "bool": false
     },
     {
       "gender": "male",
@@ -3398,7 +3497,8 @@
       "picture_large": "https://randomuser.me/api/portraits/men/40.jpg",
       "picture_medium": "https://randomuser.me/api/portraits/med/men/40.jpg",
       "picture_thumbnail": "https://randomuser.me/api/portraits/thumb/men/40.jpg",
-      "nat": "CA"
+      "nat": "CA",
+      "bool": false
     },
     {
       "gender": "male",
