@@ -7,6 +7,7 @@ import DatePicker from '../Form/DatePicker';
 import Select from '../Form/Select';
 import TextArea from '../Form/TextArea';
 import TagInput from '../Form/TagInput';
+import CheckBox from '../Form/CheckBox';
 
 import './Input.scss';
 
@@ -22,10 +23,6 @@ import './Input.scss';
 //   Object.entries(props)
 //     .filter(([key]) => sharedPropsKeys.includes(key))
 //     .reduce((acc, [key, prop]) => ({ ...acc, [key]: prop }), {});
-
-const BOOLEAN_DEFAULT_PROPS = {
-  options: [true, false],
-};
 
 class Input extends React.Component {
   constructor() {
@@ -43,9 +40,10 @@ class Input extends React.Component {
         case 'list':
         case 'dropdown':
         case 'select':
-        case 'boolean':
         case 'tags':
           return onChange(args[0], ...args);
+        case 'boolean':
+          return onChange((args[0].target || {}).checked, ...args);
         case 'integer':
         case 'number':
         case 'float':
@@ -80,7 +78,7 @@ class Input extends React.Component {
       case 'select':
         return <Select {...props} {...sharedProps} />;
       case 'boolean':
-        return <Select {...BOOLEAN_DEFAULT_PROPS} {...props} {...sharedProps} />;
+        return <CheckBox {...props} checked={props.value} {...sharedProps} />;
       case 'textarea':
         return <TextArea {...props} {...sharedProps} />;
       case 'string':

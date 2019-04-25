@@ -267,7 +267,7 @@ class DatagridCell extends React.Component {
 
     const parsedValue = this.parse(value);
 
-    if (['list', 'boolean'].includes(type)) {
+    if (type === 'list') {
       if (!editable || disabled) {
         const itemSelected = (inputProps.options || []).find(
           option => option.value === parsedValue
@@ -287,7 +287,7 @@ class DatagridCell extends React.Component {
         column={column}
         value={parsedValue}
         type={type}
-        inputProps={inputProps}
+        inputProps={{ ...inputProps, readOnly: !editable }}
         onChange={this.handleChange}
         onStartEditing={this.startEditing}
         onStopEditing={this.stopEditing}

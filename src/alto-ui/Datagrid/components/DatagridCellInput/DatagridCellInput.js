@@ -57,9 +57,7 @@ class DatagridCellInput extends React.Component {
           ...sharedProps,
           onBlur: undefined,
           onFocus: undefined,
-          onOpen: this.handleStartEditing,
           onChange: this.handleChangeFromOverlay,
-          clearable: true,
           ...inputProps,
         };
       case 'number':
