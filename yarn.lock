@@ -6261,6 +6261,13 @@ lodash.clonedeep@^4.3.2:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
 
+lodash.compose@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/lodash.compose/-/lodash.compose-2.4.1.tgz#a23f416fd91cee82c67879f63a070d3cbac31525"
+  integrity sha1-oj9Bb9kc7oLGeHn2OgcNPLrDFSU=
+  dependencies:
+    lodash.isfunction "~2.4.1"
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -6292,6 +6299,11 @@ lodash.isequal@^4.5.0:
 lodash.isfinite@^3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/lodash.isfinite/-/lodash.isfinite-3.3.2.tgz#fb89b65a9a80281833f0b7478b3a5104f898ebb3"
+
+lodash.isfunction@~2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/lodash.isfunction/-/lodash.isfunction-2.4.1.tgz#2cfd575c73e498ab57e319b77fa02adef13a94d1"
+  integrity sha1-LP1XXHPkmKtX4xm3f6Aq3vE6lNE=
 
 lodash.isnumber@^3.0.3:
   version "3.0.3"

@@ -1,3 +1,5 @@
+import compose from 'lodash.compose';
+
 const decimalSeparatorByLocale = {
   it: ',',
   'it-IT': ',',
@@ -14,10 +16,14 @@ const decimalSeparatorByLocale = {
 };
 
 const DEFAULT_DECIMAL_SEPARATOR = '.';
+export const round = (n, precision) => {
+  const valueWithFloatingPointPrecision = Math.round(n * 10 ** precision) / 10 ** precision;
+  const croppedToPrecisionValue = parseFloat(valueWithFloatingPointPrecision.toFixed(precision));
 
-export const round = (n, precision) => Math.round(n * 10 ** precision) / 10 ** precision;
+  return croppedToPrecisionValue;
+};
 
-export const parse = (value, locale, precision = 0) => {
+export const parse = (value, locale, precision = 0, { percent } = {}) => {
   const parsedValue = parseFloat(value);
 
   const decimalSeparator = decimalSeparatorByLocale[locale] || DEFAULT_DECIMAL_SEPARATOR;
@@ -31,20 +37,32 @@ export const parse = (value, locale, precision = 0) => {
             .replace(new RegExp(`[${decimalSeparator}]`, 'g'), '.')
             .replace(/(.+)-/g, '$1')
         );
-  return round(num, precision);
+
+  return round(num, percent ? precision + 2 : precision);
 };
 
-export const format = (value, locale, precision = 0, currency, disableThousandSeparator) => {
+export const format = (
+  value,
+  locale,
+  precision = 0,
+  currency,
+  disableThousandSeparator,
+  { percent } = {}
+) => {
   if (!value && value !== 0) return '';
 
-  const valueParsed = parse(value, locale, precision);
+  const valueParsed = parse(value, locale, precision, { percent });
   if (Number.isNaN(valueParsed)) return '';
 
-  const valueFormatted = valueParsed.toLocaleString(locale, {
-    minimumFractionDigits: precision,
-    maximumFractionDigits: precision,
-    useGrouping: !disableThousandSeparator,
-  });
-
-  return currency ? `${currency} ${valueFormatted}` : valueFormatted;
+  return compose(
+    x => (percent ? `${x}%` : x),
+    x => (currency && !percent ? `${currency}${x}` : x),
+    x =>
+      x.toLocaleString(locale, {
+        minimumFractionDigits: precision,
+        maximumFractionDigits: precision,
+        useGrouping: !disableThousandSeparator,
+      }),
+    x => (percent ? x * 100 : x)
+  )(valueParsed);
 };
