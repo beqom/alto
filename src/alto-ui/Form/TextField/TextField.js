@@ -41,6 +41,7 @@ const TextField = React.forwardRef((props, ref) => {
     ghost,
     frozen,
     disabled,
+    percent,
     ...remainingProps
   } = props;
 

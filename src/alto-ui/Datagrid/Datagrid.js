@@ -45,7 +45,9 @@ const FORMATTERS = {
           .toFormat('dd LLL yyyy')
       : '',
   number: (x, col, row, { locale }) =>
-    formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator),
+    formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator, {
+      percent: col.percent,
+    }),
   integer: (...args) => FORMATTERS.number(...args),
   float: (...args) => FORMATTERS.number(...args),
   int: (...args) => FORMATTERS.number(...args),
