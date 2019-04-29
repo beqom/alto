@@ -49,17 +49,24 @@ class DatagridCellInput extends React.Component {
     const { type, context, column, inputProps } = this.props;
 
     const sharedProps = this.getSharedProps();
+
     switch (type) {
       case 'list':
       case 'select':
+        return {
+          ...sharedProps,
+          onBlur: undefined,
+          onFocus: undefined,
+          onChange: this.handleChangeFromOverlay,
+          onOpen: this.handleStartEditing,
+          clearable: true,
+          ...inputProps,
+        };
       case 'boolean':
         return {
           ...sharedProps,
           onBlur: undefined,
           onFocus: undefined,
-          onOpen: this.handleStartEditing,
-          onChange: this.handleChangeFromOverlay,
-          clearable: true,
           ...inputProps,
         };
       case 'number':
