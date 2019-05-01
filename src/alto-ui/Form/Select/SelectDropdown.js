@@ -123,7 +123,10 @@ class SelectDropdown extends React.Component {
     const clearable = this.props.clearable && !!selectedTitles;
 
     return (
-      <div className={bemClass('Select--dropdown__wrapper', { clearable })}>
+      <div
+        className={bemClass('Select--dropdown__wrapper', { clearable })}
+        title={selectedTitles || defaultLabel}
+      >
         <button
           id={this.props.id}
           ref={selectRef || this.triggerRef}
