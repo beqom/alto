@@ -84,14 +84,15 @@ class DatePicker extends React.Component {
       this.props.inputProps.onBlur(e);
     }
 
-    const date = [format, displayFormat]
-      .reduce((d, f) => d && d.isValid ? d : DateTime.fromFormat(value, f), null);
-    if (date) {
+    const date = [format, displayFormat].reduce(
+      (d, f) => (d && d.isValid ? d : DateTime.fromFormat(value, f)),
+      null
+    );
+    if (date && date.isValid) {
       this.setState({ value: null, month: date });
       this.setDate(date.toJSDate());
     } else {
       this.setState({ value: null });
-      this.setDate('');
     }
 
     return this.setState({ open: false });
