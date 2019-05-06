@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { bemClass } from '../../helpers/bem';
 import { isIE11 } from '../../helpers/navigator';
 import FormElement from '../FormElement';
-import GhostInput from '../../GhostInput/GhostInput';
 
 import './TextField.scss';
 
@@ -38,15 +37,12 @@ const TextField = React.forwardRef((props, ref) => {
     error,
     area,
     right,
-    ghost,
     disabled,
     percent,
     ...remainingProps
   } = props;
 
   const visibilityProps = props.readOnly ? { 'aria-hidden': true, tabIndex: '-1' } : {};
-
-  if (ghost) return <GhostInput {...props} />;
 
   const className = bemClass(
     'textfield',

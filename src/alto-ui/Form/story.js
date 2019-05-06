@@ -67,6 +67,7 @@ require('./FileInput/story');
 require('./InputNumber/story');
 require('./Label/story');
 require('./Radio/story');
+require('./RichTextEditor/story');
 require('./Select/story');
 require('./Switch/story');
 require('./TagInput/story');

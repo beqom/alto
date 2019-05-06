@@ -98,9 +98,12 @@
     "lodash.range": "^3.2.0",
     "lodash.throttle": "^4.1.1",
     "luxon": "^1.0.0",
+    "quill-magic-url": "^1.0.2",
+    "quill-mention": "^2.1.1",
     "react-beautiful-dnd": "^10.0.4",
     "react-day-picker": "^7.1.4",
     "react-draggable": "^3.0.5",
+    "react-quill": "^1.3.3",
     "react-transition-group": "^2.3.1"
   },
   "peerDependencies": {
