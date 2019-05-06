@@ -23,13 +23,10 @@
 }
 
 .tabs__link--active {
+  @extend %focusable;
   color: $blue;
   box-shadow: inset 0 -2px 0 $blue, 0 1px 0 $blue;
   cursor: default;
-
-  &:focus {
-    box-shadow: inset 0 -1px 0 $blue, 0 1px 0 $blue, 0 0 0 3px $blue-30;
-  }
 }
 
 .tabs--panel {

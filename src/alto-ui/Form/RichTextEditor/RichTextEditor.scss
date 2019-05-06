@@ -1,0 +1,355 @@
+@import '../../scss/inc';
+
+.RichTextEditorReandOnly {
+  &--disabled {
+    cursor: not-allowed;
+    color: $coolgrey-40;
+    background: $coolgrey-10;
+    border-color: $coolgrey-20;
+    .ql-editor {
+      a {
+        color: $coolgrey-40;
+      }
+    }
+  }
+
+  &--snow {
+    background-color: $white;
+    border: 1px solid $color-input-border;
+    border-radius: $border-radius-default;
+
+    .ql-editor {
+      padding: $spacing-small $spacing-small + $spacing-x-small;
+    }
+  }
+}
+
+.RichTextEditor {
+  &--snow {
+    background-color: $white;
+    border: 1px solid $color-input-border;
+    border-radius: $border-radius-default;
+    padding-bottom: $spacing-x-small;
+
+    .ql-editor {
+      padding: $spacing-small $spacing-small + $spacing-x-small;
+      max-height: 15rem;
+    }
+
+    .ql-toolbar.ql-snow {
+      background-color: $coolgrey-10;
+      border: 0;
+      padding: $spacing-x-small;
+      border-radius: $border-radius-default $border-radius-default 0 0;
+
+      button,
+      button:hover,
+      button:active,
+      button.ql-active {
+        .ql-fill,
+        .ql-stroke.ql-fill {
+          fill: currentColor;
+        }
+
+        .ql-stroke {
+          stroke: currentColor;
+        }
+      }
+      button {
+        color: $coolgrey-60;
+        &:hover {
+          color: $coolgrey-80;
+        }
+        &.ql-active {
+          color: $blue;
+        }
+      }
+
+      .ql-formats:not(:last-child) {
+        margin-right: $spacing-x-small;
+        padding-right: $spacing-x-small;
+        border-right: 1px solid $coolgrey-20;
+      }
+    }
+
+    .ql-container {
+      border: 0;
+    }
+  }
+
+  .ql-tooltip {
+    z-index: $z-index-popover;
+    border-radius: $border-radius-default;
+  }
+
+  &--snow {
+    .ql-tooltip {
+      border: 1px solid $coolgrey-20;
+      box-shadow: $drop-shadow;
+      color: inherit;
+      padding: $spacing-small;
+      background-color: $white;
+
+      a {
+        text-decoration: underline;
+      }
+
+      &::before,
+      &[data-mode='link']::before {
+        content: '';
+        margin: 0;
+      }
+
+      .ql-action::after,
+      .ql-remove::before {
+        @extend %reset-button;
+        text-decoration: none;
+
+        width: auto;
+        height: auto;
+
+        cursor: pointer;
+        line-height: 0;
+        transition: all $transition;
+        font-size: 1rem;
+        border: 1px solid transparent;
+        color: $coolgrey-60;
+
+        &:hover {
+          color: $coolgrey-80;
+        }
+      }
+
+      a.ql-action::after,
+      &[data-mode='link'] a.ql-action::after {
+        display: inline-block;
+        margin-left: $spacing-small;
+        content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 36 36' width='1em' height='1em' role='presentation'><path fill='currentColor' d='M33.87,8.32,28,2.42a2.07,2.07,0,0,0-2.92,0L4.27,23.2l-1.9,8.2a2.06,2.06,0,0,0,2,2.5,2.14,2.14,0,0,0,.43,0L13.09,32,33.87,11.24A2.07,2.07,0,0,0,33.87,8.32ZM12.09,30.2,4.32,31.83l1.77-7.62L21.66,8.7l6,6ZM29,13.25l-6-6,3.48-3.46,5.9,6Z' /></svg>");
+      }
+
+      a.ql-remove::before {
+        display: inline-block;
+        content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 36 36' width='1em' height='1em' role='presentation'><path fill='currentColor' d='M27.14,34H8.86A2.93,2.93,0,0,1,6,31V11.23H8V31a.93.93,0,0,0,.86,1H27.14A.93.93,0,0,0,28,31V11.23h2V31A2.93,2.93,0,0,1,27.14,34Z'/><path fill='currentColor' d='M30.78,9H5A1,1,0,0,1,5,7H30.78a1,1,0,0,1,0,2Z' /><rect fill='currentColor' x='21' y='13' width='2' height='15' /><rect fill='currentColor' x='13' y='13' width='2' height='15' /><path fill='currentColor' d='M23,5.86H21.1V4H14.9V5.86H13V4a2,2,0,0,1,1.9-2h6.2A2,2,0,0,1,23,4Z' /></svg>");
+      }
+
+      &[data-mode='link'] {
+        background-color: $coolgrey-10;
+
+        a.ql-action::after {
+          content: url("data:image/svg+xml;charset=UTF-8, <svg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 36 36' width='1em' height='1em' role='presentation'><path fill='currentColor' d='M13.72,27.69,3.29,17.27a1,1,0,0,1,1.41-1.41l9,9L31.29,7.29a1,1,0,0,1,1.41,1.41Z' /></svg>");
+        }
+
+        input {
+          @extend %focusable;
+          font: inherit;
+          background: transparent;
+          outline: 0;
+
+          font-size: $font-size-medium;
+          background-color: $white;
+          color: $color-text-default;
+          border-radius: $border-radius-default;
+          border: 1px solid $color-input-border;
+          font-weight: 400;
+          line-height: $line-height-input;
+          height: $height-default;
+          padding: 0 0.625rem;
+          display: block;
+          width: 12rem;
+          transition: all $transition;
+
+          &::placeholder {
+            color: $coolgrey-40;
+          }
+
+          &:hover:not([disabled]) {
+            border-color: $blue;
+            box-shadow: 0 0 0 1px $blue;
+          }
+
+          &:focus {
+            border-color: $color-input-border;
+            box-shadow: $drop-shadow;
+          }
+
+          &:disabled {
+            cursor: not-allowed;
+            color: $coolgrey-40;
+            background: $coolgrey-10;
+            border-color: $coolgrey-20;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+
+  &--bubble {
+    .ql-tooltip {
+      background-color: $coolgrey-90;
+    }
+
+    .ql-editor {
+      padding: 0;
+    }
+
+    .ql-fill,
+    .ql-stroke.ql-fill {
+      fill: $coolgrey-40;
+    }
+
+    .ql-stroke {
+      stroke: $coolgrey-40;
+    }
+
+    .ql-bubble .ql-toolbar {
+      padding: $spacing-x-small;
+
+      .ql-formats {
+        margin: 0;
+        margin-left: 0;
+        margin-right: 0;
+        &:not(:last-child) {
+          margin-right: $spacing-x-small;
+          padding-right: $spacing-x-small;
+          border-right: 1px solid $coolgrey-70;
+        }
+      }
+    }
+  }
+
+  .ql-container {
+    font-family: $font-family;
+    font-size: 1rem;
+  }
+
+  &--oneline {
+    p {
+      display: inline;
+    }
+    br {
+      display: none;
+    }
+  }
+
+  .ql-editor {
+    $ul-symbols: '\25CF', '\25CB', '\25A0', '\25A1';
+    ul,
+    ol {
+      padding-left: 0.6rem;
+      li:not(.ql-direction-rtl) {
+        padding-left: $spacing-x-small;
+      }
+      @for $i from 1 through 8 {
+        li.ql-indent-#{$i}:not(.ql-direction-rtl) {
+          padding-left: $i * $spacing-large + $spacing-x-small;
+        }
+      }
+    }
+    ul {
+      padding-left: 0.6rem;
+
+      li:not(.ql-direction-rtl)::before {
+        content: nth($ul-symbols, 1);
+      }
+      @for $i from 1 through 8 {
+        li.ql-indent-#{$i}:not(.ql-direction-rtl)::before {
+          content: nth($ul-symbols, $i % 4 + 1);
+        }
+      }
+    }
+
+    ol {
+      padding-left: 0.8rem;
+    }
+
+    a {
+      &,
+      &:visited {
+        color: $blue;
+        text-decoration: underline;
+      }
+    }
+
+    h1 {
+      font-size: $font-size-x-large;
+    }
+
+    h2 {
+      font-size: $font-size-large;
+    }
+
+    .mention {
+      height: initial;
+      width: initial;
+      border-radius: 0;
+      background-color: transparent;
+      padding: 0;
+      .ql-mention-denotation-char {
+        display: none;
+      }
+      span {
+        background-color: $blue-10;
+        border: 1px solid $blue-20;
+        color: $blue;
+        border-radius: $border-radius-default;
+        padding: $spacing-x-small $spacing-small;
+        display: inline-block;
+        align-items: center;
+        line-height: 1;
+
+        .RichTextEditor--disabled & {
+          background-color: $coolgrey-10;
+          color: $coolgrey-50;
+          border-color: $coolgrey-20;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+.RichTextEditor__mentions-dropdown {
+  border-radius: $border-radius-default;
+  background-color: white;
+  z-index: $z-index-popover;
+  // abtitary amount
+  max-width: 55rem;
+}
+
+.RichTextEditor__mentions-list {
+  list-style: none;
+  padding: $spacing-x-small;
+  overflow: auto;
+  border: 1px solid $coolgrey-20;
+  box-shadow: $drop-shadow;
+  // abtitary amount
+  max-height: 20rem;
+}
+
+.Dropdown__list {
+  list-style: none;
+  padding: $spacing-x-small;
+  overflow: auto;
+  // abtitary amount
+  max-height: 20rem;
+}
+
+.RichTextEditor__mentions-item {
+  @extend %focusable;
+  @extend %text-ellipsis;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: $coolgrey-60;
+  padding: $spacing-x-small $spacing-small;
+  background-color: $white;
+  border-radius: $border-radius-default;
+
+  &:hover,
+  &.selected {
+    background-color: $blue-20;
+    color: $coolgrey-70;
+    color: $blue;
+  }
+}
