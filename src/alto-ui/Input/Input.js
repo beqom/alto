@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
+import isEqual from 'lodash.isequal';
 
 import InputNumber from '../Form/InputNumber';
 import TextField from '../Form/TextField';
@@ -10,6 +12,9 @@ import TagInput from '../Form/TagInput';
 import CheckBox from '../Form/CheckBox';
 
 import './Input.scss';
+import RichTextEditor from '../Form/RichTextEditor/RichTextEditor';
+
+const DEFAULT_DEBOUNCE_TIME = 200;
 
 // const sharedPropsKeys = Object.keys({
 //   ...InputNumber.propTypes,
@@ -25,10 +30,34 @@ import './Input.scss';
 //     .reduce((acc, [key, prop]) => ({ ...acc, [key]: prop }), {});
 
 class Input extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      // eslint-disable-next-line react/no-unused-state
+      valueFromProps: props.value,
+      value: props.value,
+    };
+    this.useValueFromState = false;
 
     this.handleChange = this.handleChange.bind(this);
+    const propagateChange = this.propagateChange.bind(this);
+    this.propagateChange = props.debounced
+      ? debounce(
+          propagateChange,
+          props.debounced === true ? DEFAULT_DEBOUNCE_TIME : props.debounced
+        )
+      : propagateChange;
+  }
+
+  static getDerivedStateFromProps({ value }, { valueFromProps }) {
+    if (!isEqual(value, valueFromProps)) return { value, valueFromProps: value };
+    return null;
+  }
+
+  changeValue(...args) {
+    this.setState({ value: args[0] });
+    this.propagateChange(...args);
   }
 
   handleChange(...args) {
@@ -41,26 +70,34 @@ class Input extends React.Component {
         case 'dropdown':
         case 'select':
         case 'tags':
-          return onChange(args[0], ...args);
+          return this.changeValue(args[0], ...args);
         case 'boolean':
-          return onChange((args[0].target || {}).checked, ...args);
+          return this.changeValue((args[0].target || {}).checked, ...args);
+        case 'richtext':
+        case 'html':
+          return this.changeValue(args[0], ...args);
         case 'integer':
         case 'number':
         case 'float':
-          return onChange(args[1], ...args);
+          return this.changeValue(args[1], ...args);
         default:
-          return onChange(args[0].target.value, ...args);
+          return this.changeValue(args[0].target.value, ...args);
       }
     }
     return null;
   }
 
+  propagateChange(...args) {
+    this.props.onChange(...args);
+  }
+
   render() {
-    const { type, inputRef, ...props } = this.props;
+    const { type, inputRef, value, debounced, ...props } = this.props;
 
     const sharedProps = {
       ref: inputRef,
       onChange: this.handleChange,
+      value: this.state.value,
     };
 
     switch (type) {
@@ -81,6 +118,9 @@ class Input extends React.Component {
         return <CheckBox {...props} checked={props.value} {...sharedProps} />;
       case 'textarea':
         return <TextArea {...props} {...sharedProps} />;
+      case 'richtext':
+      case 'html':
+        return <RichTextEditor {...props} {...sharedProps} />;
       case 'string':
       case 'text':
       default:
@@ -91,13 +131,16 @@ class Input extends React.Component {
 
 Input.displayName = 'Input';
 
-Input.defaultProps = {};
+Input.defaultProps = {
+  debounced: true,
+};
 
 Input.propTypes = {
   type: PropTypes.string,
   inputRef: PropTypes.object,
   onChange: PropTypes.func,
   value: PropTypes.any,
+  debounced: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 
 export default React.forwardRef((props, ref) => <Input {...props} inputRef={ref} />);
