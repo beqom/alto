@@ -1,0 +1,74 @@
+@import '../scss/inc';
+
+.ql-editor {
+  padding: 0;
+}
+
+.HTMLBlock {
+  padding: 0;
+
+  a {
+    &,
+    &:visited {
+      color: $blue;
+      text-decoration: underline;
+    }
+  }
+
+  $ul-symbols: '\25CF', '\25CB', '\25A0', '\25A1';
+  ul,
+  ol {
+    li:not(.ql-direction-rtl) {
+      padding-left: $spacing-x-small;
+    }
+    @for $i from 1 through 8 {
+      li.ql-indent-#{$i}:not(.ql-direction-rtl) {
+        padding-left: $i * $spacing-large + $spacing-x-small;
+      }
+    }
+  }
+  ul {
+    padding-left: 0.6rem;
+
+    li:not(.ql-direction-rtl)::before {
+      content: nth($ul-symbols, 1);
+    }
+    @for $i from 1 through 8 {
+      li.ql-indent-#{$i}:not(.ql-direction-rtl)::before {
+        content: nth($ul-symbols, $i % 4 + 1);
+      }
+    }
+  }
+
+  ol {
+    padding-left: 0.8rem;
+  }
+
+  h1 {
+    font-size: $font-size-x-large;
+  }
+
+  h2 {
+    font-size: $font-size-large;
+  }
+
+  &--oneline {
+    p {
+      display: inline;
+    }
+    br {
+      display: none;
+    }
+  }
+
+  .mention {
+    height: initial;
+    width: initial;
+    border-radius: 0;
+    background-color: transparent;
+    padding: 0;
+    .ql-mention-denotation-char {
+      display: none;
+    }
+  }
+}
