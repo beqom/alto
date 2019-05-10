@@ -5,7 +5,6 @@ import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
 import ArrowUp from './ArrowUp';
-import AttachedFile from './AttachedFile';
 import Balance from './Balance';
 import Bars from './Bars';
 import Bell from './Bell';
@@ -65,6 +64,7 @@ import InfoCircle from './InfoCircle';
 import InfoStandard from './InfoStandard';
 import Insight from './Insight';
 import Lightbulb from './Lightbulb';
+import Link from './Link';
 import List from './List';
 import Lock from './Lock';
 import LongText from './LongText';
@@ -115,7 +115,6 @@ export default {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
-  AttachedFile,
   Balance,
   Bars,
   Bell,
@@ -175,6 +174,7 @@ export default {
   InfoStandard,
   Insight,
   Lightbulb,
+  Link,
   List,
   Lock,
   LongText,
