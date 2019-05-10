@@ -11,7 +11,7 @@ import './HTMLBlock.scss';
 
 const renderMentions = (ref, renderMention) => {
   if (ref && ref.current) {
-    ref.current.querySelectorAll('.mention').forEach((elt, i) => {
+    [...ref.current.querySelectorAll('.mention')].forEach((elt, i) => {
       ReactDOM.render(renderMention(elt.dataset, elt, i), elt);
     });
   }
@@ -21,12 +21,12 @@ const cleanHtml = html => {
   const container = document.createElement('div');
   container.innerHTML = html;
   // clean mentions, they will be filled with renderMention()
-  container.querySelectorAll('.mention').forEach(elt => {
+  [...container.querySelectorAll('.mention')].forEach(elt => {
     // eslint-disable-next-line no-param-reassign
     elt.innerHTML = '';
   });
   // add "http://" to link
-  container.querySelectorAll('a').forEach(elt => {
+  [...container.querySelectorAll('a')].forEach(elt => {
     // eslint-disable-next-line no-param-reassign
     elt.href = /^http/.test(elt.href) ? elt.href : `http://${elt.href}`;
   });
