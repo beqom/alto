@@ -25,7 +25,7 @@ const useUpdateMentions = (time = 200) =>
       const originalValue = instance.state.value;
       const container = document.createElement('div');
       container.innerHTML = originalValue;
-      container.querySelectorAll('.mention').forEach(elt => {
+      [...container.querySelectorAll('.mention')].forEach(elt => {
         const mention = (instance.mentions || []).find(m => m.id === elt.dataset.id);
         if (mention) {
           // eslint-disable-next-line no-param-reassign
