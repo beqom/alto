@@ -1,7 +1,7 @@
 import React from 'react';
 import Icon from './Icon';
 
-const AttachedFile = props => (
+const Link = props => (
   <Icon {...props}>
     {ownProps => (
       <g>
@@ -18,6 +18,6 @@ const AttachedFile = props => (
   </Icon>
 );
 
-AttachedFile.displayName = 'AttachedFile';
+Link.displayName = 'Link';
 
-export default AttachedFile;
+export default Link;
