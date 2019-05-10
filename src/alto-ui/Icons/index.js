@@ -5,6 +5,7 @@ import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
 import ArrowRight from './ArrowRight';
 import ArrowUp from './ArrowUp';
+import AttachedFile from './AttachedFile';
 import Balance from './Balance';
 import Bars from './Bars';
 import Bell from './Bell';
@@ -114,6 +115,7 @@ export default {
   ArrowLeft,
   ArrowRight,
   ArrowUp,
+  AttachedFile,
   Balance,
   Bars,
   Bell,
