@@ -135,6 +135,7 @@ class DatagridCell extends React.Component {
       comfortable: context.comfortable,
       'with-icon': context.showError(value, column, row),
       ...context.modifiers(value, column, row),
+      [column.align]: true,
     };
   }
 
