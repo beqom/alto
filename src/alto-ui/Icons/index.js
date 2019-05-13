@@ -64,6 +64,7 @@ import InfoCircle from './InfoCircle';
 import InfoStandard from './InfoStandard';
 import Insight from './Insight';
 import Lightbulb from './Lightbulb';
+import Link from './Link';
 import List from './List';
 import Lock from './Lock';
 import LongText from './LongText';
@@ -173,6 +174,7 @@ export default {
   InfoStandard,
   Insight,
   Lightbulb,
+  Link,
   List,
   Lock,
   LongText,

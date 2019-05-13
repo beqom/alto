@@ -142,7 +142,7 @@ class DatePicker extends React.Component {
           onFocus={this.handleFocus}
           onChange={this.handleChangeInput}
           onBlur={this.handleBlur}
-          value={value || this.formatTextfieldDate()}
+          value={value === null ? this.formatTextfieldDate() : value}
           id={`${id}__input`}
           small={small}
           large={large}
