@@ -109,7 +109,7 @@ class Input extends React.Component {
         return <InputNumber {...props} {...sharedProps} />;
       case 'date':
       case 'datetime':
-        return <DatePicker {...props} {...sharedProps} value={props.value || undefined} />;
+        return <DatePicker {...props} {...sharedProps} />;
       case 'list':
       case 'dropdown':
       case 'select':
