@@ -73,7 +73,8 @@
 }
 
 %multiline-label {
-  line-height: 2em;
+  line-height: 1.5;
+  padding-top: $spacing-x-small;
   height: 2em;
   position: relative;
   word-break: break-word;
