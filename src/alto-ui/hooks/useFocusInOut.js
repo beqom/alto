@@ -23,6 +23,8 @@ export default function useFocusInOut(cb, ...refs) {
     }
   }
 
+  useEffect(() => setFocusBatched.cancel, []);
+
   useEventListener(documentRef, 'focusin', focusInlistener);
   useEventListener(documentRef, 'focusout', focusOutlistener);
   // using capture will allow to detect the click on a node that will disapear
