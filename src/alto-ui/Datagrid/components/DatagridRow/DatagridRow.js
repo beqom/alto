@@ -19,6 +19,7 @@ const DatagridRow = ({
   children,
   collapsed,
   extraCell,
+  hasCheckbox,
 }) => {
   const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
   const clickable = typeof onRowClick === 'function';
@@ -27,7 +28,7 @@ const DatagridRow = ({
       role="row"
       aria-rowindex={rowIndex}
       className={bemClass('DatagridRow', { collapsed, clickable })}
-      {...(clickable ? { onClick: () => onRowClick(row), tabIndex: '0' } : {})}
+      {...(clickable && !hasCheckbox ? { onClick: () => onRowClick(row), tabIndex: '0' } : {})}
     >
       {children(
         columns.map((column, colIndex) => {
@@ -104,6 +105,7 @@ DatagridRow.propTypes = {
   children: PropTypes.func,
   collapsed: PropTypes.bool,
   extraCell: PropTypes.bool,
+  hasCheckbox: PropTypes.bool,
 };
 
 export default DatagridRow;

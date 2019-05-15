@@ -289,7 +289,13 @@ class Datagrid extends React.PureComponent {
         {cells => (
           <Fragment>
             {hasCheckbox && (
-              <div className={bemClass('DataGrid__row-checkbox', { ...modifiers, header: true, summary: true })} />
+              <div
+                className={bemClass('DataGrid__row-checkbox', {
+                  ...modifiers,
+                  header: true,
+                  summary: true,
+                })}
+              />
             )}
             {cells}
           </Fragment>
@@ -375,6 +381,7 @@ class Datagrid extends React.PureComponent {
           row={row}
           rowIndex={rowIndex + groupedRowArr.length + 1}
           extraCell={!frozen}
+          hasCheckbox={hasCheckbox}
         >
           {cells => (
             <Fragment>
