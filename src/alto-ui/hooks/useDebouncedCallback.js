@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
+import { useRef } from 'react';
 
-const useDebounceCallback = (fn, time = 0, deps = []) => {
-  let timeout = null;
-  const clear = () => clearTimeout(timeout);
+const useDebounceCallback = (fn, time = 0) => {
+  const instance = useRef({ timeout: null }).current;
+  const clear = () => clearTimeout(instance.timeout);
 
-  return useCallback((...args) => {
+  return (...args) => {
     clear();
-    timeout = setTimeout(() => {
+    instance.timeout = setTimeout(() => {
       fn(...args);
     }, time);
     return clear;
-  }, deps);
+  };
 };
 
 export default useDebounceCallback;
