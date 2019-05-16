@@ -58,29 +58,29 @@ const TextField = React.forwardRef((props, ref) => {
     props.className
   );
 
-  return (
-    <FormElement {...props}>
-      {area ? (
-        <textarea
-          ref={ref}
-          {...remainingProps}
-          className={className}
-          {...visibilityProps}
-          disabled={disabled}
-        />
-      ) : (
-        <input
-          ref={ref}
-          {...remainingProps}
-          className={className}
-          type={getInputType(props.type)}
-          disabled={disabled}
-          {...visibilityProps}
-          onChange={event => handleChange(event, props.type, props.onChange)}
-        />
-      )}
-    </FormElement>
+  const element = area ? (
+    <textarea
+      ref={ref}
+      {...remainingProps}
+      className={className}
+      {...visibilityProps}
+      disabled={disabled}
+    />
+  ) : (
+    <input
+      ref={ref}
+      {...remainingProps}
+      className={className}
+      type={getInputType(props.type)}
+      disabled={disabled}
+      {...visibilityProps}
+      onChange={event => handleChange(event, props.type, props.onChange)}
+    />
   );
+
+  if (!label) return element;
+
+  return <FormElement {...props}>{element}</FormElement>;
 });
 TextField.defaultProps = {
   type: 'text',
