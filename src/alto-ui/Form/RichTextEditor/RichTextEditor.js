@@ -8,6 +8,7 @@ import { bemClass } from '../../helpers/bem';
 import context from './context';
 import HTMLBlock from '../../HTMLBlock/HTMLBlock';
 import useDebouncedCallback from '../../hooks/useDebouncedCallback';
+import FormElement from '../FormElement';
 
 import './RichTextEditor.scss';
 
@@ -122,6 +123,8 @@ const RichTextEditor = React.forwardRef((props, ref) => {
     children,
     readonly,
     disabled,
+    label,
+    onBlur,
     ...editorProps
   } = { ...sharedProps, ...props };
 
@@ -188,7 +191,7 @@ const RichTextEditor = React.forwardRef((props, ref) => {
     );
   }
 
-  return (
+  const editorElt = (
     <div
       ref={mainRef}
       className={bemClass(
@@ -222,12 +225,20 @@ const RichTextEditor = React.forwardRef((props, ref) => {
         {...editorProps}
         formats={formatList.length ? [...formatList, 'indent'] : []}
         modules={modules}
-        onBlur={() => {
+        onBlur={(...args) => {
+          if (typeof onBlur === 'function') onBlur(...args);
           setState({ value: state.value });
         }}
       />
       {children}
     </div>
+  );
+
+  if (!label) return editorElt;
+  return (
+    <FormElement label={label} {...props} className="">
+      {editorElt}
+    </FormElement>
   );
 });
 
@@ -264,6 +275,7 @@ RichTextEditor.propTypes = {
       value: PropTypes.string.isRequired,
     })
   ),
+  label: PropTypes.any,
 };
 
 export default RichTextEditor;
