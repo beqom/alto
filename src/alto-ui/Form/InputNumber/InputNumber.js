@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import compose from 'lodash.compose';
 
 import TextField from '../TextField';
+import FormElement from '../FormElement';
 
 import { parse, format } from '../../helpers/number';
 
@@ -112,9 +113,10 @@ class InputNumber extends React.Component {
       disableThousandSeparator,
       className,
       percent,
+      label,
       ...rest
     } = this.props;
-    return (
+    const element = (
       <TextField
         ref={forwardedRef}
         {...rest}
@@ -126,6 +128,10 @@ class InputNumber extends React.Component {
         onBlur={this.handleBlur}
       />
     );
+
+    if (!label) return element;
+
+    return <FormElement {...this.props}>{element}</FormElement>;
   }
 }
 
@@ -136,6 +142,7 @@ InputNumber.defaultProps = {
 
 InputNumber.propTypes = {
   className: PropTypes.string,
+  label: PropTypes.string,
   value: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   precision: PropTypes.number,
   locale: PropTypes.string,
