@@ -19,6 +19,18 @@ Quill.register('modules/magicUrl', MagicUrl);
 
 const INLINE_FORMAT = { bold: true, italic: true, strike: true, link: true };
 
+const cleanEmptyNodes = node => {
+  if (node && !node.innerText.trim()) {
+    if (node.parentElement) {
+      node.parentElement.removeChild(node);
+      cleanEmptyNodes(node.parentElement);
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      node.innerHTML = '';
+    }
+  }
+};
+
 const useUpdateMentions = (time = 200) =>
   useDebouncedCallback((instance, onChange) => {
     if (instance && instance.state.value) {
@@ -31,7 +43,9 @@ const useUpdateMentions = (time = 200) =>
           // eslint-disable-next-line no-param-reassign
           elt.dataset.value = mention.value;
         } else {
-          elt.parentElement.removeChild(elt);
+          const parent = elt.parentElement;
+          parent.removeChild(elt);
+          cleanEmptyNodes(parent);
         }
       });
       const newValue = container.innerHTML;
@@ -152,7 +166,6 @@ const RichTextEditor = React.forwardRef((props, ref) => {
 
   useEffect(() => {
     if (state.value !== value) setState({ value });
-    else if (!state.value && !!state.rawValue) setState({ value });
   }, [value]);
 
   const updateMentions = useUpdateMentions();
@@ -200,18 +213,22 @@ const RichTextEditor = React.forwardRef((props, ref) => {
           const content = oneline ? rawValue.replace(/<p><br><\/p>/g, '') : rawValue;
           const result = text && text !== '\n' ? content : '';
 
+          if (result === value) return;
+
           setState({
             rawValue,
             value: result,
           });
 
           onChange(result);
-          // if (result !== value) onChange(result);
         }}
         theme={(hasToolbar && 'snow') || 'bubble'}
         {...editorProps}
         formats={formatList.length ? [...formatList, 'indent'] : []}
         modules={modules}
+        onBlur={() => {
+          setState({ value: state.value });
+        }}
       />
       {children}
     </div>

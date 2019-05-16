@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
 
 import InputNumber from '../Form/InputNumber';
@@ -11,8 +10,9 @@ import TextArea from '../Form/TextArea';
 import TagInput from '../Form/TagInput';
 import CheckBox from '../Form/CheckBox';
 
-import './Input.scss';
 import RichTextEditor from '../Form/RichTextEditor/RichTextEditor';
+import useDebounceCallback from '../hooks/useDebouncedCallback';
+import './Input.scss';
 
 const DEFAULT_DEBOUNCE_TIME = 200;
 
@@ -29,40 +29,37 @@ const DEFAULT_DEBOUNCE_TIME = 200;
 //     .filter(([key]) => sharedPropsKeys.includes(key))
 //     .reduce((acc, [key, prop]) => ({ ...acc, [key]: prop }), {});
 
-class Input extends React.Component {
-  constructor(props) {
-    super(props);
+const Input = React.forwardRef((props, ref) => {
+  const [value, setValue] = useState(props.value);
 
-    this.state = {
-      // eslint-disable-next-line react/no-unused-state
-      valueFromProps: props.value,
-      value: props.value,
-    };
-    this.useValueFromState = false;
+  const instance = useRef({}).current;
 
-    this.handleChange = this.handleChange.bind(this);
-    const propagateChange = this.propagateChange.bind(this);
-    this.propagateChange = props.debounced
-      ? debounce(
-          propagateChange,
-          props.debounced === true ? DEFAULT_DEBOUNCE_TIME : props.debounced
-        )
-      : propagateChange;
+  const clearPropagation = () => {
+    if (typeof instance.clearPropagation === 'function') instance.clearPropagation();
+  };
+
+  // sync state.value with props.value
+  if (!isEqual(props.value, value)) setValue(props.value);
+  useEffect(() => clearPropagation, [props.value]);
+
+  const debouncedTime = props.debounced === true ? DEFAULT_DEBOUNCE_TIME : props.debounced || 0;
+  const onChangeDebounced = useDebounceCallback(props.onChange, debouncedTime);
+  const onChangeNotDebounced = (...args) => {
+    props.onChange(...args);
+    return () => {};
+  };
+
+  const propagateChange = props.debounced ? onChangeDebounced : onChangeNotDebounced;
+
+  function changeValue(...args) {
+    setValue(args[0]);
+    instance.clearPropagation = propagateChange(...args);
   }
 
-  static getDerivedStateFromProps({ value }, { valueFromProps }) {
-    if (!isEqual(value, valueFromProps)) return { value, valueFromProps: value };
-    return null;
-  }
+  function onChange(...args) {
+    const { type } = props;
 
-  changeValue(...args) {
-    this.setState({ value: args[0] });
-    this.propagateChange(...args);
-  }
-
-  handleChange(...args) {
-    const { type, onChange } = this.props;
-    if (onChange) {
+    if (props.onChange) {
       switch (type) {
         case 'date':
         case 'datetime':
@@ -70,64 +67,58 @@ class Input extends React.Component {
         case 'dropdown':
         case 'select':
         case 'tags':
-          return this.changeValue(args[0], ...args);
+          return changeValue(args[0], ...args);
         case 'boolean':
-          return this.changeValue((args[0].target || {}).checked, ...args);
+          return changeValue((args[0].target || {}).checked, ...args);
         case 'richtext':
         case 'html':
-          return this.changeValue(args[0], ...args);
+          return changeValue(args[0], ...args);
         case 'integer':
         case 'number':
         case 'float':
-          return this.changeValue(args[1], ...args);
+          return changeValue(args[1], ...args);
         default:
-          return this.changeValue(args[0].target.value, ...args);
+          return changeValue(args[0].target.value, ...args);
       }
     }
     return null;
   }
 
-  propagateChange(...args) {
-    this.props.onChange(...args);
+  const { type, inputRef, debounced, ...otherProps } = props;
+
+  const sharedProps = {
+    ref,
+    onChange,
+    value,
+  };
+
+  switch (type) {
+    case 'tags':
+      return <TagInput {...otherProps} {...sharedProps} />;
+    case 'integer':
+    case 'number':
+    case 'float':
+      return <InputNumber {...otherProps} {...sharedProps} />;
+    case 'date':
+    case 'datetime':
+      return <DatePicker {...otherProps} {...sharedProps} />;
+    case 'list':
+    case 'dropdown':
+    case 'select':
+      return <Select {...otherProps} {...sharedProps} />;
+    case 'boolean':
+      return <CheckBox {...otherProps} checked={props.value} {...sharedProps} />;
+    case 'textarea':
+      return <TextArea {...otherProps} {...sharedProps} />;
+    case 'richtext':
+    case 'html':
+      return <RichTextEditor {...otherProps} {...sharedProps} />;
+    case 'string':
+    case 'text':
+    default:
+      return <TextField {...otherProps} type={type} {...sharedProps} />;
   }
-
-  render() {
-    const { type, inputRef, value, debounced, ...props } = this.props;
-
-    const sharedProps = {
-      ref: inputRef,
-      onChange: this.handleChange,
-      value: this.state.value,
-    };
-
-    switch (type) {
-      case 'tags':
-        return <TagInput {...props} {...sharedProps} />;
-      case 'integer':
-      case 'number':
-      case 'float':
-        return <InputNumber {...props} {...sharedProps} />;
-      case 'date':
-      case 'datetime':
-        return <DatePicker {...props} {...sharedProps} />;
-      case 'list':
-      case 'dropdown':
-      case 'select':
-        return <Select {...props} {...sharedProps} />;
-      case 'boolean':
-        return <CheckBox {...props} checked={props.value} {...sharedProps} />;
-      case 'textarea':
-        return <TextArea {...props} {...sharedProps} />;
-      case 'richtext':
-      case 'html':
-        return <RichTextEditor {...props} {...sharedProps} />;
-      case 'string':
-      case 'text':
-      default:
-        return <TextField {...props} type={type} {...sharedProps} />;
-    }
-  }
-}
+});
 
 Input.displayName = 'Input';
 
@@ -143,4 +134,4 @@ Input.propTypes = {
   debounced: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
 };
 
-export default React.forwardRef((props, ref) => <Input {...props} inputRef={ref} />);
+export default Input;
