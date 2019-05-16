@@ -4,10 +4,6 @@ import Editor, { Quill } from 'react-quill';
 import MagicUrl from 'quill-magic-url';
 import 'quill-mention';
 
-import 'react-quill/dist/quill.core.css';
-import 'react-quill/dist/quill.snow.css';
-import 'react-quill/dist/quill.bubble.css';
-
 import { bemClass } from '../../helpers/bem';
 import context from './context';
 import HTMLBlock from '../../HTMLBlock/HTMLBlock';
