@@ -4,6 +4,7 @@ import classnames from 'classnames';
 
 import { bemClass } from '../../helpers/bem';
 import Label from '../Label';
+import HTMLBlock from '../../HTMLBlock/HTMLBlock';
 import './FormElement.scss';
 
 const FormElement = props => {
@@ -21,10 +22,10 @@ const FormElement = props => {
       </Label>
       {children}
       {props.helpText && (
-        <div
+        <HTMLBlock
           className={bemClass('form-element__help-text', { error, disabled, success })}
           id={`${id}__help-text`}
-          dangerouslySetInnerHTML={{ __html: props.helpText }}
+          html={props.helpText}
         />
       )}
     </div>
