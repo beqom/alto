@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { sanitize } from 'dompurify';
 
+import context from './context';
 import { bemClass } from '../helpers/bem';
 import './HTMLBlock.scss';
 
@@ -30,35 +31,45 @@ const cleanHtml = html => {
   return sanitize(container.innerHTML);
 };
 
-const HTMLBlock = React.forwardRef(
-  ({ tag: Tag, html, className, renderMention, oneline, ...props }, givenRef) => {
-    const defaultRef = useRef();
-    const ref = givenRef || defaultRef;
-
-    const cleanedHtml = useMemo(() => cleanHtml(html), [html]);
-
-    useEffect(() => renderMentions(ref, renderMention));
-
-    return (
-      <Tag
-        ref={ref}
-        {...props}
-        className={bemClass('HTMLBlock', { oneline }, 'ql-editor', className)}
-        dangerouslySetInnerHTML={{
-          __html: cleanedHtml,
-        }}
-      />
-    );
-  }
-);
-
-HTMLBlock.displayName = 'HTMLBlock';
-
-HTMLBlock.defaultProps = {
+const defaultProps = {
   tag: 'div',
   // eslint-disable-next-line react/prop-types
   renderMention: ({ value }) => <span>{value}</span>,
 };
+
+const HTMLBlock = React.forwardRef((props, givenRef) => {
+  const defaultRef = useRef();
+  const ref = givenRef || defaultRef;
+
+  const sharedProps = useContext(context);
+
+  const { tag: Tag, html, className, renderMention, oneline, ...otherProps } = {
+    ...defaultProps,
+    ...sharedProps,
+    ...props,
+  };
+
+  const cleanedHtml = useMemo(() => cleanHtml(html), [html]);
+
+  useEffect(() => {
+    // ensure DOM has been updated, push update mention to the end of the stack
+    const timeout = setTimeout(() => renderMentions(ref, renderMention), 0);
+    return () => clearTimeout(timeout);
+  });
+
+  return (
+    <Tag
+      ref={ref}
+      {...otherProps}
+      className={bemClass('HTMLBlock', { oneline }, 'ql-editor', className)}
+      dangerouslySetInnerHTML={{
+        __html: cleanedHtml,
+      }}
+    />
+  );
+});
+
+HTMLBlock.displayName = 'HTMLBlock';
 
 HTMLBlock.propTypes = {
   tag: PropTypes.string,
