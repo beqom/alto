@@ -3,10 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { sanitize } from 'dompurify';
 
-import 'react-quill/dist/quill.core.css';
-
 import { bemClass } from '../helpers/bem';
-
 import './HTMLBlock.scss';
 
 const renderMentions = (ref, renderMention) => {

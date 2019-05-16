@@ -1,0 +1,7 @@
+// using url(...) in order ot ensure it will be be loaded first
+// and can be then overridden
+// it seems to be a bug introduced in webpack 3 or 4
+// solution found here: https://github.com/webpack-contrib/extract-text-webpack-plugin/issues/200#issuecomment-379549528
+@import url('~react-quill/dist/quill.core.css');
+@import url('~react-quill/dist/quill.snow.css');
+@import url('~react-quill/dist/quill.bubble.css');
