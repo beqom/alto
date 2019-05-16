@@ -172,6 +172,8 @@ class SelectDropdown extends React.Component {
         id={`${this.props.id}__dropdown`}
         renderTrigger={this.renderTrigger}
         closeFocusTargetId={this.props.id}
+        mediumWidth={this.props.mediumWidth}
+        narrow={this.props.narrow}
       />
     );
   }
@@ -189,6 +191,8 @@ SelectDropdown.propTypes = {
   error: PropTypes.bool,
   large: PropTypes.bool,
   small: PropTypes.bool,
+  mediumWidth: PropTypes.bool,
+  narrow: PropTypes.bool,
   className: PropTypes.string,
   hideLabel: PropTypes.bool,
   helpText: PropTypes.string,

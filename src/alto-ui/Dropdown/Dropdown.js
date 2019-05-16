@@ -228,6 +228,8 @@ class Dropdown extends React.Component {
       loadingItems,
       small,
       large,
+      mediumWidth,
+      narrow,
       triggerRef,
       icon,
       active,
@@ -244,7 +246,7 @@ class Dropdown extends React.Component {
           start={!renderTrigger && !popoverProps.middle && !popoverProps.end}
           targetRef={this.getTriggerRef()}
           {...popoverProps}
-          className={bemClass('Dropdown', { small, large }, className)}
+          className={bemClass('Dropdown', { small, large, mediumWidth, narrow }, className)}
           baseClassName="Dropdown"
           open={this.state.open}
           onClose={this.handleClose}
@@ -292,6 +294,8 @@ Dropdown.propTypes = {
   loadingItems: PropTypes.bool,
   small: PropTypes.bool,
   large: PropTypes.bool,
+  mediumWidth: PropTypes.bool,
+  narrow: PropTypes.bool,
   triggerRef: PropTypes.object,
   icon: PropTypes.func,
   active: PropTypes.bool,

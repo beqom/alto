@@ -5,6 +5,13 @@
   // abtitary amount
   max-width: 55rem;
 
+  &--mediumWidth {
+    max-width: 45rem;
+  }
+  &--narrow {
+    max-width: 15rem;
+  }
+
   .Dropdown--left,
   .Dropdown--right {
     &.Dropdown--start {
