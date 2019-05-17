@@ -38,9 +38,12 @@ const Input = React.forwardRef((props, ref) => {
     if (typeof instance.clearPropagation === 'function') instance.clearPropagation();
   };
 
-  // sync state.value with props.value
-  if (!isEqual(props.value, value)) setValue(props.value);
-  useEffect(() => clearPropagation, [props.value]);
+  useEffect(() => {
+    // sync state.value with props.value
+    if (!isEqual(props.value, value)) setValue(props.value);
+    // cancel propagation of on change
+    return clearPropagation;
+  }, [props.value]);
 
   const debouncedTime = props.debounced === true ? DEFAULT_DEBOUNCE_TIME : props.debounced || 0;
   const onChangeDebounced = useDebounceCallback(props.onChange, debouncedTime);
