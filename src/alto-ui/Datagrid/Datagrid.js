@@ -92,6 +92,7 @@ class Datagrid extends React.PureComponent {
 
     this.scrollingElt = null;
     this.timeout = null;
+    this.initialTimeout = null;
 
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
     this.setFrozenRowsNode = this.setFrozenRowsNode.bind(this);
@@ -110,7 +111,7 @@ class Datagrid extends React.PureComponent {
 
   componentDidMount() {
     // fix scroll initial value
-    setTimeout(() => {
+    this.initialTimeout = setTimeout(() => {
       if (this.staticHeaderNode && this.frozenRowsNode && this.staticRowsNode) {
         this.staticHeaderNode.setAttribute('style', '');
         this.frozenRowsNode.setAttribute('style', '');
@@ -131,6 +132,8 @@ class Datagrid extends React.PureComponent {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.trackDimensions);
+    clearTimeout(this.initialTimeout);
+    clearTimeout(this.timeout);
   }
 
   getContext() {
