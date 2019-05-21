@@ -5,7 +5,6 @@ import centered from '@storybook/addon-centered';
 import { action } from '@storybook/addon-actions';
 
 import Sortable from './Sortable';
-import DragHandleIcon from '../Icons/DragHandle';
 import Card from '../Card';
 
 const fruits = [
@@ -39,9 +38,8 @@ function SortableDemo() {
     >
       {({ name, icon }, handleProps) => (
         <div style={{ padding: '0.25rem' }}>
-          <Card small>
+          <Card dragHandleProps={handleProps}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <DragHandleIcon {...handleProps} />
               <span
                 style={{
                   display: 'inlineBlock',

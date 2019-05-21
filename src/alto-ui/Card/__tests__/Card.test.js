@@ -11,13 +11,6 @@ describe('<Card />', () => {
     expect(wrapper.childAt(0).prop('children')).toBe('Hello world');
   });
 
-  it('should support severals modifiers', () => {
-    ['small', 'large', 'filled'].forEach(modifier => {
-      const wrapper = shallow(<Card {...{ [modifier]: true }} />);
-      expect(wrapper.prop('className')).toBe(`Card Card--${modifier}`);
-    });
-  });
-
   it('should be able to render a title', () => {
     const wrapper = shallow(<Card title="Welcome to Aperture Science">My name is Glados</Card>);
     expect(wrapper.children().length).toBe(2);

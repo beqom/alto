@@ -2,49 +2,94 @@
 
 .Card {
   border: 1px solid $coolgrey-20;
-  background-color: $white;
   border-radius: $border-radius-default;
+  padding-left: 1px;
+  display: flex;
 
-  &--filled {
-    background-color: $coolgrey-10;
+  @each $name,
+    $color
+      in (
+        pink: $pink-50,
+        indigo: $indigo-50,
+        teal: $teal-50,
+        lime: $lime-50,
+        yellow: $yellow-50,
+        orange: $orange-50,
+        red: $red-50
+      )
+  {
+    &--#{$name} {
+      border-left-color: $color;
+      box-shadow: inset 1px 0 0 $color;
+    }
+  }
+
+  &--active {
+    box-shadow: $drop-shadow;
+  }
+
+  &--with-header {
+    flex-direction: column;
   }
 }
 
 .Card__header {
-  padding: $spacing-medium;
+  padding: 0 $spacing-medium;
   border-bottom: 1px solid $coolgrey-20;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $coolgrey-10;
+  line-height: 1;
+  height: 3rem;
+}
 
-  .Card--large & {
-    padding: $spacing-large;
+.Card__drag-handle-container {
+  display: flex;
+  background-color: $white;
+  padding-right: $spacing-x-small;
+  padding-left: calc(#{$spacing-x-small} - 1px);
+  flex-shrink: 0;
+  border-right: 1px solid $coolgrey-20;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
   }
+}
 
-  .Card--small & {
-    padding: $spacing-small;
+.Card__drag-handle {
+  margin: auto;
+  cursor: grab;
+  &:active {
+    cursor: grabbing;
   }
+}
+
+.Card__hearder-icon {
+  margin-left: $spacing-small;
 }
 
 .Card__title {
   font-size: $font-size-large;
-  font-weight: $font-weight-semibold;
-  color: $coolgrey-50;
+  text-transform: uppercase;
+  flex: 1;
+}
 
-  .Card--large & {
-    font-size: $font-size-x-large;
-  }
+.Card__drag-handle--header {
+  margin-right: $spacing-x-small;
+}
 
-  .Card--small & {
-    font-size: $font-size-medium;
-  }
+.Card__actions {
+  display: flex;
 }
 
 .Card__body {
+  display: flex;
+  flex: 1;
+  background-color: $white;
   padding: $spacing-medium;
-
-  .Card--large & {
-    padding: $spacing-large;
-  }
-
-  .Card--small & {
-    padding: $spacing-small;
+  padding-left: calc(#{$spacing-medium} - 1px);
+  .Card__drag-handle-container + & {
+    padding-left: $spacing-medium;
   }
 }
