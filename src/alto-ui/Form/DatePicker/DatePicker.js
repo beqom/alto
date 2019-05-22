@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import DayPicker, { LocaleUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -67,8 +67,8 @@ class DatePicker extends React.Component {
 
   handleFocus(e) {
     if (this.props.readOnly) return;
-    if (this.props.inputProps.onFocus) {
-      this.props.inputProps.onFocus(e);
+    if (this.props.onFocus) {
+      this.props.onFocus(e);
     }
 
     this.setState({ open: true });
@@ -78,11 +78,11 @@ class DatePicker extends React.Component {
     const { value } = this.state;
     const { format, displayFormat } = this.props;
 
-    if (!value) return null;
-
-    if (this.props.inputProps.onBlur) {
-      this.props.inputProps.onBlur(e);
+    if (typeof this.props.onBlur === 'function') {
+      this.props.onBlur(e);
     }
+
+    if (!value) return null;
 
     const date = [format, displayFormat].reduce(
       (d, f) => (d && d.isValid ? d : DateTime.fromFormat(value, f)),
@@ -126,26 +126,21 @@ class DatePicker extends React.Component {
   }
 
   render() {
-    const { id, small, large, placeholder } = this.props;
+    const { inputRef, id, displayFormat, iso, onChange, onBlur, ...remainingProps } = this.props;
     const { open, value } = this.state;
     const date = this.getDate();
 
     return (
-      <div className={classnames('DatePicker', this.props.className)}>
+      <Fragment>
         <TextField
+          {...remainingProps}
           ref={this.getInputRef()}
-          placeholder={placeholder}
-          label={this.props.label}
-          hideLabel={this.props.hideLabel}
-          {...this.props.inputProps}
-          readOnly={this.props.readOnly}
+          className={classnames('DatePicker', this.props.className)}
           onFocus={this.handleFocus}
           onChange={this.handleChangeInput}
           onBlur={this.handleBlur}
           value={value === null ? this.formatTextfieldDate() : value}
           id={`${id}__input`}
-          small={small}
-          large={large}
         />
         <Popover
           className="DatePicker__day-picker"
@@ -169,7 +164,7 @@ class DatePicker extends React.Component {
             renderDay={renderDay(id)}
           />
         </Popover>
-      </div>
+      </Fragment>
     );
   }
 }
@@ -177,7 +172,6 @@ class DatePicker extends React.Component {
 DatePicker.displayName = 'DatePicker';
 
 DatePicker.defaultProps = {
-  inputProps: {},
   format: 'dd/MM/yyyy',
   placeholder: '',
   displayFormat: 'dd LLL yyyy',
@@ -185,7 +179,6 @@ DatePicker.defaultProps = {
 
 DatePicker.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
   className: PropTypes.string,
   children: PropTypes.any,
   format: PropTypes.string,
@@ -203,15 +196,10 @@ DatePicker.propTypes = {
     // date
     PropTypes.object,
   ]),
-  inputProps: PropTypes.shape({
-    onBlur: PropTypes.func,
-    onFocus: PropTypes.func,
-  }),
+  onBlur: PropTypes.func,
+  onFocus: PropTypes.func,
   inputRef: PropTypes.object,
   onClose: PropTypes.func,
-  hideLabel: PropTypes.bool,
-  small: PropTypes.bool,
-  large: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => <DatePicker inputRef={ref} {...props} />);
