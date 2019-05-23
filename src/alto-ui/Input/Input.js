@@ -87,8 +87,8 @@ const Input = React.forwardRef((props, ref) => {
     return null;
   }
 
-  const { type, inputRef, debounced, ...otherProps } = props;
-
+  const { type, inputRef, debounced, checked, ...otherProps } = props;
+  const { small, ...checkboxProps } = otherProps;
   const sharedProps = {
     ref,
     onChange,
@@ -110,7 +110,7 @@ const Input = React.forwardRef((props, ref) => {
     case 'select':
       return <Select {...otherProps} {...sharedProps} />;
     case 'boolean':
-      return <CheckBox {...otherProps} checked={props.value} {...sharedProps} />;
+      return <CheckBox {...checkboxProps} checked={!!checkboxProps.value} {...sharedProps} />;
     case 'textarea':
       return <TextArea {...otherProps} {...sharedProps} />;
     case 'richtext':
