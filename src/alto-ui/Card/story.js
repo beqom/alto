@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { text, boolean } from '@storybook/addon-knobs';
+import { text, boolean, number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
 import MediaObject from '../MediaObject';
@@ -9,6 +9,10 @@ import ShowMore from '../ShowMore';
 import Table from '../Table';
 import Switch from '../Form/Switch';
 import StateProvider from '../StateProvider';
+
+import Pencil from '../Icons/Pencil';
+import Trash from '../Icons/Trash';
+import Duplicate from '../Icons/Duplicate';
 
 import Card from './Card';
 
@@ -39,14 +43,44 @@ const people = [
   },
 ];
 
+const actions = [
+  {
+    key: '1',
+    Icon: Pencil,
+    title: 'Edit',
+    onClick: () => {},
+  },
+  {
+    key: '3',
+    Icon: Duplicate,
+    title: 'Duplicate',
+    onClick: () => {},
+  },
+  {
+    key: '2',
+    Icon: Trash,
+    title: 'Delete',
+    onClick: () => {},
+  },
+];
+
 storiesOf('Card', module)
   .addDecorator(story => <div style={{ width: 400 }}>{story()}</div>)
   .addDecorator(centered)
   .addWithJSX('overview', () => (
     <Card
+      id="1"
       title={text('title', 'My Card')}
-      small={boolean('small', false)}
-      large={boolean('large', false)}
+      active={boolean('active', false)}
+      actions={actions.slice(
+        0,
+        number('How many actions ?', 1, { range: true, min: 0, max: 3, step: 1 })
+      )}
+      dragHandleProps={boolean('dragHandleProps', false) ? {} : undefined}
+      {...['pink', 'indigo', 'teal', 'lime', 'yellow', 'orange', 'red'].reduce(
+        (acc, color) => ({ ...acc, [color]: boolean(color, false) }),
+        {}
+      )}
     >
       {text(
         'children',
@@ -55,15 +89,13 @@ storiesOf('Card', module)
     </Card>
   ))
   .addWithJSX('with MediaObject', () => (
-    <Card small={boolean('small', false)} large={boolean('large', false)}>
+    <Card id="1">
       <MediaObject
         title="Sherry Franklin"
         subtitle="Head of Group Accounting"
         src="http://i.pravatar.cc/150?img=49"
         alt="picture of Sherry Franklin"
         avatar
-        small={boolean('small', false)}
-        large={boolean('large', false)}
       />
     </Card>
   ))
