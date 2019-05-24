@@ -84,10 +84,9 @@
 }
 
 .Card__body {
-  display: flex;
   flex: 1;
   background-color: $white;
-  padding: $spacing-medium;
+  padding: $spacing-x-small $spacing-medium;
   padding-left: calc(#{$spacing-medium} - 1px);
   .Card__drag-handle-container + & {
     padding-left: $spacing-medium;
