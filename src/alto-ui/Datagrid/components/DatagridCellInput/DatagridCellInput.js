@@ -84,6 +84,7 @@ class DatagridCellInput extends React.Component {
       case 'date':
         return {
           ...sharedProps,
+          onBlur: undefined,
           onClose: this.handleBlur,
           onChange: this.handleChangeFromOverlay,
           ...inputProps,
