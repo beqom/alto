@@ -73,7 +73,7 @@ class SideNav extends React.PureComponent {
       <li
         id={`${this.props.id}__${item.id}`}
         className={bemClass('sidenav__section', { collapsed })}
-        key={item.title}
+        key={item.id}
       >
         {this.renderItem(item)}
       </li>
