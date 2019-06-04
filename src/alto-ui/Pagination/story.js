@@ -14,8 +14,9 @@ storiesOf('Pagination', module)
   .addWithJSX('overview', () => (
     <Pagination
       id="ComponentPagination"
-      max={number('max', 20)}
-      current={number('current', 10)}
-      onClick={action('onClick')}
+      totalRecords={number('totalRecords', 100)}
+      currentPage={number('currentPage', 1)}
+      onChange={action('click')}
+      pageSize={number('pageSize', 10)}
     />
   ));
