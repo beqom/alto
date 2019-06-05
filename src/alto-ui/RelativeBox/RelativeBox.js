@@ -36,7 +36,7 @@ class RelativeBox extends React.Component {
       if (propsChanged) {
         this.updateStyle();
       }
-    } else {
+    } else if (prevProps !== this.props) {
       this.updateStyle();
     }
   }
