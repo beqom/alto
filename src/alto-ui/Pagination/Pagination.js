@@ -1,94 +1,49 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import range from 'lodash.range';
 
 import { bemClass } from '../helpers/bem';
 import ChevronLeftIcon from '../Icons/ChevronLeft';
 import ChevronRightIcon from '../Icons/ChevronRight';
+import { format } from '../helpers/number';
 
 import './Pagination.scss';
 
-const renderPageButton = (
-  paginationId,
-  pages,
-  onClick,
-  current,
-  { pageLabel, currentPageLabel, goToPageLabel }
-) =>
-  pages.map(page => {
-    if (current === page) {
-      return (
-        <div
-          id={paginationId ? `${paginationId}__button--${page}` : undefined}
-          key={page}
-          className={bemClass('Pagination__button', { current: true })}
-          aria-label={`${currentPageLabel}, ${pageLabel} ${page}`}
-          aria-current
-        >
-          {page}
-        </div>
-      );
-    }
+const DEFAULT_PAGE_SIZE = 10;
+const DEFAULT_LABELS = {
+  pageLabel: 'page',
+  currentPageLabel: 'Current page',
+  goToPageLabel: 'Go to page',
+  ofTotal: 'of',
+};
 
-    return (
-      <button
-        id={paginationId ? `${paginationId}__button--${page}` : undefined}
-        key={page}
-        className="Pagination__button"
-        onClick={() => onClick(page)}
-        aria-label={`${goToPageLabel} ${page}`}
-      >
-        {page}
-      </button>
-    );
-  });
-
-const Pagination = ({ id, className, max, current, onClick, labels }) => {
-  const maxValue = Math.max(0, max);
-  const currentValue = Math.min(max, Math.max(1, current));
-  if (maxValue === 0) return null;
-
-  const pages = range(1, max + 1);
-
-  const firstPage = pages.slice(0, 1);
-  const beforePages = pages.slice(1, Math.max(1, currentValue - 2));
-  const currentPages = pages.slice(
-    Math.max(1, currentValue - 2),
-    Math.min(maxValue - 1, currentValue + 1)
-  );
-  const afterPages = pages.slice(Math.min(maxValue - 1, currentValue + 1), maxValue - 1);
-  const lastPage = pages.slice(1).slice(-1);
-
-  const paginationLabels = {
-    pageLabel: 'page',
-    currentPageLabel: 'Current page',
-    goToPageLabel: 'Go to page',
-    ...labels,
+const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
+  const totalRecords = Math.max(0, props.totalRecords);
+  if (totalRecords === 0) return null;
+  const numberOfPages = Math.ceil(totalRecords / pageSize);
+  const currentPage = Math.min(numberOfPages, Math.max(1, props.currentPage));
+  const firstRecordIndex = (currentPage - 1) * pageSize + 1;
+  const lastRecordIndex = Math.min(totalRecords, currentPage * pageSize);
+  const labels = {
+    ...DEFAULT_LABELS,
+    ...props.labels,
   };
+
   return (
     <div id={id} className={bemClass('Pagination', {}, className)}>
-      {renderPageButton(id, firstPage, onClick, currentValue, paginationLabels)}
-      {!!beforePages.length && <span className="Pagination__ellipsis" />}
-      {renderPageButton(id, currentPages, onClick, currentValue, paginationLabels)}
-      {!!afterPages.length && <span className="Pagination__ellipsis" />}
-      {renderPageButton(id, lastPage, onClick, currentValue, paginationLabels)}
-
-      <button
-        id={id ? `${id}__button--prev` : undefined}
-        className={bemClass('Pagination__button', { arrow: true })}
-        onClick={() => onClick(currentValue - 1)}
-        disabled={currentValue === 1}
-      >
-        <ChevronLeftIcon />
-      </button>
-      <button
-        id={id ? `${id}__button--next` : undefined}
-        className={bemClass('Pagination__button', { arrow: true })}
-        onClick={() => onClick(currentValue + 1)}
-        disabled={currentValue === maxValue}
-      >
-        <ChevronRightIcon />
-      </button>
+      <ChevronLeftIcon
+        id={`${id}__arrow--prev`}
+        onClick={() => onChange(currentPage - 1)}
+        className="Pagination__arrow"
+        disabled={currentPage === 1}
+      />
+      <span className="Pagination__range-items">{`${firstRecordIndex}-${lastRecordIndex}`}</span>
+      <span className="Pagination__range-total">{`${labels.ofTotal} ${format(totalRecords)}`}</span>
+      <ChevronRightIcon
+        id={`${id}__arrow--next`}
+        className="Pagination__arrow"
+        onClick={() => onChange(currentPage + 1)}
+        disabled={currentPage === numberOfPages}
+      />
     </div>
   );
 };
@@ -97,22 +52,27 @@ Pagination.displayName = 'Pagination';
 
 Pagination.defaultProps = {
   className: '',
+  pageSize: DEFAULT_PAGE_SIZE,
 };
 
 Pagination.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.string.isRequired,
   /** additonal class to add to the wrapper component */
   className: PropTypes.string,
   /** current page number (between 1 -> max) */
-  current: PropTypes.number.isRequired,
-  /** max number of pages */
-  max: PropTypes.number.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  /** total number of pages */
+  totalRecords: PropTypes.number.isRequired,
+  /** number of elements per page */
+  pageSize: PropTypes.number,
+
   /** function that will be called each time the page change, first argument is the page number */
-  onClick: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   labels: PropTypes.shape({
     pageLabel: PropTypes.string.isRequired,
     currentPageLabel: PropTypes.string.isRequired,
     goToPageLabel: PropTypes.string.isRequired,
+    ofTotal: PropTypes.string.isRequired,
   }),
 };
 
