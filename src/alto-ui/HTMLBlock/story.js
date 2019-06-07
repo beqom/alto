@@ -10,42 +10,7 @@ const text = `
 <h2>This is heading 2</h2>
 <p>Here is a first <strong>paragraph</strong> of text. </p>
 <p>Here is a second <em>paragraph</em> of text.</p>
-<p>Here is a third paragraph of text with a link to <a href="http://www.google.fr">google</a> website.</p>
-
-<ul>
- <li>Beetroot</li>
- <li>
-  Radish
-  <ul>
-    <li>Apple</li>
-    <li>
-      Ananas
-      <ul>
-        <li>Superman</li>
-        <li>Batman</li>
-      </ul>
-    </li>
-  </ul>
-</li>
-</ul>
-
-<ol>
- <li>Beetroot</li>
- <li>
-  Radish
-  <ol>
-    <li>Apple</li>
-    <li>
-      Ananas
-      <ol>
-        <li>Superman</li>
-        <li>Batman</li>
-      </ol>
-    </li>
-  </ol>
-</li>
-</ol>
-
+<p>Here is a third paragraph of text with a link to <a href="www.google.com">google</a> website.</p>
 `;
 
 storiesOf('HTMLBlock', module)
