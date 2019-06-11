@@ -16,7 +16,7 @@ storiesOf('Pagination', module)
       id="ComponentPagination"
       totalRecords={number('totalRecords', 100)}
       currentPage={number('currentPage', 1)}
-      onChange={action('click')}
+      onChange={action('onChange')}
       pageSize={number('pageSize', 10)}
     />
   ));
