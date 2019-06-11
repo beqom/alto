@@ -51,6 +51,7 @@
 %visually-hidden {
   opacity: 0;
   position: fixed;
+  top: -100000000px;
   height: 1px;
   width: 1px;
   overflow: hidden;
