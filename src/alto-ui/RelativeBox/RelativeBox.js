@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -7,54 +7,49 @@ import { getRelativePosition, getRelativePositionStyle } from '../helpers/positi
 import './RelativeBox.scss';
 import { bemClass } from '../helpers/bem';
 
-class RelativeBox extends React.Component {
-  constructor(props) {
-    super(props);
+function usePrevious(value) {
+  const ref = useRef(value);
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
-    this.state = {
-      style: {},
-      position: {},
-    };
+function getStyle(props, state) {
+  if (props.style) return { ...state.style, ...props.style };
+  return state.style;
+}
 
-    this.ref = React.createRef();
-  }
+function getClassNameWithModifiers(props, state) {
+  if (!props.baseClassName) return null;
+  const { start, middle, end } = props;
+  const { position } = state;
+  return bemClass(props.baseClassName, { ...position, start, middle, end });
+}
 
-  componentDidMount() {
-    this.updateStyle();
-  }
+function getProps(oldProps) {
+  const {
+    top,
+    bottom,
+    left,
+    right,
+    start,
+    middle,
+    end,
+    margin,
+    target,
+    targetRef,
+    style,
+    className,
+    baseClassName,
+    watch,
+    ...props
+  } = oldProps;
 
-  componentDidUpdate(prevProps) {
-    const targetChanged = !prevProps.target && !!this.props.target;
-    const targetRefChanged =
-      prevProps.target && !prevProps.target.current && !!this.props.target.current;
-    if (targetChanged || targetRefChanged) {
-      this.updateStyle();
-    } else if (prevProps.watch) {
-      const propsChanged = Object.entries(prevProps.watch).some(
-        ([key, value]) => this.props.watch[key] !== value
-      );
-      if (propsChanged) {
-        this.updateStyle();
-      }
-    } else if (prevProps !== this.props) {
-      this.updateStyle();
-    }
-  }
-
-  getStyle() {
-    if (this.props.style) return { ...this.state.style, ...this.props.style };
-    return this.state.style;
-  }
-
-  getClassNameWithModifiers() {
-    if (!this.props.baseClassName) return null;
-    const { start, middle, end } = this.props;
-    const { position } = this.state;
-    return bemClass(this.props.baseClassName, { ...position, start, middle, end });
-  }
-
-  getProps() {
-    const {
+  return {
+    ...oldProps,
+    props,
+    options: {
       top,
       bottom,
       left,
@@ -63,72 +58,72 @@ class RelativeBox extends React.Component {
       middle,
       end,
       margin,
-      target,
-      targetRef,
-      style,
-      className,
-      baseClassName,
-      watch,
-      ...props
-    } = this.props;
+    },
+  };
+}
 
-    return {
-      ...this.props,
-      props,
-      options: {
-        top,
-        bottom,
-        left,
-        right,
-        start,
-        middle,
-        end,
-        margin,
-      },
-    };
-  }
+function RelativeBox(props) {
+  const { watch } = props;
+  const target = props.target || (props.targetRef || {}).current;
+  const [state, setState] = useState({ style: {}, position: {} });
+  const ref = useRef();
 
-  getTarget() {
-    return this.props.target || (this.props.targetRef || {}).current;
-  }
+  function updateStyle() {
+    const { options } = getProps(props);
+    const { style, position } = state;
 
-  updateStyle() {
-    const { options } = this.getProps();
-    const target = this.getTarget();
-    const { style, position } = this.state;
-
-    const { top, bottom, right, left } = getRelativePosition(this.ref.current, target, options);
+    const { top, bottom, right, left } = getRelativePosition(ref.current, target, options);
     const positionChanged =
       top !== position.top ||
       bottom !== position.bottom ||
       left !== position.left ||
       right !== position.right;
 
-    const newStyle = getRelativePositionStyle(this.ref.current, target, options);
+    const newStyle = getRelativePositionStyle(ref.current, target, options);
     const styleChanged = newStyle.top !== style.top || newStyle.left !== style.left;
+
     if (positionChanged || styleChanged) {
       const customStyle =
-        typeof this.props.style === 'function'
-          ? this.props.style(newStyle, target, this.ref.current)
-          : this.props.style || {};
-      this.setState({
+        typeof props.style === 'function'
+          ? props.style(newStyle, target, ref.current)
+          : props.style || {};
+      setState({
         style: { ...newStyle, ...customStyle },
         position: { top, bottom, right, left },
       });
     }
   }
 
-  render() {
-    const { props, className } = this.getProps();
-    return (
-      <div
-        ref={this.ref}
-        {...props}
-        className={classnames('RelativeBox', className, this.getClassNameWithModifiers())}
-        style={this.getStyle()}
-      />
-    );
-  }
+  const previous = usePrevious({ target, watch, props });
+
+  useLayoutEffect(() => {
+    const targetChanged = !previous.target && !!target;
+    const targetRefChanged = previous.target && !previous.target.current && !!target.current;
+
+    if (targetChanged || targetRefChanged) {
+      updateStyle();
+    } else if (watch) {
+      const propsChanged = Object.entries(previous.watch).some(
+        ([key, value]) => watch[key] !== value
+      );
+      if (propsChanged) {
+        updateStyle();
+      }
+    } else {
+      updateStyle();
+    }
+  });
+
+  const { props: otherProps, className } = getProps(props);
+
+  return (
+    <div
+      ref={ref}
+      {...otherProps}
+      className={classnames('RelativeBox', className, getClassNameWithModifiers(props, state))}
+      style={getStyle(props, state)}
+    />
+  );
 }
 
 RelativeBox.displayName = 'RelativeBox';
