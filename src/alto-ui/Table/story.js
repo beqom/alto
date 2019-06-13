@@ -3,7 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { DateTime } from 'luxon';
 import { boolean, text } from '@storybook/addon-knobs';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import Avatar from '../Avatar';
 
 import StateProvider from '../StateProvider';

@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies, react/prop-types */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 import { boolean, text } from '@storybook/addon-knobs';
 
 import RichTextEditorStateLess from './RichTextEditor';

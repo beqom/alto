@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, color, boolean } from '@storybook/addon-knobs';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 
 import icons from './index';
 import TextField from '../Form/TextField';
