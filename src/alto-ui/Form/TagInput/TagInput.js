@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../helpers/bem';
@@ -160,7 +160,7 @@ const TagInput = React.forwardRef(
             onClick={() => setPosition(null)}
           />
           {tags.map((tag, index) => (
-            <Fragment key={getTagValue(tag)}>
+            <div key={getTagValue(tag)}>
               {position === index ? input : <div className="TagInput__caret-placeholder" />}
               <div className="TagInput__tag TagInput__tag--value">
                 {renderTag(tag, {
@@ -170,7 +170,7 @@ const TagInput = React.forwardRef(
                   onClick: e => handleClickTag(e, tag, index),
                 })}
               </div>
-            </Fragment>
+            </div>
           ))}
           {position === null || position === undefined ? input : <div style={{ width: 1 }} />}
         </div>

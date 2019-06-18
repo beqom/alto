@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Popover from '../Popover';
@@ -238,7 +238,7 @@ class Dropdown extends React.Component {
 
     const renderContent = typeof children === 'function' ? children : list => children || list;
     return (
-      <Fragment>
+      <>
         {this.renderTrigger()}
         <Popover
           start={!renderTrigger && !popoverProps.middle && !popoverProps.end}
@@ -253,7 +253,7 @@ class Dropdown extends React.Component {
         >
           {renderContent(this.renderList(popoverProps), this.handleClose)}
         </Popover>
-      </Fragment>
+      </>
     );
   }
 }
