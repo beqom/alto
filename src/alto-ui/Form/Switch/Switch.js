@@ -1,32 +1,46 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 
+import { bemClass } from '../../helpers/bem';
+import VisuallyHidden from '../../VisuallyHidden';
 import './Switch.scss';
 
-const Switch = props => {
-  const { className, checked, disabled, id, label, onChange } = props;
+function Switch({ className, hideLabel, checked, disabled, id, label, left, small, ...props }) {
+  const LabelComponent = hideLabel ? VisuallyHidden : 'div';
+  const right = !left;
+  const labelElt = (
+    <LabelComponent
+      className={bemClass('Switch__label', { hidden: hideLabel, left, right, disabled })}
+    >
+      {label}
+    </LabelComponent>
+  );
   return (
-    <div className={classnames('Switch', className)}>
+    <Fragment>
       <input
-        onChange={onChange}
+        {...props}
         className="Switch__input"
         id={id}
         checked={checked}
         disabled={disabled}
         type="checkbox"
       />
-      <label className="Switch__label" htmlFor={props.id}>
-        {label}
-        <div className="Switch__element" />
+
+      <label className={bemClass('Switch', { small }, className)} htmlFor={id}>
+        {right && labelElt}
+        <div className={bemClass('Switch__element', { small, checked, disabled })} />
+        {left && labelElt}
       </label>
-    </div>
+    </Fragment>
   );
-};
+}
+
+Switch.displayName = 'Switch';
 
 Switch.defaultProps = {
   checked: false,
   disabled: false,
+  onChange: () => {},
 };
 
 Switch.propTypes = {
@@ -36,6 +50,9 @@ Switch.propTypes = {
   checked: PropTypes.bool,
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
+  hideLabel: PropTypes.bool,
+  left: PropTypes.bool,
+  small: PropTypes.bool,
 };
 
 export default Switch;
