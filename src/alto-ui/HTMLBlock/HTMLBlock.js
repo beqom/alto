@@ -26,9 +26,14 @@ const cleanHtml = html => {
   // add "http://" to link
   [...container.querySelectorAll('a')].forEach(elt => {
     // eslint-disable-next-line no-param-reassign
-    elt.href = /^http/.test(elt.href) ? elt.href : `http://${elt.href}`;
+    elt.href = /^http|\//.test(elt.getAttribute('href'))
+      ? elt.getAttribute('href')
+      : `http://${elt.getAttribute('href')}`;
+
+    // eslint-disable-next-line no-param-reassign
+    elt.target = '_blank';
   });
-  return sanitize(container.innerHTML);
+  return sanitize(container.innerHTML, { ADD_ATTR: ['target'] });
 };
 
 const defaultProps = {
