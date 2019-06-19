@@ -1,85 +1,79 @@
 @import '../../scss/inc';
 
 .Switch {
-  //padding: $spacing-small 0;
   height: $height-default;
   display: flex;
   align-items: center;
   cursor: pointer;
   position: relative;
+  font-size: $font-size-medium;
+
+  &--small {
+    font-size: $font-size-small;
+    height: $height-small;
+  }
 }
 
 .Switch__input {
   @extend %visually-hidden;
 }
 
-.Switch__label {
-  font-size: $font-size-small;
-  outline: 0;
-  display: flex;
-  align-items: center;
-  font-weight: $font-weight-semibold;
-  font-family: $font-family-alt;
-  user-select: none;
-  color: $coolgrey-60;
-  cursor: pointer;
-
-  .Switch__input:disabled + & {
-    cursor: not-allowed;
-    color: $coolgrey-30;
-  }
-}
-
 .Switch__element {
+  font-size: $font-size-medium;
+  height: calc(1em + 2px);
+  width: calc(2em - 2px);
   cursor: pointer;
-  width: 1.4rem;
-  height: 0.8rem;
   position: relative;
-  overflow: hidden;
-  background-color: $coolgrey-60;
-  border-radius: 0.5rem;
-  margin-left: 0.25em;
+  background-color: $coolgrey-30;
+  border-radius: calc(0.5em + 1px);
+  transition: background-color 200ms;
 
-  .Switch__input:focus + .Switch__label & {
-    box-shadow: 0 0 0 3px $blue-20;
-    @include focused(true);
+  &--small {
+    font-size: $font-size-small;
   }
 
-  .Switch__input:disabled + .Switch__label & {
-    opacity: 0.5;
-    cursor: not-allowed;
+  &--checked {
+    background-color: $blue;
   }
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    border-radius: 0.5rem;
+  &--disabled {
+    background-color: $coolgrey-20;
+
+    &.Switch__element--checked {
+      background-color: $blue-30;
+    }
   }
 
   &::before {
-    width: 100%;
+    content: '';
     position: absolute;
-    height: 100%;
-    background-color: $blue;
-    transition: all $transition;
-    transform: translateX(-1rem);
-
-    .Switch__input:checked + .Switch__label & {
-      transform: translateX(0);
-    }
-  }
-  &::after {
-    width: 0.8rem;
-    height: 0.8rem;
-    border-radius: $border-radius-circle;
+    border-radius: calc(0.5em - 1px);
+    width: calc(1em - 2px);
+    height: calc(1em - 2px);
+    top: 2px;
+    left: 2px;
     background-color: $white;
-    box-shadow: inset 0 0 0 2px $coolgrey-60;
-    left: 0;
+    transition: transform 200ms;
+  }
 
-    .Switch__input:checked + .Switch__label & {
-      box-shadow: inset 0 0 0 2px $blue;
-      transform: translateX(0.6rem);
-    }
+  &--checked::before {
+    transform: translateX(calc(1em - 4px));
+  }
+}
+
+.Switch__label {
+  line-height: 1;
+  flex: 1;
+
+  &--left {
+    margin-left: $spacing-small;
+  }
+
+  &--right {
+    margin-right: $spacing-small;
+  }
+
+  &--disabled {
+    color: $coolgrey-60;
   }
 }
