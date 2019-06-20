@@ -8,7 +8,12 @@ import Avatar from './Avatar';
 
 storiesOf('Avatar', module)
   .addDecorator(centered)
-  .addWithJSX('overview', () => <Avatar src={text('src', 'http://i.pravatar.cc/150')} />)
+  .addWithJSX('overview', () => (
+    <Avatar
+      src={text('src', 'http://i.pravatar.cc/150')}
+      tooltip={text('tooltip', "Cause I'm Batman!")}
+    />
+  ))
   .addWithJSX('image 404', () => <Avatar src={text('src', 'foo')} />)
   .addWithJSX('sizes', () => {
     const src = boolean('image 404', false) ? 'foo' : 'http://i.pravatar.cc/150';
