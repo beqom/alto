@@ -30,6 +30,8 @@ const Icon = props => {
     badged,
     outline,
     active,
+    style,
+    weight,
     ...otherProps
   } = props;
   return (
@@ -47,7 +49,7 @@ const Icon = props => {
         },
         props.className
       )}
-      style={getStyle(!!props.onClick, size)}
+      style={{ ...getStyle(!!props.onClick, size), ...style }}
     >
       <svg
         version="1.1"
@@ -58,7 +60,7 @@ const Icon = props => {
         role="presentation"
         focusable="false"
       >
-        {children({ fill: color })}
+        {children({ fill: color, stroke: color, strokeWidth: weight })}
         {badged && <circle className="Icon__badge" cx="30" cy="6" r="5" />}
       </svg>
       {!!a11yLabel && <VisuallyHidden>{a11yLabel}</VisuallyHidden>}
@@ -74,6 +76,7 @@ Icon.defaultProps = {
   baseline: false,
   left: false,
   right: false,
+  weight: 0,
 };
 
 Icon.propTypes = {
@@ -90,6 +93,8 @@ Icon.propTypes = {
   className: PropTypes.string,
   onClick: PropTypes.func,
   active: PropTypes.bool,
+  style: PropTypes.object,
+  weight: PropTypes.number,
 };
 
 export default Icon;
