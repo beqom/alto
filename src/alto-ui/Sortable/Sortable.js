@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { Fragment, useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { bemClass } from '../helpers/bem';
+import useUniqueKey from '../hooks/useUniqueKey';
 
 import './Sortable.scss';
+
+const context = React.createContext();
 
 function moveByIndex(list, startIndex, endIndex) {
   const result = Array.from(list);
@@ -13,46 +16,56 @@ function moveByIndex(list, startIndex, endIndex) {
   return result;
 }
 
-function Sortable({ className, children, items, itemIdKey, onChange }) {
-  return (
-    <DragDropContext
-      onDragEnd={result => {
-        // dropped outside the list
-        if (!result.destination) return;
+const handleDragEnd = (instance, result) => {
+  // dropped outside the list
+  if (!result.destination) return;
 
-        const newItems = moveByIndex(items, result.source.index, result.destination.index);
+  const { droppableId, index: endIndex } = result.destination;
 
-        onChange(
-          newItems,
-          items[result.source.index],
-          result.source.index,
-          result.destination.index
-        );
-      }}
-    >
-      <Droppable droppableId="droppable">
-        {(providedDroppable, droppableSnapshot) => (
-          <ul
-            ref={providedDroppable.innerRef}
-            className={bemClass(
-              'Sortable',
-              {
-                dragging: droppableSnapshot.isDraggingOver,
-              },
-              className
-            )}
-          >
-            {items.map((item, index) => (
-              <Draggable key={item[itemIdKey]} draggableId={item[itemIdKey]} index={index}>
-                {(providedDraggable, draggableSnapshot) => (
-                  <li
-                    ref={providedDraggable.innerRef}
-                    {...providedDraggable.draggableProps}
-                    className={bemClass('Sortable__item', {
-                      dragging: draggableSnapshot.isDragging,
-                    })}
-                  >
-                    {children(
+  // not reordering move
+  if (result.source.droppableId !== droppableId) return;
+
+  const { items, onChange } = instance.propsByDroppableId[droppableId];
+
+  if (typeof onChange !== 'function') return;
+
+  const newItems = moveByIndex(items, result.source.index, endIndex);
+  onChange(newItems);
+};
+
+function Sortable(props) {
+  const { className, children, items, itemIdKey, renderDraggable, renderDroppable } = props;
+  const droppableId = useUniqueKey(props.id);
+  const type = useUniqueKey(props.type);
+  const instance = useRef({ propsByDroppableId: {} }).current;
+
+  const sortableContext = useContext(context);
+
+  useEffect(() => {
+    if (sortableContext) sortableContext.pushDroppableId(droppableId, props);
+    return () => {
+      if (sortableContext) sortableContext.removeDroppableId(droppableId);
+    };
+  });
+
+  const list = (
+    <Droppable droppableId={droppableId} type={type}>
+      {(providedDroppable, droppableSnapshot) =>
+        renderDroppable({
+          ref: providedDroppable.innerRef,
+          className: bemClass(
+            'Sortable',
+            {
+              dragging: droppableSnapshot.isDraggingOver,
+            },
+            className
+          ),
+          children: (
+            <Fragment>
+              {items.map((item, index) => (
+                <Draggable key={item[itemIdKey]} draggableId={item[itemIdKey]} index={index}>
+                  {(providedDraggable, draggableSnapshot) => {
+                    const itemArgs = [
                       item,
                       {
                         ...providedDraggable.dragHandleProps,
@@ -61,17 +74,50 @@ function Sortable({ className, children, items, itemIdKey, onChange }) {
                         }),
                       },
                       draggableSnapshot.isDragging,
-                      index
-                    )}
-                  </li>
-                )}
-              </Draggable>
-            ))}
-            {providedDroppable.placeholder}
-          </ul>
-        )}
-      </Droppable>
-    </DragDropContext>
+                      index,
+                    ];
+
+                    return renderDraggable(
+                      {
+                        ref: providedDraggable.innerRef,
+                        ...providedDraggable.draggableProps,
+                        className: bemClass('Sortable__item', {
+                          dragging: draggableSnapshot.isDragging,
+                        }),
+                        children: typeof children === 'function' ? children(...itemArgs) : null,
+                      },
+                      ...itemArgs
+                    );
+                  }}
+                </Draggable>
+              ))}
+              {providedDroppable.placeholder}
+            </Fragment>
+          ),
+        })
+      }
+    </Droppable>
+  );
+
+  if (sortableContext) {
+    return list;
+  }
+
+  function pushDroppableId(id, p) {
+    instance.propsByDroppableId = { ...instance.propsByDroppableId, [id]: p };
+  }
+
+  function removeDroppableId(id) {
+    const { [id]: idToRemoved, ...newPropsByDroppableId } = instance.propsByDroppableId;
+    instance.propsByDroppableId = newPropsByDroppableId;
+  }
+
+  pushDroppableId(droppableId, props);
+
+  return (
+    <context.Provider value={{ pushDroppableId, removeDroppableId }}>
+      <DragDropContext onDragEnd={res => handleDragEnd(instance, res)}>{list}</DragDropContext>
+    </context.Provider>
   );
 }
 
@@ -79,14 +125,21 @@ Sortable.displayName = 'Sortable';
 
 Sortable.defaultProps = {
   itemIdKey: 'id',
+  renderDroppable: props => <ul {...props} />,
+  renderDraggable: props => <li {...props} />,
 };
 
 Sortable.propTypes = {
+  id: PropTypes.string,
+  type: PropTypes.string,
   className: PropTypes.string,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.func,
   itemIdKey: PropTypes.string,
   items: PropTypes.array,
+  // eslint-disable-next-line react/no-unused-prop-types
   onChange: PropTypes.func,
+  renderDraggable: PropTypes.func,
+  renderDroppable: PropTypes.func,
 };
 
 export default Sortable;
