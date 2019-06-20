@@ -1,62 +1,105 @@
-@import "../scss/inc";
+@import '../scss/inc';
 
-.list {
+.List {
   background: $white;
   list-style: none;
   overflow: auto;
 }
 
-.list__item {
-  border: 1px solid $coolgrey-20;
-  border-top: 0;
-  overflow: hidden;
+.List__item {
+  padding: 0;
+  position: relative;
 
-  &:first-child {
-    border-top: 1px solid $coolgrey-20;
-    border-top-left-radius: $border-radius-default;
-    border-top-right-radius: $border-radius-default;
-  }
-
-  &:last-child {
-    border-bottom-left-radius: $border-radius-default;
-    border-bottom-right-radius: $border-radius-default;
+  &--active,
+  &--clickable:hover {
+    background-color: $blue-10;
   }
 }
 
-
-.list__item-content {
-  padding: .75rem 1.25rem;
+.List__item-row {
   display: flex;
-  flex-direction: row;
-  text-decoration: none;
+  padding: 0 $spacing-small;
   align-items: center;
-  font-weight: $font-weight-semibold;
-  color: $color-text-default;
-  justify-content: space-between;
-}
+  min-height: 4rem;
 
-.list__item-content--link {
-  transition: $duration-quick $timing-function background;
-
-  &:hover {
-    background: $blue-10;
-    color: $color-text-default;
-    text-decoration: none;
-  }
-
-  &:focus {
-    box-shadow: inset 0 0 0 3px $blue-20;
+  &--small {
+    min-height: 2rem;
+    padding: 0 0.32rem;
   }
 }
 
-.list__item-content--active {
-  &,
-  &:hover {
-    background: $blue;
-    color: $white;
-    * {
-      color: $white;
-      border-color: $white;
+.List__item-nested-row {
+  margin-left: $spacing-large;
+
+  &--bordered {
+    margin: $spacing-small;
+    margin-left: $spacing-large;
+  }
+}
+
+.List__field {
+  padding: $spacing-small;
+  min-width: 0;
+  flex-shrink: 0;
+
+  &--small {
+    padding: 0.32rem;
+  }
+
+  &--interactive {
+    position: relative;
+    z-index: 2;
+  }
+
+  &--draghandle {
+    padding: 0;
+    color: $coolgrey-50;
+    &:hover {
+      color: $coolgrey-80;
     }
+  }
+
+  &:not(.List__item--nowrap) {
+    @extend %text-ellipsis;
+  }
+
+  &--primary {
+    flex: 1;
+
+    &.List__field--button {
+      @extend %reset-button;
+      position: static;
+      cursor: pointer;
+
+      .List__item:hover &::after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: transparent;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+    }
+  }
+
+  &--hidden {
+    visibility: hidden;
+
+    .List__item-row:hover & {
+      visibility: visible;
+    }
+  }
+}
+
+.List__badges-list {
+  list-style: none;
+  display: flex;
+}
+
+.List__badge {
+  &:not(:first-child) {
+    margin-left: $spacing-small;
   }
 }

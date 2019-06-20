@@ -1,135 +1,127 @@
 @import '../scss/inc';
 
-.MediaObject {
+.Media {
   display: flex;
   align-items: center;
   text-align: left;
   width: 100%;
+  line-height: 1.2;
 
-  &--top {
+  &--wrap {
     align-items: flex-start;
   }
 }
 
-.MediaObject__image {
+.Media__image {
   max-height: 3.5rem;
   max-width: 3.5rem;
 
-  .MediaObject--large & {
+  .Media--large & {
     max-height: 5rem;
     max-width: 5rem;
   }
 
-  .MediaObject--small & {
+  .Media--small & {
     max-height: 2rem;
     max-width: 2rem;
   }
 }
 
-.MediaObject__image,
-.MediaObject__image-placeholder {
+.Media__image,
+.Media__image-placeholder {
   margin-right: $spacing-medium;
 
-  .MediaObject--large & {
+  .Media--large & {
     margin-right: $spacing-large;
   }
 
-  .MediaObject--small & {
+  .Media--small & {
     margin-right: $spacing-small;
   }
 }
 
-.MediaObject__image-placeholder {
+.Media__image-placeholder {
   background-color: $coolgrey-20;
   color: $coolgrey-40;
   display: flex;
   height: 3.5rem;
   width: 3.5rem;
 
-  .MediaObject--large & {
+  .Media--large & {
     height: 5rem;
     width: 5rem;
   }
 
-  .MediaObject--small & {
+  .Media--small & {
     height: 2rem;
     width: 2rem;
   }
 }
 
-.MediaObject__image-placeholder-icon {
+.Media__image-placeholder-icon {
   margin: auto;
   font-size: 2rem;
 
-  .MediaObject--large & {
+  .Media--large & {
     font-size: 3.5rem;
   }
 
-  .MediaObject--small & {
+  .Media--small & {
     font-size: 1rem;
   }
 }
 
-.MediaObject__content {
+.Media__content {
   flex: 1;
   min-width: 0;
 }
 
-.MediaObject__title {
-  font-weight: $font-weight-semibold;
+.Media__title {
   font-size: $font-size-large;
+  font-weight: $font-weight-semibold;
   color: $color-text-default;
 
-  .MediaObject--large & {
-    font-size: $font-size-xx-large;
+  .Media--large & {
+    font-size: $font-size-x-large;
     font-weight: $font-weight-regular;
   }
 
-  .MediaObject--small & {
-    font-size: $font-size-small;
+  .Media--small & {
+    font-size: $font-size-medium;
   }
 
-  .MediaObject--danger & {
-    color: $red;
-  }
-
-  .MediaObject--success & {
-    color: $green;
-  }
-
-  .MediaObject--white & {
+  .Media--white & {
     color: $white;
   }
 }
 
-.MediaObject__title,
-.MediaObject__subtitle {
+.Media__title,
+.Media__subtitle,
+.Media__description {
   white-space: nowrap;
   width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
 
-  .MediaObject--wrap & {
+  .Media--wrap & {
     white-space: normal;
   }
 }
 
-.MediaObject__subtitle {
-  margin-top: $spacing-x-small;
-  color: $coolgrey-50;
-  font-size: $font-size-small;
+.Media__subtitle {
+  text-transform: uppercase;
+}
 
-  .MediaObject--large & {
-    margin-top: $spacing-small;
+.Media__subtitle,
+.Media__description {
+  font-size: $font-size-small;
+  color: $coolgrey-60;
+
+  .Media--large & {
     font-size: $font-size-large;
   }
 
-  .MediaObject--small & {
-    margin-top: $spacing-xx-small;
-    font-size: $font-size-x-small;
-  }
-
-  .MediaObject--white & {
+  .Media--white & {
     color: $white;
     opacity: 0.6;
   }
