@@ -15,7 +15,8 @@
         lime: $lime-50,
         yellow: $yellow-50,
         orange: $orange-50,
-        red: $red-50
+        red: $red-50,
+        green: $green-50
       )
   {
     &--#{$name} {
@@ -31,6 +32,53 @@
   &--with-header {
     flex-direction: column;
   }
+
+  &--in-row {
+    border-radius: 0;
+    border-left-width: 0;
+
+    &.Card--first-in-group {
+      border-radius: $border-radius-default 0 0 $border-radius-default;
+      &:not(.Card--borderless) {
+        border-left-width: 1px;
+      }
+    }
+
+    &.Card--last-in-group {
+      border-radius: 0 $border-radius-default $border-radius-default 0;
+    }
+  }
+
+  &--in-column {
+    border-radius: 0;
+    border-top-width: 0;
+
+    &.Card--first-in-group {
+      border-radius: $border-radius-default $border-radius-default 0 0;
+      &:not(.Card--borderless) {
+        border-top-width: 1px;
+      }
+    }
+
+    &.Card--last-in-group {
+      border-radius: 0 0 $border-radius-default $border-radius-default;
+    }
+  }
+
+  &--borderless {
+    border: 0;
+  }
+
+  &--dragging {
+    &:not(.Card--borderless) {
+      border-width: 1px;
+      border-radius: $border-radius-default;
+    }
+  }
+
+  &--simple {
+    display: block;
+  }
 }
 
 .Card__header {
@@ -40,7 +88,6 @@
   justify-content: space-between;
   align-items: center;
   background-color: $coolgrey-10;
-  line-height: 1;
   height: 3rem;
 }
 
@@ -51,7 +98,13 @@
   padding-left: calc(#{$spacing-x-small} - 1px);
   flex-shrink: 0;
   border-right: 1px solid $coolgrey-20;
+  color: $coolgrey-50;
   cursor: grab;
+
+  &:hover {
+    color: $coolgrey-80;
+  }
+
   &:active {
     cursor: grabbing;
   }
@@ -60,6 +113,12 @@
 .Card__drag-handle {
   margin: auto;
   cursor: grab;
+  color: $coolgrey-50;
+
+  &:hover {
+    color: $coolgrey-80;
+  }
+
   &:active {
     cursor: grabbing;
   }
@@ -83,11 +142,16 @@
   display: flex;
 }
 
+.Card--simple,
+.Card__body {
+  background-color: $white;
+  padding: $spacing-medium;
+}
+
 .Card__body {
   flex: 1;
-  background-color: $white;
-  padding: $spacing-x-small $spacing-medium;
   padding-left: calc(#{$spacing-medium} - 1px);
+
   .Card__drag-handle-container + & {
     padding-left: $spacing-medium;
   }
