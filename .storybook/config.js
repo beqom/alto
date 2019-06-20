@@ -53,6 +53,7 @@ function loadStories() {
   require('../src/alto-ui/Alert/story');
   require('../src/alto-ui/Aside/story');
   require('../src/alto-ui/Avatar/story');
+  require('../src/alto-ui/Badge/story');
   require('../src/alto-ui/Breadcrumb/story');
   require('../src/alto-ui/Button/story');
   require('../src/alto-ui/Card/story');
