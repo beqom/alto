@@ -50,6 +50,7 @@ addDecorator(withKnobs);
 addDecorator(story => <Root>{story()}</Root>);
 
 function loadStories() {
+  require('../src/alto-ui/Actions/story');
   require('../src/alto-ui/Alert/story');
   require('../src/alto-ui/Aside/story');
   require('../src/alto-ui/Avatar/story');

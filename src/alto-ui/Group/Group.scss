@@ -1,0 +1,14 @@
+@import '../scss/inc';
+
+.Group {
+  display: flex;
+  list-style: none;
+
+  &--column {
+    flex-direction: column;
+  }
+
+  &--splitted > *:not(:first-child) {
+    margin-left: $spacing-small;
+  }
+}
