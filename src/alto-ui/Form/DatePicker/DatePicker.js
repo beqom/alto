@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import DayPicker, { LocaleUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -131,7 +131,7 @@ class DatePicker extends React.Component {
     const date = this.getDate();
 
     return (
-      <Fragment>
+      <>
         <TextField
           {...remainingProps}
           ref={this.getInputRef()}
@@ -164,7 +164,7 @@ class DatePicker extends React.Component {
             renderDay={renderDay(id)}
           />
         </Popover>
-      </Fragment>
+      </>
     );
   }
 }

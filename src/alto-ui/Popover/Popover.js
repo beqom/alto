@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
@@ -40,7 +40,7 @@ class Popover extends React.Component {
     } = this.props;
 
     return (
-      <Fragment>
+      <>
         {this.renderTrigger()}
         <Overlay
           onClose={onClose}
@@ -61,7 +61,7 @@ class Popover extends React.Component {
             </RelativeBox>
           )}
         </Overlay>
-      </Fragment>
+      </>
     );
   }
 }

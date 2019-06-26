@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 
@@ -267,10 +267,10 @@ class TableCell extends React.Component {
         icon
       );
     return (
-      <Fragment>
+      <>
         {errorElement}
         {content}
-      </Fragment>
+      </>
     );
   }
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
@@ -322,12 +322,12 @@ class DatagridCell extends React.Component {
     if (render) return content;
 
     return (
-      <Fragment>
+      <>
         {this.renderError()}
         {content}
         {this.renderInput()}
         {this.renderDropdown()}
-      </Fragment>
+      </>
     );
   }
 

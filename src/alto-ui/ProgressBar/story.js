@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
@@ -25,7 +25,7 @@ storiesOf('ProgressBar', module)
     />
   ))
   .addWithJSX('sizes', () => (
-    <Fragment>
+    <>
       <ProgressBar small tooltipProps={{ show: true }} value={0.4} />
       <br />
       <br />
@@ -35,5 +35,5 @@ storiesOf('ProgressBar', module)
       <br />
       <br />
       <ProgressBar large tooltipProps={{ show: true }} value={0.4} />
-    </Fragment>
+    </>
   ));

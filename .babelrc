@@ -1,11 +1,10 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "browsers": ["last 3 versions", "IE >= 11"]
       }
     }],
-    "react"
-  ],
-  "plugins": ["transform-object-rest-spread"]
+    "@babel/preset-react"
+  ]
 }

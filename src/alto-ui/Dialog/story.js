@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, text, array } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
@@ -16,7 +16,7 @@ storiesOf('Dialog', module)
   .addWithJSX('overview', () => (
     <StateProvider state={{ open: false, textfieldValue: '' }}>
       {({ open }, setState) => (
-        <Fragment>
+        <>
           <div aria-hidden={open}>
             <Button id="dialog-trigger-button" onClick={() => setState({ open: true })}>
               Open dialog
@@ -44,7 +44,7 @@ storiesOf('Dialog', module)
               )}
             </StateProvider>
           </Dialog>
-        </Fragment>
+        </>
       )}
     </StateProvider>
   ))

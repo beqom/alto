@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
@@ -53,10 +53,10 @@ const ProgressCircle = ({ id, small, large, value, min, max, className, children
       </svg>
       <div className={bemClass('ProgressCircle__figure', { small, large })}>
         {children || (
-          <Fragment>
+          <>
             <div>{Math.round(ratio * 100)}</div>
             <div className={bemClass('ProgressCircle__figure-unit', { small, large })}>%</div>
-          </Fragment>
+          </>
         )}
       </div>
     </div>
