@@ -28,8 +28,12 @@ describe('<Icon /> (used in icons)', () => {
 
   it('should render a the children function with the good param', () => {
     const children = jest.fn();
-    shallow(<Icon color="blue">{children}</Icon>);
-    expect(children).toBeCalledWith({ fill: 'blue' });
+    shallow(
+      <Icon color="blue" weight={2}>
+        {children}
+      </Icon>
+    );
+    expect(children).toBeCalledWith({ fill: 'blue', stroke: 'blue', strokeWidth: 2 });
   });
 
   it('should render foward props', () => {

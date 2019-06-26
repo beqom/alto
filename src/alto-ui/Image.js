@@ -1,58 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import omit from 'lodash.omit';
 
-class Image extends React.Component {
-  constructor(props) {
-    super(props);
+function Image({ children, alt, src, srcAlt, ...props }) {
+  const [state, setState] = useState({
+    src: srcAlt,
+    loaded: false,
+  });
 
-    this.state = {
-      src: props.srcAlt,
-      loaded: false,
-    };
+  useEffect(() => {
+    if (!src) return undefined;
 
-    this.loadImage(props.src);
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.src !== this.props.src) {
-      this.setState({ src: nextProps.srcAlt, loaded: false });
-      this.loadImage(nextProps.src);
-    }
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  loadImage(src) {
-    if (!src) return;
+    setState({ src: srcAlt, loaded: false });
     const img = document.createElement('IMG');
 
     img.src = src;
-    img.onload = () => {
-      if (this.mounted) {
-        this.setState(() => ({ src, loaded: true }));
-      }
+    const onLoad = () => setState(() => ({ src, loaded: true }));
+    img.addEventListener('load', onLoad);
+
+    return () => {
+      img.removeEventListener('load', onLoad);
     };
+  }, []);
+
+  if (children && !state.loaded) {
+    return children;
   }
 
-  render() {
-    if (this.props.children && !this.state.loaded) {
-      return this.props.children;
-    }
-    return (
-      <img
-        {...omit(this.props, ['srcAlt', 'children'])}
-        alt={this.props.alt}
-        src={this.state.src}
-      />
-    );
-  }
+  return <img {...props} alt={alt} src={state.src} />;
 }
 
 Image.propTypes = {

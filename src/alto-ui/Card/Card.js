@@ -2,37 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
-import Dropdown from '../Dropdown';
-import OptionsIcon from '../Icons/Options';
 import DragHandleIcon from '../Icons/DragHandle';
+import useGroupItem from '../Group/useGroupItem';
+import Actions from '../Actions';
 
 import './Card.scss';
-
-const renderActions = (actions, id) => {
-  if (!actions || !actions.length) return null;
-  if (actions.length >= 3) {
-    return (
-      <Dropdown
-        end
-        small
-        id={`card-${id}-dropdown`}
-        renderTrigger={(toggle, active, ref) => (
-          <div ref={ref}>
-            <OptionsIcon onClick={toggle} active={active} outline />
-          </div>
-        )}
-        items={actions.map(action => ({
-          key: action.key,
-          title: action.title,
-          onClick: action.onClick,
-        }))}
-      />
-    );
-  }
-  return actions.map(({ key, title, Icon, onClick }) => (
-    <Icon className="Card__hearder-icon" key={key} title={title} onClick={onClick} />
-  ));
-};
 
 const Card = props => {
   const {
@@ -47,38 +21,69 @@ const Card = props => {
     teal,
     lime,
     yellow,
+    green,
     orange,
     red,
     dragHandleProps,
+    borderless,
+    dragging,
     ...otherProps
   } = props;
 
-  const modifiers = { pink, indigo, teal, lime, yellow, orange, red };
   const hasHeader = !!(title || (actions && actions.length));
+  const [groupItem = {}, CleanGroup] = useGroupItem();
+  const simple = !hasHeader && !dragHandleProps;
+
   return (
-    <div
-      className={bemClass('Card', { active, 'with-header': hasHeader, ...modifiers }, className)}
-      {...otherProps}
-    >
-      {hasHeader && (
-        <div className="Card__header">
-          {dragHandleProps && (
-            <DragHandleIcon
-              {...dragHandleProps}
-              className="Card__drag-handle Card__drag-handle--header"
-            />
-          )}
-          <div className="Card__title">{title}</div>
-          <div className="Card__actions">{renderActions(actions, id)}</div>
-        </div>
-      )}
-      {dragHandleProps && !hasHeader && (
-        <div className="Card__drag-handle-container">
-          <DragHandleIcon {...dragHandleProps} className="Card__drag-handle" />
-        </div>
-      )}
-      <div className="Card__body">{children}</div>
-    </div>
+    <CleanGroup>
+      <div
+        className={bemClass(
+          'Card',
+          {
+            active,
+            'with-header': hasHeader,
+            simple,
+            pink,
+            indigo,
+            teal,
+            lime,
+            yellow,
+            orange,
+            green,
+            red,
+            borderless,
+            dragging,
+            'in-row': groupItem.row,
+            'in-column': groupItem.column,
+            'first-in-group': groupItem.first,
+            'last-in-group': groupItem.last,
+          },
+          className
+        )}
+        {...otherProps}
+      >
+        {hasHeader && (
+          <div className="Card__header">
+            {dragHandleProps && (
+              <DragHandleIcon
+                {...dragHandleProps}
+                className="Card__drag-handle Card__drag-handle--header"
+              />
+            )}
+            <div className="Card__title">{title}</div>
+            <div className="Card__actions">
+              <Actions items={actions} id={`${id}__actions`} max={2} />
+            </div>
+          </div>
+        )}
+        {dragHandleProps && !hasHeader && (
+          <div {...dragHandleProps} className="Card__drag-handle-container">
+            <DragHandleIcon className="Card__drag-handle" />
+          </div>
+        )}
+        {simple ? children : <div className="Card__body">{children}</div>}
+      </div>
+    </CleanGroup>
   );
 };
 
@@ -99,6 +104,9 @@ Card.propTypes = {
   yellow: PropTypes.bool,
   orange: PropTypes.bool,
   red: PropTypes.bool,
+  green: PropTypes.bool,
+  borderless: PropTypes.bool,
+  dragging: PropTypes.bool,
   dragHandleProps: PropTypes.object,
   actions: PropTypes.arrayOf(
     PropTypes.shape({

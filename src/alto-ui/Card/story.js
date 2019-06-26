@@ -4,7 +4,7 @@ import { storiesOf } from '@storybook/react';
 import { text, boolean, number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
-import MediaObject from '../MediaObject';
+import Media from '../Media';
 import ShowMore from '../ShowMore';
 import Table from '../Table';
 import Switch from '../Form/Switch';
@@ -77,7 +77,7 @@ storiesOf('Card', module)
         number('How many actions ?', 1, { range: true, min: 0, max: 3, step: 1 })
       )}
       dragHandleProps={boolean('dragHandleProps', false) ? {} : undefined}
-      {...['pink', 'indigo', 'teal', 'lime', 'yellow', 'orange', 'red'].reduce(
+      {...['pink', 'indigo', 'teal', 'green', 'lime', 'yellow', 'orange', 'red'].reduce(
         (acc, color) => ({ ...acc, [color]: boolean(color, false) }),
         {}
       )}
@@ -88,9 +88,9 @@ storiesOf('Card', module)
       )}
     </Card>
   ))
-  .addWithJSX('with MediaObject', () => (
+  .addWithJSX('with Media', () => (
     <Card id="1">
-      <MediaObject
+      <Media
         title="Sherry Franklin"
         subtitle="Head of Group Accounting"
         src="http://i.pravatar.cc/150?img=49"
@@ -104,7 +104,7 @@ storiesOf('Card', module)
       {(state, setState) => (
         <div style={{ position: 'absolute', top: 200 }}>
           <Card title="My profile">
-            <MediaObject
+            <Media
               title="Sherry Franklin"
               subtitle="Head of Group Accounting"
               src="http://i.pravatar.cc/150?img=49"

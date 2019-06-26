@@ -50,9 +50,11 @@ addDecorator(withKnobs);
 addDecorator(story => <Root>{story()}</Root>);
 
 function loadStories() {
+  require('../src/alto-ui/Actions/story');
   require('../src/alto-ui/Alert/story');
   require('../src/alto-ui/Aside/story');
   require('../src/alto-ui/Avatar/story');
+  require('../src/alto-ui/Badge/story');
   require('../src/alto-ui/Breadcrumb/story');
   require('../src/alto-ui/Button/story');
   require('../src/alto-ui/Card/story');
@@ -69,7 +71,7 @@ function loadStories() {
   require('../src/alto-ui/Input/story');
   require('../src/alto-ui/Line/story');
   require('../src/alto-ui/List/story');
-  require('../src/alto-ui/MediaObject/story');
+  require('../src/alto-ui/Media/story');
   require('../src/alto-ui/MenuList/story');
   require('../src/alto-ui/Pagination/story');
   require('../src/alto-ui/Popover/story');

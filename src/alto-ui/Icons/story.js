@@ -10,6 +10,7 @@ storiesOf('Icons', module).add('all', () => {
   const outlineProps = boolean('outline', false) ? { outline: true } : {};
   const badged = boolean('badged', false);
   const size = `${number('size', 30, { range: true, step: 1, min: 5, max: 600 })}px`;
+  const weight = number('weight', 0, { range: true, step: 1, min: 0, max: 10 });
   const col = color('color', '#333C48');
   const iconsElts = Object.entries(icons).map(([name, Icon]) => (
     <div
@@ -28,6 +29,7 @@ storiesOf('Icons', module).add('all', () => {
           badged={badged}
           size={size}
           color={col}
+          weight={weight}
           onClick={boolean('onClick', false) ? () => {} : undefined}
         />
       </div>
@@ -58,6 +60,7 @@ Object.entries(icons).forEach(([name, Icon]) => {
         badged={boolean('badged', false)}
         size={`${number('size', 50, { range: true, step: 1, min: 5, max: 600 })}px`}
         color={color('color', '#333C48')}
+        weight={number('weight', 0, { range: true, step: 1, min: 0, max: 10 })}
         onClick={boolean('onClick', false) ? () => {} : undefined}
       />
     ));

@@ -4,15 +4,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  line-height: $font-size-large;
+  line-height: $font-size-medium;
   font-size: $font-size-medium;
 }
 
 .Pagination__range {
-  line-height: $font-size-x-large;
+  line-height: $font-size-medium;
   font-weight: $font-weight-regular;
   outline: 0;
-
+  height: $font-size-medium;
   &:active {
     box-shadow: none;
   }
@@ -21,6 +21,25 @@
 .Pagination__range-items {
   font-weight: $font-weight-semibold;
   margin-right: 3px;
+}
+
+.Pagination__options {
+  padding: $spacing-small;
+  min-width: $size-small;
+}
+.Pagination__options-row {
+  margin-bottom: $spacing-small;
+}
+
+.Pagination__options-row--footer {
+  justify-content: flex-end;
+  margin-top: $spacing-medium;
+}
+
+.Pagination__options-page-size,
+.Pagination__options-goto-page {
+  max-width: 3rem;
+  margin: 0 $spacing-small;
 }
 
 .Pagination__arrow {

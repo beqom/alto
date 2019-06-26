@@ -5,7 +5,7 @@ import { boolean, text, number } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 import styled from 'styled-components';
 
-import MediaObject from './MediaObject';
+import Media from './Media';
 
 const CenteredDiv = styled.div`
   margin: auto;
@@ -25,23 +25,21 @@ const DarkWrapper = styled.div`
   `};
 `;
 
-storiesOf('MediaObject', module)
+storiesOf('Media', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => {
     const white = boolean('white', false);
     return (
       <DarkWrapper dark={white}>
         <CenteredDiv>
-          <MediaObject
+          <Media
             title={text('title', 'Sherry Franklin')}
             subtitle={text('subtitle', 'Head of Group Accounting')}
+            description={text('description', 'Quis sint commodo eiusmod et cillum.')}
             src={text('src', 'http://i.pravatar.cc/150?img=49')}
             alt={text('alt', 'picture of Sherry Franklin')}
             large={boolean('large', false)}
             small={boolean('small', false)}
-            danger={boolean('danger', false)}
-            success={boolean('success', false)}
-            avatar={boolean('avatar', true)}
             white={white}
           />
         </CenteredDiv>
@@ -54,7 +52,7 @@ storiesOf('MediaObject', module)
       subtitle: text('subtitle', 'Head of Group Accounting'),
       src: text('src', 'http://i.pravatar.cc/150?img=49'),
       alt: text('alt', 'picture of Sherry Franklin'),
-      avatar: true,
+      description: text('description', 'Quis sint commodo eiusmod et cillum.'),
     };
     return (
       <div
@@ -66,15 +64,15 @@ storiesOf('MediaObject', module)
           justifyContent: 'space-between',
         }}
       >
-        <MediaObject {...props} large />
-        <MediaObject {...props} />
-        <MediaObject {...props} small />
+        <Media {...props} large />
+        <Media {...props} />
+        <Media {...props} small />
       </div>
     );
   })
   .addWithJSX('with custom images', () => (
     <div style={{ width: 450 }}>
-      <MediaObject
+      <Media
         title={text('title', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.')}
         subtitle={text(
           'subtitle',

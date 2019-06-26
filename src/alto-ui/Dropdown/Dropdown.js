@@ -212,6 +212,7 @@ class Dropdown extends React.Component {
 
   render() {
     const {
+      id,
       className,
       items,
       onOpen,

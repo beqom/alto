@@ -1,0 +1,75 @@
+@import '../scss/inc';
+
+.Badge {
+  font-size: $font-size-x-small;
+  padding: 0 $spacing-small;
+  background-color: $coolgrey-30;
+  border-radius: $spacing-small + $spacing-x-small;
+  color: $coolgrey-90;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  font-weight: $font-weight-semibold;
+  min-width: 1.5rem;
+  text-align: center;
+
+  &--red {
+    color: $white;
+    background-color: $red;
+  }
+
+  &--orange {
+    color: $orange-90;
+    background-color: $orange-50;
+  }
+
+  &--yellow {
+    color: $yellow-90;
+    background-color: $yellow-50;
+  }
+
+  &--lime {
+    color: $lime-90;
+    background-color: $lime-50;
+  }
+
+  &--green {
+    color: $white;
+    background-color: $green;
+  }
+
+  &--pine {
+    color: $pine-90;
+    background-color: $pine-40;
+  }
+
+  &--teal {
+    color: $teal-90;
+    background-color: $teal-40;
+  }
+
+  &--blue {
+    color: $white;
+    background-color: $blue;
+  }
+
+  &--indigo {
+    color: $white;
+    background-color: $indigo;
+  }
+
+  &--purple {
+    color: $white;
+    background-color: $purple;
+  }
+
+  &--pink {
+    color: $white;
+    background-color: $pink;
+  }
+
+  &--black {
+    color: $white;
+    background-color: $coolgrey-80;
+  }
+}
