@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
@@ -157,7 +157,7 @@ class DropdownItem extends React.Component {
     if (!item.editable) return null;
 
     return items => (
-      <Fragment>
+      <>
         <DropdownItemEditInput
           id={this.getEditableInputId()}
           label="Edit"
@@ -167,7 +167,7 @@ class DropdownItem extends React.Component {
           item={item}
         />
         {items}
-      </Fragment>
+      </>
     );
   }
 

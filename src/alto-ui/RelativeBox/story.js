@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React, { Fragment } from 'react';
+import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { boolean, number } from '@storybook/addon-knobs';
 import { Rnd } from 'react-rnd';
@@ -13,7 +13,7 @@ storiesOf('RelativeBox', module).addWithJSX('playground', () => {
   return (
     <StateProvider refs={['target']}>
       {(state, setState, refs) => (
-        <Fragment>
+        <>
           <RelativeBox
             top={boolean('top', false)}
             bottom={boolean('bottom', false)}
@@ -70,7 +70,7 @@ storiesOf('RelativeBox', module).addWithJSX('playground', () => {
               </span>
             </div>
           </Rnd>
-        </Fragment>
+        </>
       )}
     </StateProvider>
   );

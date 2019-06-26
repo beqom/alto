@@ -1,5 +1,5 @@
 import debounce from 'lodash.debounce';
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
@@ -290,7 +290,7 @@ class Datagrid extends React.PureComponent {
         extraCell={!frozen}
       >
         {cells => (
-          <Fragment>
+          <>
             {hasCheckbox && (
               <div
                 className={bemClass('DataGrid__row-checkbox', {
@@ -301,7 +301,7 @@ class Datagrid extends React.PureComponent {
               />
             )}
             {cells}
-          </Fragment>
+          </>
         )}
       </DatagridRow>
     );
@@ -361,14 +361,14 @@ class Datagrid extends React.PureComponent {
             }
           >
             {cells => (
-              <Fragment>
+              <>
                 {!columns.length && hasCheckbox && (
                   <div
                     className={bemClass('DataGrid__row-checkbox', { ...modifiers, header: true })}
                   />
                 )}
                 {cells}
-              </Fragment>
+              </>
             )}
           </DatagridGroupedRow>
         ) : null;
@@ -387,7 +387,7 @@ class Datagrid extends React.PureComponent {
           hasCheckbox={hasCheckbox}
         >
           {cells => (
-            <Fragment>
+            <>
               {hasCheckbox && (
                 <CheckBox
                   id={`${id || 'Datagrid'}__${key}-checkbox`}
@@ -399,7 +399,7 @@ class Datagrid extends React.PureComponent {
                 />
               )}
               {cells}
-            </Fragment>
+            </>
           )}
         </DatagridRow>,
       ];
@@ -471,7 +471,7 @@ class Datagrid extends React.PureComponent {
 
         <div role="rowgroup" className="Datagrid__body">
           {this.props.rows.length ? (
-            <Fragment>
+            <>
               <div
                 role="presentation"
                 ref={this.setFrozenRowsNode}
@@ -489,7 +489,7 @@ class Datagrid extends React.PureComponent {
                   {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
                 </div>
               </div>
-            </Fragment>
+            </>
           ) : (
             <div className="Datagrid__no-data-label">{labels.errorNoData}</div>
           )}

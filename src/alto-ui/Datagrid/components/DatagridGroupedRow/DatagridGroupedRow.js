@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { evaluateFormula } from '../../../helpers/formula';
@@ -64,7 +64,7 @@ const DatagridGroupedRow = ({
     <DatagridRow {...datagridRowProps} row={row} header columns={columns} context={context}>
       {cells =>
         children(
-          <Fragment>
+          <>
             {groupingColumn && (
               <button
                 id={id ? `${id}__${key}-grouped` : undefined}
@@ -86,7 +86,7 @@ const DatagridGroupedRow = ({
               </button>
             )}
             {cells.slice(groupingColumn ? 1 : 0)}
-          </Fragment>
+          </>
         )
       }
     </DatagridRow>
