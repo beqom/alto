@@ -171,21 +171,29 @@ $nav-btn-hover-text-dark: $white;
   color: $coolgrey-70;
 
   .sidenav--dark & {
-    background-color: $coolgrey-90;
     color: $white;
   }
 }
 
+.sidenav__toggle-button-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: $spacing-xx-large;
+}
+
 .sidenav__toggle-button {
-  @extend .sidenav__button;
-  font-size: $font-size-x-large;
-  height: $footer-height;
-  i {
-    transform: rotate(45deg);
-  }
-  @include on-narrow {
-    display: none;
-  }
+  position: absolute;
+  width: $spacing-large;
+  height: $spacing-large;
+  right: calc(#{-$spacing-large} / 2);
+  border-radius: 50%;
+  border: $white solid 1px;
+  font-size: $font-size-medium;
+  background-color: $coolgrey-90;
+  color: $white;
+  cursor: pointer;
+  z-index: $z-index-tooltip;
 }
 
 .sidenav__route-link,
@@ -283,7 +291,6 @@ $nav-btn-hover-text-dark: $white;
     }
 
     .sidenav__button,
-    .sidenav__toggle-button,
     .sidenav__section-button,
     .sidenav__route-link {
       color: $coolgrey-50;
@@ -314,7 +321,6 @@ $nav-btn-hover-text-dark: $white;
 
     &.sidenav--dark {
       .sidenav__button,
-      .sidenav__toggle-button,
       .sidenav__section-button,
       .sidenav__route-link {
         color: $coolgrey-40;
