@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import CollapseIcon from '../Icons/Collapse';
-import ExpandIcon from '../Icons/Expand';
+import ChevronLeftIcon from '../Icons/ChevronLeft';
 import VisuallyHidden from '../VisuallyHidden';
 import Button from '../Button';
 import Link from '../Link';
@@ -143,19 +142,25 @@ class SideNav extends React.PureComponent {
             {open ? closeMenuButtonLabel : openMenuButtonLabel}
           </Button>
           {onToggle && (
-            <button
-              id={`${id}__collapse-button`}
+            <div
               className={bemClass(
                 'sidenav__icon-container',
                 { reverse: collapsed },
-                'sidenav__toggle-button'
+                'sidenav__toggle-button-container'
               )}
-              onClick={onToggle}
-              aria-expanded={collapsed}
             >
-              {collapsed ? <ExpandIcon /> : <CollapseIcon />}
-              <VisuallyHidden>{collapsed ? expandButtonLabel : collapseButtonLabel}</VisuallyHidden>
-            </button>
+              <button
+                id={`${id}__collapse-button`}
+                className={bemClass('sidenav__toggle-button')}
+                onClick={onToggle}
+                aria-expanded={collapsed}
+              >
+                <ChevronLeftIcon className="sidenav__toggle-icon" />
+                <VisuallyHidden>
+                  {collapsed ? expandButtonLabel : collapseButtonLabel}
+                </VisuallyHidden>
+              </button>
+            </div>
           )}
         </aside>
       </SideNavContext.Provider>
