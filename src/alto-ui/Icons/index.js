@@ -19,6 +19,7 @@ import ChevronDown from './ChevronDown';
 import ChevronLeft from './ChevronLeft';
 import ChevronRight from './ChevronRight';
 import ChevronUp from './ChevronUp';
+import Clipboard from './Clipboard';
 import Close from './Close';
 import Cog from './Cog';
 import Collapse from './Collapse';
@@ -28,6 +29,7 @@ import Content from './Content';
 import Copy from './Copy';
 import CopyToClipboard from './CopyToClipboard';
 import Dashboard from './Dashboard';
+import Data from './Data';
 import Delete from './Delete';
 import Details from './Details';
 import Divider from './Divider';
@@ -50,10 +52,12 @@ import FileGroup from './FileGroup';
 import FileSettings from './FileSettings';
 import Filter from './Filter';
 import Floppy from './Floppy';
+import Flow from './Flow';
 import Folder from './Folder';
 import FolderOpen from './FolderOpen';
 import Globe from './Globe';
 import GoTo from './GoTo';
+import Grid from './Grid';
 import Help from './Help';
 import HelpInfo from './HelpInfo';
 import Home from './Home';
@@ -78,15 +82,17 @@ import Objects from './Objects';
 import Options from './Options';
 import Organization from './Organization';
 import Pencil from './Pencil';
+import People from './People';
 import Plus from './Plus';
 import PlusCircle from './PlusCircle';
-import Populations from './Populations';
+import Profile from './Profile';
 import Radio from './Radio';
 import Remove from './Remove';
 import Repeat from './Repeat';
 import RowDensityComfortable from './RowDensityComfortable';
 import RowDensityCompact from './RowDensityCompact';
 import Search from './Search';
+import Settings from './Settings';
 import ShortText from './ShortText';
 import SortAZ from './SortAZ';
 import SortZA from './SortZA';
@@ -129,6 +135,7 @@ export default {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  Clipboard,
   Close,
   Cog,
   Collapse,
@@ -138,6 +145,7 @@ export default {
   Copy,
   CopyToClipboard,
   Dashboard,
+  Data,
   Delete,
   Details,
   Divider,
@@ -160,10 +168,12 @@ export default {
   FileSettings,
   Filter,
   Floppy,
+  Flow,
   Folder,
   FolderOpen,
   Globe,
   GoTo,
+  Grid,
   Help,
   HelpInfo,
   Home,
@@ -188,15 +198,17 @@ export default {
   Options,
   Organization,
   Pencil,
+  People,
   Plus,
   PlusCircle,
-  Populations,
+  Profile,
   Radio,
   Remove,
   Repeat,
   RowDensityComfortable,
   RowDensityCompact,
   Search,
+  Settings,
   ShortText,
   SortAZ,
   SortZA,
