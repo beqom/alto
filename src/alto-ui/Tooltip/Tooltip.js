@@ -84,7 +84,7 @@ function Tooltip({
         baseClassName="Tooltip"
         bottom
         middle
-        target={children ? this.wrapperRef.current : undefined}
+        target={children ? targetRef.current : undefined}
         margin={6.4}
         {...relativeBoxProps}
       >
