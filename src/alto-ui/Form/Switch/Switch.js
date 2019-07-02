@@ -1,11 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../helpers/bem';
 import VisuallyHidden from '../../VisuallyHidden';
 import './Switch.scss';
 
-function Switch({ className, hideLabel, checked, disabled, id, label, left, small, ...props }) {
+function Switch({
+  className,
+  hideLabel,
+  checked,
+  disabled,
+  id,
+  label,
+  left,
+  small,
+  onChange,
+  ...props
+}) {
   const LabelComponent = hideLabel ? VisuallyHidden : 'div';
   const right = !left;
   const labelElt = (
@@ -16,7 +27,7 @@ function Switch({ className, hideLabel, checked, disabled, id, label, left, smal
     </LabelComponent>
   );
   return (
-    <Fragment>
+    <>
       <input
         {...props}
         className="Switch__input"
@@ -24,6 +35,7 @@ function Switch({ className, hideLabel, checked, disabled, id, label, left, smal
         checked={checked}
         disabled={disabled}
         type="checkbox"
+        onChange={e => onChange(e.target.checked)}
       />
 
       <label className={bemClass('Switch', { small }, className)} htmlFor={id}>
@@ -31,7 +43,7 @@ function Switch({ className, hideLabel, checked, disabled, id, label, left, smal
         <div className={bemClass('Switch__element', { small, checked, disabled })} />
         {left && labelElt}
       </label>
-    </Fragment>
+    </>
   );
 }
 

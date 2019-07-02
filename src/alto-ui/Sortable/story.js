@@ -2,10 +2,12 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered';
-import { action } from '@storybook/addon-actions';
 
 import Sortable from './Sortable';
 import CardWithoutMargin from '../Card';
+import Switch from '../Form/Switch';
+import DragHandle from '../Icons/DragHandle';
+import Badge from '../Badge';
 
 const fruits = [
   { id: '1', name: 'Apple', icon: '🍎', color: 'red' },
@@ -28,7 +30,7 @@ function Card(props) {
   );
 }
 
-function Fruit({ icon, name }) {
+function Fruit({ icon, name, children }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <span
@@ -41,7 +43,8 @@ function Fruit({ icon, name }) {
       >
         {icon}
       </span>
-      {name}
+      <div style={{ flex: 1 }}>{name}</div>
+      {children}
     </div>
   );
 }
@@ -50,18 +53,7 @@ function SortableDemo() {
   const [list, setList] = useState(fruits.slice(0, 6));
 
   return (
-    <Sortable
-      items={list}
-      onChange={(newList, item, from, to) => {
-        setList(newList);
-        action(`move ${item.icon} ${item.name} from ${from} to ${to}. onChange params:`)(
-          newList,
-          item,
-          from,
-          to
-        );
-      }}
-    >
+    <Sortable items={list} onChange={setList}>
       {({ name, icon }, handleProps) => (
         <Card dragHandleProps={handleProps}>
           <Fruit name={name} icon={icon} />
@@ -109,7 +101,38 @@ function NestedSortable() {
   );
 }
 
+function DisabledDemo() {
+  const [list, setList] = useState(() => [...Array(6).keys()].map(id => ({ id: `${id}` })));
+  const [disabledById, setDisabledById] = useState(() => ({
+    [`${Math.round(Math.random() * (list.length - 1))}`]: true,
+  }));
+  const setDisabledState = id => () =>
+    setDisabledById({ ...disabledById, [id]: !disabledById[id] });
+
+  return (
+    <Sortable items={list} onChange={setList} isItemDisabled={({ id }) => disabledById[id]}>
+      {({ id }, handleProps) => (
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <DragHandle {...handleProps} />
+          <Badge style={{ marginLeft: 10 }}>{id}</Badge>
+          <div style={{ flex: 1, padding: 10, width: 120 }}>
+            {disabledById[id] ? '🔒 Blocked' : '🔓 Free'}
+          </div>
+          <Switch
+            id={`enable-item--${id}`}
+            checked={disabledById[id]}
+            onChange={setDisabledState(id)}
+            label="enable"
+            hideLabel
+          />
+        </div>
+      )}
+    </Sortable>
+  );
+}
+
 storiesOf('Sortable', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => <SortableDemo />)
-  .addWithJSX('nested', () => <NestedSortable />);
+  .addWithJSX('nested', () => <NestedSortable />)
+  .addWithJSX('disabled', () => <DisabledDemo />);

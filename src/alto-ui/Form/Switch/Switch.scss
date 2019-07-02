@@ -38,6 +38,7 @@
 
   &--disabled {
     background-color: $coolgrey-20;
+    cursor: not-allowed;
 
     &.Switch__element--checked {
       background-color: $blue-30;

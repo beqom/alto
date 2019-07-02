@@ -25,7 +25,15 @@ const handleDragEnd = (instance, result) => {
   // not reordering move
   if (result.source.droppableId !== droppableId) return;
 
-  const { items, onChange } = instance.propsByDroppableId[droppableId];
+  const { index: startIndex } = result.source;
+  const { items, onChange, isItemDisabled } = instance.propsByDroppableId[droppableId];
+
+  // dont move if one disabled item moved
+  const startEndItemsRange = items.slice(
+    Math.min(startIndex, endIndex),
+    Math.max(startIndex, endIndex) + 1
+  );
+  if (startEndItemsRange.some(item => isItemDisabled(item))) return;
 
   if (typeof onChange !== 'function') return;
 
@@ -63,7 +71,12 @@ function Sortable(props) {
           children: (
             <Fragment>
               {items.map((item, index) => (
-                <Draggable key={item[itemIdKey]} draggableId={item[itemIdKey]} index={index}>
+                <Draggable
+                  key={item[itemIdKey]}
+                  draggableId={item[itemIdKey]}
+                  index={index}
+                  isDragDisabled={!!props.isItemDisabled(item)}
+                >
                   {(providedDraggable, draggableSnapshot) => {
                     const itemArgs = [
                       item,
@@ -71,6 +84,7 @@ function Sortable(props) {
                         ...providedDraggable.dragHandleProps,
                         className: bemClass('Sortable__handle', {
                           dragging: draggableSnapshot.isDragging,
+                          disabled: props.isItemDisabled(item),
                         }),
                       },
                       draggableSnapshot.isDragging,
@@ -125,6 +139,7 @@ Sortable.displayName = 'Sortable';
 
 Sortable.defaultProps = {
   itemIdKey: 'id',
+  isItemDisabled: () => false,
   renderDroppable: props => <ul {...props} />,
   renderDraggable: props => <li {...props} />,
 };
@@ -140,6 +155,7 @@ Sortable.propTypes = {
   onChange: PropTypes.func,
   renderDraggable: PropTypes.func,
   renderDroppable: PropTypes.func,
+  isItemDisabled: PropTypes.func,
 };
 
 export default Sortable;
