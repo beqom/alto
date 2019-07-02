@@ -6,6 +6,8 @@
   align-items: center;
   line-height: $font-size-medium;
   font-size: $font-size-medium;
+  min-width: $size-xx-small;
+  white-space: nowrap;
 }
 
 .Pagination__range {
@@ -25,8 +27,10 @@
 
 .Pagination__options {
   padding: $spacing-small;
-  min-width: $size-small;
+  min-width: $size-x-small;
+  white-space: nowrap;
 }
+
 .Pagination__options-row {
   margin-bottom: $spacing-small;
 }
