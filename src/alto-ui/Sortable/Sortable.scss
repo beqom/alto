@@ -13,4 +13,12 @@
     cursor: grabbing;
     color: $coolgrey-90;
   }
+
+  &--disabled,
+  &--disabled:hover,
+  &--disabled:active,
+  &--disabled.Sortable__handle--dragging {
+    cursor: default;
+    visibility: hidden;
+  }
 }
