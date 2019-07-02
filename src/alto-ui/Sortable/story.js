@@ -106,16 +106,17 @@ function DisabledDemo() {
   const [disabledById, setDisabledById] = useState(() => ({
     [`${Math.round(Math.random() * (list.length - 1))}`]: true,
   }));
-  const setDisabledState = id => value => setDisabledById({ ...disabledById, [id]: value });
+  const setDisabledState = id => () =>
+    setDisabledById({ ...disabledById, [id]: !disabledById[id] });
 
   return (
-    <Sortable items={list} onChange={setList} isSortableDisabled={({ id }) => disabledById[id]}>
+    <Sortable items={list} onChange={setList} isItemDisabled={({ id }) => disabledById[id]}>
       {({ id }, handleProps) => (
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <DragHandle {...handleProps} />
           <Badge style={{ marginLeft: 10 }}>{id}</Badge>
           <div style={{ flex: 1, padding: 10, width: 120 }}>
-            {disabledById[id] ? 'Enabled' : 'Disabled'}
+            {disabledById[id] ? '🔒 Blocked' : '🔓 Free'}
           </div>
           <Switch
             id={`enable-item--${id}`}
