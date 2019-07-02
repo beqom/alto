@@ -80,7 +80,7 @@ const DatagridGroupedRow = ({
                 <div className="DatagridGroupedRow__toggle-content">
                   <div className="DatagridGroupedRow__toggle-name">{groupingColumn.title}</div>
                   <div className="DatagridGroupedRow__toggle-value">
-                    {formatValue(value, groupingColumn, row)}
+                    {formatValue(value, groupingColumn, (subRows || [])[0])}
                   </div>
                 </div>
               </button>
