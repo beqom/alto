@@ -41,9 +41,6 @@ const DatagridGroupedRow = ({
   ...datagridRowProps
 }) => {
   const { id, rowKeyField, groupedByColumnKey, groupedSummaryColumnKeys, labels } = context;
-  const labelValue = Object.keys(firstRowInGroup).includes(`${groupedByColumnKey}_lbl`)
-    ? firstRowInGroup[`${groupedByColumnKey}_lbl`]
-    : firstRowInGroup[groupedByColumnKey];
 
   const key = rowKeyField(firstRowInGroup);
   const value = firstRowInGroup[groupedByColumnKey];
@@ -83,7 +80,7 @@ const DatagridGroupedRow = ({
                 <div className="DatagridGroupedRow__toggle-content">
                   <div className="DatagridGroupedRow__toggle-name">{groupingColumn.title}</div>
                   <div className="DatagridGroupedRow__toggle-value">
-                    {formatValue(labelValue, groupingColumn, row)}
+                    {formatValue(value, groupingColumn, (subRows || [])[0])}
                   </div>
                 </div>
               </button>
