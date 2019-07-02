@@ -103,6 +103,7 @@ class Dropdown extends React.Component {
       large,
       className,
       selected,
+      white,
       icon: Icon,
       active,
       onClear,
@@ -128,6 +129,7 @@ class Dropdown extends React.Component {
           ref={this.getTriggerRef()}
           small={small}
           large={large}
+          white={white}
           flat
           active={this.state.open || active}
           className={bemClass(
@@ -299,6 +301,7 @@ Dropdown.propTypes = {
   onClear: PropTypes.func,
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
+  white: PropTypes.bool,
 };
 
 export default Dropdown;
