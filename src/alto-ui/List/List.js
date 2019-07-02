@@ -91,7 +91,7 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, { small 
           label={field.key}
           hideLabel
           small={small}
-          onChange={e => handleChange(e.target.checked)}
+          onChange={handleChange}
           {...props}
         />
       );

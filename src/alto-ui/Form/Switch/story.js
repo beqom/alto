@@ -8,7 +8,7 @@ import SwitchSateLess from './Switch';
 
 const Switch = props => {
   const [checked, check] = useState(props.checked);
-  return <SwitchSateLess {...props} checked={checked} onChange={e => check(e.target.checked)} />;
+  return <SwitchSateLess {...props} checked={checked} onChange={check} />;
 };
 
 storiesOf('Form/Switch', module)
