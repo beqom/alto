@@ -24,7 +24,8 @@
 
   &--small {
     min-height: 2rem;
-    padding: 0 0.32rem;
+    padding: 0 $spacing-x-small;
+    font-size: $font-size-small;
   }
 }
 
@@ -43,7 +44,7 @@
   flex-shrink: 0;
 
   &--small {
-    padding: 0.32rem;
+    padding: $spacing-x-small;
   }
 
   &--interactive {
@@ -53,10 +54,6 @@
 
   &--draghandle {
     padding: 0;
-    color: $coolgrey-50;
-    &:hover {
-      color: $coolgrey-80;
-    }
   }
 
   &:not(.List__item--nowrap) {
