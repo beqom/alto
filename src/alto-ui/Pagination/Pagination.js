@@ -34,6 +34,7 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
 
   useEffect(() => {
     setOptionPageSize(pageSize);
+    setOptionsTotalPages(numberOfPages);
   }, [pageSize]);
 
   useEffect(() => {
@@ -48,7 +49,7 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
   const setPaginationOptions = (newPageSize, newGoToPage) => {
     setOptionPageSize(newPageSize);
     setOptionsTotalPages(Math.ceil(totalRecords / newPageSize));
-    setOptionsGoToPage(Math.min(Math.ceil(totalRecords / newPageSize), Math.max(1, newGoToPage)));
+    setOptionsGoToPage(Math.min(Math.ceil(totalRecords / newPageSize), newGoToPage));
   };
 
   if (totalRecords === 0) return null;
@@ -73,6 +74,23 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
     closeDropdown();
   };
 
+  const handleCancel = closeDropdown => {
+    setOptionsGoToPage(props.currentPage);
+    setOptionPageSize(pageSize);
+    setOptionsTotalPages(numberOfPages);
+    if (typeof closeDropdown === 'function') closeDropdown();
+  };
+
+  const validate = () => {
+    if (!optionsPageSize) {
+      setPaginationOptions(pageSize, optionsGoToPage);
+    }
+
+    if (optionsGoToPage === 0) {
+      setPaginationOptions(optionsPageSize, props.currentPage);
+    }
+  };
+
   const renderDropdownContent = closeDropdown => (
     <div className="Pagination__options">
       <FormRow className="Pagination__options-row">
@@ -80,6 +98,7 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
         <InputNumber
           value={optionsPageSize}
           onChange={(e, value) => setPaginationOptions(value, optionsGoToPage)}
+          onBlur={validate}
           min={1}
           max={totalRecords}
           className="Pagination__options-page-size"
@@ -94,15 +113,21 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
           className="Pagination__options-goto-page"
           min={1}
           max={optionsTotalPages}
+          onBlur={validate}
           onChange={(e, value) => setPaginationOptions(optionsPageSize, value)}
         />
         {`${labels.ofTotal} ${format(optionsTotalPages)}`}
       </FormRow>
       <FormRow className="Pagination__options-row--footer">
-        <Button small white id={`${id}__close-options`} onClick={closeDropdown}>
+        <Button small white id={`${id}__close-options`} onClick={() => handleCancel(closeDropdown)}>
           {labels.cancel}
         </Button>
-        <Button small id={`${id}__save-options`} onClick={() => handleSave(closeDropdown)}>
+        <Button
+          small
+          id={`${id}__save-options`}
+          onClick={() => handleSave(closeDropdown)}
+          disabled={!optionsPageSize}
+        >
           {labels.save}
         </Button>
       </FormRow>
