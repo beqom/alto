@@ -25,6 +25,7 @@
 .TreeItem__toggle-button {
   @extend %reset-button;
 
+  flex-shrink: 0;
   cursor: pointer;
   font-size: $font-size-x-small;
   padding: $spacing-x-small;
