@@ -132,6 +132,7 @@ function List(props) {
     borderless,
     nestedItemsKey,
     children,
+    isSortableDisabled,
   } = props;
   const groupConfigProps = {
     column: true,
@@ -236,6 +237,7 @@ function List(props) {
         items={items}
         onChange={onChange}
         itemIdKey={itemKey}
+        isItemDisabled={isSortableDisabled}
         renderDroppable={droppableProps => <Group {...droppableProps} {...groupProps} />}
         renderDraggable={(draggableProps, item, dragHandleProps, isDragging, index) => (
           <GroupItem {...groupConfigProps} {...draggableProps} index={index} />
@@ -293,6 +295,7 @@ List.propTypes = {
   borderless: PropTypes.bool,
   nestedItemsKey: PropTypes.string,
   children: PropTypes.any,
+  isSortableDisabled: PropTypes.func,
 };
 
 export default List;
