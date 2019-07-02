@@ -68,6 +68,7 @@ storiesOf('Dropdown', module)
       small={boolean('small', false)}
       large={boolean('large', false)}
       selected="1"
+      white={boolean('white', false)}
     />
   ))
   .addWithJSX('selectable', () => (
