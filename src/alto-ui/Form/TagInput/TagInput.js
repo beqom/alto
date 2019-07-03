@@ -194,6 +194,8 @@ const TagInput = React.forwardRef(
   }
 );
 
+TagInput.displayName = 'TagInput';
+
 TagInput.defaultProps = {
   availableTags: () => null,
   getTagValue: tag =>
