@@ -32,7 +32,7 @@ const DEFAULT_DEBOUNCE_TIME = 200;
 const Input = React.forwardRef((props, ref) => {
   const [value, setValue] = useState(props.value);
 
-  const instance = useRef({}).current;
+  const instance = useRef({ prevProps: props }).current;
 
   const clearPropagation = () => {
     if (typeof instance.clearPropagation === 'function') instance.clearPropagation();
@@ -92,7 +92,7 @@ const Input = React.forwardRef((props, ref) => {
   const sharedProps = {
     ref,
     onChange,
-    value,
+    value: !isEqual(instance.prevProps.value, props.value) ? props.value : value,
   };
 
   switch (type) {
