@@ -19,7 +19,14 @@ class DatagridHeaderCell extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return !isEqual(this.props.column, nextProps.column) || this.props.width !== nextProps.width;
+    return (
+      this.props.width !== nextProps.width ||
+      this.props.colIndex !== nextProps.colIndex ||
+      this.props.rowIndex !== nextProps.rowIndex ||
+      this.props.first !== nextProps.first ||
+      this.props.last !== nextProps.last ||
+      !isEqual(this.props.column, nextProps.column)
+    );
   }
 
   handleMouseEnterResizeHandle(e) {
