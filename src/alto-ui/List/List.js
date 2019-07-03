@@ -176,9 +176,11 @@ function List(props) {
     );
   };
 
-  const renderListItem = (item, dragHandleProps, isDragging, itemIndex) => {
-    const fields = typeof props.fields === 'function' ? props.fields(item) : props.fields;
-    return (
+  function renderListItem(defaultItem, dragHandleProps, isDragging, itemIndex) {
+    const defaultFields =
+      typeof props.fields === 'function' ? props.fields(defaultItem) : props.fields;
+
+    const renderItem = (item = defaultItem, fields = defaultFields) => (
       <Card
         key={item[itemKey]}
         borderless={borderless}
@@ -238,7 +240,17 @@ function List(props) {
         {renderChildren(item, itemIndex)}
       </Card>
     );
-  };
+    return (
+      props.renderItem(
+        renderItem,
+        defaultItem,
+        defaultFields,
+        itemIndex,
+        dragHandleProps,
+        isDragging
+      ) || null
+    );
+  }
 
   if (sortable) {
     return (
@@ -271,6 +283,7 @@ List.displayName = 'List';
 
 List.defaultProps = {
   itemKey: 'id',
+  renderItem: render => render(),
 };
 
 List.propTypes = {
@@ -308,6 +321,7 @@ List.propTypes = {
   nestedItemsKey: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   children: PropTypes.any,
   isSortableDisabled: PropTypes.func,
+  renderItem: PropTypes.func,
 };
 
 export default List;
