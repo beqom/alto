@@ -15,35 +15,50 @@
   line-height: $line-height-input;
   height: $height-default;
   padding: 0 0.625rem;
-  display: block;
-  width: 100%;
+  display: flex;
   transition: all $transition;
+  align-items: center;
 
-  &::placeholder {
-    color: $coolgrey-40;
+  > * {
+    &:not(.textfield__input):not(:first-child) {
+      margin-left: 0.625rem;
+    }
+
+    &:not(.textfield__input):not(:last-child) {
+      margin-right: 0.625rem;
+    }
   }
 
-  &:hover:not(.textfield--readOnly):not([disabled]) {
+  &:hover:not(.textfield--readOnly):not(.textfield--disabled),
+  &--focus:not(.textfield--readOnly),
+  &--focus:hover:not(.textfield--readOnly) {
     border-color: $blue;
     box-shadow: 0 0 0 1px $blue;
   }
 
-  &:focus:not(.textfield--readOnly),
-  &:focus:hover:not(.textfield--readOnly) {
-    border-color: $color-input-border;
-    box-shadow: $drop-shadow;
+  &--focus:not(.textfield--readOnly),
+  &--focus:hover:not(.textfield--readOnly) {
+    box-shadow: 0 0 0 1px $blue, $drop-shadow;
   }
 
   &--readOnly:hover {
     cursor: default;
   }
 
-  &:disabled {
+  &--disabled {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
     border-color: $coolgrey-20;
     box-shadow: none;
+  }
+}
+
+.textfield__input {
+  flex: 1;
+
+  &::placeholder {
+    color: $coolgrey-40;
   }
 }
 

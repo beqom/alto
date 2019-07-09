@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean, select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import centered from '@storybook/addon-centered';
 
+import FilterIcon from '../../Icons/Filter';
 import TextField from './TextField';
 
 const SimpleWrapper = styled.div`
@@ -110,4 +112,46 @@ storiesOf('Form/TextField', module)
         <TextField label="Disabled" id="disabled" {...modifiers} disabled defaultValue="disabled" />
       </SimpleWrapper>
     );
-  });
+  })
+  .add('Clearable', () =>
+    React.createElement(() => {
+      const [value, setValue] = useState('');
+
+      return (
+        <div style={{ width: 300 }}>
+          <TextField
+            label="Clearable"
+            id="celarable"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+            clearable
+          />
+        </div>
+      );
+    })
+  )
+  .add('Children function', () =>
+    React.createElement(() => {
+      const [value, setValue] = useState('');
+      const emoji = ['😀', '😂', '😛', '😎', '👻'][Math.round(Math.random() * 4)];
+
+      return (
+        <div style={{ width: 300 }}>
+          <TextField
+            label="Children function"
+            id="children"
+            value={value}
+            onChange={e => setValue(e.target.value)}
+          >
+            {(input, isFocused) => (
+              <>
+                <FilterIcon outline={!value} active={isFocused} />
+                {input}
+                {!!value && <button onClick={() => setValue(value + emoji)}>{emoji}</button>}
+              </>
+            )}
+          </TextField>
+        </div>
+      );
+    })
+  );
