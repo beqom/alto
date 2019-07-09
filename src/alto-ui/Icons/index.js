@@ -12,6 +12,10 @@ import Bolt from './Bolt';
 import Building from './Building';
 import Calculator from './Calculator';
 import Calendar from './Calendar';
+import CaretDown from './CaretDown';
+import CaretLeft from './CaretLeft';
+import CaretRight from './CaretRight';
+import CaretUp from './CaretUp';
 import Check from './Check';
 import CheckCircle from './CheckCircle';
 import CheckList from './CheckList';
@@ -128,6 +132,10 @@ export default {
   Building,
   Calculator,
   Calendar,
+  CaretDown,
+  CaretLeft,
+  CaretRight,
+  CaretUp,
   Check,
   CheckCircle,
   CheckList,
