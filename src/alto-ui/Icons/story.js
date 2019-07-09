@@ -1,55 +1,71 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import React from 'react';
+import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import { number, color, boolean } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 
 import icons from './index';
+import TextField from '../Form/TextField';
 
-storiesOf('Icons', module).add('all', () => {
-  const outlineProps = boolean('outline', false) ? { outline: true } : {};
-  const badged = boolean('badged', false);
-  const size = `${number('size', 30, { range: true, step: 1, min: 5, max: 600 })}px`;
-  const weight = number('weight', 0, { range: true, step: 1, min: 0, max: 10 });
-  const col = color('color', '#333C48');
-  const iconsElts = Object.entries(icons).map(([name, Icon]) => (
-    <div
-      key={name}
-      style={{
-        textAlign: 'center',
-        display: 'flex',
-        padding: 10,
-        width: '33%',
-        alignItems: 'center',
-      }}
-    >
-      <div style={{ padding: 10 }}>
-        <Icon
-          {...outlineProps}
-          badged={badged}
-          size={size}
-          color={col}
-          weight={weight}
-          onClick={boolean('onClick', false) ? () => {} : undefined}
-        />
+const AllIcons = props => {
+  const [search, setSearch] = useState('');
+  const iconsElts = Object.entries(icons)
+    .filter(([name]) => name.toLowerCase().includes(search.toLowerCase()))
+    .map(([name, Icon]) => (
+      <div
+        key={name}
+        style={{
+          textAlign: 'center',
+          display: 'flex',
+          padding: 10,
+          width: '25%',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ padding: 10 }}>
+          <Icon {...props} />
+        </div>
+        <div style={{ marginLeft: 10 }}>{name}</div>
       </div>
-      <div style={{ marginLeft: 10 }}>{name}</div>
-    </div>
-  ));
-
+    ));
   return (
-    <div
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        margin: 20,
-      }}
-    >
-      {iconsElts}
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: 20 }}>
+      <TextField
+        id="search"
+        label="Search"
+        hideLabel
+        placeholder="Search..."
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        clearable
+        large
+      />
+      <div style={{ marginTop: 20, overflow: 'auto' }}>
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            alignItems: 'center',
+            flexWrap: 'wrap',
+          }}
+        >
+          {iconsElts}
+        </div>
+      </div>
     </div>
   );
-});
+};
+
+storiesOf('Icons', module).add('all', () => (
+  <AllIcons
+    outline={boolean('outline', false)}
+    badged={boolean('badged', false)}
+    size={`${number('size', 30, { range: true, step: 1, min: 5, max: 600 })}px`}
+    weight={number('weight', 0, { range: true, step: 1, min: 0, max: 10 })}
+    color={color('color', '#333C48')}
+    onClick={boolean('onClick', false) ? () => {} : undefined}
+  />
+));
 
 Object.entries(icons).forEach(([name, Icon]) => {
   storiesOf('Icons', module)
