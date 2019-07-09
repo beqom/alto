@@ -40,6 +40,7 @@ storiesOf('Media', module)
             alt={text('alt', 'picture of Sherry Franklin')}
             large={boolean('large', false)}
             small={boolean('small', false)}
+            active={boolean('active', false)}
             white={white}
           />
         </CenteredDiv>
@@ -82,13 +83,10 @@ storiesOf('Media', module)
         imageWidth={number('imageWidth', 100)}
         imageHeight={number('imageHeight', 70)}
         alt="news"
-        top={boolean('top', true)}
         wrap={boolean('wrap', true)}
         large={boolean('large', false)}
         small={boolean('small', false)}
-        danger={boolean('danger', false)}
-        success={boolean('success', false)}
-        avatar={boolean('avatar', false)}
+        active={boolean('active', false)}
       />
     </div>
   ));

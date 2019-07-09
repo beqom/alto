@@ -90,6 +90,10 @@
     font-size: $font-size-medium;
   }
 
+  .Media--active & {
+    color: $blue;
+  }
+
   .Media--white & {
     color: $white;
   }
@@ -116,6 +120,10 @@
 .Media__description {
   font-size: $font-size-small;
   color: $coolgrey-60;
+
+  .Media--active & {
+    color: $blue;
+  }
 
   .Media--large & {
     font-size: $font-size-large;
