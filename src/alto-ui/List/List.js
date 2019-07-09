@@ -14,10 +14,12 @@ import Group from '../Group';
 import GroupItem from '../Group/GroupItem';
 import Actions from '../Actions';
 import Avatar from '../Avatar';
-
-import './List.scss';
 import CheckBox from '../Form/CheckBox';
 import DragHandle from '../Icons/DragHandle';
+import getDefaultItemKey from '../helpers/getItemKey';
+import useUniqueKey from '../hooks/useUniqueKey';
+
+import './List.scss';
 
 const setIn = (obj, path, value) => setWith(clone(obj), path, value, clone);
 
@@ -49,7 +51,7 @@ const getFieldData = (item, field) =>
   get(item, field.key) ||
   (typeof field.defaultValue === 'function' ? field.defaultValue(item, field) : field.defaultValue);
 
-const renderField = (field, item, itemIndex, id, handleChange, onClick, { small }) => {
+const renderField = (field, item, itemIndex, id, handleChange, onClick, active, { small }) => {
   const data = getFieldData(item, field);
   const value = field.render ? field.render(data, item, field) : data;
   const props =
@@ -57,7 +59,7 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, { small 
 
   switch (field.type) {
     case 'media':
-      return <Media small={small} title={value} alt={value} {...props} />;
+      return <Media small={small} active={active} title={value} alt={value} {...props} />;
     case 'badge':
     case 'badges':
       return (
@@ -118,20 +120,21 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, { small 
 
 function List(props) {
   const {
-    id,
     className,
-    itemKey,
     items,
     sortable,
     onChange,
     onClick,
     splitted,
-    active,
     small,
     borderless,
     children,
     isSortableDisabled,
+    hover,
   } = props;
+  const itemKey = getDefaultItemKey(props.itemKey);
+  const id = useUniqueKey(props.id);
+
   const groupConfigProps = {
     column: true,
     splitted,
@@ -146,9 +149,9 @@ function List(props) {
   };
 
   const isActive = (item, itemIndex) => {
-    if (typeof active === 'function') return active(item, itemIndex, items);
-    if (Array.isArray(active)) return active.includes(item[itemKey]);
-    return item[itemKey] === active;
+    if (typeof props.active === 'function') return props.active(item, itemIndex, items);
+    if (Array.isArray(props.active)) return props.active.includes(itemKey(item));
+    return itemKey(item) === props.active;
   };
 
   const handleChange = getHandleChange(items, onChange);
@@ -168,7 +171,7 @@ function List(props) {
       <div className={bemClass('List__item-nested-row', { small, bordered: !borderless })}>
         <List
           {...props}
-          id={`${id}__nested-list--${item[itemKey]}`}
+          id={`${id}__nested-list--${itemKey(item)}`}
           items={nestedItems}
           onChange={handleChange(itemIndex)({ key: nestedItemsKey })}
         />
@@ -180,66 +183,73 @@ function List(props) {
     const defaultFields =
       typeof props.fields === 'function' ? props.fields(defaultItem) : props.fields;
 
-    const renderItem = (item = defaultItem, fields = defaultFields) => (
-      <Card
-        key={item[itemKey]}
-        borderless={borderless}
-        dragging={isDragging}
-        className={bemClass('List__item', {
-          active: isActive(item, itemIndex),
-          small,
-          clickable: !!onClick,
-        })}
-      >
-        <div className={bemClass('List__item-row', { active: isActive(item, itemIndex), small })}>
-          {dragHandleProps && (
-            <span
-              {...dragHandleProps}
-              className={bemClass(
-                dragHandleProps.className,
-                {},
-                bemClass('List__field', { interactive: true, draghandle: true })
-              )}
-            >
-              <DragHandle />
-            </span>
-          )}
-          {fields.map((field, index) => {
-            const isPrimaryButton = field.primary && onClick;
-            const Field = isPrimaryButton ? 'button' : 'div';
-            const handleClickItem = handleClick(itemIndex);
-            return (
-              <Field
-                key={field.key}
-                className={bemClass('List__field', {
-                  button: isPrimaryButton,
-                  primary: field.primary || fields.length === 1,
-                  hidden:
-                    typeof field.hidden === 'function'
-                      ? field.hidden(getFieldData(item, field), item, index)
-                      : field.hidden,
-                  interactive: isInteractive(field),
-                  nowrap: field.nowrap,
-                  small,
-                })}
-                onClick={isPrimaryButton ? () => handleClickItem(field) : undefined}
-              >
-                {renderField(
-                  field,
-                  item,
-                  index,
-                  `${id}__item--${item[itemKey]}__field--${field.key}`,
-                  handleChange(itemIndex)(field),
-                  handleClickItem,
-                  props
-                )}
-              </Field>
-            );
+    const renderItem = (item = defaultItem, fields = defaultFields) => {
+      const active = isActive(item, itemIndex);
+      return (
+        <Card
+          key={itemKey(item)}
+          borderless={borderless}
+          dragging={isDragging}
+          className={bemClass('List__item', {
+            active,
+            hover: hover(item, itemIndex),
+            small,
+            clickable: !!onClick,
           })}
-        </div>
-        {renderChildren(item, itemIndex)}
-      </Card>
-    );
+        >
+          <div className={bemClass('List__item-row', { active: isActive(item, itemIndex), small })}>
+            {dragHandleProps && (
+              <span
+                {...dragHandleProps}
+                className={bemClass(
+                  dragHandleProps.className,
+                  {},
+                  bemClass('List__field', { interactive: true, draghandle: true })
+                )}
+              >
+                <DragHandle />
+              </span>
+            )}
+            {fields.map((field, index) => {
+              const isPrimaryButton = field.primary && onClick;
+              const Field = isPrimaryButton ? 'button' : 'div';
+              const handleClickItem = handleClick(itemIndex);
+              return (
+                <Field
+                  key={field.key}
+                  className={bemClass('List__field', {
+                    button: isPrimaryButton,
+                    primary: field.primary || fields.length === 1,
+                    hidden:
+                      typeof field.hidden === 'function'
+                        ? field.hidden(getFieldData(item, field), item, index)
+                        : field.hidden,
+                    interactive: isInteractive(field),
+                    nowrap: field.nowrap,
+                    borderless,
+                    small,
+                    [field.type || 'untyped']: true,
+                  })}
+                  onClick={isPrimaryButton ? () => handleClickItem(field) : undefined}
+                >
+                  {renderField(
+                    field,
+                    item,
+                    index,
+                    `${id}__item--${itemKey(item)}__field--${field.key}`,
+                    handleChange(itemIndex)(field),
+                    handleClickItem,
+                    active,
+                    props
+                  )}
+                </Field>
+              );
+            })}
+          </div>
+          {renderChildren(item, itemIndex)}
+        </Card>
+      );
+    };
     return (
       props.renderItem(
         renderItem,
@@ -271,7 +281,7 @@ function List(props) {
   return (
     <Group {...groupProps}>
       {items.map((item, index) => (
-        <GroupItem {...groupConfigProps} key={item[itemKey]} index={index}>
+        <GroupItem {...groupConfigProps} key={itemKey(item)} index={index}>
           {renderListItem(item, null, null, index)}
         </GroupItem>
       ))}
@@ -282,12 +292,21 @@ function List(props) {
 List.displayName = 'List';
 
 List.defaultProps = {
-  itemKey: 'id',
   renderItem: render => render(),
+  hover: () => false,
+  fields: item => [
+    {
+      key: 'default',
+      render() {
+        if (typeof item === 'string' || typeof item === 'number') return item;
+        return item.title || item.name || item.value;
+      },
+    },
+  ],
 };
 
 List.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   fields: PropTypes.oneOfType([
     PropTypes.arrayOf(
       PropTypes.shape({
@@ -309,7 +328,7 @@ List.propTypes = {
     PropTypes.func,
   ]),
   className: PropTypes.string,
-  itemKey: PropTypes.string,
+  itemKey: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   items: PropTypes.array,
   sortable: PropTypes.bool,
   onChange: PropTypes.func,
@@ -322,6 +341,7 @@ List.propTypes = {
   children: PropTypes.any,
   isSortableDisabled: PropTypes.func,
   renderItem: PropTypes.func,
+  hover: PropTypes.func,
 };
 
 export default List;

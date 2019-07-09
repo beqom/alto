@@ -55,6 +55,7 @@ function SimpleDemo() {
         },
       ]}
       items={items}
+      active={item => item.config.active}
       onChange={xs => setItems(xs)}
       onClick={(field, item, setItem) => {
         switch (field.key) {
