@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../helpers/bem';
 import { isIE11 } from '../../helpers/navigator';
+import RemoveIcon from '../../Icons/Times';
 import FormElement from '../FormElement';
 
 import './TextField.scss';
+
+function triggerOnChange(input, value) {
+  const nativeInputValueSetter = Object.getOwnPropertyDescriptor(
+    window.HTMLInputElement.prototype,
+    'value'
+  ).set;
+  nativeInputValueSetter.call(input, value);
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+}
 
 const handleChange = (event, type, onChange) => {
   if (typeof onChange !== 'function') return;
@@ -24,7 +34,7 @@ const handleChange = (event, type, onChange) => {
 // IE for ever <3
 const getInputType = type => (isIE11() && type === 'number' ? 'text' : type);
 
-const TextField = React.forwardRef((props, ref) => {
+const TextField = React.forwardRef((props, passedRef) => {
   const {
     hideLabel,
     label,
@@ -39,24 +49,31 @@ const TextField = React.forwardRef((props, ref) => {
     right,
     disabled,
     percent,
+    children,
+    clearable,
     ...remainingProps
   } = props;
-
+  const defaultRef = useRef();
+  const ref = passedRef || defaultRef;
   const visibilityProps = props.readOnly ? { 'aria-hidden': true, tabIndex: '-1' } : {};
 
-  const className = bemClass(
-    'textfield',
-    {
-      large,
-      small,
-      success,
-      error,
-      area,
-      right,
-      readOnly: props.readOnly,
-    },
-    props.className
-  );
+  const [isFocus, setFocus] = useState(false);
+
+  const modifiers = {
+    large,
+    small,
+    success,
+    error,
+    area,
+    right,
+    focus: isFocus,
+    disabled: props.disabled,
+    readOnly: props.readOnly,
+  };
+
+  const className = bemClass('textfield', modifiers, props.className);
+  const inputClassName = bemClass('textfield__input', modifiers);
+  const renderInput = typeof children === 'function' ? children : x => x;
 
   const element = area ? (
     <textarea
@@ -67,15 +84,33 @@ const TextField = React.forwardRef((props, ref) => {
       disabled={disabled}
     />
   ) : (
-    <input
-      ref={ref}
-      {...remainingProps}
-      className={className}
-      type={getInputType(props.type)}
-      disabled={disabled}
-      {...visibilityProps}
-      onChange={event => handleChange(event, props.type, props.onChange)}
-    />
+    <div className={className}>
+      {renderInput(
+        <>
+          <input
+            ref={ref}
+            {...remainingProps}
+            className={inputClassName}
+            type={getInputType(props.type)}
+            disabled={disabled}
+            onFocus={(...args) => {
+              setFocus(true);
+              if (typeof props.onFocus === 'function') props.onFocus(...args);
+            }}
+            onBlur={(...args) => {
+              setFocus(false);
+              if (typeof props.onBlur === 'function') props.onBlur(...args);
+            }}
+            {...visibilityProps}
+            onChange={event => handleChange(event, props.type, props.onChange)}
+          />
+          {clearable && !!props.value && (
+            <RemoveIcon onClick={() => triggerOnChange(ref.current, '')} />
+          )}
+        </>,
+        isFocus
+      )}
+    </div>
   );
 
   if (!label) return element;
