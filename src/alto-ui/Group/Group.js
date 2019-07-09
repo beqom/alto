@@ -2,11 +2,12 @@ import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
-import './Group.scss';
+import getDefaultItemKey from '../helpers/getItemKey';
 import GroupItem from './GroupItem';
+import './Group.scss';
 
 const renderGroupItem = (itemKey, column, splitted, children) => (item, index, items) => (
-  <GroupItem key={item[itemKey] || item} items={items} column={column} splitted={splitted}>
+  <GroupItem key={itemKey(item) || item} items={items} column={column} splitted={splitted}>
     {children(item, index, items)}
   </GroupItem>
 );
@@ -15,19 +16,18 @@ const Group = forwardRef(
   ({ itemKey, className, children, items, column, splitted, ...props }, ref) => (
     <ul {...props} ref={ref} className={bemClass('Group', { column, splitted }, className)}>
       {typeof children === 'function'
-        ? items.map(renderGroupItem(itemKey, column, splitted, children))
+        ? items.map(renderGroupItem(getDefaultItemKey(itemKey), column, splitted, children))
         : children}
     </ul>
   )
 );
 
-Group.defaultProps = {
-  itemKey: 'id',
-};
+Group.defaultProps = {};
 
 Group.displayName = 'Group';
 
 Group.propTypes = {
+  itemKey: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   items: PropTypes.array.isRequired,
   children: PropTypes.any,
 };

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies, react/prop-types */
 import React, { useState } from 'react';
+import { boolean } from '@storybook/addon-knobs';
 
 import List from '../List';
 import Lightbulb from '../../Icons/Lightbulb';
@@ -62,11 +63,11 @@ function Backlog() {
   return (
     <List
       id="backlog"
-      small
       sortable
       active={({ selected }) => selected}
       items={items}
       onChange={xs => setItems(xs)}
+      small={boolean('small', false)}
       fields={[
         {
           key: 'selected',
@@ -94,7 +95,7 @@ function Backlog() {
           key: 'assignee',
           type: 'avatar',
           defaultValue: {},
-          props: ({ img, name }) => ({ src: img, tooltip: name }),
+          props: ({ img, name }) => ({ src: img, tooltip: name, small: true }),
         },
         {
           key: 'points',

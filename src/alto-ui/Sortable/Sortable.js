@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import { bemClass } from '../helpers/bem';
+import getDefaultItemKey from '../helpers/getItemKey';
 import useUniqueKey from '../hooks/useUniqueKey';
 
 import './Sortable.scss';
@@ -43,6 +44,7 @@ const handleDragEnd = (instance, result) => {
 
 function Sortable(props) {
   const { className, children, items, itemIdKey, renderDraggable, renderDroppable } = props;
+  const itemKey = getDefaultItemKey(itemIdKey);
   const droppableId = useUniqueKey(props.id);
   const type = useUniqueKey(props.type);
   const instance = useRef({ propsByDroppableId: {} }).current;
@@ -72,8 +74,8 @@ function Sortable(props) {
             <Fragment>
               {items.map((item, index) => (
                 <Draggable
-                  key={item[itemIdKey]}
-                  draggableId={item[itemIdKey]}
+                  key={itemKey(item)}
+                  draggableId={itemKey(item)}
                   index={index}
                   isDragDisabled={!!props.isItemDisabled(item)}
                 >
@@ -138,7 +140,6 @@ function Sortable(props) {
 Sortable.displayName = 'Sortable';
 
 Sortable.defaultProps = {
-  itemIdKey: 'id',
   isItemDisabled: () => false,
   renderDroppable: props => <ul {...props} />,
   renderDraggable: props => <li {...props} />,
@@ -149,7 +150,7 @@ Sortable.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
   children: PropTypes.func,
-  itemIdKey: PropTypes.string,
+  itemIdKey: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   items: PropTypes.array,
   // eslint-disable-next-line react/no-unused-prop-types
   onChange: PropTypes.func,

@@ -11,8 +11,13 @@
   position: relative;
 
   &--active,
+  &--hover,
   &--clickable:hover {
     background-color: $blue-10;
+  }
+
+  &--active {
+    color: $blue;
   }
 }
 
@@ -20,11 +25,13 @@
   display: flex;
   padding: 0 $spacing-small;
   align-items: center;
-  min-height: 4rem;
+
+  &--small,
+  &--borderless {
+    padding: 0 $spacing-x-small;
+  }
 
   &--small {
-    min-height: 2rem;
-    padding: 0 $spacing-x-small;
     font-size: $font-size-small;
   }
 }
@@ -43,7 +50,8 @@
   min-width: 0;
   flex-shrink: 0;
 
-  &--small {
+  &--small,
+  &--borderless {
     padding: $spacing-x-small;
   }
 
@@ -86,6 +94,14 @@
 
     .List__item-row:hover & {
       visibility: visible;
+    }
+  }
+
+  &--media {
+    min-height: 4rem;
+
+    &.List__field--small {
+      min-height: 2rem;
     }
   }
 }
