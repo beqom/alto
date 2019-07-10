@@ -98,9 +98,8 @@ function RelativeBox(props) {
 
   useLayoutEffect(() => {
     const targetChanged = !previous.target && !!target;
-    const targetRefChanged = previous.target && !previous.target.current && !!target.current;
 
-    if (targetChanged || targetRefChanged) {
+    if (targetChanged) {
       updateStyle();
     } else if (watch) {
       const propsChanged = Object.entries(previous.watch).some(
