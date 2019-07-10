@@ -1,0 +1,16 @@
+@import '../../scss/inc';
+
+.Typeahead__menu {
+  max-height: 300px;
+  overflow: auto;
+  padding: 0;
+}
+
+.Typeahead__not-matched {
+  font-weight: $font-weight-bold;
+}
+
+.Typeahead__custom-item {
+  padding: $spacing-x-small ($spacing-x-small + $spacing-small);
+  color: $coolgrey-40;
+}

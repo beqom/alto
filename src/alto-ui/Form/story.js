@@ -73,3 +73,4 @@ require('./Switch/story');
 require('./TagInput/story');
 require('./TextArea/story');
 require('./TextField/story');
+require('./Typeahead/story');

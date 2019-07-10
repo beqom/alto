@@ -91,6 +91,7 @@
     "bigeval": "^3.1.0",
     "classnames": "^2.2.5",
     "dompurify": "^1.0.10",
+    "downshift": "^3.2.10",
     "focus-trap-react": "^3.1.2",
     "lodash.clone": "^4.5.0",
     "lodash.compose": "^2.4.1",

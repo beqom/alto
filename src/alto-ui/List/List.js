@@ -297,6 +297,7 @@ List.defaultProps = {
   fields: item => [
     {
       key: 'default',
+      primary: true,
       render() {
         if (typeof item === 'string' || typeof item === 'number') return item;
         return item.title || item.name || item.value;
