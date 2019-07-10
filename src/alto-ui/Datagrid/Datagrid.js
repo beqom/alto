@@ -396,6 +396,7 @@ class Datagrid extends React.PureComponent {
                   hideLabel
                   checked={(selectedRows || []).includes(key)}
                   onChange={() => onSelectRow(row)}
+                  disabled={!key}
                 />
               )}
               {cells}
