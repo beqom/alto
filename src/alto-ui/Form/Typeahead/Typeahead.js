@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react';
+import React, { useRef, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 
@@ -10,9 +10,11 @@ import useUniqueKey from '../../hooks/useUniqueKey';
 
 import './Typeahead.scss';
 import getItemKey from '../../helpers/getItemKey';
+import Spinner from '../../Spinner';
 
 const LABELS = {
   noResults: 'No Result',
+  loading: 'Loading...',
 };
 
 const renderFields = (inputValue, itemToString, fields) => (item, ...args) => {
@@ -62,6 +64,7 @@ function Typeahead({
   value,
   onChange,
   labels: labelsProps,
+  loading,
   ...props
 }) {
   const inputRef = useRef();
@@ -77,9 +80,26 @@ function Typeahead({
   const itemFromValue = val => items.find(item => itemToValue(item) === val);
   const selectedItem = useMemo(() => itemFromValue(value) || '', [value]);
 
+  const [isFocused, setFocus] = useState(false);
+  const [tempValue, setTempValue] = useState(() => itemToString(selectedItem));
+
+  const valueToString = isFocused ? tempValue : itemToString(selectedItem);
+
+  const itemsFiltered = useMemo(
+    () =>
+      items.filter(
+        item =>
+          !tempValue ||
+          itemToString(item)
+            .toLowerCase()
+            .includes(tempValue.toLowerCase())
+      ),
+    [items, tempValue]
+  );
+
   return (
     <Downshift
-      selectedItem={selectedItem}
+      inputValue={valueToString}
       itemToString={item => (item ? itemToString(item) : '')}
       defaultHighlightedIndex={0}
       stateReducer={typeaheadStateReducer}
@@ -88,72 +108,76 @@ function Typeahead({
       }}
       onSelect={item => {
         const newValue = itemToValue(item);
+        setTempValue(itemToString(item));
         if (newValue !== value) {
           onChange(newValue);
         }
       }}
     >
-      {({ getInputProps, isOpen, inputValue, getItemProps, highlightedIndex, openMenu }) => {
-        const itemsFiltered = items.filter(
-          item =>
-            !inputValue ||
-            itemToString(item)
-              .toLowerCase()
-              .includes(inputValue.toLowerCase())
-        );
-
-        return (
-          <div>
-            <TextField
-              {...getInputProps({
-                clearable: true,
-                ...props,
-                ref: inputRef,
-                onFocus(e) {
-                  if (typeof props.onFocus === 'function') props.onFocus(e);
-                  openMenu();
-                },
-              })}
-            >
-              {input => (
-                <>
-                  {input}
-                  {!inputValue && <CaretDown onClick={openMenu} />}
-                </>
-              )}
-            </TextField>
-            <Popover
-              id={`${id}__popover`}
-              className="Typeahead__menu"
-              open={isOpen}
-              target={inputRef.current ? inputRef.current.parentElement : undefined}
-              bottom
-              start
-              style={{
-                width: inputRef.current ? inputRef.current.parentElement.offsetWidth : undefined,
-              }}
-            >
-              {itemsFiltered.length ? (
+      {({ getInputProps, isOpen, inputValue, getItemProps, highlightedIndex, openMenu }) => (
+        <div>
+          <TextField
+            {...getInputProps({
+              clearable: true,
+              ...props,
+              ref: inputRef,
+              onFocus(e) {
+                if (typeof props.onFocus === 'function') props.onFocus(e);
+                setFocus(true);
+                openMenu();
+              },
+              onInput(e) {
+                setTempValue(e.target.value);
+              },
+              onBlur() {
+                setFocus(false);
+              },
+            })}
+          >
+            {input => (
+              <>
+                {input}
+                {!inputValue && <CaretDown onClick={openMenu} />}
+              </>
+            )}
+          </TextField>
+          <Popover
+            id={`${id}__popover`}
+            className="Typeahead__menu"
+            open={isOpen}
+            target={inputRef.current ? inputRef.current.parentElement : undefined}
+            bottom
+            start
+            style={{
+              width: inputRef.current ? inputRef.current.parentElement.offsetWidth : undefined,
+            }}
+          >
+            {(!!loading && (
+              <div className="Typeahead__custom-item Typeahead__custum-item--loading">
+                <Spinner className="Typeahead__loading-spinner" small />
+                {labels.loading}
+              </div>
+            )) ||
+              (itemsFiltered.length && (
                 <List
                   id={`${id}__list`}
                   items={itemsFiltered}
                   borderless
                   fields={renderFields(inputValue, itemToString, fields)}
                   hover={(item, index) => highlightedIndex === index}
-                  // active={item => highlightedIndex === index}
+                  // active={item => itemToValue(item) === value}
                   renderItem={(render, item, _, index) => (
                     <div {...getItemProps({ key: item.id, index, item })}>{render()}</div>
                   )}
                 />
-              ) : (
+              )) || (
                 <div className="Typeahead__custom-item Typeahead__custum-item--no-result">
                   {labels.noResults}
                 </div>
               )}
-            </Popover>
-          </div>
-        );
-      }}
+          </Popover>
+        </div>
+      )}
     </Downshift>
   );
 }
@@ -189,5 +213,6 @@ Typeahead.propTypes = {
   items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])),
   fields: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
   onFocus: PropTypes.func,
+  loading: PropTypes.bool,
 };
 export default Typeahead;
