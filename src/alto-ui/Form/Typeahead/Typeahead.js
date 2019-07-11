@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Downshift from 'downshift';
 
@@ -9,73 +9,87 @@ import CaretDown from '../../Icons/CaretDown';
 import useUniqueKey from '../../hooks/useUniqueKey';
 
 import './Typeahead.scss';
+import getItemKey from '../../helpers/getItemKey';
 
 const LABELS = {
   noResults: 'No Result',
 };
 
-function defaultItemToString(item) {
-  if (typeof item === 'string' || typeof item === 'number') return item;
-  return item.title || item.name || item.value;
-}
-
 const renderFields = (inputValue, itemToString, fields) => (item, ...args) => {
   if (typeof fields !== 'function') return fields;
-  const intemStringified = itemToString(item);
-  if (!inputValue) return fields(item, intemStringified, ...args);
-  const indexOfValue = intemStringified.toLowerCase().indexOf(inputValue.toLowerCase());
+  const itemStringified = itemToString(item);
+  if (!inputValue) return fields(item, itemStringified, ...args);
+  const indexOfValue = itemStringified.toLowerCase().indexOf(inputValue.toLowerCase());
 
   const itemToStringFromated = (
     <>
-      <span className="Typeahead__not-matched">{intemStringified.slice(0, indexOfValue)}</span>
+      <span className="Typeahead__not-matched">{itemStringified.slice(0, indexOfValue)}</span>
       <span className="Typeahead__matched">
-        {intemStringified.slice(indexOfValue, indexOfValue + inputValue.length)}
+        {itemStringified.slice(indexOfValue, indexOfValue + inputValue.length)}
       </span>
       <span className="Typeahead__not-matched">
-        {intemStringified.slice(indexOfValue + inputValue.length)}
+        {itemStringified.slice(indexOfValue + inputValue.length)}
       </span>
     </>
   );
   return fields(item, itemToStringFromated, ...args);
 };
 
+function typeaheadStateReducer(state, changes) {
+  switch (changes.type) {
+    // ON BLUR (on click outside)
+    case Downshift.stateChangeTypes.mouseUp:
+      return {
+        ...changes,
+        // if onBlur and inputValue is empty, keep it empty, dont revert to prev value
+        inputValue: !state.inputValue ? state.inputValue : changes.inputValue,
+      };
+    case Downshift.stateChangeTypes.changeInput:
+      return {
+        ...changes,
+        isOpen: !!changes.inputValue,
+      };
+    default:
+      return changes;
+  }
+}
+
 function Typeahead({
   items,
-  itemToString,
+  itemToString: itemToStringFromProps,
+  itemToValue: itemToValueFromProps,
   fields,
   value,
   onChange,
-  labels: labelsGiven,
+  labels: labelsProps,
   ...props
 }) {
   const inputRef = useRef();
   const id = useUniqueKey(props.id);
   const labels = {
     ...LABELS,
-    ...labelsGiven,
+    ...labelsProps,
   };
+
+  const itemToString = item => (item ? itemToStringFromProps(item) : '');
+  const itemToValue = item =>
+    item ? getItemKey(itemToValueFromProps)(item) || itemToString(item) : '';
+  const itemFromValue = val => items.find(item => itemToValue(item) === val);
+  const selectedItem = useMemo(() => itemFromValue(value) || '', [value]);
 
   return (
     <Downshift
-      itemValue={value}
+      selectedItem={selectedItem}
       itemToString={item => (item ? itemToString(item) : '')}
       defaultHighlightedIndex={0}
-      stateReducer={(state, changes) => {
-        switch (changes.type) {
-          // ON BLUR (on click outside)
-          case Downshift.stateChangeTypes.mouseUp:
-            return {
-              ...changes,
-              // if onBlur and inputValue is empty, keep it empty, dont revert to prev value
-              inputValue: !state.inputValue ? state.inputValue : changes.inputValue,
-            };
-          case Downshift.stateChangeTypes.changeInput:
-            return {
-              ...changes,
-              isOpen: !!changes.inputValue,
-            };
-          default:
-            return changes;
+      stateReducer={typeaheadStateReducer}
+      onInputValueChange={val => {
+        if (!val && !!value) onChange(undefined);
+      }}
+      onSelect={item => {
+        const newValue = itemToValue(item);
+        if (newValue !== value) {
+          onChange(newValue);
         }
       }}
     >
@@ -87,18 +101,19 @@ function Typeahead({
               .toLowerCase()
               .includes(inputValue.toLowerCase())
         );
-        const inputProps = getInputProps();
+
         return (
           <div>
             <TextField
-              clearable
-              {...props}
-              {...inputProps}
-              ref={inputRef}
-              onFocus={e => {
-                if (typeof props.onFocus === 'function') props.onFocus(e);
-                openMenu();
-              }}
+              {...getInputProps({
+                clearable: true,
+                ...props,
+                ref: inputRef,
+                onFocus(e) {
+                  if (typeof props.onFocus === 'function') props.onFocus(e);
+                  openMenu();
+                },
+              })}
             >
               {input => (
                 <>
@@ -125,6 +140,7 @@ function Typeahead({
                   borderless
                   fields={renderFields(inputValue, itemToString, fields)}
                   hover={(item, index) => highlightedIndex === index}
+                  // active={item => highlightedIndex === index}
                   renderItem={(render, item, _, index) => (
                     <div {...getItemProps({ key: item.id, index, item })}>{render()}</div>
                   )}
@@ -142,8 +158,14 @@ function Typeahead({
   );
 }
 
+function defaultItemToString(item) {
+  if (typeof item === 'string' || typeof item === 'number') return item;
+  return item.title || item.name || item.value;
+}
+
 Typeahead.defaultProps = {
   itemToString: defaultItemToString,
+  onChange: () => {},
   fields: (item, itemToStringFromated) => [
     {
       key: 'default',
@@ -159,12 +181,13 @@ Typeahead.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.string]),
   onChange: PropTypes.func,
   id: PropTypes.string,
-  itemToString: PropTypes.string,
+  itemToString: PropTypes.func,
+  itemToValue: PropTypes.func,
   labels: PropTypes.shape({
     noResults: PropTypes.string,
   }),
   items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])),
-  fields: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+  fields: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
   onFocus: PropTypes.func,
 };
 export default Typeahead;
