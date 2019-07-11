@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
-// import { text, boolean, select } from '@storybook/addon-knobs';
+import { boolean } from '@storybook/addon-knobs';
 import centered from '@storybook/addon-centered';
 import { people, colors } from './data.json';
 
@@ -16,7 +16,12 @@ storiesOf('Form/Typeahead', module)
       const [value, setValue] = useState('');
       return (
         <div style={{ width: 300 }}>
-          <Typeahead items={Object.keys(colors)} onChange={setValue} value={value} />
+          <Typeahead
+            items={Object.keys(colors)}
+            onChange={setValue}
+            value={value}
+            loading={boolean('loading', false)}
+          />
         </div>
       );
     })
@@ -44,6 +49,7 @@ storiesOf('Form/Typeahead', module)
             itemToString={item => item.name}
             itemToValue={item => item.hex}
             helpText={color.name ? `name: ${color.name}\nhex: ${color.hex}}` : '-'}
+            loading={boolean('loading', false)}
             fields={[
               {
                 key: 'hex',
@@ -70,7 +76,7 @@ storiesOf('Form/Typeahead', module)
     <div style={{ width: 500 }}>
       <Typeahead
         items={people}
-        contained
+        loading={boolean('loading', false)}
         fields={[
           {
             key: 'name',

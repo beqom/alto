@@ -14,3 +14,12 @@
   padding: $spacing-x-small ($spacing-x-small + $spacing-small);
   color: $coolgrey-40;
 }
+
+.Typeahead__custum-item--loading {
+  display: flex;
+  align-items: center;
+}
+
+.Typeahead__loading-spinner {
+  margin-right: $spacing-x-small;
+}
