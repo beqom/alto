@@ -7,10 +7,10 @@ import Popover from '../../Popover';
 import List from '../../List';
 import CaretDown from '../../Icons/CaretDown';
 import useUniqueKey from '../../hooks/useUniqueKey';
-
-import './Typeahead.scss';
 import getItemKey from '../../helpers/getItemKey';
 import Spinner from '../../Spinner';
+import FormElement from '../FormElement';
+import './Typeahead.scss';
 
 const LABELS = {
   noResults: 'No Result',
@@ -46,11 +46,6 @@ function typeaheadStateReducer(state, changes) {
         // if onBlur and inputValue is empty, keep it empty, dont revert to prev value
         inputValue: !state.inputValue ? state.inputValue : changes.inputValue,
       };
-    case Downshift.stateChangeTypes.changeInput:
-      return {
-        ...changes,
-        isOpen: !!changes.inputValue,
-      };
     default:
       return changes;
   }
@@ -65,6 +60,7 @@ function Typeahead({
   onChange,
   labels: labelsProps,
   loading,
+  onOpen,
   ...props
 }) {
   const inputRef = useRef();
@@ -106,6 +102,9 @@ function Typeahead({
       onInputValueChange={val => {
         if (!val && !!value) onChange(undefined);
       }}
+      onStateChange={changes => {
+        if (changes.isOpen && typeof onOpen === 'function') onOpen();
+      }}
       onSelect={item => {
         const newValue = itemToValue(item);
         setTempValue(itemToString(item));
@@ -114,8 +113,16 @@ function Typeahead({
         }
       }}
     >
-      {({ getInputProps, isOpen, inputValue, getItemProps, highlightedIndex, openMenu }) => (
-        <div>
+      {({
+        getRootProps,
+        getInputProps,
+        isOpen,
+        inputValue,
+        getItemProps,
+        highlightedIndex,
+        openMenu,
+      }) => (
+        <FormElement {...getRootProps({ ...props, id })}>
           <TextField
             {...getInputProps({
               clearable: true,
@@ -129,10 +136,13 @@ function Typeahead({
               onInput(e) {
                 setTempValue(e.target.value);
               },
-              onBlur() {
+              onBlur(e) {
+                if (typeof props.onBlur === 'function') props.onBlur(e);
                 setFocus(false);
               },
             })}
+            label=""
+            className="Typeahead__input"
           >
             {input => (
               <>
@@ -149,7 +159,7 @@ function Typeahead({
             bottom
             start
             style={{
-              width: inputRef.current ? inputRef.current.parentElement.offsetWidth : undefined,
+              minWidth: inputRef.current ? inputRef.current.parentElement.offsetWidth : undefined,
             }}
           >
             {(!!loading && (
@@ -176,7 +186,7 @@ function Typeahead({
                 </div>
               )}
           </Popover>
-        </div>
+        </FormElement>
       )}
     </Downshift>
   );
@@ -213,6 +223,8 @@ Typeahead.propTypes = {
   items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])),
   fields: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
   onFocus: PropTypes.func,
+  onBlur: PropTypes.func,
   loading: PropTypes.bool,
+  onOpen: PropTypes.func,
 };
 export default Typeahead;

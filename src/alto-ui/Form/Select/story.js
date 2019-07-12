@@ -20,38 +20,55 @@ const SimpleWrapper = styled.div`
 
 SimpleWrapper.displayName = 'Story';
 
-const modifierNames = ['success', 'error', 'large', 'small', 'disabled', 'native', 'readOnly'];
+const modifierNames = [
+  'success',
+  'error',
+  'large',
+  'small',
+  'disabled',
+  'native',
+  'readOnly',
+  'autocomplete',
+];
 
 const getModifiers = (...modifiersExcluded) =>
   modifierNames
     .filter(name => !modifiersExcluded.includes(name))
     .map(name => ({
       name,
-      value: boolean(name, false),
+      value: boolean(name, name === 'autocomplete'),
     }))
-    .filter(({ value }) => value)
     .reduce((acc, { name, value }) => ({ ...acc, [name]: value }), {});
 
-const options = [
-  {
-    title: 'HEADING ONE',
-    value: [
-      'First',
-      'Second',
-      'Third',
-      'Fourth: The very very long long extra giga mega long text, isnt it ?',
-    ],
-  },
-  {
-    title: 'HEADING TWO',
-    value: [{ title: 'First', value: 'first_two' }],
-  },
-];
+const getOptions = ({ autocomplete }) =>
+  autocomplete
+    ? [
+        'First',
+        'Second',
+        'Third',
+        'Fourth: The very very long long extra giga mega long text, isnt it ?',
+      ]
+    : [
+        {
+          title: 'HEADING ONE',
+          value: [
+            'First',
+            'Second',
+            'Third',
+            'Fourth: The very very long long extra giga mega long text, isnt it ?',
+          ],
+        },
+        {
+          title: 'HEADING TWO',
+          value: [{ title: 'First', value: 'first_two' }],
+        },
+      ];
 
 storiesOf('Form/Select', module)
   .addDecorator(centered)
   .addWithJSX('overview', () => {
     const modifiers = getModifiers();
+    const options = getOptions(modifiers);
 
     return (
       <SimpleWrapper>
@@ -69,6 +86,7 @@ storiesOf('Form/Select', module)
   })
   .addWithJSX('colors', () => {
     const modifiers = getModifiers('success', 'error');
+    const options = getOptions(modifiers);
 
     return (
       <SimpleWrapper>
@@ -103,6 +121,7 @@ storiesOf('Form/Select', module)
   })
   .addWithJSX('sizes', () => {
     const modifiers = getModifiers('small', 'large');
+    const options = getOptions(modifiers);
 
     return (
       <SimpleWrapper>
@@ -134,6 +153,7 @@ storiesOf('Form/Select', module)
   })
   .addWithJSX('states', () => {
     const modifiers = getModifiers('disabled');
+    const options = getOptions(modifiers);
 
     return (
       <SimpleWrapper>
@@ -157,6 +177,7 @@ storiesOf('Form/Select', module)
   })
   .addWithJSX('multiple', () => {
     const modifiers = getModifiers('disabled');
+    const options = getOptions(modifiers);
 
     return (
       <StateProvider state={{ value: ['First', 'Second'] }}>
@@ -179,6 +200,7 @@ storiesOf('Form/Select', module)
   })
   .addWithJSX('clearable', () => {
     const modifiers = getModifiers('disabled');
+    const options = getOptions(modifiers);
 
     return (
       <StateProvider state={{ value: 'First' }}>

@@ -7,11 +7,12 @@
   min-width: 0;
 
   // TODO Refactor this to not nest
-  .Select--dropdown__label {
+  .Typeahead__input {
     font-size: $font-size-small;
   }
+
   &--comfortable {
-    .Select--dropdown__label {
+    .Typeahead__input {
       font-size: $font-size-medium;
     }
   }
