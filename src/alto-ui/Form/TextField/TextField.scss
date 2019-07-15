@@ -55,7 +55,10 @@
 }
 
 .textfield__input {
+  @extend %text-ellipsis;
+
   flex: 1;
+  min-width: 0;
 
   &::placeholder {
     color: $coolgrey-40;
