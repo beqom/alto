@@ -18,6 +18,7 @@ const SideNavPanel = ({
   className,
   panelClassName,
   inert,
+  isSecond,
 }) => (
   <SideNavContext.Consumer>
     {sidenavContext => (
@@ -30,8 +31,18 @@ const SideNavPanel = ({
       >
         <TransitionGroup>
           {open && (
-            <CSSTransition classNames="sidenav__panel--transition" in={open} timeout={350}>
-              <div className={bemClass('sidenav__panel', { collapsed: sidenavContext.collapsed })}>
+            <CSSTransition
+              classNames="sidenav__panel--transition"
+              in={open}
+              timeout={350}
+              onExited={onClose}
+            >
+              <div
+                className={bemClass('sidenav__panel', {
+                  collapsed: sidenavContext.collapsed,
+                  second: isSecond,
+                })}
+              >
                 <div className={classnames('sidenav__panel-container', panelClassName)}>
                   <header className="sidenav__panel-header">
                     <div className="sidenav__panel-title">{title}</div>
@@ -66,6 +77,7 @@ SideNavPanel.propTypes = {
   title: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   closeFocusTargetId: PropTypes.string.isRequired,
+  isSecond: PropTypes.bool,
   inert: PropTypes.bool,
 };
 
