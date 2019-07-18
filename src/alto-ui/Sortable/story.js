@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { storiesOf } from '@storybook/react';
 import centered from '@storybook/addon-centered/react';
-import { action } from '@storybook/addon-actions';
 
 import Sortable from './Sortable';
 import CardWithoutMargin from '../Card';

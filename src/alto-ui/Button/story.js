@@ -154,13 +154,10 @@ storiesOf('Button', module)
           <BarsIcon left />
         </Button>
         <Button {...modifiers} nowrap>
-          Next
-          <ArrowRightIcon right />
+          Next<ArrowRightIcon right />
         </Button>
         <Button {...modifiers} nowrap>
-          <ObjectsIcon left />
-          Select Objects
-          <ChevronDownIcon right />
+          <ObjectsIcon left />Select Objects<ChevronDownIcon right />
         </Button>
       </SimpleWrapper>
     );
@@ -172,17 +169,13 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper white={modifiers.white}>
         <Button {...modifiers}>
-          <BarsIcon left />
-          Menu
+          <BarsIcon left />Menu
         </Button>
         <Button {...modifiers}>
-          Next
-          <ArrowRightIcon right />
+          Next<ArrowRightIcon right />
         </Button>
         <Button {...modifiers}>
-          <ObjectsIcon left />
-          Select Objects
-          <ChevronDownIcon right />
+          <ObjectsIcon left />Select Objects<ChevronDownIcon right />
         </Button>
         <Button {...modifiers}>
           <ObjectsIcon />
@@ -194,19 +187,13 @@ storiesOf('Button', module)
           <ArrowRightIcon />
         </Button>
         <Button small {...modifiers}>
-          <ObjectsIcon left />
-          Icons
-          <ChevronDownIcon right />
+          <ObjectsIcon left />Icons<ChevronDownIcon right />
         </Button>
         <Button {...modifiers}>
-          <ObjectsIcon left />
-          Icons
-          <ChevronDownIcon right />
+          <ObjectsIcon left />Icons<ChevronDownIcon right />
         </Button>
         <Button large {...modifiers}>
-          <ObjectsIcon left />
-          Icons
-          <ChevronDownIcon right />
+          <ObjectsIcon left />Icons<ChevronDownIcon right />
         </Button>
       </SimpleWrapper>
     );
