@@ -358,8 +358,16 @@ $nav-btn-hover-text-dark: $white;
     left: 200px;
     bottom: 0;
 
+    &--second {
+      left: calc(200px + 22rem);
+      z-index: $z-index-navbar;
+    }
+
     &--collapsed {
       left: 3.125rem;
+      &.sidenav__panel--second {
+        left: 25.125rem;
+      }
     }
   }
 
