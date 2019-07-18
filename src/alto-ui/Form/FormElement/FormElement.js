@@ -44,7 +44,7 @@ FormElement.propTypes = {
   success: PropTypes.bool,
   readOnly: PropTypes.bool,
   hideLabel: PropTypes.bool,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.any.isRequired,
   style: PropTypes.object,
   useLabelledby: PropTypes.bool,
 };
