@@ -10,7 +10,10 @@ import SideNavPanel from './SideNavPanel';
 
 import LightbulbIcon from '../Icons/Lightbulb';
 import BoltIcon from '../Icons/Bolt';
+import CogIcon from '../Icons/Cog';
 import ObjectsIcon from '../Icons/Objects';
+import UserIcon from '../Icons/User';
+import Bell from '../Icons/Bell';
 import Avatar from '../Avatar';
 import StateProvider from '../StateProvider';
 
@@ -174,6 +177,26 @@ storiesOf('SideNav', module)
                 ],
                 'red'
               )}
+              secondaryItems={[
+                {
+                  id: 7,
+                  title: 'User',
+                  icon: UserIcon,
+                  url: '#seven',
+                },
+                {
+                  id: 8,
+                  title: 'Settings',
+                  icon: CogIcon,
+                  url: '#eight',
+                },
+                {
+                  id: 9,
+                  title: 'Notifications',
+                  icon: Bell,
+                  onClick: () => alert('On click event'),
+                },
+              ]}
               expandButtonLabel="click to expand side navigation"
               collapseButtonLabel="click to collapse side navigation"
               openMenuButtonLabel="Menu"

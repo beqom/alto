@@ -99,6 +99,7 @@ $nav-btn-hover-text-dark: $white;
   height: $spacing-xx-large;
   cursor: pointer;
   transition: all $transition;
+  padding: 0;
 }
 
 .sidenav__icon-container {
@@ -120,28 +121,35 @@ $nav-btn-hover-text-dark: $white;
     display: none;
   }
 }
+.sidenav__sections-container {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  flex-grow: 1;
+}
 
 .sidenav__sections-list {
-  border-bottom: 1px solid $coolgrey-20;
-  flex: 1;
   list-style: none;
-  overflow-y: auto;
   overflow-x: hidden;
+  color: $coolgrey-50;
+  flex-shrink: 0;
 
   @include on-narrow {
     display: none;
   }
-
-  color: $coolgrey-50;
-
   .sidenav--dark & {
     color: rgba($white, 0.8);
-    border-bottom: 1px solid $coolgrey-80;
+  }
+}
+.sidenav__narrow {
+  display: none;
+
+  @include on-narrow {
+    display: block;
   }
 }
 
 .sidenav__sections-list-narrow-container {
-  display: none;
   position: fixed;
   top: $header-height;
   height: 0;
@@ -180,6 +188,9 @@ $nav-btn-hover-text-dark: $white;
   display: flex;
   align-items: center;
   height: $spacing-xx-large;
+  @include on-narrow {
+    display: none;
+  }
 }
 
 .sidenav__toggle-button {
@@ -231,7 +242,7 @@ $nav-btn-hover-text-dark: $white;
   font-size: $font-size-medium;
   font-weight: 400;
   width: 9rem;
-
+  text-align: left;
   @extend %text-ellipsis;
 }
 
@@ -242,20 +253,7 @@ $nav-btn-hover-text-dark: $white;
 
 .sidenav__content {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-end;
   flex: 1;
-
-  @include MQ(Mplus) {
-    border-bottom: 1px solid $coolgrey-20;
-    flex: 0 0 auto;
-    justify-content: center;
-
-    .sidenav--dark & {
-      border-bottom: 1px solid $coolgrey-80;
-    }
-  }
 }
 
 .sidenav__content-item {
