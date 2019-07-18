@@ -96,6 +96,13 @@
 .textfield--area {
   height: 8em;
   resize: none;
+  display: block;
+  width: calc(100% - #{$spacing-small * 2});
+  padding: 0.625rem;
+
+  &::placeholder {
+    color: $coolgrey-40;
+  }
 }
 
 .textfield--right {
