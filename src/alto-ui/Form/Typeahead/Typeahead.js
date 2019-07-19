@@ -99,10 +99,9 @@ const Typeahead = React.forwardRef(
     const [isFocused, setFocus] = useState(false);
     const [isMenuOpen, setOpenMenu] = useState(false);
     const [tempValue, setTempValue] = useState(() => itemToString(selectedItem));
+    const prevTempValue = usePrevious(tempValue);
 
     const valueToString = isFocused || isMenuOpen ? tempValue : itemToString(selectedItem);
-
-    const prevTempValue = usePrevious(tempValue);
 
     const hasPagination = typeof onChangePage === 'function';
     const hasNotTotalYet = typeof totalItems !== 'number';
@@ -143,6 +142,8 @@ const Typeahead = React.forwardRef(
 
     useEffect(triggerChangeFirstPage, [tempValue]);
 
+    useEffect(() => setTempValue(itemToString(selectedItem)), [value]);
+
     return (
       <Downshift
         inputValue={valueToString}
@@ -150,7 +151,7 @@ const Typeahead = React.forwardRef(
         defaultHighlightedIndex={0}
         stateReducer={typeaheadStateReducer}
         onInputValueChange={val => {
-          if (!val && !!value) onChange(undefined);
+          if (!val && !!value && !isFocused) onChange(undefined);
         }}
         onStateChange={changes => {
           if (changes.isOpen) {
@@ -176,6 +177,7 @@ const Typeahead = React.forwardRef(
           getItemProps,
           highlightedIndex,
           openMenu,
+          selectItem,
         }) => (
           <FormElement {...getRootProps({ ...props, id })}>
             <TextField
@@ -227,7 +229,14 @@ const Typeahead = React.forwardRef(
                     hover={(item, index) => highlightedIndex === index}
                     // active={item => itemToValue(item) === value}
                     renderItem={(render, item, _, index) => (
-                      <div {...getItemProps({ key: getKey(item), index, item })}>{render()}</div>
+                      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+                      <div
+                        {...getItemProps({ key: getKey(item), index, item })}
+                        onMouseDown={() => selectItem(item)}
+                        className="Typeahead__item"
+                      >
+                        {render()}
+                      </div>
                     )}
                   />
                   {!loading && isPaginated && (
