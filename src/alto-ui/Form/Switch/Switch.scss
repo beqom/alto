@@ -59,6 +59,7 @@
 
   &--checked::before {
     transform: translateX(calc(1em - 4px));
+    -ms-transform: translateX(1em) translateX(-4px); /* IE 11 */
   }
 }
 
