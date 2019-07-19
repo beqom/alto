@@ -1,5 +1,6 @@
 import Add from './Add';
 import Analytics from './Analytics';
+import Anchor from './Anchor';
 import AngleArrow from './AngleArrow';
 import ArrowDown from './ArrowDown';
 import ArrowLeft from './ArrowLeft';
@@ -120,6 +121,7 @@ import World from './World';
 export default {
   Add,
   Analytics,
+  Anchor,
   AngleArrow,
   ArrowDown,
   ArrowLeft,
