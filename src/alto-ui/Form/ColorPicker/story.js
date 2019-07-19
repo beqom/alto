@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { storiesOf } from '@storybook/react';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 
 import ColorPicker from './ColorPicker';
 

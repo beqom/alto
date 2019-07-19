@@ -1,20 +1,24 @@
 import React from 'react';
-import { configure, addDecorator, setAddon } from '@storybook/react';
+import { configure, addDecorator, setAddon, addParameters } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
-import { setOptions } from '@storybook/addon-options';
 import JSXAddon from 'storybook-addon-jsx';
 //import { withInfo, setDefaults } from '@storybook/addon-info';
-import { checkA11y } from '@storybook/addon-a11y';
+import { withA11y } from '@storybook/addon-a11y';
 
 import Root from './Root';
 
 setAddon(JSXAddon);
 
-setOptions({
-  name: 'Alto UI',
-  url: 'https://github.com/beqom/alto-ui',
-  addonPanelInRight: true,
-  showStoriesPanel: true,
+// Console error: The pseudo class ":first-child" is potentially unsafe when doing server-side rendering. Try changing it to ":first-of-type".
+// https://github.com/storybookjs/storybook/issues/6998
+
+addParameters({
+  options: {
+    showPanel: true,
+    panelPosition: 'right',
+    showNav: true,
+    isToolshown: false,
+  },
 });
 
 /*
@@ -39,12 +43,11 @@ setDefaults({
 });
 */
 
-addDecorator(checkA11y);
+addDecorator(withA11y);
 
 // addDecorator((story, context) => withInfo('')(story)(context));
 
 // addDecorator(fixAddonInfo);
-
 addDecorator(withKnobs);
 
 addDecorator(story => <Root>{story()}</Root>);

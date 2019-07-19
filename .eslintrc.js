@@ -21,6 +21,8 @@ module.exports = {
     'react/no-danger': 0,
     'react/jsx-no-target-blank': 0,
     'react/require-default-props': 0,
+    'react/default-props-match-prop-types': 0,
+    'react/prop-types': 0,
     'import/no-extraneous-dependencies': 2,
     'react/jsx-filename-extension': 0,
     'jsx-a11y/label-has-for': [

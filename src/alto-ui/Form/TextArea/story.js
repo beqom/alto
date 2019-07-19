@@ -3,7 +3,7 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { text, boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 
 import TextArea from './TextArea';
 
