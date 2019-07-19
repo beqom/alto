@@ -2,7 +2,7 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 import styled from 'styled-components';
-import centered from '@storybook/addon-centered';
+import centered from '@storybook/addon-centered/react';
 
 // import { text, boolean, select } from '@storybook/addon-knobs';
 
