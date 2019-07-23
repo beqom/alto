@@ -150,6 +150,7 @@
 
 .Card__body {
   flex: 1;
+  flex-basis: auto;
   padding-left: calc(#{$spacing-medium} - 1px);
 
   .Card__drag-handle-container + & {
