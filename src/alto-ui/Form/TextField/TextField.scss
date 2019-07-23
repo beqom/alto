@@ -58,6 +58,7 @@
   @extend %text-ellipsis;
 
   flex: 1;
+  flex-basis: auto;
   min-width: 0;
 
   &::placeholder {
