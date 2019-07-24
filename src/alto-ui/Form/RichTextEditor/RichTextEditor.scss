@@ -25,6 +25,10 @@
 }
 
 .RichTextEditor {
+  .ql-editor {
+    min-height: 1.2rem;
+  }
+
   &--snow {
     background-color: $white;
     border: 1px solid $color-input-border;

@@ -35,6 +35,7 @@ class Popover extends React.Component {
       open,
       includeTarget,
       inert,
+      target,
       ...relativeBoxProps
     } = this.props;
 
@@ -56,6 +57,7 @@ class Popover extends React.Component {
               className={bemClass('Popover', {}, className)}
               margin={6.4}
               targetRef={trigger ? this.targetRef : undefined}
+              target={trigger ? undefined : target}
               {...relativeBoxProps}
             >
               {children}

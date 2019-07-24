@@ -51,6 +51,7 @@ const TextField = React.forwardRef((props, passedRef) => {
     percent,
     children,
     clearable,
+    onClear,
     ...remainingProps
   } = props;
   const defaultRef = useRef();
@@ -104,8 +105,8 @@ const TextField = React.forwardRef((props, passedRef) => {
             {...visibilityProps}
             onChange={event => handleChange(event, props.type, props.onChange)}
           />
-          {clearable && !!props.value && (
-            <RemoveIcon onClick={() => triggerOnChange(ref.current, '')} />
+          {(clearable || onClear) && !!props.value && (
+            <RemoveIcon onClick={() => (onClear ? onClear() : triggerOnChange(ref.current, ''))} />
           )}
         </>,
         isFocus
