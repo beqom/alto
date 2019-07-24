@@ -6,7 +6,7 @@
   padding: 0;
 }
 
-.Typeahead__not-matched {
+.Typeahead__matched {
   font-weight: $font-weight-bold;
 }
 
@@ -30,4 +30,26 @@
 
 .Typeahead__load-more {
   margin: 0 $spacing-small $spacing-x-small;
+}
+
+.Typeahead__clear {
+  margin-right: $spacing-x-small;
+  padding-right: $spacing-x-small;
+  border-right: 1px solid $coolgrey-20;
+}
+
+.Typeahead__caret {
+  transition: color $transition;
+  &--close {
+    transform: rotate(180deg);
+  }
+}
+
+.Typeahead__clear,
+.Typeahead__caret {
+  color: $coolgrey-40;
+
+  &:hover {
+    color: $coolgrey-80;
+  }
 }

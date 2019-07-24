@@ -10,8 +10,10 @@ import useUniqueKey from '../../hooks/useUniqueKey';
 import getItemKey from '../../helpers/getItemKey';
 import Spinner from '../../Spinner';
 import FormElement from '../FormElement';
-import './Typeahead.scss';
 import Button from '../../Button';
+import RemoveIcon from '../../Icons/Times';
+import './Typeahead.scss';
+import { bemClass } from '../../helpers/bem';
 
 const LABELS = {
   noResults: 'No Result',
@@ -19,20 +21,20 @@ const LABELS = {
   loadMore: 'Load more',
 };
 
-const renderFields = (inputValue, itemToString, fields) => (item, ...args) => {
+const renderFields = (search, itemToString, fields) => (item, ...args) => {
   if (typeof fields !== 'function') return fields;
   const itemStringified = itemToString(item);
-  if (!inputValue) return fields(item, itemStringified, ...args);
-  const indexOfValue = itemStringified.toLowerCase().indexOf(inputValue.toLowerCase());
+  if (!search) return fields(item, itemStringified, ...args);
+  const indexOfValue = itemStringified.toLowerCase().indexOf(search.toLowerCase());
 
   const itemToStringFromated = (
     <>
       <span className="Typeahead__not-matched">{itemStringified.slice(0, indexOfValue)}</span>
       <span className="Typeahead__matched">
-        {itemStringified.slice(indexOfValue, indexOfValue + inputValue.length)}
+        {itemStringified.slice(indexOfValue, indexOfValue + search.length)}
       </span>
       <span className="Typeahead__not-matched">
-        {itemStringified.slice(indexOfValue + inputValue.length)}
+        {itemStringified.slice(indexOfValue + search.length)}
       </span>
     </>
   );
@@ -46,7 +48,7 @@ function typeaheadStateReducer(state, changes) {
       return {
         ...changes,
         // if onBlur and inputValue is empty, keep it empty, dont revert to prev value
-        inputValue: !state.inputValue ? state.inputValue : changes.inputValue,
+        inputValue: state.inputValue,
       };
     default:
       return changes;
@@ -76,6 +78,7 @@ const Typeahead = React.forwardRef(
       totalItems,
       onChangePage,
       itemKey,
+      clearable,
       ...props
     },
     passedRef
@@ -90,22 +93,33 @@ const Typeahead = React.forwardRef(
     const items = Array.isArray(itemsFromProps) ? itemsFromProps : [];
     const getKey = getItemKey(itemKey);
 
+    const [isFocused, setFocus] = useState(false);
+    const [isMenuOpen, setOpenMenu] = useState(false);
+    const [search, setSearch] = useState(null);
+    const prevsearch = usePrevious(search);
+    const instance = useRef({}).current;
+
     const itemToString = item => (item ? itemToStringFromProps(item) : '');
     const itemToValue = item =>
       item ? getItemKey(itemToValueFromProps)(item) || itemToString(item) : '';
     const itemFromValue = val => items.find(item => itemToValue(item) === val);
-    const selectedItem = useMemo(() => itemFromValue(value) || '', [value]);
+    const selectedItem = useMemo(
+      () =>
+        value === instance.value && instance.selectedItem
+          ? instance.selectedItem
+          : itemFromValue(value) || '',
+      [value, items]
+    );
+    instance.value = value;
+    instance.selectedItem = selectedItem;
 
-    const [isFocused, setFocus] = useState(false);
-    const [isMenuOpen, setOpenMenu] = useState(false);
-    const [tempValue, setTempValue] = useState(() => itemToString(selectedItem));
-    const prevTempValue = usePrevious(tempValue);
+    const selectedString = itemToString(selectedItem);
 
-    const valueToString = isFocused || isMenuOpen ? tempValue : itemToString(selectedItem);
+    const valueToString = (isFocused || isMenuOpen) && search !== null ? search : selectedString;
 
     const hasPagination = typeof onChangePage === 'function';
     const hasNotTotalYet = typeof totalItems !== 'number';
-    const nextValueIsDiff = !(tempValue || '').includes(prevTempValue);
+    const nextValueIsDiff = !(search || '').includes(prevsearch);
     const isPaginated =
       hasPagination && (hasNotTotalYet || items.length < totalItems || nextValueIsDiff);
 
@@ -115,16 +129,16 @@ const Typeahead = React.forwardRef(
           ? items
           : items.filter(
               item =>
-                !tempValue ||
+                !search ||
                 itemToString(item)
                   .toLowerCase()
-                  .includes(tempValue.toLowerCase())
+                  .includes(search.toLowerCase())
             ),
-      [items, tempValue]
+      [items, search]
     );
 
-    function changePage(page, search = tempValue) {
-      if (typeof onChangePage === 'function') onChangePage(page, search || '');
+    function changePage(page, s = search) {
+      if (typeof onChangePage === 'function') onChangePage(page, s || '');
     }
 
     const handleLoadMore = openMenu => e => {
@@ -140,9 +154,9 @@ const Typeahead = React.forwardRef(
       if (isPaginated) changePage(1);
     }
 
-    useEffect(triggerChangeFirstPage, [tempValue]);
+    useEffect(triggerChangeFirstPage, [search]);
 
-    useEffect(() => setTempValue(itemToString(selectedItem)), [value]);
+    useEffect(() => setSearch(null), [isMenuOpen, value]);
 
     return (
       <Downshift
@@ -150,9 +164,6 @@ const Typeahead = React.forwardRef(
         itemToString={item => (item ? itemToString(item) : '')}
         defaultHighlightedIndex={0}
         stateReducer={typeaheadStateReducer}
-        onInputValueChange={val => {
-          if (!val && !!value && !isFocused) onChange(undefined);
-        }}
         onStateChange={changes => {
           if (changes.isOpen) {
             setOpenMenu(true);
@@ -163,9 +174,9 @@ const Typeahead = React.forwardRef(
         }}
         onSelect={item => {
           const newValue = itemToValue(item);
-          setTempValue(itemToString(item));
+          setSearch(null);
           if (newValue !== value) {
-            onChange(newValue);
+            onChange(newValue, item);
           }
         }}
       >
@@ -178,11 +189,12 @@ const Typeahead = React.forwardRef(
           highlightedIndex,
           openMenu,
           selectItem,
+          toggleMenu,
+          closeMenu,
         }) => (
           <FormElement {...getRootProps({ ...props, id })}>
             <TextField
               {...getInputProps({
-                clearable: true,
                 ...props,
                 ref: inputRef,
                 onFocus(e) {
@@ -190,8 +202,9 @@ const Typeahead = React.forwardRef(
                   setFocus(true);
                   openMenu();
                 },
-                onInput(e) {
-                  setTempValue(e.target.value);
+                onChange(e) {
+                  if (e.target.value === selectedString) setSearch(null);
+                  else setSearch(e.target.value);
                 },
                 onBlur(e) {
                   if (typeof props.onBlur === 'function') props.onBlur(e);
@@ -204,7 +217,19 @@ const Typeahead = React.forwardRef(
               {input => (
                 <>
                   {input}
-                  {!inputValue && <CaretDown onClick={openMenu} />}
+                  {isOpen && !!inputValue && clearable && (
+                    <RemoveIcon
+                      className="Typeahead__clear"
+                      onClick={() => {
+                        onChange(undefined, {});
+                        closeMenu();
+                      }}
+                    />
+                  )}
+                  <CaretDown
+                    onClick={toggleMenu}
+                    className={bemClass('Typeahead__caret', { close: isOpen })}
+                  />
                 </>
               )}
             </TextField>
@@ -225,7 +250,7 @@ const Typeahead = React.forwardRef(
                     id={`${id}__list`}
                     items={itemsFiltered}
                     borderless
-                    fields={renderFields(inputValue, itemToString, fields)}
+                    fields={renderFields(search, itemToString, fields)}
                     hover={(item, index) => highlightedIndex === index}
                     // active={item => itemToValue(item) === value}
                     renderItem={(render, item, _, index) => (
@@ -306,7 +331,7 @@ Typeahead.propTypes = {
   onBlur: PropTypes.func,
   loading: PropTypes.bool,
   onOpen: PropTypes.func,
-
+  clearable: PropTypes.bool,
   pageSize: PropTypes.number,
   totalItems: PropTypes.number,
   onChangePage: PropTypes.func,
