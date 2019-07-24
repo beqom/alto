@@ -291,7 +291,7 @@ Typeahead.defaultProps = {
 };
 
 Typeahead.propTypes = {
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.string]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   onChange: PropTypes.func,
   id: PropTypes.string,
   itemToString: PropTypes.func,
