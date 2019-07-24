@@ -60,6 +60,7 @@
   flex: 1;
   flex-basis: auto;
   min-width: 0;
+  line-height: 1;
 
   &::placeholder {
     color: $coolgrey-40;
