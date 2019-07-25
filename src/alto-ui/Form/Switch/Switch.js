@@ -28,6 +28,12 @@ function Switch({
   );
   return (
     <>
+      <label className={bemClass('Switch', { small }, className)} htmlFor={id}>
+        {right && labelElt}
+        <div className={bemClass('Switch__element', { small, checked, disabled })} />
+        {left && labelElt}
+      </label>
+
       <input
         {...props}
         className="Switch__input"
@@ -37,12 +43,6 @@ function Switch({
         type="checkbox"
         onChange={e => onChange(e.target.checked)}
       />
-
-      <label className={bemClass('Switch', { small }, className)} htmlFor={id}>
-        {right && labelElt}
-        <div className={bemClass('Switch__element', { small, checked, disabled })} />
-        {left && labelElt}
-      </label>
     </>
   );
 }
