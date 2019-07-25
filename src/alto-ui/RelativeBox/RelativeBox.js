@@ -111,7 +111,7 @@ function RelativeBox(props) {
     } else {
       updateStyle();
     }
-  });
+  }, [ref.current]);
 
   const { props: otherProps, className } = getProps(props);
 

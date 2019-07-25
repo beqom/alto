@@ -20,12 +20,12 @@
   align-items: center;
 
   > * {
-    &:not(.textfield__input):not(:first-child) {
+    & + .textfield__input {
       margin-left: 0.625rem;
     }
 
-    &:not(.textfield__input):not(:last-child) {
-      margin-right: 0.625rem;
+    .textfield__input + & {
+      margin-left: 0.625rem;
     }
   }
 
@@ -58,7 +58,9 @@
   @extend %text-ellipsis;
 
   flex: 1;
+  flex-basis: auto;
   min-width: 0;
+  line-height: 1;
 
   &::placeholder {
     color: $coolgrey-40;

@@ -58,7 +58,7 @@
   }
 
   &--checked::before {
-    transform: translateX(calc(1em - 4px));
+    transform: translateX(1em) translateX(-4px);
   }
 }
 

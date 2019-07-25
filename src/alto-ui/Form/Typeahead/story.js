@@ -34,7 +34,18 @@ storiesOf('Form/Typeahead', module)
             onChange={setValue}
             value={value}
             loading={boolean('loading', false)}
+            clearable={boolean('clearable', true)}
           />
+        </div>
+      );
+    })
+  )
+  .add('small result', () =>
+    React.createElement(() => {
+      const [value, setValue] = useState('true');
+      return (
+        <div style={{ width: 150 }}>
+          <Typeahead items={['true', 'false']} onChange={setValue} value={value} />
         </div>
       );
     })
