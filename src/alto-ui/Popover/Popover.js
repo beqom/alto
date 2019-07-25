@@ -33,15 +33,17 @@ class Popover extends React.Component {
       openFocusTargetId,
       closeFocusTargetId,
       open,
-      target,
       includeTarget,
       inert,
+      target,
       ...relativeBoxProps
     } = this.props;
 
+    const trigger = this.renderTrigger();
+
     return (
       <Fragment>
-        {this.renderTrigger()}
+        {trigger}
         <Overlay
           onClose={onClose}
           openFocusTargetId={openFocusTargetId}
@@ -54,7 +56,8 @@ class Popover extends React.Component {
             <RelativeBox
               className={bemClass('Popover', {}, className)}
               margin={6.4}
-              targetRef={this.targetRef}
+              targetRef={trigger ? this.targetRef : undefined}
+              target={trigger ? undefined : target}
               {...relativeBoxProps}
             >
               {children}

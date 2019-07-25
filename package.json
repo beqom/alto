@@ -87,6 +87,7 @@
     "@webcomponents/custom-elements": "^1.0.0",
     "bigeval": "^3.1.0",
     "classnames": "^2.2.5",
+    "downshift": "^3.2.10",
     "focus-trap-react": "^3.1.2",
     "lodash.compose": "^2.4.1",
     "lodash.debounce": "^4.0.8",
