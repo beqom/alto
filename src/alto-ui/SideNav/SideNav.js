@@ -31,26 +31,45 @@ class SideNav extends React.PureComponent {
   }
 
   renderItemContent(item) {
+    const active = item.active || this.props.currentUrl.indexOf(item.url) === 0;
+    const itemContent = (
+      <div className="sidenav__section-item">
+        {item.icon && (
+          <div className="sidenav__section-item-icon">
+            <item.icon outline badged={item.badged} />
+          </div>
+        )}
+        {this.props.collapsed ? (
+          <VisuallyHidden> {item.title} </VisuallyHidden>
+        ) : (
+          <div className="sidenav__section-item-title">{item.title}</div>
+        )}
+      </div>
+    );
+
+    if (!item.url && item.onClick) {
+      return (
+        <Button
+          flat
+          id={`${this.props.id}__${item.id}__link`}
+          className={bemClass('sidenav__section-button', { active })}
+          onClick={item.onClick}
+          active={item.active}
+        >
+          {itemContent}
+        </Button>
+      );
+    }
+
     return (
       <Link
         id={`${this.props.id}__${item.id}__link`}
         href={item.url}
         className={bemClass('sidenav__route-link', {
-          active: this.props.currentUrl.indexOf(item.url) === 0,
+          active,
         })}
       >
-        <div className="sidenav__section-item">
-          {item.icon && (
-            <div className="sidenav__section-item-icon">
-              <item.icon outline />
-            </div>
-          )}
-          {this.props.collapsed ? (
-            <VisuallyHidden> {item.title} </VisuallyHidden>
-          ) : (
-            <div className="sidenav__section-item-title">{item.title}</div>
-          )}
-        </div>
+        {itemContent}
       </Link>
     );
   }
@@ -66,9 +85,9 @@ class SideNav extends React.PureComponent {
     return this.renderItemContent(item);
   }
 
-  renderNavItems() {
+  renderNavItems(items) {
     const { collapsed } = this.props;
-    return this.props.items.map(item => (
+    return (items || []).map(item => (
       <li
         id={`${this.props.id}__${item.id}`}
         className={bemClass('sidenav__section', { collapsed })}
@@ -95,11 +114,14 @@ class SideNav extends React.PureComponent {
       collapseButtonLabel,
       collapsed,
       onToggle,
+      secondaryItems,
+      items,
     } = this.props;
     const labels = {
       ...DEFAULT_LABELS,
       ...this.props.labels,
     };
+
     return (
       <SideNavContext.Provider value={{ open, collapsed }}>
         <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
@@ -116,31 +138,44 @@ class SideNav extends React.PureComponent {
               {logo}
             </a>
           </header>
-          <ul className="sidenav__sections-list">{this.renderNavItems()}</ul>
-          <div
-            className={bemClass('sidenav__sections-list-narrow-container', {
-              open,
-            })}
-            aria-hidden={!open}
-          >
-            <ul className={bemClass('sidenav__sections-list-narrow', { open })} aria-hidden={!open}>
-              {this.renderNavItems()}
-            </ul>
-          </div>
-          {!!children && (
-            <div className="sidenav__content">
-              {typeof children === 'function' ? children(open) : children}
+          <div className="sidenav__sections-container">
+            <ul className="sidenav__sections-list">{this.renderNavItems(items)}</ul>
+
+            {!!children && (
+              <div className="sidenav__content">
+                {typeof children === 'function' ? children(open) : children}
+              </div>
+            )}
+            <div className="sidenav__sections-list sidenav__sections-list--secondary">
+              {this.renderNavItems(secondaryItems)}
             </div>
-          )}
-          <Button
-            id={`${id}__menu-button`}
-            flat
-            white={dark}
-            onClick={this.handleToggleOpen}
-            className="sidenav__menu-button"
-          >
-            {open ? closeMenuButtonLabel : openMenuButtonLabel}
-          </Button>
+          </div>
+          <div className="sidenav__narrow">
+            <div
+              className={bemClass('sidenav__sections-list-narrow-container', {
+                open,
+              })}
+              aria-hidden={!open}
+            >
+              <ul
+                className={bemClass('sidenav__sections-list-narrow', { open })}
+                aria-hidden={!open}
+              >
+                {this.renderNavItems(items)}
+                {this.renderNavItems(secondaryItems)}
+              </ul>
+            </div>
+            <Button
+              id={`${id}__menu-button`}
+              flat
+              white={dark}
+              onClick={this.handleToggleOpen}
+              className="sidenav__menu-button"
+            >
+              {open ? closeMenuButtonLabel : openMenuButtonLabel}
+            </Button>
+          </div>
+
           {onToggle && (
             <div
               className={bemClass(
@@ -195,8 +230,22 @@ SideNav.propTypes = {
         .isRequired,
       title: PropTypes.string.isRequired,
       icon: PropTypes.func.isRequired,
+      onClick: PropTypes.func,
+      active: PropTypes.bool,
+      badged: PropTypes.bool
     })
   ).isRequired,
+  secondaryItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.oneOfType([PropTypes.string.isRequired, PropTypes.number.isRequired])
+        .isRequired,
+      title: PropTypes.string.isRequired,
+      icon: PropTypes.func.isRequired,
+      onClick: PropTypes.func,
+      active: PropTypes.bool,
+      badged: PropTypes.bool,
+    })
+  ),
   collapsed: PropTypes.bool,
   onToggle: PropTypes.func,
   labels: PropTypes.object,
