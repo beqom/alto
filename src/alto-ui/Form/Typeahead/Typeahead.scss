@@ -1,0 +1,71 @@
+@import '../../scss/inc';
+
+.Typeahead__menu {
+  max-height: 300px;
+  overflow: auto;
+  padding: 0;
+}
+
+.Typeahead__matched {
+  font-weight: $font-weight-bold;
+}
+
+.Typeahead__item {
+  cursor: pointer;
+  display: flex;
+  padding: 0 0.5rem;
+  align-items: center;
+
+  &:hover {
+    background-color: $blue-10;
+  }
+}
+
+.Typeahead__input {
+  display: flex;
+}
+
+.Typeahead__custom-item {
+  padding: $spacing-x-small ($spacing-x-small + $spacing-small);
+  color: $coolgrey-40;
+}
+
+.Typeahead__item-button {
+  display: flex;
+  padding: $spacing-x-small, $spacing-small;
+  align-items: center;
+}
+
+.Typeahead__custum-item--loading {
+  display: flex;
+  align-items: center;
+}
+
+.Typeahead__loading-spinner {
+  margin-right: $spacing-x-small;
+}
+
+.Typeahead__load-more {
+  margin: 0 $spacing-small $spacing-x-small;
+}
+
+.Typeahead__clear {
+  margin-right: $spacing-x-small;
+  padding-right: $spacing-x-small;
+}
+
+.Typeahead__caret {
+  transition: color $transition;
+  &--close {
+    transform: rotate(180deg);
+  }
+}
+
+.Typeahead__clear,
+.Typeahead__caret {
+  color: $coolgrey-40;
+
+  &:hover {
+    color: $coolgrey-80;
+  }
+}

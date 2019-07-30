@@ -71,3 +71,4 @@ require('./Switch/story');
 require('./TextArea/story');
 require('./TextField/story');
 require('./Fieldset/story');
+require('./Typeahead/story');
