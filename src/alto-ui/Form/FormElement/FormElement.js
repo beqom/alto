@@ -6,10 +6,10 @@ import { bemClass } from '../../helpers/bem';
 import Label from '../Label';
 import './FormElement.scss';
 
-const FormElement = props => {
+const FormElement = React.forwardRef((props, ref) => {
   const { error, disabled, success, id, children, readOnly, style } = props;
   return (
-    <div className={classnames('form-element', props.className)} style={style}>
+    <div ref={ref} className={classnames('form-element', props.className)} style={style}>
       <Label
         tag={props.useLabelledby ? 'div' : 'label'}
         hidden={props.hideLabel}
@@ -29,7 +29,9 @@ const FormElement = props => {
       )}
     </div>
   );
-};
+});
+
+FormElement.displayName = 'FormElement';
 
 FormElement.propTypes = {
   helpText: PropTypes.any,
@@ -41,7 +43,7 @@ FormElement.propTypes = {
   success: PropTypes.bool,
   readOnly: PropTypes.bool,
   hideLabel: PropTypes.bool,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   style: PropTypes.object,
   useLabelledby: PropTypes.bool,
 };

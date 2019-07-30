@@ -1,6 +1,6 @@
 {
   "name": "@beqom/alto-ui",
-  "version": "0.13.25",
+  "version": "0.13.26",
   "main": "index.js",
   "repository": "https://github.com/beqom/alto",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com>",
@@ -87,6 +87,7 @@
     "@webcomponents/custom-elements": "^1.0.0",
     "bigeval": "^3.1.0",
     "classnames": "^2.2.5",
+    "downshift": "^3.2.10",
     "focus-trap-react": "^3.1.2",
     "lodash.compose": "^2.4.1",
     "lodash.debounce": "^4.0.8",
