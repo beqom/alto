@@ -40,12 +40,12 @@ const DatagridGroupedRow = ({
   groupingColumnWidth,
   ...datagridRowProps
 }) => {
-  const { id, rowKeyField, groupedByColumnKey, groupedSummaryColumnKeys, labels } = context;
+  const { id, rowKeyField, groupedByColumnKey, renderGroupCell, groupedSummaryColumnKeys, labels } = context;
 
   const key = rowKeyField(firstRowInGroup);
   const value = firstRowInGroup[groupedByColumnKey];
 
-  const row = columns
+  const row = renderGroupCell ? firstRowInGroup : columns
     .filter(col => groupedSummaryColumnKeys.includes(col.key))
     .reduce(
       (acc, col) => ({
@@ -61,7 +61,14 @@ const DatagridGroupedRow = ({
   const formatValue = getFormattedValue(context);
 
   return (
-    <DatagridRow {...datagridRowProps} row={row} header columns={columns} context={context}>
+    <DatagridRow
+      {...datagridRowProps}
+      render={(...args) => renderGroupCell(groupedByColumnKey, ...args)}
+      row={row}
+      header
+      columns={columns}
+      context={context}
+    >
       {cells =>
         children(
           <>
