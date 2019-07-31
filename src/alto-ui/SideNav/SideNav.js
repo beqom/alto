@@ -232,7 +232,7 @@ SideNav.propTypes = {
       icon: PropTypes.func.isRequired,
       onClick: PropTypes.func,
       active: PropTypes.bool,
-      badged: PropTypes.bool
+      badged: PropTypes.bool,
     })
   ).isRequired,
   secondaryItems: PropTypes.arrayOf(

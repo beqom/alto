@@ -194,6 +194,7 @@ storiesOf('SideNav', module)
                   id: 9,
                   title: 'Notifications',
                   icon: Bell,
+                  // eslint-disable-next-line no-alert
                   onClick: () => alert('On click event'),
                 },
               ]}
