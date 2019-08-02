@@ -15,39 +15,55 @@
   line-height: $line-height-input;
   height: $height-default;
   padding: 0 0.625rem;
-  display: block;
-  width: 100%;
+  display: flex;
   transition: all $transition;
+  align-items: center;
 
-  &::placeholder {
-    color: $coolgrey-20;
+  > * {
+    & + .textfield__input {
+      margin-left: 0.625rem;
+    }
+
+    .textfield__input + & {
+      margin-left: 0.625rem;
+    }
   }
 
-  &:hover:not(.textfield--frozen) {
+  &:hover:not(.textfield--readOnly):not(.textfield--disabled),
+  &--focus:not(.textfield--readOnly),
+  &--focus:hover:not(.textfield--readOnly) {
     border-color: $blue;
     box-shadow: 0 0 0 1px $blue;
   }
 
-  &:focus,
-  &:focus:hover {
-    border-color: $color-input-border;
-    box-shadow: $drop-shadow;
+  &--focus:not(.textfield--readOnly),
+  &--focus:hover:not(.textfield--readOnly) {
+    box-shadow: 0 0 0 1px $blue, $drop-shadow;
   }
 
-  &:disabled:not(.textfield--frozen) {
+  &--readOnly:hover {
+    cursor: default;
+  }
+
+  &--disabled {
     cursor: not-allowed;
     color: $coolgrey-40;
     background: $coolgrey-10;
     border-color: $coolgrey-20;
     box-shadow: none;
   }
+}
 
-  &[readonly] {
-    border: 0;
-    padding-left: 0;
-    padding-right: 0;
-    box-shadow: none;
-    background: transparent;
+.textfield__input {
+  @extend %text-ellipsis;
+
+  flex: 1;
+  flex-basis: auto;
+  min-width: 0;
+  line-height: 1;
+
+  &::placeholder {
+    color: $coolgrey-40;
   }
 }
 
@@ -82,12 +98,15 @@
 .textfield--area {
   height: 8em;
   resize: none;
+  display: block;
+  width: calc(100% - #{$spacing-small * 2});
+  padding: 0.625rem;
+
+  &::placeholder {
+    color: $coolgrey-40;
+  }
 }
 
 .textfield--right {
   text-align: right;
-}
-
-.textfield__input {
-  flex: 1;
 }
