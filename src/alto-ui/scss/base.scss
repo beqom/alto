@@ -12,3 +12,6 @@ a,
 button {
   @extend %focusable;
 }
+
+input::-ms-clear {  display: none; width : 0; height: 0; }
+input::-ms-reveal {  display: none; width : 0; height: 0; }
