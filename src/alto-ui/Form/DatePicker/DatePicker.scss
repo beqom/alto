@@ -1,5 +1,7 @@
 @import '../../scss/inc';
 
+$day-size: 36px;
+
 .DatePicker {
   width: 12rem;
 }
@@ -7,32 +9,50 @@
 .DayPicker__a11y-day-button {
   @extend %reset-button;
   color: inherit;
-  width: 2.2rem;
+  width: $day-size;
 }
 
-.DatePicker__month-form {
+.DatePicker__day-picker {
+  padding: 0;
+  border: 1px solid $coolgrey-20;
+}
+
+.DatePicker__header {
+  width: calc(#{$day-size * 7} + #{$spacing-small * 2});
+  padding: $spacing-small;
+  background-color: $coolgrey-15;
+  border-radius: $border-radius-default $border-radius-default 0 0;
+}
+
+.DatePicker__header-row {
   display: flex;
   flex: 1;
-  margin-bottom: $spacing-small;
+  margin-bottom: $spacing-x-small;
 }
 
-.DatePicker__month-select {
+.DatePicker__input-primary {
   flex: 1;
-  margin-right: $spacing-small;
+  margin-right: $spacing-x-small;
+  min-width: 0;
+}
+
+.DatePicker__am-pm-choice,
+.DatePicker__year-input {
+  width: 5.5rem;
 }
 
 .DatePicker__year-input {
-  width: 4.5rem;
   text-align: right;
+}
+
+.DatePicker__days {
+  padding: 0 $spacing-small $spacing-small;
 }
 
 .DatePicker__nav {
   display: flex;
   justify-content: space-between;
-  margin-bottom: $spacing-medium;
-  padding: $spacing-small 0;
-  border-top: 1px solid $coolgrey-20;
-  border-bottom: 1px solid $coolgrey-20;
+  padding-top: $spacing-x-small;
 }
 
 // react-day-picker overrides
@@ -47,7 +67,7 @@
 
 .DayPicker-Day {
   border-radius: 50%;
-  height: 2.2rem;
+  height: $day-size;
   padding: 0;
 
   &[aria-disabled='false']:hover {
