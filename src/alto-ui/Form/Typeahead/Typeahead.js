@@ -154,7 +154,9 @@ const Typeahead = React.forwardRef(
       if (isPaginated) changePage(1);
     }
 
-    useEffect(triggerChangeFirstPage, [search]);
+    useEffect(() => {
+      if (isFocused || isMenuOpen) triggerChangeFirstPage();
+    }, [search]);
 
     useEffect(() => setSearch(null), [isMenuOpen, value]);
 
