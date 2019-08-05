@@ -107,6 +107,7 @@ class Dropdown extends React.Component {
       icon: Icon,
       active,
       onClear,
+      disableChevron,
     } = this.props;
     const { open } = this.state;
     const triggerId = `${id}__trigger`;
@@ -144,7 +145,9 @@ class Dropdown extends React.Component {
           {(loading && !loadingItems) || (loadingItems && !open) ? (
             <Spinner className="Dropdown__trigger-spinner" small />
           ) : (
-            !clearable && (
+            !clearable &&
+            !disableChevron &&
+            !Icon && (
               <div className="Dropdown__icon-trigger">
                 <ChevronDown />
               </div>
@@ -236,6 +239,7 @@ class Dropdown extends React.Component {
       active,
       onClear,
       closeFocusTargetId,
+      disableChevron,
       ...popoverProps
     } = this.props;
 
@@ -302,6 +306,7 @@ Dropdown.propTypes = {
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
   white: PropTypes.bool,
+  disableChevron: PropTypes.string,
 };
 
 export default Dropdown;

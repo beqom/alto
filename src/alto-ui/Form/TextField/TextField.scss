@@ -12,7 +12,6 @@
   border-radius: $border-radius-default;
   border: 1px solid $color-input-border;
   font-weight: 400;
-  line-height: $line-height-input;
   height: $height-default;
   padding: 0 0.625rem;
   display: flex;
@@ -32,13 +31,14 @@
   &:hover:not(.textfield--readOnly):not(.textfield--disabled),
   &--focus:not(.textfield--readOnly),
   &--focus:hover:not(.textfield--readOnly) {
-    border-color: $blue;
-    box-shadow: 0 0 0 1px $blue;
+    border-color: $blue-40;
+    box-shadow: 0 0 0 1px $blue-40;
   }
 
   &--focus:not(.textfield--readOnly),
   &--focus:hover:not(.textfield--readOnly) {
-    box-shadow: 0 0 0 1px $blue, $drop-shadow;
+    border-color: $blue;
+    box-shadow: 0 0 0 1px $blue;
   }
 
   &--readOnly:hover {
@@ -60,7 +60,7 @@
   flex: 1;
   flex-basis: 0;
   min-width: 0;
-  line-height: 1;
+  line-height: $line-height-input;
 
   &::placeholder {
     color: $coolgrey-40;
@@ -69,17 +69,31 @@
 
 .textfield--success {
   border-color: $green;
-  &:focus {
+
+  &:hover {
+    border-color: $green-40;
+    box-shadow: 0 0 0 1px $green-40;
+  }
+
+  &:focus,
+  &:focus:hover {
     border-color: $green;
-    box-shadow: 0 0 0 3px $green-20;
+    box-shadow: 0 0 0 1px $green;
   }
 }
 
 .textfield--error {
   border-color: $red;
-  &:focus {
+
+  &:hover {
+    border-color: $red-40;
+    box-shadow: 0 0 0 1px $red-40;
+  }
+
+  &:focus,
+  &:focus:hover {
     border-color: $red;
-    box-shadow: 0 0 0 3px $red-20;
+    box-shadow: 0 0 0 1px $red;
   }
 }
 
