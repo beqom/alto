@@ -60,6 +60,7 @@ function loadStories() {
   require('../src/alto-ui/Badge/story');
   require('../src/alto-ui/Breadcrumb/story');
   require('../src/alto-ui/Button/story');
+  require('../src/alto-ui/ButtonGroup/story');
   require('../src/alto-ui/Card/story');
   require('../src/alto-ui/CloseButton/story');
   require('../src/alto-ui/ContentEditable/story');
