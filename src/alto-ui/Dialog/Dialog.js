@@ -37,6 +37,7 @@ const Dialog = props => {
     >
       {open && (
         <div
+          id={id}
           className={classnames('Dialog', className)}
           role="dialog"
           aria-modal="true"
