@@ -28,6 +28,7 @@
   flex: 1 1 0;
   background-color: $white;
   min-height: 0;
+  -ms-overflow-style: scrollbar;
 }
 
 .Datagrid__head {
