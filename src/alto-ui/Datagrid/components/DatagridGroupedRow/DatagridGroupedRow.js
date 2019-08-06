@@ -52,17 +52,18 @@ const DatagridGroupedRow = ({
   const key = rowKeyField(firstRowInGroup);
   const value = firstRowInGroup[groupedByColumnKey];
 
-  const row = renderGroupCell
-    ? firstRowInGroup
-    : columns
-        .filter(col => groupedSummaryColumnKeys.includes(col.key))
-        .reduce(
-          (acc, col) => ({
-            ...acc,
-            [col.key]: getGroupColumnSummary(col, subRows, labels),
-          }),
-          {}
-        );
+  const row =
+    typeof renderGroupCell === 'function'
+      ? firstRowInGroup
+      : columns
+          .filter(col => groupedSummaryColumnKeys.includes(col.key))
+          .reduce(
+            (acc, col) => ({
+              ...acc,
+              [col.key]: getGroupColumnSummary(col, subRows, labels),
+            }),
+            {}
+          );
 
   const modifiers = getModifiers(context);
   const style = { width: groupingColumnWidth, maxWidth: groupingColumnWidth };
@@ -73,7 +74,9 @@ const DatagridGroupedRow = ({
     <DatagridRow
       {...datagridRowProps}
       render={
-        renderGroupCell ? (...args) => renderGroupCell(groupedByColumnKey, ...args) : undefined
+        typeof renderGroupCell === 'function'
+          ? (...args) => renderGroupCell(groupedByColumnKey, ...args)
+          : undefined
       }
       row={row}
       header
