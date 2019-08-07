@@ -15,6 +15,7 @@ class DatagridCellInput extends React.Component {
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleStartEditing = this.handleStartEditing.bind(this);
+    this.handleChangeFromOverlay = this.handleChangeFromOverlay.bind(this);
 
     this.inputRef = React.createRef();
   }
@@ -103,6 +104,11 @@ class DatagridCellInput extends React.Component {
 
   handleBlur() {
     this.props.onStopEditing(this.props.value);
+  }
+
+  handleChangeFromOverlay(value) {
+    this.props.onChange(value);
+    this.props.onStopEditing(value);
   }
 
   handleStartEditing() {
