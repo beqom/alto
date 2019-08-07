@@ -306,7 +306,7 @@ Dropdown.propTypes = {
   openFocusTargetId: PropTypes.string,
   closeFocusTargetId: PropTypes.string,
   white: PropTypes.bool,
-  disableChevron: PropTypes.string,
+  disableChevron: PropTypes.bool,
 };
 
 export default Dropdown;
