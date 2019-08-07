@@ -126,6 +126,7 @@ class DatagridCell extends React.Component {
       editable,
       editing: editing || ['boolean', 'list', 'select'].includes(type),
       edited,
+      focus: editing,
       disabled,
       header,
       summary,
