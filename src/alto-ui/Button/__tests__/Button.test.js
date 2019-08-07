@@ -27,7 +27,7 @@ describe('<Button />', () => {
       'danger',
       'success',
       'white',
-      'large',
+      'medium',
       'small',
       'active',
       'block',

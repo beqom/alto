@@ -135,6 +135,7 @@ $coolgrey-50: #8398a8 !default;
 $coolgrey-40: #a3b5c6 !default;
 $coolgrey-30: #c2d0de !default;
 $coolgrey-20: #e0e9f1 !default;
+$coolgrey-15: #dfe4e9 !default;
 $coolgrey-10: #f8f9fb !default;
 
 $grey-90: #242424 !default;
@@ -206,10 +207,10 @@ $color-row-header-bkgd: $white !default;
 
 $font-size-root: 16px !default;
 
-$font-size-xx-small: 0.5rem !default; // 8px
 $font-size-x-small: 0.75rem !default; // 12px
 $font-size-small: 0.875rem !default; // 14px
 $font-size-medium: 1rem !default; // 16px
+$font-size-default: 1rem !default; // 16px
 $font-size-large: 1.125rem !default; // 18px
 $font-size-x-large: 1.5rem !default; // 24px
 $font-size-xx-large: 2rem !default; // 32x
@@ -304,9 +305,15 @@ $line-height-button-large: 2.875rem !default;
 // ===================================
 // Height
 
-$height-small: 1.5rem !default;
-$height-default: 1.75rem !default;
-$height-large: 2rem !default;
+$height-x-small: 1.375rem !default; // 22px
+$height-small: 1.5rem !default; // 22px
+$height-medium: 1.75rem !default; // 28px
+$height-default: 2rem !default; // 32px
+
+$padding-default: 0.5rem; // 8px
+
+$height-large: 2.25rem !default; // 36px <--- TO KILL
+
 $input-padding: 0.625rem !default;
 
 $height-datagrid-compact: 1.75rem !default; // 28px
@@ -370,4 +377,4 @@ $color-input-border: $coolgrey-30 !default;
 $color-input-border-disabled: transparent !default;
 
 // shadow
-$drop-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+$drop-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);

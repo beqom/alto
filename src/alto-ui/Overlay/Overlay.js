@@ -59,7 +59,10 @@ class Overlay extends React.PureComponent {
   contains(node) {
     const { include } = this.props;
     if (this.contentRef.current && this.contentRef.current.contains(node)) return true;
-    if (include && include.current && include.current.contains(node)) return true;
+    if (include) {
+      const elt = include instanceof Element ? include : include.current;
+      if (elt && elt.contains(node)) return true;
+    }
     return false;
   }
 

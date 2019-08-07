@@ -39,8 +39,9 @@ const modifierNames = [
   'danger',
   'success',
   'white',
-  'large',
+  'medium',
   'small',
+  'xsmall',
   'active',
   'block',
   'disabled',
@@ -95,6 +96,9 @@ storiesOf('Button', module)
         <Button {...modifiers} danger>
           Danger
         </Button>
+        <Button {...modifiers} primary>
+          primary
+        </Button>
       </SimpleWrapper>
     );
   })
@@ -116,16 +120,19 @@ storiesOf('Button', module)
     );
   })
   .addWithJSX('sizes', () => {
-    const modifiers = getModifiers('small', 'large');
+    const modifiers = getModifiers('small', 'medium', 'xsmall');
 
     return (
       <SimpleWrapper white={modifiers.white}>
-        <Button {...modifiers} small>
-          Small
+        <Button {...modifiers}>default</Button>
+        <Button {...modifiers} medium>
+          medium
         </Button>
-        <Button {...modifiers}>Default</Button>
-        <Button {...modifiers} large>
-          Large
+        <Button {...modifiers} small>
+          small
+        </Button>
+        <Button {...modifiers} xsmall>
+          xsmall
         </Button>
       </SimpleWrapper>
     );
@@ -154,10 +161,13 @@ storiesOf('Button', module)
           <BarsIcon left />
         </Button>
         <Button {...modifiers} nowrap>
-          Next<ArrowRightIcon right />
+          Next
+          <ArrowRightIcon right />
         </Button>
         <Button {...modifiers} nowrap>
-          <ObjectsIcon left />Select Objects<ChevronDownIcon right />
+          <ObjectsIcon left />
+          Select Objects
+          <ChevronDownIcon right />
         </Button>
       </SimpleWrapper>
     );
@@ -169,13 +179,17 @@ storiesOf('Button', module)
     return (
       <SimpleWrapper white={modifiers.white}>
         <Button {...modifiers}>
-          <BarsIcon left />Menu
+          <BarsIcon left />
+          Menu
         </Button>
         <Button {...modifiers}>
-          Next<ArrowRightIcon right />
+          Next
+          <ArrowRightIcon right />
         </Button>
         <Button {...modifiers}>
-          <ObjectsIcon left />Select Objects<ChevronDownIcon right />
+          <ObjectsIcon left />
+          Select Objects
+          <ChevronDownIcon right />
         </Button>
         <Button {...modifiers}>
           <ObjectsIcon />
@@ -187,13 +201,19 @@ storiesOf('Button', module)
           <ArrowRightIcon />
         </Button>
         <Button small {...modifiers}>
-          <ObjectsIcon left />Icons<ChevronDownIcon right />
+          <ObjectsIcon left />
+          Icons
+          <ChevronDownIcon right />
         </Button>
         <Button {...modifiers}>
-          <ObjectsIcon left />Icons<ChevronDownIcon right />
+          <ObjectsIcon left />
+          Icons
+          <ChevronDownIcon right />
         </Button>
         <Button large {...modifiers}>
-          <ObjectsIcon left />Icons<ChevronDownIcon right />
+          <ObjectsIcon left />
+          Icons
+          <ChevronDownIcon right />
         </Button>
       </SimpleWrapper>
     );

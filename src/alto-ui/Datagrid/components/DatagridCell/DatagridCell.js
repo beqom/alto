@@ -124,7 +124,7 @@ class DatagridCell extends React.Component {
       [type]: true,
       formula: !!column.formula,
       editable,
-      editing,
+      editing: editing || ['boolean', 'list', 'select'].includes(type),
       edited,
       disabled,
       header,
