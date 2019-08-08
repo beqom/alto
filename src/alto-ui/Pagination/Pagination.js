@@ -96,6 +96,7 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
       <FormRow className="Pagination__options-row">
         {labels.elementsPerPage}
         <InputNumber
+          id={`Pagination__options-${id}-page-size`}
           value={optionsPageSize}
           onChange={(e, value) => setPaginationOptions(value, optionsGoToPage)}
           onBlur={validate}
@@ -109,6 +110,7 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
         {labels.goToPageLabel}
         <InputNumber
           small
+          id={`Pagination__options-${id}-goto-page`}
           value={optionsGoToPage}
           className="Pagination__options-goto-page"
           min={1}
