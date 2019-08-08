@@ -30,7 +30,7 @@ const getHandleChange = (items, onChange) => itemIndex => field => value => {
   if (typeof onChange === 'function') {
     const item = setIn(items[itemIndex], field.key, value);
     const newItems = items.map((x, i) => (i === itemIndex ? item : x));
-    onChange(newItems);
+    onChange(newItems, item);
   }
 };
 
