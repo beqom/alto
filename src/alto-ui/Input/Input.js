@@ -104,8 +104,9 @@ const Input = React.forwardRef((props, ref) => {
     case 'float':
       return <InputNumber {...otherProps} {...sharedProps} />;
     case 'date':
-    case 'datetime':
       return <DatePicker {...otherProps} {...sharedProps} />;
+    case 'datetime':
+      return <DatePicker {...otherProps} {...sharedProps} datetime />;
     case 'list':
     case 'dropdown':
     case 'select':

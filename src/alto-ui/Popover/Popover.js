@@ -49,7 +49,9 @@ class Popover extends React.Component {
           openFocusTargetId={openFocusTargetId}
           closeFocusTargetId={closeFocusTargetId}
           open={open}
-          include={includeTarget ? this.props.targetRef || this.targetRef : undefined}
+          include={
+            includeTarget ? this.props.target || this.props.targetRef || this.targetRef : undefined
+          }
           inert={inert}
         >
           {open && (

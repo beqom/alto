@@ -1,10 +1,13 @@
 @import '../../../scss/inc';
 
 .DatagridCellInput {
-  display: none;
   margin: 0;
   flex: 1;
   min-width: 0;
+
+  &:not(.DatagridCellInput--editing) {
+    display: none;
+  }
 
   // TODO Refactor this to not nest
   .Typeahead__input {
@@ -52,19 +55,19 @@
   }
 
   &--editing {
-    display: block;
-    border-color: $blue-60;
-    box-shadow: 0 0 0 1px $blue;
     border-radius: $border-radius-default;
     font-size: $font-size-small;
     width: 100%;
   }
 
+  &--focus {
+    border-color: $blue-60;
+    box-shadow: 0 0 0 1px $blue;
+  }
+
   &--list,
   &--select,
   &--boolean {
-    display: block;
-
     &.DatagridCellInput--edited .Select {
       font-weight: bold;
     }

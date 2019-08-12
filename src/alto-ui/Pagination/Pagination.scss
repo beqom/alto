@@ -14,7 +14,7 @@
   line-height: $font-size-medium;
   font-weight: $font-weight-regular;
   outline: 0;
-  height: $font-size-medium;
+  height: $font-size-x-large;
   &:active {
     box-shadow: none;
   }
@@ -23,6 +23,10 @@
 .Pagination__range-items {
   font-weight: $font-weight-semibold;
   margin-right: 3px;
+}
+
+.Pagination__range-total {
+  text-transform: lowercase;
 }
 
 .Pagination__options {
@@ -56,10 +60,9 @@
   display: flex;
   font: inherit;
   justify-content: center;
-  margin: 0 $spacing-x-small;
   outline: 0;
   min-width: $spacing-large;
-  min-height: $spacing-large;
+  height: $spacing-large;
   transition: color $transition, background-color $transition;
 
   &:hover {

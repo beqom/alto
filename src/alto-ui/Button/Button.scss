@@ -1,141 +1,116 @@
 @import '../scss/_inc';
 
-$color-button-base: $blue-60;
-$color-button-accent: $blue-80;
-
-$color-white-button-focus: $blue-30; // Focus ring for white buttons
+$color-disabled: $coolgrey-30;
 
 // ===================================
 // Mixins
 
 // Solid buttons
-@mixin button--solid(
-  $color-default,
-  $color-hover,
-  $color-focus,
-  $color-active,
-  $color-font: white
-) {
+@mixin button--solid($color-default, $color-hover, $color-active) {
   background: $color-default;
-  color: $color-font;
+  color: $white;
   border-color: $color-default;
 
-  &:focus {
-    box-shadow: 0 0 0 3px $color-focus;
-  }
-
-  &:hover,
-  &.button--active {
+  &:hover {
     background: $color-hover;
     border-color: $color-hover;
   }
 
-  &:active {
-    box-shadow: 0 0 0 3px $color-focus, inset 0 2px 0 $color-active;
+  &:active,
+  &--active {
+    background: $color-active;
+    border-color: $color-active;
   }
 
   &:disabled,
-  &.button--disabled {
-    background: $coolgrey-30;
-    border-color: $coolgrey-30;
+  &--disabled {
+    background: $color-disabled;
+    border-color: $color-disabled;
   }
 }
 
 // Outline buttons
-@mixin button--outline(
-  $color-default,
-  $color-hover,
-  $color-hover-dark,
-  $color-focus,
-  $color-active
-) {
-  background: transparent;
+@mixin button--outline($color-default, $color-hover, $color-active) {
+  &,
+  &:hover,
+  &:active,
+  &:disabled,
+  &--disabled,
+  &--active {
+    background: transparent;
+  }
+
   color: $color-default;
   border-color: $color-default;
 
-  &:focus {
-    box-shadow: 0 0 0 3px $color-focus;
+  &:hover {
+    border-color: $color-hover;
+    color: $color-hover;
   }
-  &:active {
-    background: transparent;
-    box-shadow: 0 0 0 3px $color-focus, inset 0 2px 0 $color-active;
+
+  &:active,
+  &--active {
+    border-color: $color-active;
+    color: $color-active;
   }
-  &:hover,
-  &.button--active {
-    background: $color-hover;
-    border-color: $color-hover-dark;
-    color: $color-hover-dark;
-  }
+
   &:disabled,
-  &.button--disabled {
-    background: transparent;
-    color: $coolgrey-30;
-    border-color: $coolgrey-30;
+  &--disabled {
+    color: $color-disabled;
+    border-color: $color-disabled;
+    background-color: transparent;
   }
 }
 
 // Flat Buttons
-@mixin button--flat(
-  $color-default,
-  $color-hover-text,
-  $color-focus,
-  $color-hover-bkgd,
-  $color-active-bkgd,
-  $color-active-text
-) {
+@mixin button--flat($color-default, $color-hover-text, $color-active-text) {
   color: $color-default;
 
   &,
   &:hover,
   &:active,
   &:disabled,
-  &.button--disabled,
-  &.button--active {
+  &--disabled,
+  &--active {
     background: transparent;
     border-color: transparent;
   }
 
-  &:focus {
-    box-shadow: 0 0 0 3px $color-focus;
-  }
-
-  &:hover,
-  &.button--active {
+  &:hover {
     color: $color-hover-text;
-    background: $color-hover-bkgd;
   }
-
-  &.button--active {
-    background: $color-active-bkgd;
+  &:active,
+  &--active {
     color: $color-active-text;
   }
 
   &:disabled,
-  &.button--disabled {
-    color: $coolgrey-30;
-    background: transparent;
+  &--disabled {
+    color: $color-disabled;
   }
 }
 
 .button {
-  @include button--solid($blue, $blue-80, $blue-30, $blue-90);
+  @include button--solid($blue, $blue-50, $blue-70);
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   font-weight: $font-weight-semibold;
-  font-size: $font-size-medium;
+  font-size: $font-size-default;
   font-family: $font-family-alt;
-  padding: 0 0.75rem;
-  height: $height-default; // Button height = 32px
-  line-height: $line-height-button;
-  border: none;
+  padding: 0 $padding-default;
+  border: 1px solid transparent;
   border-radius: $border-radius-default;
   text-decoration: none;
   text-align: center;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.02rem;
   cursor: pointer;
   transition: all $duration-quick $timing-function, padding 0s;
+  text-transform: uppercase;
+  line-height: 1;
+  height: $height-default;
+  white-space: nowrap;
 
   &:focus {
     outline: none;
@@ -151,55 +126,39 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
   }
 }
 
-.button--success {
-  @include button--solid($green, $green-80, $green-30, $green-90);
+.button--danger {
+  @include button--solid($red, $red-50, $red-70);
 }
 
-.button--danger {
-  @include button--solid($red, $red-80, $red-30, $red-90);
+.button--success {
+  @include button--solid($green, $green-50, $green-70);
 }
 
 .button--white {
-  @include button--solid(
-    $white,
-    rgba($white, 0.8),
-    $color-white-button-focus,
-    rgba($white, 0.9),
-    $color-text-default
-  );
+  @include button--solid($white, $coolgrey-20, $white);
+
+  color: $coolgrey-80;
+
+  &:disabled,
+  &--disabled {
+    background-color: $coolgrey-60;
+    border-color: $coolgrey-60;
+  }
+}
+
+.button--medium {
+  font-size: $font-size-small;
+  height: $height-medium;
 }
 
 .button--small {
   font-size: $font-size-small;
-  padding: 0 0.5rem;
-  height: 1.5rem; // Button height = 26px
-  .Icon {
-    font-size: $font-size-medium; // Keeps icons in small buttons readable
-  }
+  height: $height-small;
 }
 
-.button--large {
-  font-size: $font-size-large;
-  padding: 0 1.25rem;
-  height: 2rem; // Button height = 36px
-}
-
-.button--nowrap {
-  padding-top: 0;
-  padding-bottom: 0;
-  line-height: 1.875rem;
-  height: 1.875rem;
-  white-space: nowrap;
-
-  &.button--small {
-    line-height: 1.5rem;
-    height: 1.5rem;
-  }
-
-  &.button--large {
-    line-height: 3rem;
-    height: 3rem;
-  }
+.button--xsmall {
+  font-size: $font-size-x-small;
+  height: $height-x-small;
 }
 
 .button--block {
@@ -209,57 +168,50 @@ $color-white-button-focus: $blue-30; // Focus ring for white buttons
 // Outline
 
 .button--outline {
-  @include button--outline($blue, $blue-20, $blue-70, $blue-30, $blue-20);
-}
-
-.button--outline.button--success {
-  @include button--outline($green, $green-20, $green-70, $green-30, $green-20);
+  @include button--outline($blue, $blue-50, $blue-70);
 }
 
 .button--outline.button--danger {
-  @include button--outline($red, $red-20, $red-70, $red-30, $red-20);
+  @include button--outline($red, $red-50, $red-70);
 }
 
 .button--outline.button--white {
-  @include button--outline(
-    $white,
-    rgba($white, 0.1),
-    $white,
-    $color-white-button-focus,
-    rgba($white, 0.3)
-  );
+  @include button--outline($white, $coolgrey-20, $white);
+
+  &:disabled,
+  &--disabled {
+    color: $coolgrey-60;
+    border-color: $coolgrey-60;
+  }
 }
 
 // Flat
 
 .button--flat {
-  @include button--flat($coolgrey-60, $blue-60, $blue-30, transparent, $blue-20, $blue-70);
-  background: transparent;
-  border-color: transparent;
+  @include button--flat($coolgrey-80, $blue-50, $blue-70);
   font-weight: 600;
-  padding-left: $spacing-x-small;
-  padding-right: $spacing-x-small;
+  padding: 0;
 }
 
-.button--flat.button--success {
-  @include button--flat($green, $green-80, $green-20, $green-20, $green-30, $green);
+.button--flat.button--primary {
+  @include button--flat($blue, $blue-50, $blue-70);
+}
+
+.button--flat {
+  @include button--flat($coolgrey-80, $blue-50, $blue-70);
+  font-weight: 600;
+  padding: 0;
 }
 
 .button--flat.button--danger {
-  @include button--flat($red, $red-80, $red-20, $red-20, $red-30, $red);
+  @include button--flat($red, $red-50, $red-70);
 }
 
 .button--flat.button--white {
-  @include button--flat(
-    $white,
-    rgba($white, 0.8),
-    $color-white-button-focus,
-    rgba($white, 0.2),
-    rgba($white, 0.3),
-    $white
-  );
-}
+  @include button--flat($white, $coolgrey-20, $white);
 
-.button--flat.button--muted {
-  @include button--flat($coolgrey-50, $blue-60, $blue-30, transparent, $blue-20, $blue-70);
+  &:disabled,
+  &--disabled {
+    color: $coolgrey-60;
+  }
 }

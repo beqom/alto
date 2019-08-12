@@ -30,7 +30,7 @@ const getHandleChange = (items, onChange) => itemIndex => field => value => {
   if (typeof onChange === 'function') {
     const item = setIn(items[itemIndex], field.key, value);
     const newItems = items.map((x, i) => (i === itemIndex ? item : x));
-    onChange(newItems);
+    onChange(newItems, item);
   }
 };
 
@@ -89,7 +89,7 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, active, 
       return (
         <Switch
           id={id}
-          checked={value}
+          checked={!!value}
           label={field.key}
           hideLabel
           small={small}
@@ -98,11 +98,12 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, active, 
         />
       );
 
+
     case 'checkbox':
       return (
         <CheckBox
           id={id}
-          checked={value}
+          checked={!!value}
           label={field.key}
           hideLabel
           onChange={e => handleChange(e.target.checked)}

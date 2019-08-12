@@ -10,7 +10,7 @@ import StateProvider from '../../StateProvider';
 storiesOf('Form/DatePicker', module)
   .addDecorator(centered)
   .addWithJSX('playground', () => (
-    <StateProvider>
+    <StateProvider state={{ date: new Date() }}>
       {(state, setState) => (
         <DatePicker
           id="Datepicker-demo-1"
@@ -18,6 +18,7 @@ storiesOf('Form/DatePicker', module)
           value={state.date}
           label="Choose a date"
           readOnly={boolean('readOnly', false)}
+          datetime={boolean('datetime', false)}
         />
       )}
     </StateProvider>

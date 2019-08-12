@@ -19,20 +19,20 @@
   width: 100%;
   transition: box-shadow $transition, border-color $transition;
 
-  &:hover:not(.Select--readOnly) {
-    border-color: $blue;
-    box-shadow: 0 0 0 1px $blue;
+  &:hover {
+    border-color: $blue-40;
+    box-shadow: 0 0 0 1px $blue-40;
   }
 
   &:focus,
   &:focus:hover {
-    border-color: $color-input-border;
-    box-shadow: $drop-shadow;
+    border-color: $blue;
+    box-shadow: 0 0 0 1px $blue;
   }
 
   &--success {
     border-color: $green;
-    :focus {
+    &:focus {
       border-color: $green;
       box-shadow: 0 0 0 3px $green-20;
     }
@@ -89,10 +89,10 @@
   width: 100%;
 
   &.Select--open {
-    &,
-    &:hover {
-      border-color: $color-input-border;
-      box-shadow: $drop-shadow;
+    &:focus,
+    &:focus:hover {
+      border-color: $blue;
+      box-shadow: 0 0 0 1px $blue;
     }
   }
 }

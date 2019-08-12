@@ -124,8 +124,9 @@ class DatagridCell extends React.Component {
       [type]: true,
       formula: !!column.formula,
       editable,
-      editing,
+      editing: editing || ['boolean', 'list', 'select'].includes(type),
       edited,
+      focus: editing,
       disabled,
       header,
       summary,
@@ -301,7 +302,8 @@ class DatagridCell extends React.Component {
   }
 
   renderContent() {
-    const { id, column, render, editable, disabled } = this.props;
+    const { id, column, row, render, editable, disabled, context } = this.props;
+    if (!context.visible(column, row)) return null;
     const value = this.getValue();
     const type = getType(value, column);
     const modifiers = this.getModifiers();

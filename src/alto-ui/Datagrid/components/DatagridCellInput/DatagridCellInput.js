@@ -12,10 +12,10 @@ class DatagridCellInput extends React.Component {
     super(props);
 
     this.handleChange = this.handleChange.bind(this);
-    this.handleChangeFromOverlay = this.handleChangeFromOverlay.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
     this.handleStartEditing = this.handleStartEditing.bind(this);
+    this.handleChangeFromOverlay = this.handleChangeFromOverlay.bind(this);
 
     this.inputRef = React.createRef();
   }
@@ -82,11 +82,11 @@ class DatagridCellInput extends React.Component {
           ...inputProps,
         };
       case 'date':
+      case 'datetime':
         return {
           ...sharedProps,
           onBlur: undefined,
           onClose: this.handleBlur,
-          onChange: this.handleChangeFromOverlay,
           ...inputProps,
         };
       default:
@@ -102,13 +102,13 @@ class DatagridCellInput extends React.Component {
     this.props.onChange(value);
   }
 
+  handleBlur() {
+    this.props.onStopEditing(this.props.value);
+  }
+
   handleChangeFromOverlay(value) {
     this.props.onChange(value);
     this.props.onStopEditing(value);
-  }
-
-  handleBlur() {
-    this.props.onStopEditing(this.props.value);
   }
 
   handleStartEditing() {

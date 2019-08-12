@@ -1,40 +1,69 @@
-@import "../scss/_inc";
+@import '../scss/inc';
 
-.button-group {
+.ButtonGroup {
+  display: flex;
+}
+
+.ButtonGroup__button {
+  @extend %reset-button;
+
+  cursor: pointer;
+  flex: 1;
+  border: 1px solid $blue-70;
+  background: $white;
   display: flex;
   flex-direction: row;
-  > .button {
-    border-radius: 0;
-    background: transparent;
-    color: $blue-60;
-    border-color: $blue-60;
-    &:hover {
-      background-color: $blue-20;
-      color: $blue-80;
+  align-items: center;
+  justify-content: center;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-default;
+  font-family: $font-family-alt;
+  padding: 0 $padding-default;
+  text-decoration: none;
+  text-align: center;
+  letter-spacing: 0.06rem;
+  transition: all $duration-quick $timing-function, padding 0s;
+  text-transform: uppercase;
+  line-height: 1;
+  height: $height-default;
+  white-space: nowrap;
+  color: $blue-70;
+
+  &:first-child {
+    border-radius: $border-radius-default 0 0 $border-radius-default;
+  }
+
+  &:last-child {
+    border-radius: 0 $border-radius-default $border-radius-default 0;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    color: $coolgrey-60;
+    border-color: $coolgrey-60;
+  }
+
+  &:active,
+  &--active {
+    background-color: $blue-70;
+    color: $white;
+
+    &.ButtonGroup__button--disabled {
+      background-color: $coolgrey-60;
     }
-    &.button--active {
-      background: $blue-60;
-      color: $white;
-      cursor: default;
-    }
-    &:first-child {
-      border-radius: $border-radius-default 0 0 $border-radius-default;
-    }
-    &:last-child {
-      border-radius: 0 $border-radius-default $border-radius-default 0;
-    }
-    &:not(:last-child) {
-      border-right: 0;
-    }
-    &:disabled,
-    &:disabled:hover {
-      color: $coolgrey-30;
-      background: transparent;
-      border-color: $coolgrey-30;
-      border-left-color: $blue-60;
-      + :disabled {
-        border-left-color: $coolgrey-30;
-      }
-    }
+  }
+
+  &--small {
+    font-size: $font-size-small;
+    height: $height-small;
+  }
+
+  &--xsmall {
+    font-size: $font-size-x-small;
+    height: $height-x-small;
   }
 }

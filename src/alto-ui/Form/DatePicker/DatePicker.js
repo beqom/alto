@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DayPicker, { LocaleUtils } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -25,156 +25,166 @@ const renderDay = datePickerId => date => (
   </button>
 );
 
-class DatePicker extends React.Component {
-  constructor(props) {
-    super(props);
+function getDisplayFormat({ datetime, displayFormat }) {
+  if (displayFormat) return displayFormat;
+  if (datetime) return 'dd LLL yyyy hh:mm a';
+  return 'dd LLL yyyy';
+}
 
-    this.state = {
-      open: false,
-      month: this.getDate() || DateTime.local(),
-      value: null,
-    };
+const getDateWithProps = props => value => {
+  const dateToParse = value || props.value;
+  // iso or timestamp ?
+  const date =
+    ['number', 'string'].includes(typeof dateToParse) && dateToParse
+      ? new Date(dateToParse)
+      : dateToParse;
 
-    this.handleFocus = this.handleFocus.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-    this.handleChangeMonth = this.handleChangeMonth.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
+  return date ? DateTime.fromJSDate(date) : null;
+};
 
-    this.inputRef = React.createRef();
+const formatTextfieldDateWithProps = props => value => {
+  const date = getDateWithProps(props)(value);
+
+  if (!date) return '';
+
+  return date.toFormat(getDisplayFormat(props));
+};
+
+function useDate(dateToParse) {
+  // iso or timestamp ?
+  const dateParsed =
+    ['number', 'string'].includes(typeof dateToParse) && dateToParse
+      ? new Date(dateToParse)
+      : dateToParse;
+
+  const getDate = () => (dateToParse ? DateTime.fromJSDate(dateParsed) : DateTime.local());
+  const [date, setDate] = useState(getDate);
+  useEffect(() => setDate(getDate), [(dateParsed || '').toString()]);
+
+  return [date, setDate];
+}
+
+function DatePicker(props) {
+  const formatTextfieldDate = formatTextfieldDateWithProps(props);
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useDate(props.value);
+  const [value, setValue] = useState(null);
+  const defaultInputRef = useRef();
+
+  const {
+    inputRef: givenRef,
+    id,
+    displayFormat,
+    timestamp,
+    iso,
+    onChange,
+    format,
+    datetime,
+    ...remainingProps
+  } = props;
+
+  const inputRef = givenRef || defaultInputRef;
+
+  function handleChange(d) {
+    if (timestamp) onChange(d.getTime());
+    else if (iso) onChange(d.toISOString());
+    else onChange(d);
   }
 
-  getDate(value) {
-    const dateToParse = value || this.props.value;
-    // iso or timestamp ?
-    const date =
-      ['number', 'string'].includes(typeof dateToParse) && dateToParse
-        ? new Date(dateToParse)
-        : dateToParse;
-    return date ? DateTime.fromJSDate(date) : null;
+  function handleFocus(e) {
+    if (props.readOnly) return;
+    if (props.onFocus) props.onFocus(e);
+
+    setOpen(true);
   }
 
-  getInputRef() {
-    return this.props.inputRef || this.inputRef;
-  }
+  function handleBlur(e) {
+    if (typeof props.onBlur === 'function') props.onBlur(e);
 
-  setDate(date) {
-    const { timestamp, iso, onChange } = this.props;
-    if (timestamp) onChange(date.getTime());
-    else if (iso) onChange(date.toISOString());
-    else onChange(date);
-  }
+    if (value === '') {
+      if (props.value) handleChange(null);
+    } else if (value) {
+      const newDate = [getDisplayFormat(props)].reduce(
+        (d, f) => (d && d.isValid ? d : DateTime.fromFormat(value, f)),
+        null
+      );
 
-  handleFocus(e) {
-    if (this.props.readOnly) return;
-    if (this.props.onFocus) {
-      this.props.onFocus(e);
+      if (newDate && newDate.isValid) {
+        setDate(newDate);
+        handleChange(newDate.toJSDate());
+      }
     }
 
-    this.setState({ open: true });
+    setValue(null);
   }
 
-  handleBlur(e) {
-    const { value } = this.state;
-    const { format, displayFormat } = this.props;
-
-    if (typeof this.props.onBlur === 'function') {
-      this.props.onBlur(e);
-    }
-
-    if (!value) return null;
-
-    const date = [format, displayFormat].reduce(
-      (d, f) => (d && d.isValid ? d : DateTime.fromFormat(value, f)),
-      null
-    );
-    if (date && date.isValid) {
-      this.setState({ value: null, month: date });
-      this.setDate(date.toJSDate());
-    } else {
-      this.setState({ value: null });
-    }
-
-    return this.setState({ open: false });
-  }
-
-  handleClose() {
-    if (this.props.onClose) {
-      this.props.onClose();
-    }
-    this.setState({ open: false });
-  }
-
-  handleChangeMonth(obj) {
-    this.setState(({ month }) => ({ month: month.set(obj) }));
-  }
-
-  handleChangeInput(e) {
-    this.setState({ value: e.target.value });
-  }
-
-  formatTextfieldDate(value) {
-    // const { open } = this.state; // Uncomment when we enhance for typing in datefield
-    const { format, displayFormat } = this.props;
-
-    const date = this.getDate(value);
-
-    if (!date) return '';
-    // if (open) return date.toFormat(format); // Uncomment when we enhance for typing in datefield
-
-    return date.toFormat(displayFormat || format);
-  }
-
-  render() {
-    const { inputRef, id, displayFormat, iso, onChange, onBlur, ...remainingProps } = this.props;
-    const { open, value } = this.state;
-    const date = this.getDate();
-
-    return (
-      <>
-        <TextField
-          {...remainingProps}
-          ref={this.getInputRef()}
-          className={classnames('DatePicker', this.props.className)}
-          onFocus={this.handleFocus}
-          onChange={this.handleChangeInput}
-          onBlur={this.handleBlur}
-          value={value === null ? this.formatTextfieldDate() : value}
-          id={`${id}__input`}
+  return (
+    <>
+      <TextField
+        {...remainingProps}
+        ref={inputRef}
+        className={classnames('DatePicker', props.className)}
+        onFocus={handleFocus}
+        onChange={e => setValue(e.target.value)}
+        onBlur={handleBlur}
+        value={value === null ? formatTextfieldDate() : value}
+        id={`${id}__input`}
+        onClear={() => {
+          handleChange(null);
+          setValue(null);
+        }}
+      />
+      <Popover
+        className="DatePicker__day-picker"
+        onClose={() => {
+          if (props.onClose) props.onClose();
+          setOpen(false);
+        }}
+        open={open}
+        start
+        target={inputRef.current ? inputRef.current.parentElement : undefined}
+        includeTarget
+      >
+        <DatePickerHeader
+          date={date}
+          id={id}
+          onChange={values => setDate(d => d.set(values))}
+          onChangeTime={values => {
+            const newDate = date.set(values);
+            setDate(newDate);
+            handleChange(newDate.toJSDate());
+          }}
+          datetime={datetime}
         />
-        <Popover
-          className="DatePicker__day-picker"
-          onClose={this.handleClose}
-          open={open}
-          start
-          targetRef={this.getInputRef()}
-          includeTarget
-        >
-          <DatePickerHeader date={this.state.month} id={id} onChange={this.handleChangeMonth} />
+        <div className="DatePicker__days">
           <DayPicker
-            month={this.state.month.toJSDate()}
+            month={date.toJSDate()}
             canChangeMonth={false}
             captionElement={() => null}
             onDayClick={d => {
-              this.setDate(d);
-              this.setState({ open: false });
+              const newDate = datetime
+                ? DateTime.fromJSDate(d)
+                    .set({ hour: date.hour, minute: date.minute })
+                    .toJSDate()
+                : d;
+              handleChange(newDate);
+              if (!datetime) setOpen(false);
             }}
             localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
             selectedDays={date ? date.toJSDate() : null}
             renderDay={renderDay(id)}
           />
-        </Popover>
-      </>
-    );
-  }
+        </div>
+      </Popover>
+    </>
+  );
 }
 
 DatePicker.displayName = 'DatePicker';
 
 DatePicker.defaultProps = {
-  format: 'dd/MM/yyyy',
+  format: 'dd/MM/yyyy HH:mm',
   placeholder: '',
-  displayFormat: 'dd LLL yyyy',
 };
 
 DatePicker.propTypes = {
@@ -200,6 +210,7 @@ DatePicker.propTypes = {
   onFocus: PropTypes.func,
   inputRef: PropTypes.object,
   onClose: PropTypes.func,
+  datetime: PropTypes.bool,
 };
 
 export default React.forwardRef((props, ref) => <DatePicker inputRef={ref} {...props} />);

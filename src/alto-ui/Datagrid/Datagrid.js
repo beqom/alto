@@ -29,6 +29,7 @@ const DEFAULT_LABELS = {
 
 const PARSERS = {
   date: x => (x ? new Date(x) : ''),
+  datetime: x => (x ? new Date(x) : ''),
   boolean: x => {
     const bool = `${x}`.toLowerCase();
     if (['true', '1'].includes(bool)) return true;
@@ -43,6 +44,12 @@ const FORMATTERS = {
       ? DateTime.fromJSDate(x)
           .setLocale(locale)
           .toFormat('dd LLL yyyy')
+      : '',
+  datetime: (x, col, row, { locale }) =>
+    x instanceof Date
+      ? DateTime.fromJSDate(x)
+          .setLocale(locale)
+          .toFormat('dd LLL yyyy hh:mm a')
       : '',
   number: (x, col, row, { locale }) =>
     formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator, {
@@ -505,6 +512,7 @@ Datagrid.displayName = 'Datagrid';
 Datagrid.defaultProps = {
   disabled: col => col.disabled,
   editable: col => col.editable,
+  visible: () => true,
   edited: () => false,
   modifiers: () => {},
   showError: () => false,
