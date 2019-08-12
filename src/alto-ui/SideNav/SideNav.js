@@ -126,17 +126,22 @@ class SideNav extends React.PureComponent {
       <SideNavContext.Provider value={{ open, collapsed }}>
         <aside id={id} className={bemClass('sidenav', { collapsed, dark, [color]: true })}>
           <header className="sidenav__header">
-            <a id={`${id}__logo`} className="sidenav__logo" href={logoUrl} title={labels.a11yLogo}>
+            <Link
+              id={`${id}__logo`}
+              className="sidenav__logo"
+              href={logoUrl}
+              title={labels.a11yLogo}
+            >
               {collapsed ? logoSmall : logo}
-            </a>
-            <a
+            </Link>
+            <Link
               id={`${id}__logo--narrow`}
               className="sidenav__logo sidenav__logo--narrow"
               href={logoUrl}
               title={labels.a11yLogo}
             >
               {logo}
-            </a>
+            </Link>
           </header>
           <div className="sidenav__sections-container">
             <ul className="sidenav__sections-list">{this.renderNavItems(items)}</ul>
