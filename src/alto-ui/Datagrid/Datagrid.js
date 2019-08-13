@@ -512,6 +512,7 @@ Datagrid.displayName = 'Datagrid';
 Datagrid.defaultProps = {
   disabled: col => col.disabled,
   editable: col => col.editable,
+  visible: () => true,
   edited: () => false,
   modifiers: () => {},
   showError: () => false,
