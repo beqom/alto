@@ -79,6 +79,7 @@ const Typeahead = React.forwardRef(
       onChangePage,
       itemKey,
       clearable,
+      edited,
       ...props
     },
     passedRef
@@ -214,7 +215,7 @@ const Typeahead = React.forwardRef(
                 },
               })}
               label=""
-              className="Typeahead__input"
+              className={bemClass('Typeahead__input', { edited })}
             >
               {input => (
                 <>

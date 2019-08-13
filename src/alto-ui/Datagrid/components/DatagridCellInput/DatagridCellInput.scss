@@ -12,6 +12,9 @@
   // TODO Refactor this to not nest
   .Typeahead__input {
     font-size: $font-size-small;
+    &--edited {
+      font-weight: bold;
+    }
   }
 
   &--comfortable {
