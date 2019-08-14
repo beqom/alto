@@ -98,7 +98,6 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, active, 
         />
       );
 
-
     case 'checkbox':
       return (
         <CheckBox
@@ -321,6 +320,7 @@ List.propTypes = {
           'actions',
           'avatar',
           'checkbox',
+          'custom',
         ]),
         hidden: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
         props: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
