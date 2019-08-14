@@ -73,7 +73,7 @@ const TextField = React.forwardRef((props, passedRef) => {
   };
 
   const className = bemClass('textfield', modifiers, props.className);
-  const inputClassName = bemClass('textfield__input', modifiers, props.className);
+  const inputClassName = bemClass('textfield__input', modifiers);
   const renderInput = typeof children === 'function' ? children : x => x;
 
   const element = area ? (
