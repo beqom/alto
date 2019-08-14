@@ -149,7 +149,6 @@ const Pagination = ({ id, className, onChange, pageSize, ...props }) => {
         renderTrigger={renderDropdownTrigger}
         center="true"
         closeFocusTargetId={`${id}__close-options`}
-        openFocusTargetId={id}
       >
         {(_, closeDropdown) => renderDropdownContent(closeDropdown)}
       </Dropdown>
