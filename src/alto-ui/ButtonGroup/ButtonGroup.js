@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
 import './ButtonGroup.scss';
@@ -19,6 +20,7 @@ function ButtonGroup({ className, items, onChange, value, small }) {
         return (
           <button
             key={item.value}
+            id={item.id}
             className={bemClass('ButtonGroup__button', { active, small })}
             onClick={getHandleChange(index, active, items, onChange)}
           >
@@ -29,5 +31,26 @@ function ButtonGroup({ className, items, onChange, value, small }) {
     </div>
   );
 }
+
+ButtonGroup.propTypes = {
+  className: PropTypes.string,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      value: PropTypes.any,
+      title: PropTypes.string,
+    })
+  ),
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.any,
+  small: PropTypes.any,
+};
+
+ButtonGroup.defaultProps = {
+  className: '',
+  items: [],
+  value: null,
+  small: false,
+};
 
 export default ButtonGroup;
