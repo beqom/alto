@@ -99,6 +99,7 @@ $nav-btn-hover-text-dark: $white;
   height: $spacing-xx-large;
   cursor: pointer;
   transition: all $transition;
+  text-transform: none;
   padding: 0;
 }
 
@@ -292,7 +293,7 @@ $nav-btn-hover-text-dark: $white;
     .sidenav__button,
     .sidenav__section-button,
     .sidenav__route-link {
-      color: $coolgrey-50;
+      color: $coolgrey-80;
 
       &:hover {
         background-color: $color; //mix($white, $coolgrey-90, 92%);
@@ -311,7 +312,7 @@ $nav-btn-hover-text-dark: $white;
     }
 
     .sidenav__route-link {
-      color: $coolgrey-40;
+      color: $coolgrey-80;
       &--active {
         background-color: $color;
         color: $white;
