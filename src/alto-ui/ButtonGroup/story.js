@@ -30,21 +30,11 @@ storiesOf('ButtonGroup', module)
           <ButtonGroup
             onChange={value => setState({ value })}
             value={state.value}
-            items={[{ title: 'yes', value: 'a' }, { title: 'no', value: 'b' }, { title: 'not sure', value: 'c' }]}
-            small={boolean('small', false)}
-          />
-        )}
-      </StateProvider>
-    </div>
-  ))
-  .addWithJSX('Multiple', () => (
-    <div style={{ width: 120 }}>
-      <StateProvider state={{ value: true }}>
-        {(state, setState) => (
-          <ButtonGroup
-            onChange={value => setState({ value })}
-            value={state.value}
-            items={[{ title: 'yes', value: 'a' }, { title: 'no', value: 'b' }, { title: 'not sure', value: 'c' }]}
+            items={[
+              { title: 'yes', value: 'a' },
+              { title: 'no', value: 'b' },
+              { title: 'not sure', value: 'c' },
+            ]}
             small={boolean('small', false)}
           />
         )}
