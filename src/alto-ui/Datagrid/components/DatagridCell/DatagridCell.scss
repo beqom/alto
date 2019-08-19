@@ -107,6 +107,13 @@
 
   @extend %text-ellipsis;
 
+  &--header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    line-height: $spacing-medium;
+  }
+
   &--compact:not(.DatagridCell__content--header):not(.DatagridCell__content--editable) {
     height: $height-small;
     line-height: $height-small;
