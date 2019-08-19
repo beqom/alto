@@ -93,7 +93,7 @@ class DatagridCellInput extends React.Component {
         return {
           ...sharedProps,
           onBlur: undefined,
-          onClose: this.handleBlur,
+          onChange: this.handleChangeFromOverlay,
           ...inputProps,
         };
       default:

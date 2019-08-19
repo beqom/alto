@@ -105,8 +105,8 @@ function DatePicker(props) {
       if (props.value) handleChange(null);
     } else if (value) {
       const newDate = [getDisplayFormat(props)].reduce(
-        (d, f) => (d && d.isValid ? d : DateTime.fromFormat(value, f)),
-        null
+        (d, f) => (d.isValid ? d : DateTime.fromFormat(value, f)),
+        {}
       );
 
       if (newDate && newDate.isValid) {
@@ -137,6 +137,7 @@ function DatePicker(props) {
       <Popover
         className="DatePicker__day-picker"
         onClose={() => {
+          handleChange(date.toJSDate());
           if (props.onClose) props.onClose();
           setOpen(false);
         }}
@@ -167,6 +168,7 @@ function DatePicker(props) {
                     .set({ hour: date.hour, minute: date.minute })
                     .toJSDate()
                 : d;
+
               handleChange(newDate);
               if (!datetime) setOpen(false);
             }}
