@@ -1,75 +1,77 @@
 @import '../scss/inc';
 
 .Badge {
-  font-size: $font-size-x-small;
+  font-size: $font-size-x-small; 
   padding: 0 $spacing-small;
   background-color: $coolgrey-30;
   border-radius: $spacing-small + $spacing-x-small;
-  color: $coolgrey-90;
+  color: $coolgrey-80;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.02rem;
+  
+ 
   display: inline-block;
   font-weight: $font-weight-semibold;
   min-width: 1.5rem;
   text-align: center;
 
   &--red {
-    color: $white;
-    background-color: $red;
+    color: $red-70;
+    background-color: $red-30;
   }
 
   &--orange {
-    color: $orange-90;
-    background-color: $orange-50;
+    color: $orange-80;
+    background-color: $orange-30;
   }
 
   &--yellow {
     color: $yellow-90;
-    background-color: $yellow-50;
+    background-color: $yellow-30;
   }
 
   &--lime {
     color: $lime-90;
-    background-color: $lime-50;
+    background-color: $lime-30;
   }
 
   &--green {
-    color: $white;
-    background-color: $green;
+    color: $green-80;
+    background-color: $green-30;
   }
 
   &--pine {
-    color: $pine-90;
-    background-color: $pine-40;
+    color: $pine-80;
+    background-color: $pine-30;
   }
 
   &--teal {
     color: $teal-90;
-    background-color: $teal-40;
+    background-color: $teal-30;
   }
 
   &--blue {
-    color: $white;
-    background-color: $blue;
+    color: $blue-90;
+    background-color: $blue-30;
   }
 
   &--indigo {
-    color: $white;
-    background-color: $indigo;
+    color: $indigo-80;
+    background-color: $indigo-30;
   }
 
   &--purple {
-    color: $white;
-    background-color: $purple;
+    color: $purple-80;
+    background-color: $purple-30;
   }
 
   &--pink {
-    color: $white;
-    background-color: $pink;
+    color: $pink-80;
+    background-color: $pink-30;
   }
 
   &--black {
-    color: $white;
-    background-color: $coolgrey-80;
+    color: $grey-80;
+    background-color: $grey-20;
   }
 }
