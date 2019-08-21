@@ -277,7 +277,12 @@ class DatagridCell extends React.Component {
           option => option.value === parsedValue
         );
         return (
-          <div className={bemClass('DatagridCell__content', this.getModifiers())}>
+          <div
+            className={bemClass('DatagridCell__content', {
+              ...this.getModifiers(),
+              editing: false,
+            })}
+          >
             {itemSelected ? itemSelected.title : inputProps.placeholder || ''}
           </div>
         );
