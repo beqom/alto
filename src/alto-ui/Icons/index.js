@@ -80,6 +80,7 @@ import LongText from './LongText';
 import Menu from './Menu';
 import Minus from './Minus';
 import MinusCircle from './MinusCircle';
+import Money from './Money';
 import More from './More';
 import Note from './Note';
 import Numeric from './Numeric';
@@ -201,6 +202,7 @@ export default {
   Menu,
   Minus,
   MinusCircle,
+  Money,
   More,
   Note,
   Numeric,
