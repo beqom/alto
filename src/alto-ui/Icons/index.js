@@ -88,6 +88,7 @@ import Objects from './Objects';
 import Options from './Options';
 import Organization from './Organization';
 import Pencil from './Pencil';
+import Pergamen from './Pergamen';
 import People from './People';
 import Plus from './Plus';
 import PlusCircle from './PlusCircle';
@@ -211,6 +212,7 @@ export default {
   Organization,
   Pencil,
   People,
+  Pergamen,
   Plus,
   PlusCircle,
   Profile,
