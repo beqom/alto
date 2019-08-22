@@ -107,12 +107,7 @@
 
   @extend %text-ellipsis;
 
-  &--header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    line-height: $spacing-medium;
-  }
+
 
   &--compact:not(.DatagridCell__content--header):not(.DatagridCell__content--editable) {
     height: $height-small;
@@ -128,6 +123,13 @@
     height: $height-large;
     line-height: $height-large;
     font-size: $font-size-medium;
+  }
+
+  &--header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    line-height: $spacing-medium;
   }
 
   &--editing {
