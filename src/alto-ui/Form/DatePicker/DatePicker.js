@@ -129,7 +129,7 @@ function DatePicker(props) {
           if (e.keyCode === ENTER_KEY_CODE) {
             setOpen(false);
           }
-          onKeyDown(e);
+          if (typeof onKeyDown === 'function') onKeyDown(e);
         }}
         ref={inputRef}
         className={classnames('DatePicker', props.className)}
