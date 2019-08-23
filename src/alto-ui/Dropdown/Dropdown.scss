@@ -1,6 +1,8 @@
 @import '../scss/inc';
 
 .Dropdown {
+  display: flex;
+  flex-direction: column;
   padding: 0;
   // abtitary amount
   max-width: 55rem;
@@ -14,6 +16,10 @@
       margin-bottom: -$spacing-small;
     }
   }
+}
+
+.Dropdown__list-container {
+  flex: 1 auto;
 }
 
 .Dropdown__list {
