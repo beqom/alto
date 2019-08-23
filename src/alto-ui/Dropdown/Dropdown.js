@@ -212,7 +212,11 @@ class Dropdown extends React.Component {
     }
     if (!hasItems) return null;
 
-    return <ul className="Dropdown__list">{this.renderItems(popoverProps, items)}</ul>;
+    return (
+      <div className="Dropdown__list-container">
+        <ul className="Dropdown__list">{this.renderItems(popoverProps, items)}</ul>
+      </div>
+    );
   }
 
   render() {
