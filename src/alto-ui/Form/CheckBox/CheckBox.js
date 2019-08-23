@@ -28,7 +28,9 @@ const CheckBox = React.forwardRef(
   )
 );
 
-CheckBox.defaultProps = {};
+CheckBox.defaultProps = {
+  checked: false,
+};
 
 CheckBox.propTypes = {
   label: PropTypes.string.isRequired,
