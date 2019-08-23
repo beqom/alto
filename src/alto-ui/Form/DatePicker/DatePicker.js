@@ -12,6 +12,8 @@ import Popover from '../../Popover';
 
 import './DatePicker.scss';
 
+const ENTER_KEY_CODE = 13;
+
 const renderDay = datePickerId => date => (
   <button
     id={`${datePickerId}__day--${date.getTime()}`}
@@ -80,6 +82,7 @@ function DatePicker(props) {
     onChange,
     format,
     datetime,
+    onKeyDown,
     ...remainingProps
   } = props;
 
@@ -122,6 +125,12 @@ function DatePicker(props) {
     <>
       <TextField
         {...remainingProps}
+        onKeyDown={e => {
+          if (e.keyCode === ENTER_KEY_CODE) {
+            setOpen(false);
+          }
+          onKeyDown(e);
+        }}
         ref={inputRef}
         className={classnames('DatePicker', props.className)}
         onFocus={handleFocus}
@@ -132,6 +141,7 @@ function DatePicker(props) {
         onClear={() => {
           handleChange(null);
           setValue(null);
+          setOpen(false);
         }}
       />
       <Popover
@@ -211,6 +221,7 @@ DatePicker.propTypes = {
   inputRef: PropTypes.object,
   onClose: PropTypes.func,
   datetime: PropTypes.bool,
+  onKeyDown: PropTypes.func,
 };
 
 export default React.forwardRef((props, ref) => <DatePicker inputRef={ref} {...props} />);
