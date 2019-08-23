@@ -7,6 +7,9 @@ import { bemClass } from '../../../helpers/bem';
 
 import './DatagridCellInput.scss';
 
+const ENTER_KEY_CODE = 13;
+const ESC_KEY_CODE = 27;
+
 class DatagridCellInput extends React.Component {
   constructor(props) {
     super(props);
@@ -93,7 +96,7 @@ class DatagridCellInput extends React.Component {
         return {
           ...sharedProps,
           onBlur: undefined,
-          onChange: this.handleChangeFromOverlay,
+          onChange: this.handleChange,
           ...inputProps,
         };
       default:
@@ -127,7 +130,7 @@ class DatagridCellInput extends React.Component {
   }
 
   handleKeyDown(e) {
-    if (e.key === 'Escape' || e.key === 'Esc' || e.key === 'Enter') {
+    if (e.keyCode === ESC_KEY_CODE || e.keyCode === ENTER_KEY_CODE) {
       this.props.onStopEditing();
     }
   }
