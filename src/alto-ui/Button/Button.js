@@ -15,6 +15,7 @@ const buttonProps = bemProps('button', [
   'medium',
   'small',
   'xsmall',
+  'large',
   'active',
   'block',
   'nowrap',

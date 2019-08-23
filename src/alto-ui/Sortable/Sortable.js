@@ -39,7 +39,8 @@ const handleDragEnd = (instance, result) => {
   if (typeof onChange !== 'function') return;
 
   const newItems = moveByIndex(items, result.source.index, endIndex);
-  onChange(newItems);
+  const newItem = items[result.source.index];
+  onChange(newItems, newItem);
 };
 
 function Sortable(props) {
