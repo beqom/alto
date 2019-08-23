@@ -20,7 +20,7 @@ function Image({ children, alt, src, srcAlt, ...props }) {
     return () => {
       img.removeEventListener('load', onLoad);
     };
-  }, []);
+  }, [src]);
 
   if (children && !state.loaded) {
     return children;
