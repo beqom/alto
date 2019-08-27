@@ -230,6 +230,7 @@ const Typeahead = React.forwardRef(
                     />
                   )}
                   <CaretDown
+                    id={`${id}__caret-down`}
                     onClick={toggleMenu}
                     className={bemClass('Typeahead__caret', { close: isOpen })}
                   />
