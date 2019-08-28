@@ -75,9 +75,11 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, active, 
                   ? badge
                   : badge.title || badge.name;
               const badgeProps =
-                typeof field.props === 'function' ? field.props(badge) : field.props || {};
+                typeof field.props === 'function'
+                  ? field.elementProps(badge, data, item, itemIndex)
+                  : {};
               return (
-                <Badge key={key} {...badgeProps}>
+                <Badge key={key} {...props} {...badgeProps}>
                   {badgeProps.children || children}
                 </Badge>
               );
@@ -324,6 +326,7 @@ List.propTypes = {
         ]),
         hidden: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
         props: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
+        elementProps: PropTypes.func,
         render: PropTypes.func,
       }).isRequired
     ),
