@@ -75,7 +75,7 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, active, 
                   ? badge
                   : badge.title || badge.name;
               const badgeProps =
-                typeof field.props === 'function'
+                typeof field.elementProps === 'function'
                   ? field.elementProps(badge, data, item, itemIndex)
                   : {};
               return (
