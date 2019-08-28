@@ -61,6 +61,7 @@
   flex-basis: auto;
   min-width: 0;
   line-height: $line-height-input;
+  width: 100%;
 
   &::placeholder {
     color: $coolgrey-40;
