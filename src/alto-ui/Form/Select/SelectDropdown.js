@@ -67,6 +67,7 @@ class SelectDropdown extends React.Component {
       multiple,
       disabled,
       clearable,
+      hideLabel,
       ...props
     } = this.props;
     const items = getItemsFromOptions(options);
