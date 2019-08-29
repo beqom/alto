@@ -346,6 +346,7 @@ class DatagridCell extends React.Component {
     return (
       <div
         className={bemClass('DatagridCell', modifiers)}
+        title={this.getFormattedValue()}
         ref={this.cellRef}
         style={style}
         role="gridcell"
