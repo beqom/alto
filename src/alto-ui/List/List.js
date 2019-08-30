@@ -80,7 +80,7 @@ const renderField = (field, item, itemIndex, id, handleChange, onClick, active, 
                   : {};
               return (
                 <Badge key={key} {...props} {...badgeProps}>
-                  {badgeProps.children || children}
+                  {badgeProps.children || props.children || children}
                 </Badge>
               );
             }}
