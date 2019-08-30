@@ -6,8 +6,6 @@
   display: flex;
   flex-direction: column;
   opacity: 0;
-  border: 1px solid $coolgrey-20;
-  border-radius: $border-radius-default;
   max-width: 100%;
   max-height: 100%;
   // Misalignement on last rows
@@ -31,7 +29,6 @@
 }
 
 .Datagrid__head {
-  border-bottom: 1px solid $coolgrey-20;
   .ps__rail-x {
     display: none;
   }
@@ -40,11 +37,6 @@
 .Datagrid__header-row {
   display: flex;
   flex-direction: column;
-}
-
-.Datagrid__header-row--frozen {
-  margin-right: 2px;
-  box-shadow: 2px 0 0 $coolgrey-20;
 }
 
 .Datagrid__header-row--static,
@@ -68,8 +60,6 @@
 }
 
 .Datagrid__rows--frozen {
-  box-shadow: 2px 0 0 $coolgrey-20;
-  margin-right: 2px;
   overflow-y: auto;
   overflow-x: hidden;
   -ms-overflow-style: none;
@@ -109,13 +99,23 @@
   margin: auto;
 }
 
-.DataGrid__row-checkbox {
+.DataGrid__row-checkbox-container {
   display: flex;
   align-items: center;
-  padding-left: 0.75rem;
-  height: $height-datagrid-default;
   width: $height-datagrid-default;
   border-bottom: 1px solid $coolgrey-20;
+  border-left: 1px solid $coolgrey-20;
+  background-color: $white;
+  height: $height-datagrid-default;
+
+  &--first-row {
+    border-top: 1px solid $coolgrey-20;
+    border-top-left-radius: $border-radius-default;
+  }
+
+  &--last-row {
+    border-bottom-left-radius: $border-radius-default;
+  }
 
   &--compact {
     height: $height-datagrid-compact;
@@ -126,29 +126,16 @@
   }
 
   &--header {
-    background-color: $white;
-    height: $height-datagrid-header-default;
+    height: 2.5rem;
 
-    &.DataGrid__row-checkbox--compact {
-      height: $height-datagrid-header-compact;
-    }
-
-    &.DataGrid__row-checkbox--comfortable {
-      height: $height-datagrid-header-comfortable;
+    &.DataGrid__row-checkbox-container--comfortable {
+      height: 3.5rem;
     }
   }
+}
 
-  &--summary {
-    height: $height-datagrid-default;
-
-    &.DataGrid__row-checkbox--compact {
-      height: $height-datagrid-default;
-    }
-
-    &.DataGrid__row-checkbox--comfortable {
-      height: $height-datagrid-comfortable;
-    }
-  }
+.DataGrid__row-checkbox {
+  margin: auto;
 }
 
 @media all and (-ms-high-contrast: none) {

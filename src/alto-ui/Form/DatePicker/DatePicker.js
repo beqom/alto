@@ -9,6 +9,7 @@ import TextField from '../TextField';
 import VisuallyHidden from '../../VisuallyHidden';
 import DatePickerHeader from './DatePickerHeader';
 import Popover from '../../Popover';
+import CalendarIcon from '../../Icons/Calendar';
 
 import './DatePicker.scss';
 
@@ -121,6 +122,10 @@ function DatePicker(props) {
     setValue(null);
   }
 
+  useEffect(() => {
+    if (!open && typeof props.onClose === 'function') props.onClose();
+  }, [open]);
+
   return (
     <>
       <TextField
@@ -139,15 +144,28 @@ function DatePicker(props) {
         value={value === null ? formatTextfieldDate() : value}
         id={`${id}__input`}
         onClear={() => {
-          handleChange("");
-          setValue("");
+          handleChange('');
+          setValue('');
           setOpen(false);
         }}
-      />
+      >
+        {input => (
+          <>
+            <CalendarIcon
+              id={`${id}__calendar`}
+              className="DatePicker__calendar-icon"
+              active={open}
+              onClick={() => {
+                if (inputRef && inputRef.current) inputRef.current.focus();
+              }}
+            />
+            {input}
+          </>
+        )}
+      </TextField>
       <Popover
         className="DatePicker__day-picker"
         onClose={() => {
-          if (props.onClose) props.onClose();
           setOpen(false);
         }}
         open={open}

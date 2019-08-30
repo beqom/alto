@@ -23,9 +23,11 @@ const getGroupColumnSummary = (column, rows, labels) => {
   return sum(rows.map(r => parseFloat(r[column.key] || 0)));
 };
 
-const getModifiers = context => ({
+const getModifiers = (context, { lastRow, frozen }) => ({
   compact: context.compact,
   comfortable: context.comfortable,
+  'first-in-row': typeof context.onSelectRow !== 'function' || frozen,
+  'last-row': lastRow,
 });
 
 const DatagridGroupedRow = ({
@@ -65,7 +67,7 @@ const DatagridGroupedRow = ({
             {}
           );
 
-  const modifiers = getModifiers(context);
+  const modifiers = getModifiers(context, datagridRowProps);
   const style = { width: groupingColumnWidth, maxWidth: groupingColumnWidth };
 
   const formatValue = getFormattedValue(context);
@@ -82,6 +84,8 @@ const DatagridGroupedRow = ({
       header
       columns={columns}
       context={context}
+      detached
+      cellClassName="DatagridGroupedRow__cell"
     >
       {cells =>
         children(

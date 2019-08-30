@@ -10,17 +10,13 @@
   }
 
   // TODO Refactor this to not nest
-  .Typeahead__input {
+  .textfield {
+    height: $height-datagrid-default - 0.375;
     font-size: $font-size-small;
-    &--edited {
-      font-weight: bold;
-    }
   }
 
-  &--comfortable {
-    .Typeahead__input {
-      font-size: $font-size-medium;
-    }
+  .textfield__input {
+    line-height: $height-datagrid-compact - 0.375;
   }
 
   //TODO refactor this to not nest
@@ -35,25 +31,27 @@
   &--float {
     .textfield {
       text-align: right;
-      height: $height-default;
-      line-height: $height-default;
-      font-size: $font-size-small;
-      box-shadow: none;
     }
   }
 
   &--comfortable {
     .textfield {
-      height: $height-large;
-      line-height: $height-large;
-      font-size: $font-size-medium;
+      height: $height-datagrid-comfortable - 0.75;
+      font-size: $font-size-large;
+    }
+
+    .textfield__input {
+      line-height: $height-datagrid-compact - 0.75;
     }
   }
 
   &--compact {
     .textfield {
-      height: $height-small;
-      line-height: $height-small;
+      height: $height-datagrid-compact - 0.125;
+    }
+
+    .textfield__input {
+      line-height: $height-datagrid-compact - 0.125;
     }
   }
 
@@ -61,11 +59,6 @@
     border-radius: $border-radius-default;
     font-size: $font-size-small;
     width: 100%;
-  }
-
-  &--focus {
-    border-color: $blue-60;
-    box-shadow: 0 0 0 1px $blue;
   }
 
   &--list,

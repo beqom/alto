@@ -316,14 +316,14 @@ $height-large: 2.25rem !default; // 36px <--- TO KILL
 
 $input-padding: 0.625rem !default;
 
-$height-datagrid-compact: 1.75rem !default; // 28px
-$height-datagrid-default: 2.5rem !default; // 40px
+$height-datagrid-compact: 1.5rem !default; // 24px
+$height-datagrid-default: 2rem !default; // 32px
 $height-datagrid-comfortable: 3rem !default; // 48px
 
-$height-datagrid-header-compact: 2.25rem !default; // 28px
 $height-datagrid-header-default: 2.75rem !default; // 40px
-$height-datagrid-header-comfortable: 3rem !default; // 48px
 
+$height-datagrid-summary-default: 2.5rem !default;
+$height-datagrid-summary-comfortable: 3.5rem !default;
 // ===================================
 // Border Radius
 

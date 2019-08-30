@@ -9,6 +9,8 @@ import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
 import Tooltip from '../../../Tooltip';
 import DatagridCellInput from '../DatagridCellInput/DatagridCellInput';
+import Calendar from '../../../Icons/Calendar';
+import CaretDown from '../../../Icons/CaretDown';
 
 import { getFormattedValue, getValue, getFormatter, getType, IDENTITY } from '../../helpers';
 
@@ -76,6 +78,8 @@ class DatagridCell extends React.Component {
       this.props.row !== nextProps.row ||
       this.props.selectedRowKey !== nextProps.selectedRowKey ||
       this.props.width !== nextProps.width ||
+      this.props.colIndex !== nextProps.colIndex ||
+      this.props.rowIndex !== nextProps.rowIndex ||
       this.props.context.compact !== nextProps.context.compact ||
       this.props.context.comfortable !== nextProps.context.comfortable
     );
@@ -115,6 +119,9 @@ class DatagridCell extends React.Component {
       summary,
       selectedRowKey,
       clickable,
+      detached,
+      aria,
+      lastRow,
     } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
@@ -124,7 +131,7 @@ class DatagridCell extends React.Component {
       [type]: true,
       formula: !!column.formula,
       editable,
-      editing: editing || ['boolean', 'list', 'select'].includes(type),
+      editing: editing || ['boolean'].includes(type),
       edited,
       focus: editing,
       disabled,
@@ -132,6 +139,10 @@ class DatagridCell extends React.Component {
       summary,
       selected,
       clickable,
+      detached,
+      first: typeof context.onSelectRow !== 'function' && aria.colIndex === 1,
+      last: aria.colIndex === this.props.context.columns.length,
+      'last-row': lastRow,
       compact: context.compact,
       comfortable: context.comfortable,
       'with-icon': context.showError(value, column, row),
@@ -236,9 +247,9 @@ class DatagridCell extends React.Component {
 
     const tooltipContent = this.replaceRowValues(error);
     const icon = warning ? (
-      <ExclamationTriangleIcon baseline className="DatagridCell__warning-icon" />
+      <ExclamationTriangleIcon className="DatagridCell__warning-icon" />
     ) : (
-      <ExclamationCircleIcon baseline className="DatagridCell__error-icon" />
+      <ExclamationCircleIcon className="DatagridCell__error-icon" />
     );
 
     return <Tooltip content={tooltipContent}>{icon}</Tooltip>;
@@ -262,32 +273,14 @@ class DatagridCell extends React.Component {
   }
 
   renderInput() {
-    const { id, column, render, editable, header, disabled, inputProps } = this.props;
+    const { id, column, render, editable, header, inputProps } = this.props;
     if (render) return null;
 
     const value = this.getValue();
     const type = getType(value, column);
-    if ((!editable && !['list', 'boolean'].includes(type)) || header) return null;
+    if ((!editable && !['boolean'].includes(type)) || header) return null;
 
     const parsedValue = this.parse(value);
-
-    if (type === 'list') {
-      if (!editable || disabled) {
-        const itemSelected = (inputProps.options || []).find(
-          option => option.value === parsedValue
-        );
-        return (
-          <div
-            className={bemClass('DatagridCell__content', {
-              ...this.getModifiers(),
-              editing: false,
-            })}
-          >
-            {itemSelected ? itemSelected.title : inputProps.placeholder || ''}
-          </div>
-        );
-      }
-    }
 
     return (
       <DatagridCellInput
@@ -311,10 +304,12 @@ class DatagridCell extends React.Component {
     if (!context.visible(column, row)) return null;
     const value = this.getValue();
     const type = getType(value, column);
+    const isDate = type === 'date' || type === 'datetime';
+    const isList = type === 'list' || type === 'select';
     const modifiers = this.getModifiers();
     const ContentComponent = editable ? 'button' : 'div';
 
-    const content = !['list', 'boolean'].includes(type) && (
+    const content = !['boolean'].includes(type) && (
       <ContentComponent
         id={editable && id ? `${id}__button` : undefined}
         ref={this.setContentNode}
@@ -322,7 +317,9 @@ class DatagridCell extends React.Component {
         className={bemClass('DatagridCell__content', modifiers)}
         onClick={editable ? this.handleClickEditButton : undefined}
       >
-        {this.renderValue()}
+        {isDate && editable === true && <Calendar className="DatagridCell__content-icon-left" />}
+        <span className="DatagridCell__content-value">{this.renderValue()}</span>
+        {isList && editable === true && <CaretDown className="DatagridCell__content-icon-right" />}
       </ContentComponent>
     );
 
@@ -345,7 +342,7 @@ class DatagridCell extends React.Component {
 
     return (
       <div
-        className={bemClass('DatagridCell', modifiers)}
+        className={bemClass('DatagridCell', modifiers, this.props.className)}
         title={this.getFormattedValue()}
         ref={this.cellRef}
         style={style}

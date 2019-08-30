@@ -18,16 +18,24 @@ const DatagridRow = ({
   context,
   children,
   collapsed,
-  extraCell,
+  frozen,
   hasCheckbox,
+  className,
+  detached,
+  cellClassName,
+  lastRow,
 }) => {
-  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth } = context;
+  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth, compact, comfortable } = context;
   const clickable = typeof onRowClick === 'function';
   return (
     <div
       role="row"
       aria-rowindex={rowIndex}
-      className={bemClass('DatagridRow', { collapsed, clickable })}
+      className={bemClass(
+        'DatagridRow',
+        { collapsed, clickable, frozen, detached, compact, comfortable },
+        className
+      )}
       {...(clickable && !hasCheckbox ? { onClick: () => onRowClick(row), tabIndex: '0' } : {})}
     >
       {children(
@@ -66,11 +74,14 @@ const DatagridRow = ({
               selectedRowKey={selectedRowKey}
               inputProps={context.getInputProps(column, row)}
               width={columnsWidth[column.key] || column.width}
+              detached={detached}
+              className={cellClassName}
+              lastRow={lastRow}
             />
           );
         })
       )}
-      {!!extraCell && <div className="DatagridRow__last-cell" />}
+      {!frozen && <div className="DatagridRow__last-cell" />}
     </div>
   );
 };

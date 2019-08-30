@@ -1,24 +1,36 @@
 @import '../../../scss/inc';
 
+.DatagridGroupedRow__cell {
+  background-color: $white;
+}
+
 .DatagridGroupedRow__button {
-  height: $height-datagrid-header-default;
+  height: $height-datagrid-summary-default;
   overflow: hidden;
   flex-shrink: 0;
   text-align: left;
   font-size: $font-size-small;
+  border-top: 1px solid $coolgrey-20;
   border-bottom: 1px solid $coolgrey-20;
   font-weight: $font-weight-semibold;
   display: flex;
-  background-color: $color-row-header-bkgd;
+  background-color: $white;
   align-items: center;
   cursor: pointer;
+  line-height: 1.2;
 
-  &--compact {
-    height: $height-datagrid-header-compact;
+  &--first-in-row {
+    border-top-left-radius: $border-radius-default;
+    border-left: 1px solid $coolgrey-20;
+
+    &.DatagridGroupedRow__button--last-row {
+      border-bottom-left-radius: $border-radius-default;
+    }
   }
 
   &--comfortable {
-    height: $height-datagrid-header-comfortable;
+    height: $height-datagrid-summary-comfortable;
+    font-size: $font-size-large;
   }
 }
 
@@ -45,19 +57,21 @@
 
 .DatagridGroupedRow__toggle-name {
   @extend %text-ellipsis;
-  font-size: 0.6875rem;
-  line-height: 1.25;
+  font-size: $font-size-x-small;
   color: $color-text-muted;
   font-weight: $font-weight-regular;
   text-transform: uppercase;
+
+  .DatagridGroupedRow__button--comfortable & {
+    font-size: $font-size-small;
+  }
 }
 
 .DatagridGroupedRow__toggle-value {
   @extend %text-ellipsis;
   font-size: $font-size-medium;
-  line-height: 1.25;
 
-  .DatagridGroupedRow__button--compact & {
-    font-size: $font-size-medium;
+  .DatagridGroupedRow__button--comfortable & {
+    font-size: $font-size-large;
   }
 }
