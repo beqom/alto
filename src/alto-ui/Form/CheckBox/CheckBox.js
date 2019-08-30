@@ -6,7 +6,10 @@ import './CheckBox.scss';
 
 const CheckBox = React.forwardRef(
   ({ label, className, hideLabel, style, ...props }, forwardedRef) => (
-    <div className={bemClass('CheckBox', {}, className)} style={style}>
+    <div
+      className={bemClass('CheckBox', { 'without-label': hideLabel || !label }, className)}
+      style={style}
+    >
       <input
         ref={forwardedRef}
         {...(props.readOnly ? { tabIndex: -1 } : null)}

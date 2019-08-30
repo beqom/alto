@@ -3,6 +3,10 @@
 .CheckBox {
   position: relative;
   line-height: 2;
+
+  &--without-label {
+    line-height: 1;
+  }
 }
 
 .CheckBox__input {
@@ -15,8 +19,13 @@
   cursor: pointer;
   position: relative;
   outline: 0;
-  display: inline-block;
+  display: block;
   max-width: 100%;
+
+  .CheckBox--without-label & {
+    padding-left: 1em;
+    height: 1em;
+  }
 
   &--readOnly {
     cursor: default;
@@ -42,6 +51,10 @@
     height: 0.875em;
     width: 0.875em;
     border-radius: $border-radius-default;
+
+    .CheckBox--without-label & {
+      top: 0;
+    }
 
     input:checked + & {
       border-color: $blue;
@@ -72,6 +85,10 @@
       width: 0.5em;
       border-left: 2px solid white;
       border-bottom: 2px solid white;
+
+      .CheckBox--without-label & {
+        top: 0.25em;
+      }
     }
 
     input:checked:disabled:not(.CheckBox__input--readOnly) + & {
@@ -86,6 +103,7 @@
 
   &--hidden {
     @extend %visually-hidden;
+    position: fixed;
 
     margin: 0;
   }
