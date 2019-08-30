@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function Image({ children, alt, src, srcAlt, ...props }) {
+function Image({ children, alt, src, srcAlt, onError, onLoad, ...props }) {
   const [state, setState] = useState({
     src: srcAlt,
     loaded: false,
@@ -14,11 +14,23 @@ function Image({ children, alt, src, srcAlt, ...props }) {
     const img = document.createElement('IMG');
 
     img.src = src;
-    const onLoad = () => setState(() => ({ src, loaded: true }));
-    img.addEventListener('load', onLoad);
+    const onLoadListener = () => {
+      setState(() => ({ src, loaded: true }));
+      if (typeof onLoad === 'function') {
+        onLoad();
+      }
+    };
+    img.addEventListener('load', onLoadListener);
+
+    if (typeof onError === 'function') {
+      img.addEventListener('error', onError);
+    }
 
     return () => {
-      img.removeEventListener('load', onLoad);
+      img.removeEventListener('load', onLoadListener);
+      if (typeof onError === 'function') {
+        img.removeEventListener('error', onError);
+      }
     };
   }, [src]);
 
@@ -38,6 +50,10 @@ Image.propTypes = {
   src: PropTypes.string,
   /** @type {string} Image alt text */
   alt: PropTypes.string,
+  /** @type {function} On error image */
+  onError: PropTypes.func,
+  /** @type {function} On load image */
+  onLoad: PropTypes.func,
 };
 
 export default Image;
