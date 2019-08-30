@@ -139,8 +139,8 @@ function DatePicker(props) {
         value={value === null ? formatTextfieldDate() : value}
         id={`${id}__input`}
         onClear={() => {
-          handleChange(null);
-          setValue(null);
+          handleChange("");
+          setValue("");
           setOpen(false);
         }}
       />
