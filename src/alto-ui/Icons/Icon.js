@@ -32,6 +32,7 @@ const Icon = props => {
     active,
     style,
     weight,
+    small,
     ...otherProps
   } = props;
   return (
@@ -46,6 +47,7 @@ const Icon = props => {
           button: props.onClick,
           disabled: otherProps.disabled,
           active,
+          small,
         },
         props.className
       )}
@@ -77,6 +79,7 @@ Icon.defaultProps = {
   left: false,
   right: false,
   weight: 0,
+  small: false,
 };
 
 Icon.propTypes = {
@@ -95,6 +98,7 @@ Icon.propTypes = {
   active: PropTypes.bool,
   style: PropTypes.object,
   weight: PropTypes.number,
+  small: PropTypes.bool,
 };
 
 export default Icon;

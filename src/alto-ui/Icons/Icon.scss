@@ -58,3 +58,9 @@
 .Icon--active:hover {
   color: $blue-60;
 }
+
+.Icon--small {
+  width: $height-small;
+  height: $height-small;
+  font-size: $height-small;
+}
