@@ -299,7 +299,8 @@ class DatagridCell extends React.Component {
   }
 
   renderContent() {
-    const { id, column, render, editable, disabled } = this.props;
+    const { id, column, row, render, editable, disabled, context } = this.props;
+    if (!context.visible(column, row)) return null;
     const value = this.getValue();
     const type = getType(value, column);
     const modifiers = this.getModifiers();
