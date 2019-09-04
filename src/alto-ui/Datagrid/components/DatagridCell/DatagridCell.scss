@@ -7,6 +7,7 @@
   text-align: left;
   display: flex;
   border-bottom: 1px solid $coolgrey-20;
+  background-color: $white;
 
   .DatagridRow--clickable:hover & {
     transition: background-color $transition;
@@ -17,7 +18,35 @@
     }
   }
 
-  &--compact:not(.DatagridCell--header) {
+  &--detached {
+    border-top: 1px solid $coolgrey-20;
+  }
+
+  &--first {
+    border-left: 1px solid $coolgrey-20;
+
+    &.DatagridCell--detached {
+      border-top-left-radius: $border-radius-default;
+    }
+
+    &.DatagridCell--last-row {
+      border-bottom-left-radius: $border-radius-default;
+    }
+  }
+
+  &--last {
+    border-right: 1px solid $coolgrey-20;
+
+    &.DatagridCell--detached {
+      border-top-right-radius: $border-radius-default;
+    }
+
+    &.DatagridCell--last-row {
+      border-bottom-right-radius: $border-radius-default;
+    }
+  }
+
+  &--compact {
     height: $height-datagrid-compact;
   }
 
@@ -25,14 +54,11 @@
     height: $height-datagrid-comfortable;
   }
 
-  &--header:not(.DatagridCell--summary) {
-    height: $height-datagrid-header-default;
-    background-color: $color-row-header-bkgd;
-    &.DatagridCell--compact {
-      height: $height-datagrid-header-compact;
-    }
+  &--header {
+    height: 2.5rem;
+
     &.DatagridCell--comfortable {
-      height: $height-datagrid-header-comfortable;
+      height: 3.5rem;
     }
   }
 
@@ -104,32 +130,39 @@
   max-width: 100%;
   flex: 1;
   border-radius: $border-radius-default;
+  display: flex;
+  align-items: center;
 
   @extend %text-ellipsis;
 
+  .Avatar {
+    font-size: $height-datagrid-default - 0.375;
+  }
 
-
-  &--compact:not(.DatagridCell__content--header):not(.DatagridCell__content--editable) {
-    height: $height-small;
-    line-height: $height-small;
+  &--compact {
+    height: $height-datagrid-compact;
+    line-height: $height-datagrid-compact;
     font-size: $font-size-small;
   }
 
-  .Avatar {
-    font-size: 1.5rem;
-  }
-
   &--comfortable {
-    height: $height-large;
-    line-height: $height-large;
-    font-size: $font-size-medium;
+    height: $height-datagrid-comfortable;
+    line-height: $height-datagrid-comfortable;
+    font-size: $font-size-large;
+
+    .Avatar {
+      font-size: $height-datagrid-comfortable - 0.75;
+    }
   }
 
   &--header {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    line-height: $spacing-medium;
+    height: 2.5rem;
+    font-size: 1rem;
+    line-height: 1.2;
+
+    &.DatagridCell__content--comfortable {
+      height: 3.5rem;
+    }
   }
 
   &--editing {
@@ -153,19 +186,31 @@
   }
 }
 
+.DatagridCell__content-value {
+  @extend %text-ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+
+.DatagridCell__content-icon-left {
+  margin-right: 0.625rem;
+}
+
 // --- button ---
 .DatagridCell__content--editable {
   cursor: pointer;
   position: relative;
   transition: all $transition;
-  border-color: $color-input-border;
-  line-height: 1rem;
-  background-color: $white;
+  background-color: $blue-20;
+  height: $height-datagrid-default - 0.375;
+  line-height: $height-datagrid-default - 0.375;
+
   &:hover {
     border-color: $blue-40;
     box-shadow: 0 0 0 1px $blue-40;
     cursor: pointer;
   }
+
   .DatagridCell--warning &,
   .DatagridCell--warning &:hover {
     border-color: $orange;
@@ -179,9 +224,13 @@
   }
 
   &.DatagridCell__content--compact {
-    line-height: 1rem;
-    height: $height-small;
-    font-size: $font-size-small;
+    height: $height-datagrid-compact - 0.125;
+    line-height: $height-datagrid-compact - 0.125;
+  }
+
+  &.DatagridCell__content--comfortable {
+    height: $height-datagrid-comfortable - 0.75;
+    line-height: $height-datagrid-comfortable - 0.75;
   }
 }
 
@@ -211,14 +260,21 @@
   width: 1.25rem;
 }
 
+.DatagridCell__error-icon,
+.DatagridCell__warning-icon {
+  margin: 0 $spacing-small;
+
+  .DatagridCell--comfortable & {
+    font-size: 1.25rem;
+  }
+}
+
 .DatagridCell__error-icon {
   color: $red;
-  margin: 0 $spacing-small;
 }
 
 .DatagridCell__warning-icon {
   color: $orange;
-  margin: 0 $spacing-small;
 }
 
 .DatagridCell__spinner {

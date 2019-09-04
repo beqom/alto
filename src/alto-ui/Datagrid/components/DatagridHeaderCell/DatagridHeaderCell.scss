@@ -1,18 +1,42 @@
 @import '../../../scss/inc';
 
 .DatagridHeaderCell {
-  min-height: 2.5rem;
+  min-height: $height-datagrid-header-default;
   flex-shrink: 0;
   text-align: left;
   border-bottom: 1px solid $coolgrey-20;
   font-weight: $font-weight-semibold;
   font-size: $font-size-small;
+  text-transform: uppercase;
   display: flex;
-  background-color: $white;
   align-items: center;
+  line-height: 1;
+  background-color: $white;
 
   &:not(.DatagridHeaderCell--last) {
     box-shadow: inset -1px 0 0 0 $coolgrey-20;
+  }
+
+  &--first-row {
+    border-top: 1px solid $coolgrey-20;
+  }
+
+  &--first-in-row {
+    border-left: 1px solid $coolgrey-20;
+    border-bottom-left-radius: $border-radius-default;
+
+    &.DatagridHeaderCell--first-row {
+      border-top-left-radius: $border-radius-default;
+    }
+  }
+
+  &--last-in-row {
+    border-right: 1px solid $coolgrey-20;
+    border-bottom-right-radius: $border-radius-default;
+
+    &.DatagridHeaderCell--first-row {
+      border-top-right-radius: $border-radius-default;
+    }
   }
 
   &--sortable {
@@ -26,9 +50,8 @@
   @extend %reset-button;
   white-space: nowrap;
   text-overflow: ellipsis;
-  padding: $spacing-x-small 0.625rem;
+  padding: $spacing-xx-small 0.625rem;
   flex: 1;
-  color: $coolgrey-60;
   padding-right: 0.75rem;
   text-align: left;
   display: flex;
@@ -63,6 +86,7 @@
   overflow: hidden;
   flex: 1 1 auto;
   line-height: 1.2;
+  max-height: calc(5em * 1.2); // max height => 5 lines
 
   &--sortable {
     width: calc(100% - calc(2rem - 12px));

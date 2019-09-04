@@ -11,10 +11,21 @@
     cursor: pointer;
     outline: 0;
   }
+
+  &--frozen {
+    border-right: 2px solid $coolgrey-20;
+  }
+
+  &--detached {
+    margin-top: $spacing-medium;
+
+    &.DatagridRow--compact {
+      margin-top: $spacing-small;
+    }
+  }
 }
 
 .DatagridRow__last-cell {
-  border-left: 1px solid $coolgrey-20;
   min-width: 8rem;
   flex: 1;
 }

@@ -92,7 +92,17 @@ class DatagridHeaderCell extends React.Component {
   }
 
   render() {
-    const { column, context, rowIndex, colIndex, first, last, width } = this.props;
+    const {
+      column,
+      context,
+      rowIndex,
+      colIndex,
+      last,
+      width,
+      firstCellInRow,
+      lastCellInRow,
+      firstRow,
+    } = this.props;
     const wrapped = context.wrapHeader;
     const style = {
       width,
@@ -109,7 +119,9 @@ class DatagridHeaderCell extends React.Component {
           sortable: !!context.onSort && column.sortable !== false,
           sorted,
           filtered: column.filtered,
-          first,
+          'first-row': firstRow,
+          'first-in-row': firstCellInRow,
+          'last-in-row': lastCellInRow,
           last,
           wrapped,
         })}

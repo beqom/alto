@@ -4,6 +4,10 @@
   display: flex;
   flex: 1;
   flex-basis: auto;
+
+  &--frozen {
+    border-right: 2px solid $coolgrey-20;
+  }
 }
 
 .DatagridHeaderRow__group {
@@ -13,26 +17,34 @@
 
 .DatagridHeaderRow__group-title {
   flex-shrink: 0;
-  height: 1.5rem;
-  line-height: 1.5rem;
+  height: $height-datagrid-header-default;
+  line-height: $height-datagrid-header-default;
   overflow: hidden;
+  border-top: 1px solid $coolgrey-20;
   border-bottom: 1px solid $coolgrey-20;
   font-weight: $font-weight-semibold;
   font-size: $font-size-small;
   white-space: nowrap;
   text-overflow: ellipsis;
   padding: 0 0.625rem;
-  color: $coolgrey-60;
-  text-align: left;
+  text-align: center;
   background-color: $white;
   box-shadow: inset -1px 0 0 0 $coolgrey-20;
+  text-transform: uppercase;
 
-  .DatagridHeaderRow__group--last & {
-    box-shadow: none;
+  .DatagridHeaderRow__group--first-in-row & {
+    border-top-left-radius: $border-radius-default;
+    border-left: 1px solid $coolgrey-20;
   }
 
-  &--empty {
-    background: transparent;
+  .DatagridHeaderRow__group--last-in-row & {
+    border-top-right-radius: $border-radius-default;
+    border-right: 1px solid $coolgrey-20;
+  }
+
+  .DatagridHeaderRow__group--last &,
+  &--followed-by-empty {
+    box-shadow: none;
   }
 }
 
@@ -42,23 +54,32 @@
   flex-basis: auto;
 }
 
-.DatagridHeaderRow__checkbox {
+.DatagridHeaderRow__checkbox-container {
   background-color: $white;
   border-bottom: 1px solid $coolgrey-20;
+  border-left: 1px solid $coolgrey-20;
   display: flex;
   align-items: center;
-  font-size: $font-size-small;
   width: $height-datagrid-default;
-  padding-left: 0.75rem;
   box-shadow: inset -1px 0 0 0 $coolgrey-20;
+  height: 100%;
+  border-bottom-left-radius: $border-radius-default;
 
-  .DatagridHeaderRow__group--last & {
+  &--first-row {
+    border-top-left-radius: $border-radius-default;
+    border-top: 1px solid $coolgrey-20;
+  }
+
+  &--last {
     box-shadow: none;
   }
 }
 
+.DatagridHeaderRow__checkbox {
+  margin: auto;
+}
+
 .DatagridHeaderRow__last-cell {
-  border-left: 1px solid $coolgrey-20;
   min-width: 9rem;
   flex: 1;
 }

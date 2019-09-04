@@ -18,7 +18,7 @@ import DatagridResizer from './components/DatagridResizer';
 
 import './Datagrid.scss';
 
-const CHECKBOX_WIDTH = 40;
+const CHECKBOX_WIDTH = 32;
 const WINDOW_RESIZE_DEBOUNCE = 100;
 
 const DEFAULT_LABELS = {
@@ -271,7 +271,7 @@ class Datagrid extends React.PureComponent {
         columnIndexStart={columnIndexStart}
         context={this.getContext()}
         hasCheckBox={hasCheckbox}
-        extraCell={!frozen}
+        frozen={frozen}
       />
     );
   }
@@ -294,16 +294,21 @@ class Datagrid extends React.PureComponent {
         context={this.getContext()}
         render={renderSummaryCell}
         columnIndexStart={columnIndexStart}
-        extraCell={!frozen}
+        frozen={frozen}
+        detached
+        lastRow
       >
         {cells => (
           <>
             {hasCheckbox && (
               <div
-                className={bemClass('DataGrid__row-checkbox', {
+                className={bemClass('DataGrid__row-checkbox-container', {
                   ...modifiers,
                   header: true,
                   summary: true,
+                  last: !columns.length,
+                  'first-row': true,
+                  'last-row': true,
                 })}
               />
             )}
@@ -338,14 +343,20 @@ class Datagrid extends React.PureComponent {
 
     return rows.reduce((acc, row, index, arr) => {
       const isFirstRow = index === 0;
+      const isLastRow = index === arr.length - 1;
       const isPrecededByDifferentGroup =
         isFirstRow || row[groupedByColumnKey] !== arr[index - 1][groupedByColumnKey];
+
+      const isFollowedByDifferentGroup =
+        isLastRow || row[groupedByColumnKey] !== arr[index + 1][groupedByColumnKey];
 
       const key = rowKeyField(row);
       const uniqueId = `${key}__${index}`;
       const rowIndex = headersCount + summaryRowsCount + 1 + acc.length;
+      const collapsed = groupedByColumnKey && !!this.state.collapsedGroups[row[groupedByColumnKey]];
+
       const sharedProps = {
-        collapsed: groupedByColumnKey && !!this.state.collapsedGroups[row[groupedByColumnKey]],
+        collapsed,
         columns,
         context: this.getContext(),
         columnIndexStart,
@@ -361,17 +372,23 @@ class Datagrid extends React.PureComponent {
             rowIndex={rowIndex}
             onToggle={this.handleToggleGroup}
             subRows={rows.filter(r => r[groupedByColumnKey] === row[groupedByColumnKey])}
-            extraCell={!frozen}
+            frozen={frozen}
             groupingColumn={displayGroupToggle ? groupingColumn : undefined}
             groupingColumnWidth={
               columns.length && hasCheckbox ? firstColumnWidth + CHECKBOX_WIDTH : firstColumnWidth
             }
+            lastRow={collapsed}
           >
             {cells => (
               <>
                 {!columns.length && hasCheckbox && (
                   <div
-                    className={bemClass('DataGrid__row-checkbox', { ...modifiers, header: true })}
+                    className={bemClass('DataGrid__row-checkbox-container', {
+                      ...modifiers,
+                      header: true,
+                      'first-row': true,
+                      'last-row': collapsed,
+                    })}
                   />
                 )}
                 {cells}
@@ -382,6 +399,7 @@ class Datagrid extends React.PureComponent {
 
       const groupedRowArr = groupedRow ? [groupedRow] : [];
       const { labels } = this.getContext();
+      const ariaRowIndex = rowIndex + groupedRowArr.length + 1;
       return [
         ...acc,
         ...groupedRowArr,
@@ -389,22 +407,33 @@ class Datagrid extends React.PureComponent {
           {...sharedProps}
           key={uniqueId}
           row={row}
-          rowIndex={rowIndex + groupedRowArr.length + 1}
-          extraCell={!frozen}
+          rowIndex={ariaRowIndex}
+          frozen={frozen}
           hasCheckbox={hasCheckbox}
+          detached={index === 0 && !groupedRow}
+          lastRow={isFollowedByDifferentGroup}
         >
           {cells => (
             <>
               {hasCheckbox && (
-                <CheckBox
-                  id={`${id || 'Datagrid'}__${key}-checkbox`}
-                  className={bemClass('DataGrid__row-checkbox', modifiers)}
-                  label={labels.checkboxLabel}
-                  hideLabel
-                  checked={(selectedRows || []).includes(key)}
-                  onChange={() => onSelectRow(row)}
-                  disabled={!key}
-                />
+                <div
+                  className={bemClass('DataGrid__row-checkbox-container', {
+                    'first-row': index + groupedRowArr.length === 0,
+                    'last-row': index === rows.length - 1,
+                    ...modifiers,
+                  })}
+                >
+                  <CheckBox
+                    id={`${id || 'Datagrid'}__${key}-checkbox`}
+                    className="DataGrid__row-checkbox"
+                    title={ariaRowIndex}
+                    label={labels.checkboxLabel}
+                    hideLabel
+                    checked={(selectedRows || []).includes(key)}
+                    onChange={() => onSelectRow(row)}
+                    disabled={!key}
+                  />
+                </div>
               )}
               {cells}
             </>
@@ -451,7 +480,11 @@ class Datagrid extends React.PureComponent {
         id={id}
         role="grid"
         aria-rowcount={headersCount + rows.length}
-        className={bemClass('Datagrid', { loaded: this.state.loaded }, className)}
+        className={bemClass(
+          'Datagrid',
+          { loaded: this.state.loaded, 'with-summary': !!this.props.renderSummaryCell },
+          className
+        )}
         ref={this.containerRef}
       >
         {this.renderResizer()}
