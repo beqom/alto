@@ -256,7 +256,7 @@ const Typeahead = React.forwardRef(
                     borderless
                     fields={renderFields(search, itemToString, fields)}
                     hover={(item, index) => highlightedIndex === index}
-                    // active={item => itemToValue(item) === value}
+                    active={item => itemToValue(item) === value}
                     renderItem={(render, item, _, index) => (
                       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                       <div
