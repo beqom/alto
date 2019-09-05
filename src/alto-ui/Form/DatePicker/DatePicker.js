@@ -84,6 +84,7 @@ function DatePicker(props) {
     format,
     datetime,
     onKeyDown,
+    onSelectDate,
     ...remainingProps
   } = props;
 
@@ -189,13 +190,31 @@ function DatePicker(props) {
             canChangeMonth={false}
             captionElement={() => null}
             onDayClick={d => {
-              const newDate = datetime
-                ? DateTime.fromJSDate(d)
-                    .set({ hour: date.hour, minute: date.minute })
-                    .toJSDate()
-                : d;
-              handleChange(newDate);
-              if (!datetime) setOpen(false);
+              const newDate = DateTime.fromJSDate(d);
+              if (datetime) {
+                newDate.set({ hour: date.hour, minute: date.minute });
+              }
+              const jsDate = newDate.toJSDate();
+
+              // if date & time picker then don't close it
+              if (datetime) {
+                onChange(jsDate);
+                return;
+              }
+
+              // close if no time select field
+              setOpen(false);
+
+              // close and set data with stop editing if specifed
+              if (typeof onSelectDate === 'function') {
+                onSelectDate(jsDate);
+                return;
+              }
+
+              onChange(jsDate);
+              if (typeof props.onClose === 'function') {
+                props.onClose();
+              }
             }}
             localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
             selectedDays={date ? date.toJSDate() : null}
