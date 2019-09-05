@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 
 import ButtonGroup from '../ButtonGroup';
 
-describe.only('ButtonGroup', () => {
+describe('ButtonGroup', () => {
   const getSpecificButtonProps = (buttonGroupWrapper, index) =>
     buttonGroupWrapper
       .find('button')
@@ -91,28 +91,6 @@ describe.only('ButtonGroup', () => {
       });
       it('callbacks two times', () => {
         expect(onChange).toHaveBeenCalledTimes(2);
-      });
-    });
-    describe('Exactly two buttons test case', () => {
-      const onChange = jest.fn();
-      const items = [{ value: 1 }, { value: 2 }];
-      const buttonGroup = shallow(<ButtonGroup items={items} value={2} onChange={onChange} />);
-
-      it('callbacks with second button value on click on active', () => {
-        buttonGroup
-          .find('button')
-          .at(1)
-          .simulate('click');
-
-        expect(onChange).toHaveBeenCalledWith(1);
-      });
-      it('callbacks with this same button value on click on NO active', () => {
-        buttonGroup
-          .find('button')
-          .at(0)
-          .simulate('click');
-
-        expect(onChange).toHaveBeenCalledWith(1);
       });
     });
   });
