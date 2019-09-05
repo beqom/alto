@@ -489,10 +489,17 @@ class Datagrid extends React.PureComponent {
       >
         {this.renderResizer()}
         <div role="rowgroup" className="Datagrid__head">
-          <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
-            {this.renderHeaderRows(frozenColumnHeaders, true)}
-            {this.renderSummaryRow(frozenColumns, true, staticColumns.length, HEADER_ROW_INDEX + 1)}
-          </div>
+          {!!frozenColumns.length && (
+            <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
+              {this.renderHeaderRows(frozenColumnHeaders, true)}
+              {this.renderSummaryRow(
+                frozenColumns,
+                true,
+                staticColumns.length,
+                HEADER_ROW_INDEX + 1
+              )}
+            </div>
+          )}
           <div
             role="presentation"
             ref={this.setStaticHeaderNode}
@@ -513,14 +520,16 @@ class Datagrid extends React.PureComponent {
         <div role="rowgroup" className="Datagrid__body">
           {this.props.rows.length ? (
             <>
-              <div
-                role="presentation"
-                ref={this.setFrozenRowsNode}
-                onScroll={this.handleScrollYFrozenRows}
-                className={bemClass('Datagrid__rows', { frozen: true })}
-              >
-                {this.renderRows(frozenColumns, true, headersCount)}
-              </div>
+              {!!frozenColumns.length && (
+                <div
+                  role="presentation"
+                  ref={this.setFrozenRowsNode}
+                  onScroll={this.handleScrollYFrozenRows}
+                  className={bemClass('Datagrid__rows', { frozen: true })}
+                >
+                  {this.renderRows(frozenColumns, true, headersCount)}
+                </div>
+              )}
               <div role="presentation" className={bemClass('Datagrid__rows', { static: true })}>
                 <div
                   className="Datagrid__rows-container"
