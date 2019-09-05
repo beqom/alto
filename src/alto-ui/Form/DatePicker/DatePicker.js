@@ -146,7 +146,6 @@ function DatePicker(props) {
         onClear={() => {
           handleChange('');
           setValue('');
-          setOpen(false);
         }}
       >
         {input => (
