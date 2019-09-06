@@ -139,9 +139,8 @@ function DatePicker(props) {
         value={value === null ? formatTextfieldDate() : value}
         id={`${id}__input`}
         onClear={() => {
-          handleChange("");
-          setValue("");
-          setOpen(false);
+          handleChange('');
+          setValue('');
         }}
       />
       <Popover
