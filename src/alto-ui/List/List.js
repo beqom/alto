@@ -281,13 +281,20 @@ function List(props) {
     );
   }
   return (
-    <Group {...groupProps}>
-      {items.map((item, index) => (
-        <GroupItem {...groupConfigProps} key={itemKey(item)} index={index}>
-          {renderListItem(item, null, null, index)}
-        </GroupItem>
-      ))}
-    </Group>
+    /**
+     * IE11 doesn't read height of the element with overflow-y: auto;
+     * and doesn't triger height for container by children so we need one extra div element
+     * https://stackoverflow.com/questions/44311284/container-div-doesnt-resize-correctly-in-internet-explorer-11
+    */
+    <div>
+      <Group {...groupProps}>
+        {items.map((item, index) => (
+          <GroupItem {...groupConfigProps} key={itemKey(item)} index={index}>
+            {renderListItem(item, null, null, index)}
+          </GroupItem>
+        ))}
+      </Group>
+    </div>
   );
 }
 
