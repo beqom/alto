@@ -10,4 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: yarn -v
+- script: yarn install
+  displayName: Install packages
+- script: yarn test
+  displayName: Test
+
