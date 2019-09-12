@@ -12,7 +12,7 @@ pool:
 steps:
 - task: SonarQubePrepare@4
   inputs:
-    SonarQube: 'SonarQube'
+    SonarQube: 'SonarQube Docker'
     scannerMode: 'CLI'
     configMode: 'file'
 
