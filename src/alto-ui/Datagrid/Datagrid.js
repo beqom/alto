@@ -397,7 +397,7 @@ class Datagrid extends React.PureComponent {
           </DatagridGroupedRow>
         ) : null;
 
-      const groupedRowArr = groupedRow ? [groupedRow] : [];
+      const groupedRowArr = groupedRow && groupingColumn ? [groupedRow] : [];
       const { labels } = this.getContext();
       const ariaRowIndex = rowIndex + groupedRowArr.length + 1;
       return [
