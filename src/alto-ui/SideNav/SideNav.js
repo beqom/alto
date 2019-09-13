@@ -31,15 +31,21 @@ class SideNav extends React.PureComponent {
   }
 
   renderItemContent(item) {
-    const active = item.active || this.props.currentUrl.indexOf(item.url) === 0;
+    const {
+      outline,
+      currentUrl,
+      collapsed,
+    } = this.props;
+
+    const active = item.active || currentUrl.indexOf(item.url) === 0;
     const itemContent = (
       <div className="sidenav__section-item">
         {item.icon && (
           <div className="sidenav__section-item-icon">
-            <item.icon outline badged={item.badged} />
+            <item.icon outline={outline} badged={item.badged} />
           </div>
         )}
-        {this.props.collapsed ? (
+        {collapsed ? (
           <VisuallyHidden> {item.title} </VisuallyHidden>
         ) : (
           <div className="sidenav__section-item-title">{item.title}</div>
@@ -214,6 +220,7 @@ SideNav.defaultProps = {
   dark: false,
   id: 'sidenav',
   collapsed: false,
+  outline: true,
 };
 
 SideNav.propTypes = {
@@ -254,6 +261,7 @@ SideNav.propTypes = {
   collapsed: PropTypes.bool,
   onToggle: PropTypes.func,
   labels: PropTypes.object,
+  outline: PropTypes.bool,
 };
 
 export default SideNav;
