@@ -10,8 +10,20 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- task: SonarQubePrepare@4
+  inputs:
+    SonarQube: 'SonarQube Docker'
+    scannerMode: 'CLI'
+    configMode: 'file'
+
 - script: yarn install
   displayName: Install packages
+
 - script: yarn test
   displayName: Test
+
+- task: SonarQubeAnalyze@4
+- task: SonarQubePublish@4
+  inputs:
+    pollingTimeoutSec: '300'
 
