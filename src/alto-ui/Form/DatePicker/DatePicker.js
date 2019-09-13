@@ -9,6 +9,7 @@ import TextField from '../TextField';
 import VisuallyHidden from '../../VisuallyHidden';
 import DatePickerHeader from './DatePickerHeader';
 import Popover from '../../Popover';
+import CalendarIcon from '../../Icons/Calendar';
 
 import './DatePicker.scss';
 
@@ -83,6 +84,7 @@ function DatePicker(props) {
     format,
     datetime,
     onKeyDown,
+    onSelectDate,
     ...remainingProps
   } = props;
 
@@ -121,6 +123,10 @@ function DatePicker(props) {
     setValue(null);
   }
 
+  useEffect(() => {
+    if (!open && typeof props.onClose === 'function') props.onClose();
+  }, [open]);
+
   return (
     <>
       <TextField
@@ -142,11 +148,24 @@ function DatePicker(props) {
           handleChange('');
           setValue('');
         }}
-      />
+      >
+        {input => (
+          <>
+            <CalendarIcon
+              id={`${id}__calendar`}
+              className="DatePicker__calendar-icon"
+              active={open}
+              onClick={() => {
+                if (inputRef && inputRef.current) inputRef.current.focus();
+              }}
+            />
+            {input}
+          </>
+        )}
+      </TextField>
       <Popover
         className="DatePicker__day-picker"
         onClose={() => {
-          if (props.onClose) props.onClose();
           setOpen(false);
         }}
         open={open}
@@ -171,13 +190,31 @@ function DatePicker(props) {
             canChangeMonth={false}
             captionElement={() => null}
             onDayClick={d => {
-              const newDate = datetime
-                ? DateTime.fromJSDate(d)
-                    .set({ hour: date.hour, minute: date.minute })
-                    .toJSDate()
-                : d;
-              handleChange(newDate);
-              if (!datetime) setOpen(false);
+              const newDate = DateTime.fromJSDate(d);
+              if (datetime) {
+                newDate.set({ hour: date.hour, minute: date.minute });
+              }
+              const jsDate = newDate.toJSDate();
+
+              // if date & time picker then don't close it
+              if (datetime) {
+                onChange(jsDate);
+                return;
+              }
+
+              // close if no time select field
+              setOpen(false);
+
+              // close and set data with stop editing if specifed
+              if (typeof onSelectDate === 'function') {
+                onSelectDate(jsDate);
+                return;
+              }
+
+              onChange(jsDate);
+              if (typeof props.onClose === 'function') {
+                props.onClose();
+              }
             }}
             localeUtils={{ ...LocaleUtils, formatDay: () => '' }}
             selectedDays={date ? date.toJSDate() : null}
