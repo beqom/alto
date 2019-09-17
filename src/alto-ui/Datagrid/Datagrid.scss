@@ -151,6 +151,10 @@
   .Datagrid__rows--frozen {
     overflow-x: hidden;
     -ms-overflow-style: none;
+    & > div:last-child {
+      /* IE11 Misalignment on last row */
+      margin-bottom: $height-scrollbar;
+    }
   }
 }
 
