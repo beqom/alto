@@ -123,6 +123,15 @@ function DatePicker(props) {
     setValue(null);
   }
 
+  const onChangeDatetimeHeader = dateValues => {
+    const newDate = DateTime.fromObject({
+      ...date.toObject(),
+      ...dateValues,
+    });
+    setDate(newDate);
+    onChange(newDate.toJSDate());
+  };
+
   useEffect(() => {
     if (!open && typeof props.onClose === 'function') props.onClose();
   }, [open]);
@@ -166,6 +175,9 @@ function DatePicker(props) {
       <Popover
         className="DatePicker__day-picker"
         onClose={() => {
+          if (datetime && typeof onSelectDate === 'function') {
+            onSelectDate(date.toJSDate());
+          }
           setOpen(false);
         }}
         open={open}
@@ -176,12 +188,8 @@ function DatePicker(props) {
         <DatePickerHeader
           date={date}
           id={id}
-          onChange={values => setDate(d => d.set(values))}
-          onChangeTime={values => {
-            const newDate = date.set(values);
-            setDate(newDate);
-            handleChange(newDate.toJSDate());
-          }}
+          onChange={onChangeDatetimeHeader}
+          onChangeTime={onChangeDatetimeHeader}
           datetime={datetime}
         />
         <div className="DatePicker__days">
@@ -189,12 +197,13 @@ function DatePicker(props) {
             month={date.toJSDate()}
             canChangeMonth={false}
             captionElement={() => null}
-            onDayClick={d => {
-              const newDate = DateTime.fromJSDate(d);
+            onDayClick={jsDateValue => {
+              const jsDate = new Date(jsDateValue);
               if (datetime) {
-                newDate.set({ hour: date.hour, minute: date.minute });
+                const { hour, minute } = date;
+                jsDate.setHours(hour);
+                jsDate.setMinutes(minute);
               }
-              const jsDate = newDate.toJSDate();
 
               // if date & time picker then don't close it
               if (datetime) {
