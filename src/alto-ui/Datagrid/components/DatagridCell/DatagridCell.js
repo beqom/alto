@@ -256,7 +256,7 @@ class DatagridCell extends React.Component {
   }
 
   renderValue() {
-    const { render, column, row, context } = this.props;
+    const { render, column, row, context, inputProps } = this.props;
     const value = this.getValue();
     const type = getType(value, column);
 
@@ -266,10 +266,18 @@ class DatagridCell extends React.Component {
       return render(column, row, format);
     }
     const renderer = context.renderers[type] || IDENTITY;
-    if (type === 'error') {
-      return renderer(value, column, row, context);
+
+    switch (type) {
+      case 'error':
+        return renderer(value, column, row, context);
+      case 'list': {
+        const itemSelected =
+          (inputProps.options || []).find(option => option.value === value) || {};
+        return renderer(itemSelected.title, column, row, context);
+      }
+      default:
+        return renderer(this.getFormattedValue(), column, row, context);
     }
-    return renderer(this.getFormattedValue(), column, row, context);
   }
 
   renderInput() {
@@ -392,6 +400,7 @@ DatagridCell.propTypes = {
     onClickCellDropdownItem: PropTypes.func.isRequired,
     compact: PropTypes.bool,
     comfortable: PropTypes.bool,
+    columns: PropTypes.array,
   }),
   render: PropTypes.func,
   editable: PropTypes.bool,
@@ -409,6 +418,11 @@ DatagridCell.propTypes = {
   width: PropTypes.number,
   compact: PropTypes.bool,
   comfortable: PropTypes.bool,
+  colIndex: PropTypes.number,
+  rowIndex: PropTypes.number,
+  detached: PropTypes.bool,
+  lastRow: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default DatagridCell;
