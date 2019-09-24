@@ -72,6 +72,7 @@ function DatePicker(props) {
   const [open, setOpen] = useState(false);
   const [date, setDate] = useDate(props.value);
   const [value, setValue] = useState(null);
+  const [isEmptyYearValue, setIsEmptyYearValue] = useState(false);
   const defaultInputRef = useRef();
 
   const {
@@ -124,6 +125,9 @@ function DatePicker(props) {
   }
 
   const onChangeDatetimeHeader = dateValues => {
+    const { year } = dateValues;
+    setIsEmptyYearValue(Number.isNaN(year));
+
     const newDate = DateTime.fromObject({
       ...date.toObject(),
       ...dateValues,
@@ -133,7 +137,11 @@ function DatePicker(props) {
   };
 
   useEffect(() => {
-    if (!open && typeof props.onClose === 'function') props.onClose();
+    const { onClose } = props;
+    if (!open && typeof onClose === 'function') {
+      onClose();
+      setIsEmptyYearValue(false);
+    }
   }, [open]);
 
   return (
@@ -191,6 +199,7 @@ function DatePicker(props) {
           onChange={onChangeDatetimeHeader}
           onChangeTime={onChangeDatetimeHeader}
           datetime={datetime}
+          isEmptyYearValue={isEmptyYearValue}
         />
         <div className="DatePicker__days">
           <DayPicker
