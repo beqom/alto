@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect, forwardRef } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
@@ -62,11 +62,12 @@ function getProps(oldProps) {
   };
 }
 
-function RelativeBox(props) {
+const RelativeBox = forwardRef((props, forwardedRef) => {
   const { watch } = props;
   const target = props.target || (props.targetRef || {}).current;
   const [state, setState] = useState({ style: {}, position: {} });
-  const ref = useRef();
+  const defaultRef = useRef();
+  const ref = forwardedRef || defaultRef;
 
   function updateStyle() {
     const { options } = getProps(props);
@@ -123,7 +124,7 @@ function RelativeBox(props) {
       style={getStyle(props, state)}
     />
   );
-}
+});
 
 RelativeBox.displayName = 'RelativeBox';
 
@@ -148,6 +149,7 @@ RelativeBox.propTypes = {
   middle: PropTypes.bool,
   end: PropTypes.bool,
   margin: PropTypes.number,
+  forwardedRef: PropTypes.object,
 };
 
 export default RelativeBox;
