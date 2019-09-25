@@ -12,6 +12,9 @@ import ChevronRightIcon from '../../Icons/ChevronRight';
 import ButtonGroup from '../../ButtonGroup/ButtonGroup';
 import Input from '../../Input';
 
+
+const MAX_YEAR_VALUE = 99999;
+
 const months = LocaleUtils.getMonths().map((month, i) => ({
   title: month,
   value: i + 1,
@@ -67,10 +70,27 @@ class DatePickerHeader extends React.Component {
     this.props.onChange({ month });
   }
 
-  handleChangeYear(e) {
-    const { month } = this.props.date;
-    const newDate = { year: parseInt(e.target.value, 10), month };
-    this.props.onChange(newDate);
+  handleChangeYear({
+    target: {
+      value,
+    },
+    event,
+  }) {
+    const {
+      date: {
+        month,
+      },
+      onChange,
+    } = this.props;
+
+    const year = parseInt(value, 10);
+    if (year > MAX_YEAR_VALUE) {
+      event.preventDefault();
+      return;
+    }
+
+    const newDate = { year, month };
+    onChange(newDate);
   }
 
   handleClickToday() {
@@ -78,7 +98,20 @@ class DatePickerHeader extends React.Component {
   }
 
   render() {
-    const { id, date, labels } = this.props;
+    const {
+      id,
+      date: {
+        year: yearValue,
+        month,
+        hour,
+      },
+      date,
+      labels,
+      isEmptyYearValue,
+    } = this.props;
+
+    const year = isEmptyYearValue ? '' : yearValue;
+
     const datePickerLabels = {
       month: 'Month',
       year: 'Year',
@@ -95,7 +128,7 @@ class DatePickerHeader extends React.Component {
               id={`${id}__month-select`}
               label={datePickerLabels.month}
               hideLabel
-              value={date.month}
+              value={month}
               name="month"
               onChange={this.handleChangeMonth}
               options={months}
@@ -109,7 +142,7 @@ class DatePickerHeader extends React.Component {
             type="number"
             name="year"
             className="DatePicker__year-input"
-            value={date.year}
+            value={year}
             onChange={this.handleChangeYear}
           />
         </FormRow>
@@ -131,8 +164,8 @@ class DatePickerHeader extends React.Component {
             <ButtonGroup
               className="DatePicker__am-pm-choice"
               items={[{ title: 'am', value: -12 }, { title: 'pm', value: 12 }]}
-              value={date.hour > 11 ? 12 : -12}
-              onChange={delta => this.props.onChangeTime({ hour: date.hour + delta })}
+              value={hour > 11 ? 12 : -12}
+              onChange={delta => this.props.onChangeTime({ hour: hour + delta })}
             />
           </FormRow>
         )}
@@ -167,6 +200,11 @@ DatePickerHeader.propTypes = {
     year: PropTypes.string,
   }),
   datetime: PropTypes.bool,
+  isEmptyYearValue: PropTypes.bool,
+};
+
+DatePickerHeader.defaultProps = {
+  isEmptyYearValue: false,
 };
 
 export default DatePickerHeader;
