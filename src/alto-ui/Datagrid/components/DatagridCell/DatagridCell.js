@@ -12,7 +12,14 @@ import DatagridCellInput from '../DatagridCellInput/DatagridCellInput';
 import Calendar from '../../../Icons/Calendar';
 import CaretDown from '../../../Icons/CaretDown';
 
-import { getFormattedValue, getValue, getFormatter, getType, IDENTITY } from '../../helpers';
+import {
+  getFormattedValue,
+  getValue,
+  getFormatter,
+  getType,
+  IDENTITY,
+  getTitleValue,
+} from '../../helpers';
 
 import { bemClass } from '../../../helpers/bem';
 
@@ -347,11 +354,12 @@ class DatagridCell extends React.Component {
     const { aria } = this.props;
     const style = this.getStyle();
     const modifiers = this.getModifiers();
+    const value = this.getFormattedValue();
 
     return (
       <div
         className={bemClass('DatagridCell', modifiers, this.props.className)}
-        title={this.getFormattedValue()}
+        title={getTitleValue(value)}
         ref={this.cellRef}
         style={style}
         role="gridcell"
