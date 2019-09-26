@@ -2,11 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Link from '../Link';
+import Button from '../Button';
 import { bemClass } from '../helpers/bem';
 
 import './Tabs.scss';
 
-const Tabs = ({ id, items, children, className, currentUrl, panel }) => (
+const getHandleChange = (items, index, active, onChange) => () => {
+  if (!active) return onChange(items[index].value);
+  return null;
+};
+
+const renderLinks = (items, children, panel, className, currentUrl, id) => (
   <ul id={id} className={bemClass('tabs', { panel }, className)} role="tablist">
     {items.map((item, index) => (
       <li key={item.url} className="tabs__tab">
@@ -21,6 +27,24 @@ const Tabs = ({ id, items, children, className, currentUrl, panel }) => (
     ))}
   </ul>
 );
+
+const renderButtons = (items, value, id, onChange) =>
+  items.map((item, index) => (
+    <Button
+      key={item.value}
+      id={id ? `${id}__button--${index}` : undefined}
+      className={bemClass('tabs__button', { active: item.value === value })}
+      onClick={getHandleChange(items, index, item.value === value, onChange)}
+      flat
+    >
+      {item.title}
+    </Button>
+  ));
+
+const Tabs = ({ id, items, children, className, currentUrl, panel, onChange, value }) =>
+  value
+    ? renderButtons(items, value, id, onChange)
+    : renderLinks(items, children, panel, className, currentUrl, id);
 
 Tabs.displayName = 'Tabs';
 
@@ -37,7 +61,7 @@ Tabs.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string,
-      url: PropTypes.string.isRequired,
+      url: PropTypes.string,
     })
   ).isRequired,
 };
