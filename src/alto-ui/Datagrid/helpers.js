@@ -21,3 +21,5 @@ export const getFormattedValue = context => (value, column, row) => {
   const format = getFormatter(context, type);
   return format(value, column, row);
 };
+
+export const getTitleValue = value => ([undefined, null].includes(value) ? '' : value.toString());

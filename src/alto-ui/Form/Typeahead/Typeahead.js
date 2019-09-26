@@ -41,15 +41,25 @@ const renderFields = (search, itemToString, fields) => (item, ...args) => {
   return fields(item, itemToStringFromated, ...args);
 };
 
-function typeaheadStateReducer(state, changes) {
+function typeaheadStateReducer(state, changes, documentRef, dropdownRef) {
   switch (changes.type) {
     // ON BLUR (on click outside)
-    case Downshift.stateChangeTypes.mouseUp:
+    case Downshift.stateChangeTypes.mouseUp: {
+      // We have to check if user clicks on scrollbar, because on IE it triggers onBlur event
+      // If yes, we don't want to hide dropdown list
+      const {
+        current: { activeElement },
+      } = documentRef;
+      const { current: dropdownListRef } = dropdownRef;
+      const wasScrollBarClicked = activeElement.isSameNode(dropdownListRef);
       return {
         ...changes,
         // if onBlur and inputValue is empty, keep it empty, dont revert to prev value
         inputValue: state.inputValue,
+        highlightedIndex: wasScrollBarClicked ? state.highlightedIndex : changes.highlightedIndex,
+        isOpen: wasScrollBarClicked,
       };
+    }
     default:
       return changes;
   }
@@ -85,6 +95,8 @@ const Typeahead = React.forwardRef(
     passedRef
   ) => {
     const defaultInputRef = useRef();
+    const dropdownRef = useRef();
+    const documentRef = useRef(document);
     const inputRef = passedRef || defaultInputRef;
     const id = useUniqueKey(props.id);
     const labels = {
@@ -166,7 +178,9 @@ const Typeahead = React.forwardRef(
         inputValue={valueToString}
         itemToString={item => (item ? itemToString(item) : '')}
         defaultHighlightedIndex={0}
-        stateReducer={typeaheadStateReducer}
+        stateReducer={(state, changes) =>
+          typeaheadStateReducer(state, changes, documentRef, dropdownRef)
+        }
         onStateChange={changes => {
           if (changes.isOpen) {
             setOpenMenu(true);
@@ -241,6 +255,7 @@ const Typeahead = React.forwardRef(
               id={`${id}__popover`}
               className="Typeahead__menu"
               open={isOpen}
+              forwardedRef={dropdownRef}
               target={inputRef.current ? inputRef.current.parentElement : undefined}
               bottom
               start

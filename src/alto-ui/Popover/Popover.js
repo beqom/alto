@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
@@ -36,6 +36,7 @@ class Popover extends React.Component {
       includeTarget,
       inert,
       target,
+      forwardedRef,
       ...relativeBoxProps
     } = this.props;
 
@@ -60,6 +61,7 @@ class Popover extends React.Component {
               margin={6.4}
               targetRef={trigger ? this.targetRef : undefined}
               target={trigger ? undefined : target}
+              ref={forwardedRef}
               {...relativeBoxProps}
             >
               {children}
@@ -99,6 +101,7 @@ Popover.propTypes = {
   open: PropTypes.bool,
   includeTarget: PropTypes.bool,
   inert: PropTypes.bool,
+  forwardedRef: PropTypes.object,
 };
 
-export default Popover;
+export default forwardRef((props, forwardedRef) => <Popover {...props} ref={forwardedRef} />);
