@@ -41,27 +41,33 @@ const renderFields = (search, itemToString, fields) => (item, ...args) => {
   return fields(item, itemToStringFromated, ...args);
 };
 
-function typeaheadStateReducer(state, changes, documentRef, dropdownRef) {
+function typeaheadStateReducer(state, changes, wasScrollbarOrInputClicked) {
+  // We have to check if user clicks on scrollbar, because on IE it triggers onBlur event
+  // If yes, we don't want to hide dropdown list
+  const isScrollbarOrInputClicked = wasScrollbarOrInputClicked();
   switch (changes.type) {
     // ON BLUR (on click outside)
     case Downshift.stateChangeTypes.mouseUp: {
-      // We have to check if user clicks on scrollbar, because on IE it triggers onBlur event
-      // If yes, we don't want to hide dropdown list
-      const {
-        current: { activeElement },
-      } = documentRef;
-      const { current: dropdownListRef } = dropdownRef;
-      const wasScrollBarClicked = activeElement.isSameNode(dropdownListRef);
       return {
         ...changes,
         // if onBlur and inputValue is empty, keep it empty, dont revert to prev value
         inputValue: state.inputValue,
-        highlightedIndex: wasScrollBarClicked ? state.highlightedIndex : changes.highlightedIndex,
-        isOpen: wasScrollBarClicked,
+        highlightedIndex: isScrollbarOrInputClicked
+          ? state.highlightedIndex
+          : changes.highlightedIndex,
+        isOpen: isScrollbarOrInputClicked,
       };
     }
-    default:
+    case Downshift.stateChangeTypes.itemMouseEnter:
       return changes;
+    default:
+      return {
+        ...changes,
+        highlightedIndex: isScrollbarOrInputClicked
+          ? state.highlightedIndex
+          : changes.highlightedIndex,
+        isOpen: changes.isOpen || isScrollbarOrInputClicked,
+      };
   }
 }
 
@@ -90,6 +96,7 @@ const Typeahead = React.forwardRef(
       itemKey,
       clearable,
       edited,
+      isDataGridCell,
       ...props
     },
     passedRef
@@ -173,13 +180,27 @@ const Typeahead = React.forwardRef(
 
     useEffect(() => setSearch(null), [isMenuOpen, value]);
 
+    const wasScrollbarOrInputClicked = () => {
+      const {
+        current: { activeElement },
+      } = documentRef;
+      const { current: dropdownListRef } = dropdownRef;
+      const { current: typeaheadRef } = inputRef;
+
+      return (
+        activeElement &&
+        ((dropdownListRef && activeElement.isSameNode(dropdownListRef)) ||
+          (typeaheadRef && activeElement.isSameNode(typeaheadRef)))
+      );
+    };
+
     return (
       <Downshift
         inputValue={valueToString}
         itemToString={item => (item ? itemToString(item) : '')}
         defaultHighlightedIndex={0}
         stateReducer={(state, changes) =>
-          typeaheadStateReducer(state, changes, documentRef, dropdownRef)
+          typeaheadStateReducer(state, changes, wasScrollbarOrInputClicked)
         }
         onStateChange={changes => {
           if (changes.isOpen) {
@@ -224,8 +245,13 @@ const Typeahead = React.forwardRef(
                   else setSearch(e.target.value);
                 },
                 onBlur(e) {
-                  if (typeof props.onBlur === 'function') props.onBlur(e);
-                  setFocus(false);
+                  if (wasScrollbarOrInputClicked()) {
+                    inputRef.current.focus();
+                  } else {
+                    if (typeof props.onBlur === 'function') props.onBlur(e);
+                    if (isDataGridCell) closeMenu();
+                    setFocus(false);
+                  }
                 },
               })}
               label=""

@@ -63,6 +63,7 @@ class DatagridCellInput extends React.Component {
           onOpen: this.handleStartEditing,
           clearable: true,
           edited: modifiers.edited,
+          isDataGridCell: true,
           ...inputProps,
         };
       case 'boolean':
