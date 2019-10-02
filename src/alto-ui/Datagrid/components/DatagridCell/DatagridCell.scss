@@ -232,6 +232,10 @@
     height: $height-datagrid-comfortable - 0.75;
     line-height: $height-datagrid-comfortable - 0.75;
   }
+
+  &.DatagridCell__content--selected {
+    background-color: $white;
+  }
 }
 
 .DatagridCell__content--edited {
