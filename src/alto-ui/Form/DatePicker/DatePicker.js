@@ -86,6 +86,7 @@ function DatePicker(props) {
     datetime,
     onKeyDown,
     onSelectDate,
+    labels,
     ...remainingProps
   } = props;
 
@@ -200,6 +201,7 @@ function DatePicker(props) {
           onChangeTime={onChangeDatetimeHeader}
           datetime={datetime}
           isEmptyYearValue={isEmptyYearValue}
+          labels={labels}
         />
         <div className="DatePicker__days">
           <DayPicker

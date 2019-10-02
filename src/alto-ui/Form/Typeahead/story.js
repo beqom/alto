@@ -88,7 +88,7 @@ storiesOf('Form/Typeahead', module)
         <div style={{ width: 300 }}>
           <Typeahead
             label="On demand and Pagination"
-            items={currentPage === 1 && fetching ? [] : list}
+            items={currentPage === 1 && fetching ? [] : list || [value]}
             onChange={setValue}
             value={value}
             loading={fetching}

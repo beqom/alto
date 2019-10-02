@@ -78,6 +78,20 @@ function usePrevious(value) {
   return prevValue;
 }
 
+const wasScrollbarOrInputClicked = (documentRef, dropdownRef, inputRef) => {
+  const {
+    current: { activeElement },
+  } = documentRef;
+  const { current: dropdownListRef } = dropdownRef;
+  const { current: typeaheadRef } = inputRef;
+
+  return (
+    activeElement &&
+    ((dropdownListRef && activeElement.isSameNode(dropdownListRef)) ||
+      (typeaheadRef && activeElement.isSameNode(typeaheadRef)))
+  );
+};
+
 const Typeahead = React.forwardRef(
   (
     {
@@ -135,7 +149,8 @@ const Typeahead = React.forwardRef(
 
     const selectedString = itemToString(selectedItem);
 
-    const valueToString = (isFocused || isMenuOpen) && search !== null ? search : selectedString;
+    const valueToString =
+      (isFocused || isMenuOpen) && search !== null ? search : selectedString || value;
 
     const hasPagination = typeof onChangePage === 'function';
     const hasNotTotalYet = typeof totalItems !== 'number';
@@ -157,7 +172,7 @@ const Typeahead = React.forwardRef(
       [items, search]
     );
 
-    function changePage(page, s = search) {
+    function changePage(page, s = valueToString) {
       if (typeof onChangePage === 'function') onChangePage(page, s || '');
     }
 
@@ -180,27 +195,15 @@ const Typeahead = React.forwardRef(
 
     useEffect(() => setSearch(null), [isMenuOpen, value]);
 
-    const wasScrollbarOrInputClicked = () => {
-      const {
-        current: { activeElement },
-      } = documentRef;
-      const { current: dropdownListRef } = dropdownRef;
-      const { current: typeaheadRef } = inputRef;
-
-      return (
-        activeElement &&
-        ((dropdownListRef && activeElement.isSameNode(dropdownListRef)) ||
-          (typeaheadRef && activeElement.isSameNode(typeaheadRef)))
-      );
-    };
-
     return (
       <Downshift
         inputValue={valueToString}
         itemToString={item => (item ? itemToString(item) : '')}
         defaultHighlightedIndex={0}
         stateReducer={(state, changes) =>
-          typeaheadStateReducer(state, changes, wasScrollbarOrInputClicked)
+          typeaheadStateReducer(state, changes, () =>
+            wasScrollbarOrInputClicked(documentRef, dropdownRef, inputRef)
+          )
         }
         onStateChange={changes => {
           if (changes.isOpen) {
@@ -245,7 +248,9 @@ const Typeahead = React.forwardRef(
                   else setSearch(e.target.value);
                 },
                 onBlur(e) {
-                  if (wasScrollbarOrInputClicked()) {
+                  if (wasScrollbarOrInputClicked(documentRef, dropdownRef, inputRef)) {
+                    // On IE11 when user clicks on scrollbar or caret, input loses focus
+                    // so we have to restore it
                     inputRef.current.focus();
                   } else {
                     if (typeof props.onBlur === 'function') props.onBlur(e);
@@ -309,7 +314,7 @@ const Typeahead = React.forwardRef(
                       </div>
                     )}
                   />
-                  {!loading && isPaginated && (
+                  {!loading && isPaginated && items.length < totalItems && (
                     <Button
                       className="Typeahead__load-more"
                       flat

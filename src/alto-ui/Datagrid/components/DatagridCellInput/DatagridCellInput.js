@@ -49,7 +49,16 @@ class DatagridCellInput extends React.Component {
   }
 
   getInputProps() {
-    const { type, context, column, inputProps, modifiers } = this.props;
+    const {
+      type,
+      context: {
+        locale,
+        labels,
+      },
+      column,
+      inputProps,
+      modifiers,
+    } = this.props;
 
     const sharedProps = this.getSharedProps();
 
@@ -78,7 +87,7 @@ class DatagridCellInput extends React.Component {
       case 'float':
         return {
           ...sharedProps,
-          locale: context.locale,
+          locale,
           precision: column.precision,
           right: true,
           disableThousandSeparator: column.disableThousandSeparator,
@@ -94,6 +103,7 @@ class DatagridCellInput extends React.Component {
           onChange: this.handleChange,
           onSelectDate: this.handleChangeFromOverlay,
           ...inputProps,
+          labels,
         };
       default:
         return {
