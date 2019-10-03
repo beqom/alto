@@ -51,10 +51,7 @@ class DatagridCellInput extends React.Component {
   getInputProps() {
     const {
       type,
-      context: {
-        locale,
-        labels,
-      },
+      context: { locale, labels },
       column,
       inputProps,
       modifiers,
@@ -68,8 +65,10 @@ class DatagridCellInput extends React.Component {
         return {
           ...sharedProps,
           onFocus: undefined,
+          onBlur: undefined,
           onChange: this.handleChangeFromOverlay,
           onOpen: this.handleStartEditing,
+          onClose: this.handleBlur,
           clearable: true,
           edited: modifiers.edited,
           isDataGridCell: true,
