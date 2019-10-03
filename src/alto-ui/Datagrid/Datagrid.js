@@ -473,6 +473,7 @@ class Datagrid extends React.PureComponent {
       ? columnHeaders.filter(({ frozen }) => frozen)
       : frozenColumns;
     const headersCount = 1;
+    const hasCheckbox = typeof this.props.onSelectRow === 'function';
 
     const { labels } = this.getContext();
     return (
@@ -489,7 +490,7 @@ class Datagrid extends React.PureComponent {
       >
         {this.renderResizer()}
         <div role="rowgroup" className="Datagrid__head">
-          {!!frozenColumns.length && (
+          {(!!frozenColumns.length || hasCheckbox) && (
             <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
               {this.renderHeaderRows(frozenColumnHeaders, true)}
               {this.renderSummaryRow(
@@ -520,7 +521,7 @@ class Datagrid extends React.PureComponent {
         <div role="rowgroup" className="Datagrid__body">
           {this.props.rows.length ? (
             <>
-              {!!frozenColumns.length && (
+              {(!!frozenColumns.length || hasCheckbox) && (
                 <div
                   role="presentation"
                   ref={this.setFrozenRowsNode}
