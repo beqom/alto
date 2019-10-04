@@ -1,0 +1,43 @@
+# Node.js with React
+# Build a Node.js project that uses React.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+  - release/0.20
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: SonarQubePrepare@4
+    inputs:
+      SonarQube: 'SonarQube Docker'
+      scannerMode: 'CLI'
+      configMode: 'manual'
+      cliProjectKey: 'Alto-9.1'
+      cliProjectName: 'Alto 9.1'
+      cliProjectVersion: '0.20'
+      cliSources: 'src/alto-ui/'
+      extraProperties: |
+        sonar.branch.name=release/0.20
+
+        # Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
+        # This property is optional if sonar.modules is set.
+        sonar.sources=src/alto-ui/
+        sonar.exclusions=**/index.js, **/story/**, **/story.js
+        sonar.javascript.lcov.reportPaths=coverage/lcov.info
+        sonar.tests=src/alto-ui/
+        sonar.test.inclusions=**/__tests__/**
+        sonar.coverage.exclusions=**/__tests__/**, **/index.js, **/story/**, **/story.js
+
+  - script: yarn install
+    displayName: Install packages
+
+  - script: yarn test
+    displayName: Test
+
+  - task: SonarQubeAnalyze@4
+  - task: SonarQubePublish@4
+    inputs:
+      pollingTimeoutSec: '300'
