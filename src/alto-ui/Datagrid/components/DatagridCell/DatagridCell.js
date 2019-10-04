@@ -147,7 +147,7 @@ class DatagridCell extends React.Component {
       selected,
       clickable,
       detached,
-      first: typeof context.onSelectRow !== 'function' && aria.colIndex === 1,
+      first: (typeof context.onSelectRow !== 'function' || !column.frozen) && aria.colIndex === 1,
       last: aria.colIndex === this.props.context.columns.length,
       'last-row': lastRow,
       compact: context.compact,

@@ -77,7 +77,8 @@ const DatagridHeaderRow = ({
     {columns.map((column, colIndex) => {
       const { columnsWidth } = context;
       const firstCellInRow =
-        typeof context.onSelectRow !== 'function' && columnIndexStart + colIndex === 0;
+        (typeof context.onSelectRow !== 'function' || !column.frozen) &&
+        columnIndexStart + colIndex === 0;
       if (!column.children) {
         return (
           <DatagridHeaderCell

@@ -23,10 +23,10 @@ const getGroupColumnSummary = (column, rows, labels) => {
   return sum(rows.map(r => parseFloat(r[column.key] || 0)));
 };
 
-const getModifiers = (context, { lastRow, frozen }) => ({
+const getModifiers = (context, { lastRow }) => ({
   compact: context.compact,
   comfortable: context.comfortable,
-  'first-in-row': typeof context.onSelectRow !== 'function' || frozen,
+  'first-in-row': true,
   'last-row': lastRow,
 });
 
