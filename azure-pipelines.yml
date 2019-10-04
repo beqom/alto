@@ -20,7 +20,7 @@ steps:
       cliProjectVersion: '0.21'
       cliSources: 'src/alto-ui/'
       extraProperties: |
-        sonar.branch.name=master
+        sonar.branch.name=release/0.21
 
         # Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
         # This property is optional if sonar.modules is set.
