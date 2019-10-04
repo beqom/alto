@@ -103,6 +103,7 @@ const Typeahead = React.forwardRef(
       onChange,
       labels: labelsProps,
       loading,
+      onClose,
       onOpen,
       pageSize,
       totalItems,
@@ -194,6 +195,10 @@ const Typeahead = React.forwardRef(
     }, [search]);
 
     useEffect(() => setSearch(null), [isMenuOpen, value]);
+
+    useEffect(() => {
+      if (typeof onClose === 'function' && !isMenuOpen) onClose();
+    }, [isMenuOpen]);
 
     return (
       <Downshift
@@ -378,6 +383,7 @@ Typeahead.propTypes = {
   items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.string, PropTypes.object])),
   fields: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
   onFocus: PropTypes.func,
+  onClose: PropTypes.func,
   onBlur: PropTypes.func,
   loading: PropTypes.bool,
   onOpen: PropTypes.func,
