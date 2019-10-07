@@ -231,7 +231,7 @@ function DatePicker(props) {
                 return;
               }
 
-              onChange(jsDate);
+              handleChange(jsDate);
               if (typeof props.onClose === 'function') {
                 props.onClose();
               }
