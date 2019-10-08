@@ -93,8 +93,8 @@ function DatePicker(props) {
   const inputRef = givenRef || defaultInputRef;
 
   function handleChange(d) {
-    if (timestamp) onChange(d.getTime());
-    else if (iso) onChange(d.toISOString());
+    if (timestamp && d) onChange(d.getTime());
+    else if (iso && d) onChange(d.toISOString());
     else onChange(d);
   }
 
@@ -231,7 +231,7 @@ function DatePicker(props) {
                 return;
               }
 
-              onChange(jsDate);
+              handleChange(jsDate);
               if (typeof props.onClose === 'function') {
                 props.onClose();
               }
