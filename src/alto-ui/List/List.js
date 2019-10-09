@@ -216,9 +216,12 @@ function List(props) {
               const isPrimaryButton = field.primary && onClick;
               const Field = isPrimaryButton ? 'button' : 'div';
               const handleClickItem = handleClick(itemIndex);
+              const uniqueId = `${id}__item--${itemKey(item)}__field--${field.key}`;
+
               return (
                 <Field
                   key={field.key}
+                  id={isPrimaryButton ? `List__field--${uniqueId}` : null}
                   className={bemClass('List__field', {
                     button: isPrimaryButton,
                     primary: field.primary || fields.length === 1,
@@ -238,7 +241,7 @@ function List(props) {
                     field,
                     item,
                     index,
-                    `${id}__item--${itemKey(item)}__field--${field.key}`,
+                    uniqueId,
                     handleChange(itemIndex)(field),
                     handleClickItem,
                     active,
@@ -285,7 +288,7 @@ function List(props) {
      * IE11 doesn't read height of the element with overflow-y: auto;
      * and doesn't triger height for container by children so we need one extra div element
      * https://stackoverflow.com/questions/44311284/container-div-doesnt-resize-correctly-in-internet-explorer-11
-    */
+     */
     <div>
       <Group {...groupProps}>
         {items.map((item, index) => (
