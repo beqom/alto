@@ -1,37 +1,51 @@
 @import '../scss/inc';
 
 .Datagrid {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  max-width: 100%;
-  max-height: 100%;
   // Misalignement on last rows
   line-height: 1;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-
-  &--loaded {
-    opacity: 1;
-  }
 }
 
-.Datagrid__head,
+.Datagrid__horizontal-scroll-element {
+  height: $height-scrollbar;
+  background-color: transparent;
+}
+.Datagrid__horizontal-scroll-container {
+  position: absolute;
+  bottom: 0;
+  right: $height-scrollbar;
+  width: 100%;
+  overflow-x: scroll;
+  z-index: 1000;
+}
+
 .Datagrid__body {
   display: flex;
-}
-
-.Datagrid__body {
   flex: 1 1 0;
   min-height: 0;
-  -ms-overflow-style: scrollbar;
+  padding-bottom: $height-scrollbar;
 }
 
 .Datagrid__head {
+  display: flex;
+  overflow: hidden;
   .ps__rail-x {
     display: none;
   }
+}
+
+.Datagrid__header-container {
+  overflow-y: hidden;
+}
+
+.Datagrid__header-row-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -ms-overflow-style: none;
 }
 
 .Datagrid__header-row {
@@ -39,33 +53,7 @@
   flex-direction: column;
 }
 
-.Datagrid__header-row--static,
-.Datagrid__rows--static {
-  flex: 1 1 0;
-}
-.Datagrid__header-row,
-.Datagrid__rows {
-  overflow: hidden;
-}
-
-.Datagrid__header-row--static {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    height: 0;
-    visibility: hidden;
-  }
-}
-
 .Datagrid__rows--frozen {
-  overflow-y: auto;
-  overflow-x: hidden;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   .ps__rail-y {
     display: none;
   }
@@ -73,22 +61,17 @@
 
 .Datagrid__rows--static {
   position: relative;
-  overflow: auto;
+  width: 100%;
 }
 
 .Datagrid__rows-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: auto;
-}
+  overflow-x: hidden;
+  overflow-y: visible;
+  -ms-overflow-style: none;
 
-.DataGrid__perfect-scrollbar {
-  // Override inline with added by scrollbar package
-  width: 100% !important;
-  height: 100% !important;
+  &--isMacOS {
+    overflow-x: scroll;
+  }
 }
 
 .Datagrid__no-data-label {
@@ -143,27 +126,4 @@
   .Datagrid {
     border-radius: 0;
   } /* IE11 */
-
-  .Datagrid__header-row--static {
-    -ms-overflow-style: none;
-  }
-
-  .Datagrid__rows--frozen {
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-    & > div:last-child {
-      /* IE11 Misalignment on last row */
-      margin-bottom: $height-scrollbar;
-    }
-  }
-}
-
-/* Hack for Edge Scrolling */
-@supports (-ms-ime-align: auto) {
-  .Datagrid__head {
-    height: 25.5%;
-  }
-  .Datagrid__body {
-    height: 74.5%;
-  }
 }
