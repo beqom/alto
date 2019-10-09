@@ -1,40 +1,57 @@
 @import '../scss/inc';
 
 .Datagrid {
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  opacity: 0;
-  border: 1px solid $coolgrey-20;
-  border-radius: $border-radius-default;
-  max-width: 100%;
-  max-height: 100%;
   // Misalignement on last rows
   line-height: 1;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-
-  &--loaded {
-    opacity: 1;
-  }
 }
 
-.Datagrid__head,
+.Datagrid__horizontal-scroll-element {
+  height: $height-scrollbar;
+  background-color: transparent;
+}
+.Datagrid__horizontal-scroll-container {
+  position: absolute;
+  bottom: 0;
+  right: $height-scrollbar;
+  width: 100%;
+  overflow-x: scroll;
+  z-index: 1000;
+}
+
 .Datagrid__body {
   display: flex;
-}
-
-.Datagrid__body {
   flex: 1 1 0;
   min-height: 0;
-  -ms-overflow-style: scrollbar;
+  padding-bottom: $height-scrollbar;
 }
 
 .Datagrid__head {
-  border-bottom: 1px solid $coolgrey-20;
+  display: flex;
+  overflow: hidden;
   .ps__rail-x {
     display: none;
   }
+}
+
+.Datagrid__header-container {
+  overflow-y: hidden;
+}
+
+.Datagrid__header-row--frozen,
+.Datagrid__header-row-container {
+  border: 1px solid $coolgrey-20;
+  border-bottom: 0;
+}
+
+.Datagrid__header-row-container {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -ms-overflow-style: none;
 }
 
 .Datagrid__header-row {
@@ -42,40 +59,8 @@
   flex-direction: column;
 }
 
-.Datagrid__header-row--frozen {
-  margin-right: 2px;
-  box-shadow: 2px 0 0 $coolgrey-20;
-}
-
-.Datagrid__header-row--static,
-.Datagrid__rows--static {
-  flex: 1 1 0;
-}
-.Datagrid__header-row,
-.Datagrid__rows {
-  overflow: hidden;
-}
-
-.Datagrid__header-row--static {
-  position: relative;
-  overflow-x: auto;
-  overflow-y: hidden;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    height: 0;
-    visibility: hidden;
-  }
-}
-
 .Datagrid__rows--frozen {
-  box-shadow: 2px 0 0 $coolgrey-20;
-  margin-right: 2px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -ms-overflow-style: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  border: 1px solid $coolgrey-20;
   .ps__rail-y {
     display: none;
   }
@@ -83,22 +68,18 @@
 
 .Datagrid__rows--static {
   position: relative;
-  overflow: auto;
+  width: 100%;
+  border: 1px solid $coolgrey-20;
 }
 
 .Datagrid__rows-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  overflow: auto;
-}
+  overflow-x: hidden;
+  overflow-y: visible;
+  -ms-overflow-style: none;
 
-.DataGrid__perfect-scrollbar {
-  // Override inline with added by scrollbar package
-  width: 100% !important;
-  height: 100% !important;
+  &--isMacOS {
+    overflow-x: scroll;
+  }
 }
 
 .Datagrid__no-data-label {
@@ -109,13 +90,23 @@
   margin: auto;
 }
 
-.DataGrid__row-checkbox {
+.DataGrid__row-checkbox-container {
   display: flex;
   align-items: center;
-  padding-left: 0.75rem;
-  height: $height-datagrid-default;
   width: $height-datagrid-default;
   border-bottom: 1px solid $coolgrey-20;
+  border-left: 1px solid $coolgrey-20;
+  background-color: $white;
+  height: $height-datagrid-default;
+
+  &--first-row {
+    border-top: 1px solid $coolgrey-20;
+    border-top-left-radius: $border-radius-default;
+  }
+
+  &--last-row {
+    border-bottom-left-radius: $border-radius-default;
+  }
 
   &--compact {
     height: $height-datagrid-compact;
@@ -126,29 +117,16 @@
   }
 
   &--header {
-    background-color: $white;
-    height: $height-datagrid-header-default;
+    height: 2.5rem;
 
-    &.DataGrid__row-checkbox--compact {
-      height: $height-datagrid-header-compact;
-    }
-
-    &.DataGrid__row-checkbox--comfortable {
-      height: $height-datagrid-header-comfortable;
+    &.DataGrid__row-checkbox-container--comfortable {
+      height: 3.5rem;
     }
   }
+}
 
-  &--summary {
-    height: $height-datagrid-default;
-
-    &.DataGrid__row-checkbox--compact {
-      height: $height-datagrid-default;
-    }
-
-    &.DataGrid__row-checkbox--comfortable {
-      height: $height-datagrid-comfortable;
-    }
-  }
+.DataGrid__row-checkbox {
+  margin: auto;
 }
 
 @media all and (-ms-high-contrast: none) {
@@ -156,23 +134,4 @@
   .Datagrid {
     border-radius: 0;
   } /* IE11 */
-
-  .Datagrid__header-row--static {
-    -ms-overflow-style: none;
-  }
-
-  .Datagrid__rows--frozen {
-    overflow-x: hidden;
-    -ms-overflow-style: none;
-  }
-}
-
-/* Hack for Edge Scrolling */
-@supports (-ms-ime-align: auto) {
-  .Datagrid__head {
-    height: 25.5%;
-  }
-  .Datagrid__body {
-    height: 74.5%;
-  }
 }
