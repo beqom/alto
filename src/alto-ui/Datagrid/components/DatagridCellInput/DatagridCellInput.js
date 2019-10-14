@@ -58,7 +58,6 @@ class DatagridCellInput extends React.Component {
     } = this.props;
 
     const sharedProps = this.getSharedProps();
-
     switch (type) {
       case 'list':
       case 'select':
@@ -71,7 +70,6 @@ class DatagridCellInput extends React.Component {
           onClose: this.handleBlur,
           clearable: true,
           edited: modifiers.edited,
-          isDataGridCell: true,
           ...inputProps,
         };
       case 'boolean':
