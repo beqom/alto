@@ -111,7 +111,6 @@ const Typeahead = React.forwardRef(
       itemKey,
       clearable,
       edited,
-      isDataGridCell,
       ...props
     },
     passedRef
@@ -259,7 +258,6 @@ const Typeahead = React.forwardRef(
                     inputRef.current.focus();
                   } else {
                     if (typeof props.onBlur === 'function') props.onBlur(e);
-                    if (isDataGridCell) closeMenu();
                     setFocus(false);
                   }
                 },
