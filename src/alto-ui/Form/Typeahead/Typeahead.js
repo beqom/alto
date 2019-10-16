@@ -116,7 +116,8 @@ const Typeahead = React.forwardRef(
 
     const selectedString = itemToString(selectedItem);
 
-    const valueToString = (isFocused || isMenuOpen) && search !== null ? search : selectedString;
+    const valueToString =
+      (isFocused || isMenuOpen) && search !== null ? search : selectedString || value;
 
     const hasPagination = typeof onChangePage === 'function';
     const hasNotTotalYet = typeof totalItems !== 'number';
@@ -138,7 +139,7 @@ const Typeahead = React.forwardRef(
       [items, search]
     );
 
-    function changePage(page, s = search) {
+    function changePage(page, s = valueToString) {
       if (typeof onChangePage === 'function') onChangePage(page, s || '');
     }
 
@@ -268,7 +269,7 @@ const Typeahead = React.forwardRef(
                       </div>
                     )}
                   />
-                  {!loading && isPaginated && (
+                  {!loading && isPaginated && items.length < totalItems && (
                     <Button
                       className="Typeahead__load-more"
                       flat
