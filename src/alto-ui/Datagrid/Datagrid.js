@@ -1,13 +1,13 @@
-import debounce from 'lodash.debounce';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DateTime } from 'luxon';
 
 import ErrorIcon from '../Icons/ErrorIcon';
 import Avatar from '../Avatar';
-import { isIE11 } from '../helpers/navigator';
 import { bemClass } from '../helpers/bem';
 import { format as formatNumber } from '../helpers/number';
+import sum from '../helpers/sum';
+import { isMacOS as isMacOSHelper } from '../helpers/navigator';
 import CheckBox from '../Form/CheckBox';
 import Tooltip from '../Tooltip';
 
@@ -19,7 +19,7 @@ import DatagridResizer from './components/DatagridResizer';
 import './Datagrid.scss';
 
 const CHECKBOX_WIDTH = 32;
-const WINDOW_RESIZE_DEBOUNCE = 100;
+const SCROLLBAR_SIZE = 17;
 
 const DEFAULT_LABELS = {
   errorFormula: 'There is an error in formula',
@@ -86,61 +86,51 @@ const initialStateResizer = {
   resizing: false,
 };
 
+const IS_MAC_OS = isMacOSHelper();
+
 class Datagrid extends React.PureComponent {
   constructor(props) {
     super(props);
 
     this.state = {
-      loaded: false,
       collapsedGroups: {},
       resizer: initialStateResizer,
       columnsWidth: {},
     };
 
-    this.scrollingElt = null;
-    this.timeout = null;
-    this.initialTimeout = null;
-
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
     this.setFrozenRowsNode = this.setFrozenRowsNode.bind(this);
     this.setStaticRowsNode = this.setStaticRowsNode.bind(this);
-    this.handleScrollXStaticHeader = this.handleScrollXStaticHeader.bind(this);
-    this.handleScrollYFrozenRows = this.handleScrollYFrozenRows.bind(this);
-    this.handleScrollStaticRows = this.handleScrollStaticRows.bind(this);
     this.handleMouseEnterResizeHandle = this.handleMouseEnterResizeHandle.bind(this);
     this.handleToggleGroup = this.handleToggleGroup.bind(this);
     this.handleStopResize = this.handleStopResize.bind(this);
     this.handleStartResize = this.handleStartResize.bind(this);
-    this.trackDimensions = debounce(this.trackDimensions.bind(this), WINDOW_RESIZE_DEBOUNCE);
 
     this.containerRef = React.createRef();
+
+    this.setScrollNode = this.setScrollNode.bind(this);
+    this.setScrollHeaderNode = this.setScrollHeaderNode.bind(this);
+    this.scrollListener = IS_MAC_OS
+      ? this.scrollMacOSListener.bind(this)
+      : this.scrollListener.bind(this);
+
   }
 
   componentDidMount() {
-    // fix scroll initial value
-    this.initialTimeout = setTimeout(() => {
-      if (this.staticHeaderNode && this.frozenRowsNode && this.staticRowsNode) {
-        this.staticHeaderNode.setAttribute('style', '');
-        this.frozenRowsNode.setAttribute('style', '');
-        this.staticHeaderNode.scrollLeft = 0;
-        this.frozenRowsNode.scrollTop = 0;
-        this.staticRowsNode.scrollLeft = 0;
-        this.staticRowsNode.scrollTop = 0;
-        this.trackDimensions();
-      }
-      this.setState({ loaded: true });
-    }, 0);
-    this.addWindowResizeListener();
-  }
+    if (this.staticHeaderNode && this.frozenRowsNode) {
+      this.staticHeaderNode.setAttribute('style', '');
+      this.frozenRowsNode.setAttribute('style', '');
+    }
 
-  componentDidUpdate() {
-    this.trackDimensions();
+    const scrollNode = IS_MAC_OS
+      ? this.staticRowsNode
+      : this.scrollNode;
+
+    scrollNode.addEventListener('scroll', this.scrollListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.trackDimensions);
-    clearTimeout(this.initialTimeout);
-    clearTimeout(this.timeout);
+    window.removeEventListener('scroll', this.scrollListener);
   }
 
   getContext() {
@@ -174,6 +164,14 @@ class Datagrid extends React.PureComponent {
     this.staticHeaderNode = node || fakeNode;
   }
 
+  setScrollNode(node) {
+    this.scrollNode = node;
+  }
+
+  setScrollHeaderNode(node) {
+    this.scrollHeaderNode = node;
+  }
+
   setFrozenRowsNode(node) {
     this.frozenRowsNode = node || fakeNode;
   }
@@ -182,17 +180,15 @@ class Datagrid extends React.PureComponent {
     this.staticRowsNode = node || fakeNode;
   }
 
-  trackDimensions() {
-    if (this.staticHeaderNode && this.frozenRowsNode && this.staticRowsNode) {
-      this.staticHeaderNode.style.width = `${this.staticRowsNode.clientWidth}px`;
-      if (!isIE11()) {
-        this.frozenRowsNode.style.height = `${this.staticRowsNode.clientHeight}px`;
-      }
-    }
+  scrollListener() {
+    const { scrollLeft } = this.scrollNode;
+    this.staticRowsNode.scrollLeft = scrollLeft;
+    this.scrollHeaderNode.scrollLeft = scrollLeft;
   }
 
-  addWindowResizeListener() {
-    window.addEventListener('resize', this.trackDimensions);
+  scrollMacOSListener() {
+    const { scrollLeft } = this.staticRowsNode;
+    this.scrollHeaderNode.scrollLeft = scrollLeft;
   }
 
   handleToggleGroup(groupId) {
@@ -202,40 +198,6 @@ class Datagrid extends React.PureComponent {
       [groupId]: !stateGroupId,
     };
     this.setState({ collapsedGroups });
-  }
-
-  handleScrollXStaticHeader() {
-    if (!this.scrollingElt || this.scrollingElt === 'handleScrollXStaticHeader') {
-      this.scrollingElt = 'handleScrollXStaticHeader';
-      this.staticRowsNode.scrollLeft = this.staticHeaderNode.scrollLeft;
-      this.resetScrollingElt();
-    }
-  }
-
-  handleScrollYFrozenRows() {
-    if (!this.scrollingElt || this.scrollingElt === 'handleScrollYFrozenRows') {
-      this.scrollingElt = 'handleScrollYFrozenRows';
-      this.staticRowsNode.scrollTop = this.frozenRowsNode.scrollTop;
-      this.resetScrollingElt();
-    }
-  }
-
-  handleScrollStaticRows() {
-    if (!this.scrollingElt || this.scrollingElt === 'handleScrollStaticRows') {
-      this.scrollingElt = 'handleScrollStaticRows';
-      this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
-      this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
-      this.resetScrollingElt();
-    }
-  }
-
-  resetScrollingElt() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => {
-      this.staticHeaderNode.scrollLeft = this.staticRowsNode.scrollLeft;
-      this.frozenRowsNode.scrollTop = this.staticRowsNode.scrollTop;
-      this.scrollingElt = null;
-    }, 200);
   }
 
   handleMouseEnterResizeHandle(e, column) {
@@ -462,6 +424,29 @@ class Datagrid extends React.PureComponent {
     );
   }
 
+  renderHorizontalScroll(rowsWidth = 0) {
+    if (IS_MAC_OS || !rowsWidth) {
+      return null;
+    }
+
+    const {
+      offsetWidth: frozenRowsWidth = 0,
+    } = this.frozenRowsNode || {};
+
+    return (
+      <div
+        className="Datagrid__horizontal-scroll-container"
+        ref={this.setScrollNode}
+        style={{ width: `calc(100% - ${frozenRowsWidth + SCROLLBAR_SIZE}px)` }}
+      >
+        <div
+          className="Datagrid__horizontal-scroll-element"
+          style={{ width: `${rowsWidth}px`}}
+        />
+      </div>
+    );
+  }
+
   render() {
     const { className, columns, columnHeaders, rows, id } = this.props;
     const staticColumns = columns.filter(({ frozen }) => !frozen);
@@ -476,18 +461,14 @@ class Datagrid extends React.PureComponent {
     const hasCheckbox = typeof this.props.onSelectRow === 'function';
 
     const { labels } = this.getContext();
+    const {
+      offsetWidth: frozenRowsWidth = 0,
+    } = this.frozenRowsNode || {};
+
+    const rowsWidth = sum(staticColumns, 'width');;
+
     return (
-      <div
-        id={id}
-        role="grid"
-        aria-rowcount={headersCount + rows.length}
-        className={bemClass(
-          'Datagrid',
-          { loaded: this.state.loaded, 'with-summary': !!this.props.renderSummaryCell },
-          className
-        )}
-        ref={this.containerRef}
-      >
+      <>
         {this.renderResizer()}
         <div role="rowgroup" className="Datagrid__head">
           {(!!frozenColumns.length || hasCheckbox) && (
@@ -501,51 +482,68 @@ class Datagrid extends React.PureComponent {
               )}
             </div>
           )}
-          <div
-            role="presentation"
-            ref={this.setStaticHeaderNode}
-            onScroll={this.handleScrollXStaticHeader}
-            className={bemClass('Datagrid__header-row', { static: true })}
-          >
-            {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
-            {this.renderSummaryRow(
-              staticColumns,
-              false,
-              staticColumns.length,
-              HEADER_ROW_INDEX + 1,
-              frozenColumns.length
+          <div ref={this.setScrollHeaderNode} className="Datagrid__header-row-container">
+            <div
+              role="presentation"
+              ref={this.setStaticHeaderNode}
+              className={bemClass('Datagrid__header-row', { static: true })}
+              style={{ width: rowsWidth }}
+            >
+              {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
+              {this.renderSummaryRow(
+                staticColumns,
+                false,
+                staticColumns.length,
+                HEADER_ROW_INDEX + 1,
+                frozenColumns.length
+              )}
+            </div>
+          </div>
+        </div>
+        <div
+          id={id}
+          role="grid"
+          aria-rowcount={headersCount + rows.length}
+          className={bemClass(
+            'Datagrid',
+            { 'with-summary': !!this.props.renderSummaryCell },
+            className
+          )}
+          ref={this.containerRef}
+        >
+          {this.renderHorizontalScroll(rowsWidth)}
+
+          <div role="rowgroup" className="Datagrid__body">
+            {this.props.rows.length ? (
+              <>
+                {(!!frozenColumns.length || hasCheckbox) && (
+                  <div
+                    role="presentation"
+                    ref={this.setFrozenRowsNode}
+                    className={bemClass('Datagrid__rows', { frozen: true })}
+                  >
+                    {this.renderRows(frozenColumns, true, headersCount)}
+                  </div>
+                )}
+                <div
+                  role="presentation"
+                  className={bemClass('Datagrid__rows', { static: true })}
+                  style={{ width: `calc(100% - ${frozenRowsWidth}px)` }}
+                >
+                  <div
+                    className={bemClass('Datagrid__rows-container', { isMacOS: IS_MAC_OS })}
+                    ref={this.setStaticRowsNode}
+                  >
+                    {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="Datagrid__no-data-label">{labels.errorNoData}</div>
             )}
           </div>
         </div>
-
-        <div role="rowgroup" className="Datagrid__body">
-          {this.props.rows.length ? (
-            <>
-              {(!!frozenColumns.length || hasCheckbox) && (
-                <div
-                  role="presentation"
-                  ref={this.setFrozenRowsNode}
-                  onScroll={this.handleScrollYFrozenRows}
-                  className={bemClass('Datagrid__rows', { frozen: true })}
-                >
-                  {this.renderRows(frozenColumns, true, headersCount)}
-                </div>
-              )}
-              <div role="presentation" className={bemClass('Datagrid__rows', { static: true })}>
-                <div
-                  className="Datagrid__rows-container"
-                  ref={this.setStaticRowsNode}
-                  onScroll={this.handleScrollStaticRows}
-                >
-                  {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
-                </div>
-              </div>
-            </>
-          ) : (
-            <div className="Datagrid__no-data-label">{labels.errorNoData}</div>
-          )}
-        </div>
-      </div>
+      </>
     );
   }
 }
