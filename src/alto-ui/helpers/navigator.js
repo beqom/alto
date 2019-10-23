@@ -3,3 +3,11 @@ export const isIE11 = () => {
   const { userAgent } = window.navigator;
   return userAgent.indexOf('Trident/') !== -1;
 };
+
+export const isMacOS = () => {
+  const {
+    navigator: { appVersion },
+  } = window;
+
+  return appVersion.indexOf("Mac") !== -1;
+};
