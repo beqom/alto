@@ -36,6 +36,7 @@ import CopyToClipboard from './CopyToClipboard';
 import Dashboard from './Dashboard';
 import Data from './Data';
 import Delete from './Delete';
+import Department from './Department';
 import Details from './Details';
 import Divider from './Divider';
 import Download from './Download';
@@ -87,6 +88,7 @@ import Numeric from './Numeric';
 import Objects from './Objects';
 import Options from './Options';
 import Organization from './Organization';
+import Payee from './Payee';
 import Pencil from './Pencil';
 import Pergamen from './Pergamen';
 import People from './People';
@@ -103,9 +105,11 @@ import Settings from './Settings';
 import ShortText from './ShortText';
 import SortAZ from './SortAZ';
 import SortZA from './SortZA';
+import Structure from './Structure';
 import Sync from './Sync';
 import Tasks from './Tasks';
 import Templates from './Templates';
+import Territory from './Territory';
 import Text from './Text';
 import Times from './Times';
 import Tool from './Tool';
@@ -159,6 +163,7 @@ export default {
   Dashboard,
   Data,
   Delete,
+  Department,
   Details,
   Divider,
   Download,
@@ -210,6 +215,7 @@ export default {
   Objects,
   Options,
   Organization,
+  Payee,
   Pencil,
   People,
   Pergamen,
@@ -226,9 +232,11 @@ export default {
   ShortText,
   SortAZ,
   SortZA,
+  Structure,
   Sync,
   Tasks,
   Templates,
+  Territory,
   Text,
   Times,
   Tool,
