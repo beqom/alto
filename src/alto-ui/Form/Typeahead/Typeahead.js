@@ -272,6 +272,7 @@ const Typeahead = React.forwardRef(
                     <RemoveIcon
                       className="Typeahead__clear"
                       onClick={() => {
+                        setSearch('');
                         onChange(undefined, {});
                         closeMenu();
                       }}
