@@ -8,7 +8,7 @@ import Image from '../Image';
 import './Avatar.scss';
 import Tooltip from '../Tooltip';
 
-function Avatar({ className, src, alt, tooltip, large, small, big }) {
+function Avatar({ className, src, alt, tooltip, large, small, big, getDefaultAvatarIcon }) {
   const ref = useRef();
 
   return (
@@ -16,7 +16,11 @@ function Avatar({ className, src, alt, tooltip, large, small, big }) {
       <Image className="Avatar__image" src={src} alt={alt || tooltip}>
         <div className="Avatar__placeholder">
           <div className="Avatar__placeholder-icon-container">
-            <UserIcon className="Avatar__placeholder-icon" />
+            {getDefaultAvatarIcon && typeof getDefaultAvatarIcon === 'function' ? (
+              getDefaultAvatarIcon()
+            ) : (
+              <UserIcon className="Avatar__placeholder-icon" />
+            )}
           </div>
         </div>
       </Image>
@@ -37,6 +41,7 @@ Avatar.propTypes = {
   big: PropTypes.bool,
   large: PropTypes.bool,
   small: PropTypes.bool,
+  getDefaultAvatarIcon: PropTypes.func,
 };
 
 export default Avatar;
