@@ -156,6 +156,11 @@ function List(props) {
     return itemKey(item) === props.active;
   };
 
+  const isClickable = item => {
+    if (typeof props.clickable === 'function') return props.clickable(item);
+    return true;
+  };
+
   const handleChange = getHandleChange(items, onChange);
   const handleClick = getHandleClick(items, onClick, onChange);
 
@@ -187,6 +192,7 @@ function List(props) {
 
     const renderItem = (item = defaultItem, fields = defaultFields) => {
       const active = isActive(item, itemIndex);
+      const clickable = isClickable(item);
       return (
         <Card
           key={itemKey(item)}
@@ -196,7 +202,7 @@ function List(props) {
             active,
             hover: hover(item, itemIndex),
             small,
-            clickable: !!onClick,
+            clickable: !!onClick && clickable,
           })}
         >
           <div className={bemClass('List__item-row', { active: isActive(item, itemIndex), small })}>
@@ -213,7 +219,7 @@ function List(props) {
               </span>
             )}
             {fields.map((field, index) => {
-              const isPrimaryButton = field.primary && onClick;
+              const isPrimaryButton = field.primary && onClick && clickable;
               const Field = isPrimaryButton ? 'button' : 'div';
               const handleClickItem = handleClick(itemIndex);
               const uniqueId = `${id}__item--${itemKey(item)}__field--${field.key}`;
@@ -357,6 +363,7 @@ List.propTypes = {
   isSortableDisabled: PropTypes.func,
   renderItem: PropTypes.func,
   hover: PropTypes.func,
+  clickable: PropTypes.func,
 };
 
 export default List;
