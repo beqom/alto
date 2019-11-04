@@ -96,6 +96,7 @@ class Datagrid extends React.PureComponent {
       collapsedGroups: {},
       resizer: initialStateResizer,
       columnsWidth: {},
+      initializedScrollListener: false,
     };
 
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
@@ -116,13 +117,18 @@ class Datagrid extends React.PureComponent {
   }
 
   componentDidMount() {
-    const scrollNode = IS_MAC_OS ? this.staticRowsNode : this.scrollNode;
+    this.initializeScrollListener();
+  }
 
-    scrollNode.addEventListener('scroll', this.scrollListener);
+  componentDidUpdate() {
+    this.initializeScrollListener();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollListener);
+    const scrollNode = this.getScrollNode();
+    if (scrollNode) {
+      scrollNode.removeEventListener('scroll', this.scrollListener);
+    }
   }
 
   getContext() {
@@ -152,6 +158,10 @@ class Datagrid extends React.PureComponent {
     };
   }
 
+  getScrollNode() {
+    return IS_MAC_OS ? this.staticRowsNode : this.scrollNode;
+  }
+
   setStaticHeaderNode(node) {
     this.staticHeaderNode = node || fakeNode;
   }
@@ -169,7 +179,19 @@ class Datagrid extends React.PureComponent {
   }
 
   setStaticRowsNode(node) {
-    this.staticRowsNode = node || fakeNode;
+    this.staticRowsNode = node;
+  }
+
+  initializeScrollListener() {
+    const scrollNode = this.getScrollNode();
+    const { initializedScrollListener } = this.state;
+
+    if (initializedScrollListener || !scrollNode) {
+      return;
+    }
+
+    scrollNode.addEventListener('scroll', this.scrollListener);
+    this.setState({ initializedScrollListener: true });
   }
 
   scrollListener() {
