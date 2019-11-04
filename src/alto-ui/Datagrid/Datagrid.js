@@ -96,6 +96,7 @@ class Datagrid extends React.PureComponent {
       collapsedGroups: {},
       resizer: initialStateResizer,
       columnsWidth: {},
+      initializedScrollListener: false,
     };
 
     this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
@@ -113,24 +114,21 @@ class Datagrid extends React.PureComponent {
     this.scrollListener = IS_MAC_OS
       ? this.scrollMacOSListener.bind(this)
       : this.scrollListener.bind(this);
-
   }
 
   componentDidMount() {
-    if (this.staticHeaderNode && this.frozenRowsNode) {
-      this.staticHeaderNode.setAttribute('style', '');
-      this.frozenRowsNode.setAttribute('style', '');
-    }
+    this.initializeScrollListener();
+  }
 
-    const scrollNode = IS_MAC_OS
-      ? this.staticRowsNode
-      : this.scrollNode;
-
-    scrollNode.addEventListener('scroll', this.scrollListener);
+  componentDidUpdate() {
+    this.initializeScrollListener();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollListener);
+    const scrollNode = this.getScrollNode();
+    if (scrollNode) {
+      scrollNode.removeEventListener('scroll', this.scrollListener);
+    }
   }
 
   getContext() {
@@ -160,6 +158,10 @@ class Datagrid extends React.PureComponent {
     };
   }
 
+  getScrollNode() {
+    return IS_MAC_OS ? this.staticRowsNode : this.scrollNode;
+  }
+
   setStaticHeaderNode(node) {
     this.staticHeaderNode = node || fakeNode;
   }
@@ -177,7 +179,19 @@ class Datagrid extends React.PureComponent {
   }
 
   setStaticRowsNode(node) {
-    this.staticRowsNode = node || fakeNode;
+    this.staticRowsNode = node;
+  }
+
+  initializeScrollListener() {
+    const scrollNode = this.getScrollNode();
+    const { initializedScrollListener } = this.state;
+
+    if (initializedScrollListener || !scrollNode) {
+      return;
+    }
+
+    scrollNode.addEventListener('scroll', this.scrollListener);
+    this.setState({ initializedScrollListener: true });
   }
 
   scrollListener() {
@@ -465,7 +479,7 @@ class Datagrid extends React.PureComponent {
       offsetWidth: frozenRowsWidth = 0,
     } = this.frozenRowsNode || {};
 
-    const rowsWidth = sum(staticColumns, 'width');;
+    const rowsWidth = sum(staticColumns, 'width');
 
     return (
       <>
