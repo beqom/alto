@@ -18,7 +18,7 @@ const Media = ({
   white,
   wrap,
   active,
-  getDefaultAvatarIcon,
+  icon,
 }) => (
   <div className={bemClass('Media', { large, small, white, wrap, active }, className)}>
     {src && (
@@ -28,7 +28,7 @@ const Media = ({
         alt={alt}
         small={small}
         large={large}
-        getDefaultAvatarIcon={getDefaultAvatarIcon}
+        icon={icon}
       />
     )}
     <div className="Media__content">
@@ -55,7 +55,7 @@ Media.propTypes = {
   white: PropTypes.bool,
   wrap: PropTypes.bool,
   active: PropTypes.bool,
-  getDefaultAvatarIcon: PropTypes.func,
+  icon: PropTypes.func,
 };
 
 export default Media;
