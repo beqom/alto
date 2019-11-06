@@ -19,12 +19,13 @@ const Media = ({
   wrap,
   active,
   icon,
+  shouldDisplayDefaultIcon,
 }) => (
   <div className={bemClass('Media', { large, small, white, wrap, active }, className)}>
     {src && (
       <Avatar
         className="Media__image"
-        src={src}
+        src={shouldDisplayDefaultIcon ? null : src}
         alt={alt}
         small={small}
         large={large}
@@ -56,6 +57,7 @@ Media.propTypes = {
   wrap: PropTypes.bool,
   active: PropTypes.bool,
   icon: PropTypes.func,
+  shouldDisplayDefaultIcon: PropTypes.bool,
 };
 
 export default Media;
