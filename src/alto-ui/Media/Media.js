@@ -21,7 +21,7 @@ const Media = ({
   icon,
 }) => (
   <div className={bemClass('Media', { large, small, white, wrap, active }, className)}>
-    {src && (
+    {(src || icon) && (
       <Avatar
         className="Media__image"
         src={src}
