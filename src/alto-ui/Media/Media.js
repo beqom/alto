@@ -18,9 +18,19 @@ const Media = ({
   white,
   wrap,
   active,
+  icon,
 }) => (
   <div className={bemClass('Media', { large, small, white, wrap, active }, className)}>
-    {src && <Avatar className="Media__image" src={src} alt={alt} small={small} large={large} />}
+    {(src || icon) && (
+      <Avatar
+        className="Media__image"
+        src={src}
+        alt={alt}
+        small={small}
+        large={large}
+        icon={icon}
+      />
+    )}
     <div className="Media__content">
       <div className="Media__title">{title}</div>
       {!small && subtitle && <div className="Media__subtitle">{subtitle}</div>}
@@ -45,6 +55,7 @@ Media.propTypes = {
   white: PropTypes.bool,
   wrap: PropTypes.bool,
   active: PropTypes.bool,
+  icon: PropTypes.func,
 };
 
 export default Media;
