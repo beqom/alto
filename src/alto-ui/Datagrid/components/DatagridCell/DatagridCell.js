@@ -3,14 +3,13 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import isEqual from 'lodash.isequal';
 
-import ExclamationCircleIcon from '../../../Icons/ExclamationCircle';
-import ExclamationTriangleIcon from '../../../Icons/ExclamationTriangle';
 import Dropdown from '../../../Dropdown';
 import OptionsIcon from '../../../Icons/Options';
-import Tooltip from '../../../Tooltip';
 import DatagridCellInput from '../DatagridCellInput/DatagridCellInput';
 import Calendar from '../../../Icons/Calendar';
 import CaretDown from '../../../Icons/CaretDown';
+
+import DataGridCellError from './components/DataGridCellError';
 
 import {
   getFormattedValue,
@@ -53,6 +52,7 @@ class DatagridCell extends React.Component {
     this.format = this.format.bind(this);
     this.handleClickEditButton = this.handleClickEditButton.bind(this);
     const propagateChange = this.propagateChange.bind(this);
+    this.replaceRowValues = this.replaceRowValues.bind(this);
     this.propagateChange = onChangeDebounceTime
       ? debounce(propagateChange, onChangeDebounceTime)
       : propagateChange;
@@ -75,7 +75,7 @@ class DatagridCell extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     const type = getType(this.getValue(), nextProps.column);
-    if (nextProps.context.renderers[type]) return true;
+    if ((nextProps.context.renderers || {})[type]) return true;
     if (nextProps.render) return true;
     if (!isEqual(this.state, nextState)) {
       return true;
@@ -135,7 +135,7 @@ class DatagridCell extends React.Component {
     const selected = selectedRowKey && context.rowKeyField(row) === selectedRowKey;
 
     return {
-      [type]: true,
+      ...(type && type !== 'undefined' ? { [type]: true } : {}),
       formula: !!column.formula,
       editable,
       editing: editing || ['boolean'].includes(type),
@@ -154,7 +154,7 @@ class DatagridCell extends React.Component {
       comfortable: context.comfortable,
       'with-icon': context.showError(value, column, row),
       ...context.modifiers(value, column, row),
-      [column.align]: true,
+      ...(column.align ? { [column.align]: true } : {}),
     };
   }
 
@@ -220,48 +220,6 @@ class DatagridCell extends React.Component {
     }
   }
 
-  renderDropdown() {
-    const { id, column, header, context } = this.props;
-    if (header || !column.cellDropdownItems || !column.cellDropdownItems.length) return null;
-    return (
-      <Dropdown
-        id={`${id}__column-dropdown`}
-        items={column.cellDropdownItems}
-        end
-        onClick={item =>
-          context.onClickCellDropdownItem(item, this.getValue(), this.props.row, this.props.column)
-        }
-        renderTrigger={(onClick, open, ref) => (
-          <span ref={ref}>
-            <OptionsIcon onClick={onClick} />
-          </span>
-        )}
-      />
-    );
-  }
-
-  renderError() {
-    const { column, row, context } = this.props;
-    const value = this.getValue();
-    const error =
-      typeof context.showError === 'function' ? context.showError(value, column, row) : false;
-
-    if (!error) return null;
-    const warning =
-      typeof context.isWarningError === 'function'
-        ? context.isWarningError(value, column, row)
-        : false;
-
-    const tooltipContent = this.replaceRowValues(error);
-    const icon = warning ? (
-      <ExclamationTriangleIcon className="DatagridCell__warning-icon" />
-    ) : (
-      <ExclamationCircleIcon className="DatagridCell__error-icon" />
-    );
-
-    return <Tooltip content={tooltipContent}>{icon}</Tooltip>;
-  }
-
   renderValue() {
     const { render, column, row, context, inputProps } = this.props;
     const value = this.getValue();
@@ -287,37 +245,15 @@ class DatagridCell extends React.Component {
     }
   }
 
-  renderInput() {
-    const { id, column, render, editable, header, inputProps } = this.props;
-    if (render) return null;
-
+  renderContent() {
+    const { id, column, row, render, editable, disabled, header, context, inputProps } = this.props;
+    const { editing } = this.state;
+    if (!context.visible(column, row)) {
+      return null;
+    }
     const value = this.getValue();
-    const type = getType(value, column);
-    if ((!editable && !['boolean'].includes(type)) || header) return null;
-
     const parsedValue = this.parse(value);
 
-    return (
-      <DatagridCellInput
-        id={`${id}__input`}
-        context={this.props.context}
-        column={column}
-        value={parsedValue}
-        type={type}
-        inputProps={{ ...inputProps, readOnly: !editable }}
-        onChange={this.handleChange}
-        onStartEditing={this.startEditing}
-        onStopEditing={this.stopEditing}
-        modifiers={this.getModifiers()}
-        editing={this.state.editing}
-      />
-    );
-  }
-
-  renderContent() {
-    const { id, column, row, render, editable, disabled, context } = this.props;
-    if (!context.visible(column, row)) return null;
-    const value = this.getValue();
     const type = getType(value, column);
     const isDate = type === 'date' || type === 'datetime';
     const isList = type === 'list' || type === 'select';
@@ -338,14 +274,49 @@ class DatagridCell extends React.Component {
       </ContentComponent>
     );
 
-    if (render) return content;
+    if (render) {
+      return content;
+    }
 
     return (
       <>
-        {this.renderError()}
+        <DataGridCellError
+          column={column}
+          row={row}
+          value={value}
+          showError={context.showError}
+          isWarningError={context.isWarningError}
+          replaceRowValues={this.replaceRowValues}
+        />
         {content}
-        {this.renderInput()}
-        {this.renderDropdown()}
+        {!header && !(!editable && !['boolean'].includes(type)) && (
+          <DatagridCellInput
+            id={`${id}__input`}
+            context={context}
+            column={column}
+            value={parsedValue}
+            type={type}
+            inputProps={{ ...inputProps, readOnly: !editable }}
+            onChange={this.handleChange}
+            onStartEditing={this.startEditing}
+            onStopEditing={this.stopEditing}
+            modifiers={this.getModifiers()}
+            editing={editing}
+          />
+        )}
+        {!header && (column.cellDropdownItems && column.cellDropdownItems.length) && (
+          <Dropdown
+            id={`${id}__column-dropdown`}
+            items={column.cellDropdownItems}
+            end
+            onClick={item => context.onClickCellDropdownItem(item, value, row, column)}
+            renderTrigger={(onClick, open, ref) => (
+              <span ref={ref}>
+                <OptionsIcon onClick={onClick} />
+              </span>
+            )}
+          />
+        )}
       </>
     );
   }
@@ -378,9 +349,18 @@ class DatagridCell extends React.Component {
 DatagridCell.displayName = 'DatagridCell';
 
 DatagridCell.defaultProps = {
+  clickable: false,
+  comfortable: false,
+  compact: false,
+  context: {},
+  detached: false,
+  disabled: false,
   editable: false,
   edited: false,
+  header: false,
+  lastRow: false,
   row: {},
+  summary: false,
   width: 150,
 };
 
@@ -394,7 +374,6 @@ DatagridCell.propTypes = {
     formula: PropTypes.string,
     formatter: PropTypes.func,
   }),
-  row: PropTypes.object,
   context: PropTypes.shape({
     onChangeDebounceTime: PropTypes.number,
     onChange: PropTypes.func,
@@ -411,27 +390,28 @@ DatagridCell.propTypes = {
     comfortable: PropTypes.bool,
     columns: PropTypes.array,
   }),
-  render: PropTypes.func,
-  editable: PropTypes.bool,
-  edited: PropTypes.bool,
-  disabled: PropTypes.bool,
-  header: PropTypes.bool,
-  summary: PropTypes.bool,
   aria: PropTypes.shape({
     rowIndex: PropTypes.number.isRequired,
     colIndex: PropTypes.number.isRequired,
   }).isRequired,
-  selectedRowKey: PropTypes.string,
-  clickable: PropTypes.bool,
-  inputProps: PropTypes.object,
-  width: PropTypes.number,
-  compact: PropTypes.bool,
-  comfortable: PropTypes.bool,
-  colIndex: PropTypes.number,
-  rowIndex: PropTypes.number,
-  detached: PropTypes.bool,
-  lastRow: PropTypes.bool,
   className: PropTypes.string,
+  clickable: PropTypes.bool,
+  colIndex: PropTypes.number,
+  comfortable: PropTypes.bool,
+  compact: PropTypes.bool,
+  detached: PropTypes.bool,
+  disabled: PropTypes.bool,
+  editable: PropTypes.bool,
+  edited: PropTypes.bool,
+  header: PropTypes.bool,
+  inputProps: PropTypes.object,
+  lastRow: PropTypes.bool,
+  render: PropTypes.func,
+  row: PropTypes.object,
+  rowIndex: PropTypes.number,
+  selectedRowKey: PropTypes.string,
+  summary: PropTypes.bool,
+  width: PropTypes.number,
 };
 
 export default DatagridCell;
