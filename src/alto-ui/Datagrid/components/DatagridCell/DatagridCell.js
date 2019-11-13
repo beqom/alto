@@ -351,15 +351,16 @@ class DatagridCell extends React.Component {
   }
 
   render() {
-    const { aria } = this.props;
+    const { aria, column, row, context } = this.props;
     const style = this.getStyle();
     const modifiers = this.getModifiers();
     const value = this.getFormattedValue();
+    const isCellVisible = context.visible(column, row);
 
     return (
       <div
         className={bemClass('DatagridCell', modifiers, this.props.className)}
-        title={getTitleValue(value)}
+        title={isCellVisible ? getTitleValue(value) : ''}
         ref={this.cellRef}
         style={style}
         role="gridcell"
