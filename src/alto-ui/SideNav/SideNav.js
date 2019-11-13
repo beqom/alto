@@ -31,11 +31,7 @@ class SideNav extends React.PureComponent {
   }
 
   renderItemContent(item) {
-    const {
-      outline,
-      currentUrl,
-      collapsed,
-    } = this.props;
+    const { outline, currentUrl, collapsed } = this.props;
 
     const active = item.active || currentUrl.indexOf(item.url) === 0;
     const itemContent = (
@@ -53,7 +49,7 @@ class SideNav extends React.PureComponent {
       </div>
     );
 
-    if (!item.url && item.onClick) {
+    if (!item.url && item.onClick && !active) {
       return (
         <Button
           flat
@@ -67,13 +63,24 @@ class SideNav extends React.PureComponent {
       );
     }
 
+    if (active) {
+      return (
+        <div
+          id={`${this.props.id}__${item.id}__div`}
+          className={bemClass('sidenav__route-link', {
+            active,
+          })}
+        >
+          {itemContent}
+        </div>
+      );
+    }
+
     return (
       <Link
         id={`${this.props.id}__${item.id}__link`}
         href={item.url}
-        className={bemClass('sidenav__route-link', {
-          active,
-        })}
+        className="sidenav__route-link"
       >
         {itemContent}
       </Link>
