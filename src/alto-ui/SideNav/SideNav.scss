@@ -316,6 +316,7 @@ $nav-btn-hover-text-dark: $white;
       &--active {
         background-color: $color;
         color: $white;
+        cursor: default;
       }
     }
 
