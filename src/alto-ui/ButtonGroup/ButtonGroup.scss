@@ -41,6 +41,11 @@
     outline: none;
   }
 
+  &:hover {
+    color: $blue-50;
+    border-color: $blue-50;
+  }
+
   &--disabled {
     cursor: not-allowed;
     color: $coolgrey-60;
@@ -51,6 +56,11 @@
   &--active {
     background-color: $blue-70;
     color: $white;
+
+    &:hover {
+      background-color: $blue-50;
+      color: $white;
+    }
 
     &.ButtonGroup__button--disabled {
       background-color: $coolgrey-60;
