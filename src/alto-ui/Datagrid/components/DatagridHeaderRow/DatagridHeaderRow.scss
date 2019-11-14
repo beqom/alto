@@ -49,7 +49,6 @@
   align-items: center;
   font-size: $font-size-small;
   width: $height-datagrid-default;
-  padding-left: 0.75rem;
   box-shadow: inset -1px 0 0 0 $coolgrey-20;
 
   .DatagridHeaderRow__group--last & {
