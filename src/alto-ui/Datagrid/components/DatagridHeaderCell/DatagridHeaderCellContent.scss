@@ -1,0 +1,102 @@
+@import '../../../scss/inc';
+
+.DatagridHeaderCellContent {
+  @extend %reset-button;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: $spacing-xx-small 0.625rem;
+  flex: 1;
+  padding-right: 0.75rem;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  .Datagrid--compact & {
+    padding-top: 0.375rem;
+    padding-bottom: 0.375rem;
+  }
+
+  .Datagrid--comfortable & {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  &--button {
+    @extend %reset-button;
+    width: 100%;
+    transition: all $transition;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+}
+
+.DatagridHeaderCellContent__title {
+  width: calc(100% - 0px);
+  max-width: calc(100% - 0px);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  flex: 1 1 auto;
+  line-height: 1.2;
+  max-height: calc(5em * 1.2); // max height => 5 lines
+
+  &--sortable {
+    width: calc(100% - calc(2rem - 12px));
+    max-width: calc(100% - calc(2rem - 12px));
+  }
+
+  &--wrapped {
+    white-space: normal;
+    word-break: break-word;
+  }
+
+  .Datagrid--compact & {
+    width: calc(100% - calc(1.5rem - 12px));
+    max-width: calc(100% - calc(1.5rem - 12px));
+  }
+
+  .DatagridHeaderCellContent--sorted & {
+    color: $blue;
+  }
+}
+
+.DatagridHeaderCellContent__sortable-icons {
+  opacity: 0;
+  transition: $duration-quick $timing-function opacity;
+  display: flex;
+  flex-direction: column;
+  font-size: $font-size-x-small;
+  padding-left: 0.5rem;
+  line-height: 0;
+  flex: 0 0 auto;
+}
+
+.DatagridHeaderCellContent__icon {
+  color: $coolgrey-30;
+
+  &--active {
+    color: $blue;
+  }
+}
+
+.DatagridHeaderCellContent__icon--filter {
+  margin-right: $spacing-x-small;
+
+  .DatagridHeaderCellContent--filtered & {
+    color: $blue;
+  }
+}
+
+.DatagridHeaderCell--sortable {
+  padding: 0;
+
+  &:hover .DatagridHeaderCellContent__sortable-icons {
+    opacity: 1;
+  }
+}
+
+.DatagridHeaderCell--sorted .DatagridHeaderCellContent__sortable-icons {
+  opacity: 1;
+}
