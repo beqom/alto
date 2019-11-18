@@ -3,10 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash.isequal';
 
-import ChevronUpIcon from '../../../Icons/ChevronUp';
-import ChevronDownIcon from '../../../Icons/ChevronDown';
-import FilterIcon from '../../../Icons/Filter';
-import VisuallyHidden from '../../../VisuallyHidden';
+import DataGridHeaderCellContent from './DatagridHeaderCellContent';
+
 import { bemClass } from '../../../helpers/bem';
 
 import './DatagridHeaderCell.scss';
@@ -31,64 +29,6 @@ class DatagridHeaderCell extends React.Component {
 
   handleMouseEnterResizeHandle(e) {
     this.props.context.onMouseEnterResizeHandle(e, this.props.column);
-  }
-
-  renderContent(style, sorted, wrapped) {
-    const { context, column } = this.props;
-
-    const titleStyle = {
-      ...(wrapped && wrapped !== true ? { maxHeight: `${wrapped * 1.2}em` } : {}),
-    };
-
-    if (!context.onSort || column.sortable === false) {
-      return (
-        <div className={bemClass('DatagridHeaderCell__content', { wrapped })} style={style}>
-          <span className={bemClass('DatagridHeaderCell__title', { wrapped })} style={titleStyle}>
-            {column.title}
-          </span>
-        </div>
-      );
-    }
-
-    const sortedASC = (sorted && context.sortDirection === 1) || column.sortDirection === 1;
-    const sortedDESC = (sorted && context.sortDirection === -1) || column.sortDirection === -1;
-
-    return (
-      <button
-        id={context.id ? `${context.id}__header-button--${column.key}` : undefined}
-        className={bemClass('DatagridHeaderCell__content', { button: true, wrapped })}
-        onClick={() => context.onSort(column)}
-        style={style}
-        title={column.title}
-      >
-        <VisuallyHidden>{context.labels.a11ySortLabel}</VisuallyHidden>
-        {column.filtered ? (
-          <FilterIcon className={bemClass('DatagridHeaderCell__icon', { filter: true })} />
-        ) : null}
-        <span
-          className={bemClass('DatagridHeaderCell__title', { sortable: true, wrapped })}
-          style={titleStyle}
-        >
-          {column.title}
-        </span>
-        <div className="DatagridHeaderCell__sortable-icons">
-          <div
-            className={bemClass('DatagridHeaderCell__icon', {
-              active: sortedASC,
-            })}
-          >
-            <ChevronUpIcon />
-          </div>
-          <div
-            className={bemClass('DatagridHeaderCell__icon', {
-              active: sortedDESC,
-            })}
-          >
-            <ChevronDownIcon />
-          </div>
-        </div>
-      </button>
-    );
   }
 
   render() {
@@ -130,7 +70,13 @@ class DatagridHeaderCell extends React.Component {
         aria-rowindex={rowIndex}
         aria-colindex={colIndex}
       >
-        {this.renderContent(style, sorted, wrapped)}
+        <DataGridHeaderCellContent
+          style={style}
+          sorted={sorted}
+          wrapped={wrapped}
+          context={context}
+          column={column}
+        />
         <div
           className="DatagridHeaderCell__resize-handle"
           onMouseEnter={this.handleMouseEnterResizeHandle}
