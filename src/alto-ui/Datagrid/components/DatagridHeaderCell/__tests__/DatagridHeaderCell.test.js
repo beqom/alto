@@ -46,13 +46,19 @@ describe('DatagridHeaderCell component', () => {
         minWidth: '2rem',
         maxWidth: 200,
       };
-      const { context, column } = props;
+      const {
+        context: { onSort, sortDirection, id, labels },
+        column,
+      } = props;
 
       expect(wrapper.find(DataGridHeaderCellContent).prop('style')).toEqual(style);
       expect(wrapper.find(DataGridHeaderCellContent).prop('sorted')).toBe(true);
       expect(wrapper.find(DataGridHeaderCellContent).prop('wrapped')).toBe(true);
       expect(wrapper.find(DataGridHeaderCellContent).prop('style')).toEqual(style);
-      expect(wrapper.find(DataGridHeaderCellContent).prop('context')).toEqual(context);
+      expect(wrapper.find(DataGridHeaderCellContent).prop('onSort')).toEqual(onSort);
+      expect(wrapper.find(DataGridHeaderCellContent).prop('sortDirection')).toEqual(sortDirection);
+      expect(wrapper.find(DataGridHeaderCellContent).prop('id')).toEqual(id);
+      expect(wrapper.find(DataGridHeaderCellContent).prop('labels')).toEqual(labels);
       expect(wrapper.find(DataGridHeaderCellContent).prop('column')).toEqual(column);
     });
 

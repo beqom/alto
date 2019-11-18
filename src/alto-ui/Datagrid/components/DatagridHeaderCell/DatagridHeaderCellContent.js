@@ -8,12 +8,21 @@ import { bemClass } from '../../../helpers/bem';
 
 import './DatagridHeaderCellContent.scss';
 
-const DataGridHeaderCellContent = ({ style, sorted, wrapped, context, column }) => {
+const DataGridHeaderCellContent = ({
+  style,
+  sorted,
+  wrapped,
+  onSort,
+  sortDirection,
+  id,
+  labels,
+  column,
+}) => {
   const titleStyle = {
     ...(wrapped && wrapped !== true ? { maxHeight: `${wrapped * 1.2}em` } : {}),
   };
 
-  if (!context.onSort || column.sortable === false) {
+  if (!onSort || column.sortable === false) {
     return (
       <div className={bemClass('DatagridHeaderCellContent', { wrapped })} style={style}>
         <span
@@ -26,18 +35,18 @@ const DataGridHeaderCellContent = ({ style, sorted, wrapped, context, column }) 
     );
   }
 
-  const sortedASC = (sorted && context.sortDirection === 1) || column.sortDirection === 1;
-  const sortedDESC = (sorted && context.sortDirection === -1) || column.sortDirection === -1;
+  const sortedASC = (sorted && sortDirection === 1) || column.sortDirection === 1;
+  const sortedDESC = (sorted && sortDirection === -1) || column.sortDirection === -1;
 
   return (
     <button
-      id={context.id ? `${context.id}__header-button--${column.key}` : undefined}
+      id={id ? `${id}__header-button--${column.key}` : undefined}
       className={bemClass('DatagridHeaderCellContent', { button: true, wrapped })}
-      onClick={() => context.onSort(column)}
+      onClick={() => onSort(column)}
       style={style}
       title={column.title}
     >
-      <VisuallyHidden>{context.labels.a11ySortLabel}</VisuallyHidden>
+      <VisuallyHidden>{labels.a11ySortLabel}</VisuallyHidden>
       {column.filtered ? (
         <FilterIcon className={bemClass('DatagridHeaderCellContent__icon', { filter: true })} />
       ) : null}
