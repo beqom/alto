@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { DateTime } from 'luxon';
-
-import ErrorIcon from '../Icons/ErrorIcon';
-import Avatar from '../Avatar';
 import { bemClass } from '../helpers/bem';
-import { format as formatNumber } from '../helpers/number';
+
 import sum from '../helpers/sum';
 import { isMacOS as isMacOSHelper } from '../helpers/navigator';
 import CheckBox from '../Form/CheckBox';
-import Tooltip from '../Tooltip';
 
 import DatagridHeaderRow from './components/DatagridHeaderRow';
 import DatagridGroupedRow from './components/DatagridGroupedRow';
@@ -17,76 +12,100 @@ import DatagridRow from './components/DatagridRow';
 import DatagridResizer from './components/DatagridResizer';
 
 import './Datagrid.scss';
-
-const CHECKBOX_WIDTH = 32;
-const SCROLLBAR_SIZE = 17;
-
-const DEFAULT_LABELS = {
-  errorFormula: 'There is an error in formula',
-  a11ySortLabel: 'Click to sort this column by Ascending or Descending',
-  checkboxLabel: 'Check to select a row',
-};
-
-const PARSERS = {
-  date: x => (x ? new Date(x) : ''),
-  datetime: x => (x ? new Date(x) : ''),
-  boolean: x => {
-    const bool = `${x}`.toLowerCase();
-    if (['true', '1'].includes(bool)) return true;
-    if (['false', '0'].includes(bool)) return false;
-    return x;
-  },
-};
-
-const FORMATTERS = {
-  date: (x, col, row, { locale }) =>
-    x instanceof Date
-      ? DateTime.fromJSDate(x)
-          .setLocale(locale)
-          .toFormat('dd LLL yyyy')
-      : '',
-  datetime: (x, col, row, { locale }) =>
-    x instanceof Date
-      ? DateTime.fromJSDate(x)
-          .setLocale(locale)
-          .toFormat('dd LLL yyyy hh:mm a')
-      : '',
-  number: (x, col, row, { locale }) =>
-    formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator, {
-      percent: col.percent,
-    }),
-  integer: (...args) => FORMATTERS.number(...args),
-  float: (...args) => FORMATTERS.number(...args),
-  int: (...args) => FORMATTERS.number(...args),
-};
-
-const RENDERERS = {
-  image: (x, col, row, { comfortable, compact }) => (
-    <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
-  ),
-  error: x => (
-    <Tooltip content={x.message}>
-      <ErrorIcon outline />
-    </Tooltip>
-  ),
-};
+import { FORMATTERS, PARSERS, RENDERERS } from './helpers';
+import {
+  DATAGRID_CHECKBOX_WIDTH,
+  DEFAULT_LABELS,
+  DATAGRID_HEADER_ROW_INDEX,
+  DATAGRID_SCROLLBAR_SIZE,
+  DATAGRID_INITIAL_STATE_RESIZER,
+} from './constants';
 
 // Needed in case of the node is not provided as soon as needed
 const fakeNode = document.createElement('div');
 
-const HEADER_ROW_INDEX = 1;
-
-const emptyBoundingClientRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
-
-const initialStateResizer = {
-  column: null,
-  parent: emptyBoundingClientRect,
-  target: emptyBoundingClientRect,
-  container: emptyBoundingClientRect,
-  resizing: false,
-};
-
 const IS_MAC_OS = isMacOSHelper();
+
+function Datagrid({ compact, comfortable, onChangeWidth, onSelectRow }) {
+  const [collapsedGroups, setCollapsedGroups] = useState({});
+  const [resizer, setResizer] = useState(DATAGRID_INITIAL_STATE_RESIZER);
+  const [columnsWidth, setColumnsWidth] = useState({});
+  const [initializedScrollListener, setInitializedScrollListener] = useState(false);
+  const [containerRef, setContainerRef] = useRef();
+  const staticRowsNode = useRef();
+  const scrollNode = useRef();
+  const frozenRows = useRef();
+  const scrollHeaderNode = useRef();
+
+  useEffect(() => {
+    const scrollListener = IS_MAC_OS ? scrollMacOSListener : defaultScrollListener;
+    if (initializedScrollListener || !scrollNode) {
+      return;
+    }
+    scrollNode.addEventListener('scroll', scrollListener);
+    setInitializedScrollListener(true);
+    return () => {
+      scrollNode.removeEventListener('scroll', scrollListener);
+      setInitializedScrollListener(false);
+    };
+  }, []);
+
+  function defaultScrollListener() {
+    const { scrollLeft } = scrollNode;
+    staticRowsNode.scrollLeft = scrollLeft;
+    scrollHeaderNode.scrollLeft = scrollLeft;
+  }
+
+  function scrollMacOSListener() {
+    const { scrollLeft } = staticRowsNode;
+    scrollHeaderNode.scrollLeft = scrollLeft;
+  }
+
+  function handleToggleGroup(groupId) {
+    const stateGroupId = collapsedGroups[groupId];
+    const collapsedGroups = {
+      ...collapsedGroups,
+      [groupId]: !stateGroupId,
+    };
+    setCollapsedGroups(collapsedGroups);
+  }
+
+  function handleMouseEnterResizeHandle(e, column) {
+    if (resizer.resizing) return;
+    const target = e.target.getBoundingClientRect();
+    const parent = e.target.parentNode.getBoundingClientRect();
+    const container = containerRef.current.getBoundingClientRect();
+    setResizer({ column, target, parent, container, resizing: false });
+  }
+
+  function handleStartResize() {
+    setResizer({ ...resizer, resizing: true });
+  }
+
+  function handleStopResize(deltaX) {
+    if (typeof onChangeWidth === 'function') {
+      const value = resizer.parent.width + deltaX;
+      onChangeWidth(value, resizer.column);
+    }
+    setResizer(DATAGRID_INITIAL_STATE_RESIZER);
+    setColumnsWidth({ ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX });
+  }
+
+  function renderHeaderRows(columns, frozen, columnIndexStart = 0) {
+    const hasCheckbox = typeof onSelectRow === 'function' && frozen;
+    return (
+      <DatagridHeaderRow
+        rowIndex={DATAGRID_HEADER_ROW_INDEX}
+        columns={columns}
+        columnIndexStart={columnIndexStart}
+        context={this.getContext()}
+        hasCheckBox={hasCheckbox}
+        frozen={frozen}
+      />
+    );
+  }
+
+}
 
 class Datagrid extends React.PureComponent {
   constructor(props) {
@@ -94,7 +113,7 @@ class Datagrid extends React.PureComponent {
 
     this.state = {
       collapsedGroups: {},
-      resizer: initialStateResizer,
+      resizer: DATAGRID_INITIAL_STATE_RESIZER,
       columnsWidth: {},
       initializedScrollListener: false,
     };
@@ -233,7 +252,7 @@ class Datagrid extends React.PureComponent {
       onChangeWidth(value, this.state.resizer.column);
     }
     this.setState(({ columnsWidth, resizer }) => ({
-      resizer: initialStateResizer,
+      resizer: DATAGRID_INITIAL_STATE_RESIZER,
       columnsWidth: { ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX },
     }));
   }
@@ -242,7 +261,7 @@ class Datagrid extends React.PureComponent {
     const hasCheckbox = typeof this.props.onSelectRow === 'function' && frozen;
     return (
       <DatagridHeaderRow
-        rowIndex={HEADER_ROW_INDEX}
+        rowIndex={DATAGRID_HEADER_ROW_INDEX}
         columns={columns}
         columnIndexStart={columnIndexStart}
         context={this.getContext()}
@@ -351,7 +370,9 @@ class Datagrid extends React.PureComponent {
             frozen={frozen}
             groupingColumn={displayGroupToggle ? groupingColumn : undefined}
             groupingColumnWidth={
-              columns.length && hasCheckbox ? firstColumnWidth + CHECKBOX_WIDTH : firstColumnWidth
+              columns.length && hasCheckbox
+                ? firstColumnWidth + DATAGRID_CHECKBOX_WIDTH
+                : firstColumnWidth
             }
             lastRow={collapsed}
           >
@@ -443,20 +464,15 @@ class Datagrid extends React.PureComponent {
       return null;
     }
 
-    const {
-      offsetWidth: frozenRowsWidth = 0,
-    } = this.frozenRowsNode || {};
+    const { offsetWidth: frozenRowsWidth = 0 } = this.frozenRowsNode || {};
 
     return (
       <div
         className="Datagrid__horizontal-scroll-container"
         ref={this.setScrollNode}
-        style={{ width: `calc(100% - ${frozenRowsWidth + SCROLLBAR_SIZE}px)` }}
+        style={{ width: `calc(100% - ${frozenRowsWidth + DATAGRID_SCROLLBAR_SIZE}px)` }}
       >
-        <div
-          className="Datagrid__horizontal-scroll-element"
-          style={{ width: `${rowsWidth}px`}}
-        />
+        <div className="Datagrid__horizontal-scroll-element" style={{ width: `${rowsWidth}px` }} />
       </div>
     );
   }
@@ -475,9 +491,7 @@ class Datagrid extends React.PureComponent {
     const hasCheckbox = typeof this.props.onSelectRow === 'function';
 
     const { labels } = this.getContext();
-    const {
-      offsetWidth: frozenRowsWidth = 0,
-    } = this.frozenRowsNode || {};
+    const { offsetWidth: frozenRowsWidth = 0 } = this.frozenRowsNode || {};
 
     const rowsWidth = sum(staticColumns, 'width');
 
@@ -492,7 +506,7 @@ class Datagrid extends React.PureComponent {
                 frozenColumns,
                 true,
                 staticColumns.length,
-                HEADER_ROW_INDEX + 1
+                DATAGRID_HEADER_ROW_INDEX + 1
               )}
             </div>
           )}
@@ -508,7 +522,7 @@ class Datagrid extends React.PureComponent {
                 staticColumns,
                 false,
                 staticColumns.length,
-                HEADER_ROW_INDEX + 1,
+                DATAGRID_HEADER_ROW_INDEX + 1,
                 frozenColumns.length
               )}
             </div>
