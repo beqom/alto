@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { DateTime } from 'luxon';
-
-import ErrorIcon from '../Icons/ErrorIcon';
-import Avatar from '../Avatar';
 import { bemClass } from '../helpers/bem';
-import { format as formatNumber } from '../helpers/number';
+
 import sum from '../helpers/sum';
 import { isMacOS as isMacOSHelper } from '../helpers/navigator';
 import CheckBox from '../Form/CheckBox';
-import Tooltip from '../Tooltip';
 
 import DatagridHeaderRow from './components/DatagridHeaderRow';
 import DatagridGroupedRow from './components/DatagridGroupedRow';
@@ -17,272 +12,254 @@ import DatagridRow from './components/DatagridRow';
 import DatagridResizer from './components/DatagridResizer';
 
 import './Datagrid.scss';
-
-const CHECKBOX_WIDTH = 32;
-const SCROLLBAR_SIZE = 17;
-
-const DEFAULT_LABELS = {
-  errorFormula: 'There is an error in formula',
-  a11ySortLabel: 'Click to sort this column by Ascending or Descending',
-  checkboxLabel: 'Check to select a row',
-};
-
-const PARSERS = {
-  date: x => (x ? new Date(x) : ''),
-  datetime: x => (x ? new Date(x) : ''),
-  boolean: x => {
-    const bool = `${x}`.toLowerCase();
-    if (['true', '1'].includes(bool)) return true;
-    if (['false', '0'].includes(bool)) return false;
-    return x;
-  },
-};
-
-const FORMATTERS = {
-  date: (x, col, row, { locale }) =>
-    x instanceof Date
-      ? DateTime.fromJSDate(x)
-          .setLocale(locale)
-          .toFormat('dd LLL yyyy')
-      : '',
-  datetime: (x, col, row, { locale }) =>
-    x instanceof Date
-      ? DateTime.fromJSDate(x)
-          .setLocale(locale)
-          .toFormat('dd LLL yyyy hh:mm a')
-      : '',
-  number: (x, col, row, { locale }) =>
-    formatNumber(x, locale, col.precision || 0, null, col.disableThousandSeparator, {
-      percent: col.percent,
-    }),
-  integer: (...args) => FORMATTERS.number(...args),
-  float: (...args) => FORMATTERS.number(...args),
-  int: (...args) => FORMATTERS.number(...args),
-};
-
-const RENDERERS = {
-  image: (x, col, row, { comfortable, compact }) => (
-    <Avatar small={compact} large={comfortable} src={x || ''} alt={col.title} />
-  ),
-  error: x => (
-    <Tooltip content={x.message}>
-      <ErrorIcon outline />
-    </Tooltip>
-  ),
-};
+import { FORMATTERS, PARSERS, RENDERERS } from './helpers';
+import {
+  DATAGRID_CHECKBOX_WIDTH,
+  DATAGRID_HEADER_ROW_INDEX,
+  DATAGRID_SCROLLBAR_SIZE,
+  DATAGRID_INITIAL_STATE_RESIZER,
+  DEFAULT_LABELS,
+} from './constants';
 
 // Needed in case of the node is not provided as soon as needed
-const fakeNode = document.createElement('div');
-
-const HEADER_ROW_INDEX = 1;
-
-const emptyBoundingClientRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
-
-const initialStateResizer = {
-  column: null,
-  parent: emptyBoundingClientRect,
-  target: emptyBoundingClientRect,
-  container: emptyBoundingClientRect,
-  resizing: false,
-};
+// const fakeNode = document.createElement('div');
 
 const IS_MAC_OS = isMacOSHelper();
 
-class Datagrid extends React.PureComponent {
-  constructor(props) {
-    super(props);
+export const DataGridContext = React.createContext({
+  renderers: RENDERERS,
+  parsers: PARSERS,
+  formatters: FORMATTERS,
+  labels: DEFAULT_LABELS,
+  columnsWidth: {},
+});
 
-    this.state = {
-      collapsedGroups: {},
-      resizer: initialStateResizer,
-      columnsWidth: {},
-      initializedScrollListener: false,
-    };
+DataGridContext.displayName = 'DataGridContext';
 
-    this.setStaticHeaderNode = this.setStaticHeaderNode.bind(this);
-    this.setFrozenRowsNode = this.setFrozenRowsNode.bind(this);
-    this.setStaticRowsNode = this.setStaticRowsNode.bind(this);
-    this.handleMouseEnterResizeHandle = this.handleMouseEnterResizeHandle.bind(this);
-    this.handleToggleGroup = this.handleToggleGroup.bind(this);
-    this.handleStopResize = this.handleStopResize.bind(this);
-    this.handleStartResize = this.handleStartResize.bind(this);
+function Datagrid({
+  className,
+  columnHeaders,
+  columns,
+  comfortable,
+  compact,
+  disabled,
+  editable,
+  edited,
+  formatters,
+  getInputProps,
+  groupedByColumnKey,
+  groupedSummaryColumnKeys,
+  id,
+  isDisplayedRowsSelected,
+  isWarningError,
+  labels,
+  locale,
+  modifiers,
+  onChange,
+  onChangeDebounceTime,
+  onChangeWidth,
+  onClickCellDropdownItem,
+  onRowClick,
+  onSelectAllRows,
+  onSelectRow,
+  onSort,
+  onStartEditing,
+  onStopEditing,
+  parsers,
+  renderSummaryCell,
+  renderers,
+  rowKeyField,
+  rows,
+  selectedRowKey,
+  selectedRows,
+  showError,
+  sortDirection,
+  visible,
+  wrapHeader,
+}) {
+  const [collapsedGroups, setCollapsedGroups] = useState({});
+  const [columnsWidth, setColumnsWidth] = useState({});
+  const [initializedScrollListener, setInitializedScrollListener] = useState(false);
+  const [resizer, setResizer] = useState(DATAGRID_INITIAL_STATE_RESIZER);
 
-    this.containerRef = React.createRef();
+  const containerRef = useRef();
+  const frozenRowsNode = useRef();
+  const scrollHeaderNode = useRef();
+  const scrollNode = useRef();
+  const staticHeaderNode = useRef();
+  const staticRowsNode = useRef();
 
-    this.setScrollNode = this.setScrollNode.bind(this);
-    this.setScrollHeaderNode = this.setScrollHeaderNode.bind(this);
-    this.scrollListener = IS_MAC_OS
-      ? this.scrollMacOSListener.bind(this)
-      : this.scrollListener.bind(this);
+  const staticColumns = columns.filter(({ frozen }) => !frozen);
+  const frozenColumns = columns.filter(({ frozen }) => frozen);
+
+  const staticColumnHeaders = columnHeaders
+    ? columnHeaders.filter(({ frozen }) => !frozen)
+    : staticColumns;
+  const frozenColumnHeaders = columnHeaders
+    ? columnHeaders.filter(({ frozen }) => frozen)
+    : frozenColumns;
+  const headersCount = 1;
+  const hasCheckbox = typeof onSelectRow === 'function';
+
+  const rowsWidth = sum(staticColumns, 'width');
+
+  const { offsetWidth: frozenRowsWidth = 0 } = frozenRowsNode || {};
+
+  function defaultScrollListener() {
+    const { scrollLeft } = scrollNode.current;
+    staticRowsNode.current.scrollLeft = scrollLeft;
+    scrollHeaderNode.current.scrollLeft = scrollLeft;
   }
 
-  componentDidMount() {
-    this.initializeScrollListener();
+  function scrollMacOSListener() {
+    const { scrollLeft } = staticRowsNode.current;
+    scrollHeaderNode.current.scrollLeft = scrollLeft;
   }
 
-  componentDidUpdate() {
-    this.initializeScrollListener();
+  function getScrollNode() {
+    return IS_MAC_OS ? staticRowsNode : scrollNode;
   }
 
-  componentWillUnmount() {
-    const scrollNode = this.getScrollNode();
-    if (scrollNode) {
-      scrollNode.removeEventListener('scroll', this.scrollListener);
+  useEffect(() => {
+    const scrollListener = IS_MAC_OS ? scrollMacOSListener : defaultScrollListener;
+    const scrollingNode = getScrollNode().current;
+
+    if (initializedScrollListener || !scrollingNode) {
+      return undefined;
     }
-  }
-
-  getContext() {
-    const renderers = { ...RENDERERS, ...this.props.renderers };
-    const parsers = { ...PARSERS, ...this.props.parsers };
-    const formatters = { ...FORMATTERS, ...this.props.formatters };
-    const labels = {
-      ...DEFAULT_LABELS,
-      ...this.props.labels,
+    scrollingNode.addEventListener('scroll', scrollListener);
+    setInitializedScrollListener(true);
+    return () => {
+      scrollingNode.removeEventListener('scroll', scrollListener);
+      setInitializedScrollListener(false);
     };
+  }, []);
 
-    return {
-      ...this.props,
-      renderers,
-      parsers,
-      formatters,
-      labels,
-      onMouseEnterResizeHandle: this.handleMouseEnterResizeHandle,
-      columnsWidth: this.state.columnsWidth,
-    };
-  }
-
-  getModifiers() {
-    return {
-      compact: this.props.compact,
-      comfortable: this.props.comfortable,
-    };
-  }
-
-  getScrollNode() {
-    return IS_MAC_OS ? this.staticRowsNode : this.scrollNode;
-  }
-
-  setStaticHeaderNode(node) {
-    this.staticHeaderNode = node || fakeNode;
-  }
-
-  setScrollNode(node) {
-    this.scrollNode = node;
-  }
-
-  setScrollHeaderNode(node) {
-    this.scrollHeaderNode = node;
-  }
-
-  setFrozenRowsNode(node) {
-    this.frozenRowsNode = node || fakeNode;
-  }
-
-  setStaticRowsNode(node) {
-    this.staticRowsNode = node;
-  }
-
-  initializeScrollListener() {
-    const scrollNode = this.getScrollNode();
-    const { initializedScrollListener } = this.state;
-
-    if (initializedScrollListener || !scrollNode) {
-      return;
-    }
-
-    scrollNode.addEventListener('scroll', this.scrollListener);
-    this.setState({ initializedScrollListener: true });
-  }
-
-  scrollListener() {
-    const { scrollLeft } = this.scrollNode;
-    this.staticRowsNode.scrollLeft = scrollLeft;
-    this.scrollHeaderNode.scrollLeft = scrollLeft;
-  }
-
-  scrollMacOSListener() {
-    const { scrollLeft } = this.staticRowsNode;
-    this.scrollHeaderNode.scrollLeft = scrollLeft;
-  }
-
-  handleToggleGroup(groupId) {
-    const stateGroupId = this.state.collapsedGroups[groupId];
-    const collapsedGroups = {
-      ...this.state.collapsedGroups,
-      [groupId]: !stateGroupId,
-    };
-    this.setState({ collapsedGroups });
-  }
-
-  handleMouseEnterResizeHandle(e, column) {
-    if (this.state.resizer.resizing) return;
+  function handleMouseEnterResizeHandle(e, column) {
+    if (resizer.resizing) return;
     const target = e.target.getBoundingClientRect();
     const parent = e.target.parentNode.getBoundingClientRect();
-    const container = this.containerRef.current.getBoundingClientRect();
-    this.setState({ resizer: { column, target, parent, container, resizing: false } });
+    const container = containerRef.current.getBoundingClientRect();
+    setResizer({ column, target, parent, container, resizing: false });
+  }
+  function getInitContextValue() {
+    const contextRenderers = { ...RENDERERS, ...renderers };
+    const contextParsers = { ...PARSERS, ...parsers };
+    const contextFormatters = { ...FORMATTERS, ...formatters };
+    const contextLabels = {
+      ...DEFAULT_LABELS,
+      ...labels,
+    };
+
+    return {
+      columnHeaders,
+      columns,
+      columnsWidth,
+      comfortable,
+      compact,
+      disabled,
+      edited,
+      editable,
+      formatters: contextFormatters,
+      getInputProps,
+      groupedSummaryColumnKeys,
+      id,
+      isDisplayedRowsSelected,
+      isWarningError,
+      labels: contextLabels,
+      locale,
+      modifiers,
+      onChange,
+      onChangeDebounceTime,
+      onClickCellDropdownItem,
+      onMouseEnterResizeHandle: handleMouseEnterResizeHandle,
+      onRowClick,
+      onSelectAllRows,
+      onSelectRow,
+      onSort,
+      onStartEditing,
+      onStopEditing,
+      parsers: contextParsers,
+      renderers: contextRenderers,
+      rowKeyField,
+      rows,
+      selectedRowKey,
+      showError,
+      sortDirection,
+      visible,
+      wrapHeader,
+    };
   }
 
-  handleStartResize() {
-    this.setState(({ resizer }) => ({ resizer: { ...resizer, resizing: true } }));
+  function handleToggleGroup(groupId) {
+    setCollapsedGroups({
+      ...collapsedGroups,
+      [groupId]: !collapsedGroups[groupId],
+    });
   }
 
-  handleStopResize(deltaX) {
-    const { onChangeWidth } = this.props;
+  function handleStartResize() {
+    setResizer({ ...resizer, resizing: true });
+  }
+
+  function handleStopResize(deltaX) {
     if (typeof onChangeWidth === 'function') {
-      const value = this.state.resizer.parent.width + deltaX;
-      onChangeWidth(value, this.state.resizer.column);
+      const value = resizer.parent.width + deltaX;
+      onChangeWidth(value, resizer.column);
     }
-    this.setState(({ columnsWidth, resizer }) => ({
-      resizer: initialStateResizer,
-      columnsWidth: { ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX },
-    }));
+    setResizer(DATAGRID_INITIAL_STATE_RESIZER);
+    setColumnsWidth({ ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX });
   }
 
-  renderHeaderRows(columns, frozen, columnIndexStart = 0) {
-    const hasCheckbox = typeof this.props.onSelectRow === 'function' && frozen;
+  function renderHeaderRows(cols, frozen, columnIndexStart = 0) {
+    const rowHasCheckbox = typeof onSelectRow === 'function' && frozen;
     return (
       <DatagridHeaderRow
-        rowIndex={HEADER_ROW_INDEX}
-        columns={columns}
+        rowIndex={DATAGRID_HEADER_ROW_INDEX}
+        columns={cols}
         columnIndexStart={columnIndexStart}
-        context={this.getContext()}
-        hasCheckBox={hasCheckbox}
+        context={getInitContextValue()}
+        hasCheckBox={rowHasCheckbox}
         frozen={frozen}
       />
     );
   }
 
-  renderSummaryRow(columns, frozen, numberOfRows, headersCount = 1, columnIndexStart = 0) {
-    const { renderSummaryCell, onSelectRow } = this.props;
-    const hasCheckbox = typeof onSelectRow === 'function' && frozen;
+  function getModifiers() {
+    return { compact, comfortable };
+  }
 
-    if (!renderSummaryCell || !numberOfRows) return null;
+  function renderSummaryRow(cols, frozen, numberOfRows, rowHeadersCount = 1, columnIndexStart = 0) {
+    const rowHasCheckbox = typeof onSelectRow === 'function' && frozen;
 
-    const modifiers = this.getModifiers();
+    if (!renderSummaryCell || !numberOfRows) {
+      return null;
+    }
+    const containerModifiers = getModifiers();
 
     return (
       <DatagridRow
-        columns={columns}
-        index={0}
-        header
-        summary
-        rowIndex={headersCount + 1}
-        context={this.getContext()}
-        render={renderSummaryCell}
         columnIndexStart={columnIndexStart}
-        frozen={frozen}
+        columns={cols}
+        context={getInitContextValue()}
         detached
+        frozen={frozen}
+        header
+        index={0}
         lastRow
+        render={renderSummaryCell}
+        rowIndex={rowHeadersCount + 1}
+        summary
       >
         {cells => (
           <>
-            {hasCheckbox && (
+            {rowHasCheckbox && (
               <div
                 className={bemClass('DataGrid__row-checkbox-container', {
-                  ...modifiers,
+                  ...containerModifiers,
                   header: true,
                   summary: true,
-                  last: !columns.length,
+                  last: !cols.length,
                   'first-row': true,
                   'last-row': true,
                 })}
@@ -295,27 +272,13 @@ class Datagrid extends React.PureComponent {
     );
   }
 
-  renderRows(columns, frozen, headersCount = 1, columnIndexStart = 0) {
-    const {
-      rowKeyField,
-      renderSummaryCell,
-      groupedByColumnKey,
-      rows,
-      id,
-      selectedRows,
-      onSelectRow,
-    } = this.props;
-
-    const hasCheckbox = typeof onSelectRow === 'function' && frozen;
-    const firstColumnWidth =
-      this.state.columnsWidth[(columns[0] || {}).key] || (columns[0] || {}).width;
-
+  function renderRows(col, frozen, rowHeadersCount = 1, columnIndexStart = 0) {
+    const rowHasCheckbox = typeof onSelectRow === 'function' && frozen;
+    const firstColumnWidth = columnsWidth[(col[0] || {}).key] || (col[0] || {}).width;
     const summaryRowsCount = renderSummaryCell ? 1 : 0;
-    const groupingColumn =
-      groupedByColumnKey && this.props.columns.find(col => col.key === groupedByColumnKey);
-    const displayGroupToggle =
-      (frozen && columns.length) || (!frozen && columns.length === this.props.columns.length);
-    const modifiers = this.getModifiers();
+    const groupingColumn = groupedByColumnKey && columns.find(c => c.key === groupedByColumnKey);
+    const displayGroupToggle = (frozen && col.length) || (!frozen && col.length === columns.length);
+    const rowModifiers = getModifiers();
 
     return rows.reduce((acc, row, index, arr) => {
       const isFirstRow = index === 0;
@@ -328,13 +291,13 @@ class Datagrid extends React.PureComponent {
 
       const key = rowKeyField(row);
       const uniqueId = `${key}__${index}`;
-      const rowIndex = headersCount + summaryRowsCount + 1 + acc.length;
-      const collapsed = groupedByColumnKey && !!this.state.collapsedGroups[row[groupedByColumnKey]];
+      const rowIndex = rowHeadersCount + summaryRowsCount + 1 + acc.length;
+      const collapsed = groupedByColumnKey && !!collapsedGroups[row[groupedByColumnKey]];
 
       const sharedProps = {
         collapsed,
-        columns,
-        context: this.getContext(),
+        columns: col,
+        context: getInitContextValue(),
         columnIndexStart,
         index,
       };
@@ -346,21 +309,23 @@ class Datagrid extends React.PureComponent {
             key={`${uniqueId}--group`}
             firstRowInGroup={row}
             rowIndex={rowIndex}
-            onToggle={this.handleToggleGroup}
+            onToggle={handleToggleGroup}
             subRows={rows.filter(r => r[groupedByColumnKey] === row[groupedByColumnKey])}
             frozen={frozen}
             groupingColumn={displayGroupToggle ? groupingColumn : undefined}
             groupingColumnWidth={
-              columns.length && hasCheckbox ? firstColumnWidth + CHECKBOX_WIDTH : firstColumnWidth
+              col.length && rowHasCheckbox
+                ? firstColumnWidth + DATAGRID_CHECKBOX_WIDTH
+                : firstColumnWidth
             }
             lastRow={collapsed}
           >
             {cells => (
               <>
-                {!columns.length && hasCheckbox && (
+                {!col.length && rowHasCheckbox && (
                   <div
                     className={bemClass('DataGrid__row-checkbox-container', {
-                      ...modifiers,
+                      ...rowModifiers,
                       header: true,
                       'first-row': true,
                       'last-row': collapsed,
@@ -374,7 +339,6 @@ class Datagrid extends React.PureComponent {
         ) : null;
 
       const groupedRowArr = groupedRow && groupingColumn ? [groupedRow] : [];
-      const { labels } = this.getContext();
       const ariaRowIndex = rowIndex + groupedRowArr.length + 1;
       return [
         ...acc,
@@ -385,18 +349,18 @@ class Datagrid extends React.PureComponent {
           row={row}
           rowIndex={ariaRowIndex}
           frozen={frozen}
-          hasCheckbox={hasCheckbox}
+          hasCheckbox={rowHasCheckbox}
           detached={index === 0 && !groupedRow}
           lastRow={isFollowedByDifferentGroup}
         >
           {cells => (
             <>
-              {hasCheckbox && (
+              {rowHasCheckbox && (
                 <div
                   className={bemClass('DataGrid__row-checkbox-container', {
                     'first-row': index + groupedRowArr.length === 0,
                     'last-row': index === rows.length - 1,
-                    ...modifiers,
+                    ...rowModifiers,
                   })}
                 >
                   <CheckBox
@@ -419,8 +383,8 @@ class Datagrid extends React.PureComponent {
     }, []);
   }
 
-  renderResizer() {
-    const { target, container, parent, resizing, column } = this.state.resizer;
+  function renderResizer() {
+    const { target, container, parent, resizing, column } = resizer;
     const minWidth = column && column.editable ? 74 : 64;
 
     return (
@@ -431,138 +395,106 @@ class Datagrid extends React.PureComponent {
         height={container.bottom - target.top}
         maxLeft={parent.left + minWidth}
         maxRight={column && column.frozen ? container.right - minWidth : container.right}
-        onStart={this.handleStartResize}
-        onStop={this.handleStopResize}
+        onStart={handleStartResize}
+        onStop={handleStopResize}
         resizing={resizing}
       />
     );
   }
 
-  renderHorizontalScroll(rowsWidth = 0) {
-    if (IS_MAC_OS || !rowsWidth) {
+  function renderHorizontalScroll(rowsScrollWidth = 0) {
+    if (IS_MAC_OS || !rowsScrollWidth) {
       return null;
     }
-
-    const {
-      offsetWidth: frozenRowsWidth = 0,
-    } = this.frozenRowsNode || {};
 
     return (
       <div
         className="Datagrid__horizontal-scroll-container"
-        ref={this.setScrollNode}
-        style={{ width: `calc(100% - ${frozenRowsWidth + SCROLLBAR_SIZE}px)` }}
+        ref={scrollNode}
+        style={{ width: `calc(100% - ${frozenRowsWidth + DATAGRID_SCROLLBAR_SIZE}px)` }}
       >
         <div
           className="Datagrid__horizontal-scroll-element"
-          style={{ width: `${rowsWidth}px`}}
+          style={{ width: `${rowsScrollWidth}px` }}
         />
       </div>
     );
   }
-
-  render() {
-    const { className, columns, columnHeaders, rows, id } = this.props;
-    const staticColumns = columns.filter(({ frozen }) => !frozen);
-    const frozenColumns = columns.filter(({ frozen }) => frozen);
-    const staticColumnHeaders = columnHeaders
-      ? columnHeaders.filter(({ frozen }) => !frozen)
-      : staticColumns;
-    const frozenColumnHeaders = columnHeaders
-      ? columnHeaders.filter(({ frozen }) => frozen)
-      : frozenColumns;
-    const headersCount = 1;
-    const hasCheckbox = typeof this.props.onSelectRow === 'function';
-
-    const { labels } = this.getContext();
-    const {
-      offsetWidth: frozenRowsWidth = 0,
-    } = this.frozenRowsNode || {};
-
-    const rowsWidth = sum(staticColumns, 'width');
-
-    return (
-      <>
-        {this.renderResizer()}
-        <div role="rowgroup" className="Datagrid__head">
-          {(!!frozenColumns.length || hasCheckbox) && (
-            <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
-              {this.renderHeaderRows(frozenColumnHeaders, true)}
-              {this.renderSummaryRow(
-                frozenColumns,
-                true,
-                staticColumns.length,
-                HEADER_ROW_INDEX + 1
-              )}
-            </div>
-          )}
-          <div ref={this.setScrollHeaderNode} className="Datagrid__header-row-container">
-            <div
-              role="presentation"
-              ref={this.setStaticHeaderNode}
-              className={bemClass('Datagrid__header-row', { static: true })}
-              style={{ width: rowsWidth }}
-            >
-              {this.renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
-              {this.renderSummaryRow(
-                staticColumns,
-                false,
-                staticColumns.length,
-                HEADER_ROW_INDEX + 1,
-                frozenColumns.length
-              )}
-            </div>
+  return (
+    <DataGridContext.Provider value={getInitContextValue()}>
+      {renderResizer()}
+      <div role="rowgroup" className="Datagrid__head">
+        {(!!frozenColumns.length || hasCheckbox) && (
+          <div role="presentation" className={bemClass('Datagrid__header-row', { frozen: true })}>
+            {renderHeaderRows(frozenColumnHeaders, true)}
+            {renderSummaryRow(
+              frozenColumns,
+              true,
+              staticColumns.length,
+              DATAGRID_HEADER_ROW_INDEX + 1
+            )}
           </div>
-        </div>
-        <div
-          id={id}
-          role="grid"
-          aria-rowcount={headersCount + rows.length}
-          className={bemClass(
-            'Datagrid',
-            { 'with-summary': !!this.props.renderSummaryCell },
-            className
-          )}
-          ref={this.containerRef}
-        >
-          {this.renderHorizontalScroll(rowsWidth)}
-
-          <div role="rowgroup" className="Datagrid__body">
-            {this.props.rows.length ? (
-              <>
-                {(!!frozenColumns.length || hasCheckbox) && (
-                  <div
-                    role="presentation"
-                    ref={this.setFrozenRowsNode}
-                    className={bemClass('Datagrid__rows', { frozen: true })}
-                  >
-                    {this.renderRows(frozenColumns, true, headersCount)}
-                  </div>
-                )}
-                <div
-                  role="presentation"
-                  className={bemClass('Datagrid__rows', { static: true })}
-                  style={{ width: `calc(100% - ${frozenRowsWidth}px)` }}
-                >
-                  <div
-                    className={bemClass('Datagrid__rows-container', { isMacOS: IS_MAC_OS })}
-                    ref={this.setStaticRowsNode}
-                  >
-                    {this.renderRows(staticColumns, false, headersCount, frozenColumns.length)}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="Datagrid__no-data-label">{labels.errorNoData}</div>
+        )}
+        <div ref={scrollHeaderNode} className="Datagrid__header-row-container">
+          <div
+            role="presentation"
+            ref={staticHeaderNode}
+            className={bemClass('Datagrid__header-row', { static: true })}
+            style={{ width: rowsWidth }}
+          >
+            {renderHeaderRows(staticColumnHeaders, false, frozenColumns.length)}
+            {renderSummaryRow(
+              staticColumns,
+              false,
+              staticColumns.length,
+              DATAGRID_HEADER_ROW_INDEX + 1,
+              frozenColumns.length
             )}
           </div>
         </div>
-      </>
-    );
-  }
-}
+      </div>
+      <div
+        id={id}
+        role="grid"
+        aria-rowcount={headersCount + rows.length}
+        className={bemClass('Datagrid', { 'with-summary': !!renderSummaryCell }, className)}
+        ref={containerRef}
+      >
+        {renderHorizontalScroll(rowsWidth)}
 
-Datagrid.displayName = 'Datagrid';
+        <div role="rowgroup" className="Datagrid__body">
+          {rows.length ? (
+            <>
+              {(!!frozenColumns.length || hasCheckbox) && (
+                <div
+                  role="presentation"
+                  ref={frozenRowsNode}
+                  className={bemClass('Datagrid__rows', { frozen: true })}
+                >
+                  {renderRows(frozenColumns, true, headersCount)}
+                </div>
+              )}
+              <div
+                role="presentation"
+                className={bemClass('Datagrid__rows', { static: true })}
+                style={{ width: `calc(100% - ${frozenRowsWidth}px)` }}
+              >
+                <div
+                  className={bemClass('Datagrid__rows-container', { isMacOS: IS_MAC_OS })}
+                  ref={staticRowsNode}
+                >
+                  {renderRows(staticColumns, false, headersCount, frozenColumns.length)}
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="Datagrid__no-data-label">{labels.errorNoData}</div>
+          )}
+        </div>
+      </div>
+    </DataGridContext.Provider>
+  );
+}
 
 Datagrid.defaultProps = {
   disabled: col => col.disabled,
