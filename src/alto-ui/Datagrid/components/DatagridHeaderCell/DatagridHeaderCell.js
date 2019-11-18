@@ -9,82 +9,84 @@ import { bemClass } from '../../../helpers/bem';
 
 import './DatagridHeaderCell.scss';
 
-class DatagridHeaderCell extends React.Component {
-  constructor(props) {
-    super(props);
+const DatagridHeaderCell = ({
+  column,
+  context: {
+    wrapHeader,
+    columnSorted,
+    onSort,
+    onMouseEnterResizeHandle,
+    sortDirection,
+    id,
+    labels,
+  },
+  rowIndex,
+  colIndex,
+  last,
+  width,
+  firstCellInRow,
+  lastCellInRow,
+  firstRow,
+}) => {
+  const wrapped = wrapHeader;
+  const style = {
+    width,
+    minWidth: column.editable ? '4.625rem' : '2rem',
+    maxWidth: width,
+  };
 
-    this.handleMouseEnterResizeHandle = this.handleMouseEnterResizeHandle.bind(this);
-  }
+  const sorted = column.key === columnSorted || [1, -1].includes(column.sortDirection);
 
-  shouldComponentUpdate(nextProps) {
-    return (
-      this.props.width !== nextProps.width ||
-      this.props.colIndex !== nextProps.colIndex ||
-      this.props.rowIndex !== nextProps.rowIndex ||
-      this.props.first !== nextProps.first ||
-      this.props.last !== nextProps.last ||
-      !isEqual(this.props.column, nextProps.column)
-    );
-  }
+  const handleMouseEnterResizeHandle = e => {
+    onMouseEnterResizeHandle(e, column);
+  };
 
-  handleMouseEnterResizeHandle(e) {
-    this.props.context.onMouseEnterResizeHandle(e, this.props.column);
-  }
-
-  render() {
-    const {
-      column,
-      context,
-      rowIndex,
-      colIndex,
-      last,
-      width,
-      firstCellInRow,
-      lastCellInRow,
-      firstRow,
-    } = this.props;
-    const wrapped = context.wrapHeader;
-    const style = {
-      width,
-      minWidth: column.editable ? '4.625rem' : '2rem',
-      maxWidth: width,
-    };
-
-    const sorted = column.key === context.columnSorted || [1, -1].includes(column.sortDirection);
-
-    return (
-      <div
-        key={column.key}
-        className={bemClass('DatagridHeaderCell', {
-          sortable: !!context.onSort && column.sortable !== false,
-          sorted,
-          filtered: column.filtered,
-          'first-row': firstRow,
-          'first-in-row': firstCellInRow,
-          'last-in-row': lastCellInRow,
-          last,
-          wrapped,
-        })}
+  return (
+    <div
+      key={column.key}
+      className={bemClass('DatagridHeaderCell', {
+        sortable: !!onSort && column.sortable !== false,
+        sorted,
+        filtered: column.filtered,
+        'first-row': firstRow,
+        'first-in-row': firstCellInRow,
+        'last-in-row': lastCellInRow,
+        last,
+        wrapped,
+      })}
+      style={style}
+      role="columheader"
+      aria-rowindex={rowIndex}
+      aria-colindex={colIndex}
+    >
+      <DataGridHeaderCellContent
         style={style}
-        role="columheader"
-        aria-rowindex={rowIndex}
-        aria-colindex={colIndex}
-      >
-        <DataGridHeaderCellContent
-          style={style}
-          sorted={sorted}
-          wrapped={wrapped}
-          context={context}
-          column={column}
-        />
-        <div
-          className="DatagridHeaderCell__resize-handle"
-          onMouseEnter={this.handleMouseEnterResizeHandle}
-        />
-      </div>
-    );
-  }
-}
+        sorted={sorted}
+        wrapped={wrapped}
+        onSort={onSort}
+        sortDirection={sortDirection}
+        id={id}
+        labels={labels}
+        column={column}
+      />
+      <div
+        className="DatagridHeaderCell__resize-handle"
+        onMouseEnter={handleMouseEnterResizeHandle}
+      />
+    </div>
+  );
+};
+
+const areEqual = (prevProps, nextProps) => {
+  return (
+    prevProps.width === nextProps.width &&
+    prevProps.colIndex === nextProps.colIndex &&
+    prevProps.rowIndex === nextProps.rowIndex &&
+    prevProps.first === nextProps.first &&
+    prevProps.last === nextProps.last &&
+    isEqual(prevProps.column, nextProps.column)
+  );
+};
 
 DatagridHeaderCell.defaultProps = {
   first: false,
@@ -121,9 +123,8 @@ DatagridHeaderCell.propTypes = {
   }),
   rowIndex: PropTypes.number.isRequired,
   colIndex: PropTypes.number.isRequired,
-  first: PropTypes.bool,
   last: PropTypes.bool,
   width: PropTypes.number,
 };
 
-export default DatagridHeaderCell;
+export default React.memo(DatagridHeaderCell, areEqual);

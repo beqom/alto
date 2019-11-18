@@ -8,12 +8,12 @@ import FilterIcon from '../../../../Icons/Filter';
 
 describe('DataGridHeaderCellContent component', () => {
   const props = {
-    context: {
-      labels: {
-        a11ySortLabel: 'title',
-      },
-      onSort: jest.fn(),
+    labels: {
+      a11ySortLabel: 'title',
     },
+    onSort: jest.fn(),
+    sortDirection: 1,
+    id: 'column',
     column: {
       key: '1',
       title: 'Column Title',
@@ -107,11 +107,8 @@ describe('DataGridHeaderCellContent component', () => {
       expect(wrapper.containsMatchingElement(<FilterIcon />)).toBe(true);
     });
   });
-  it('should call context.onSort function after click button', () => {
-    const {
-      context: { onSort },
-      column,
-    } = props;
+  it('should call onSort function after click button', () => {
+    const { onSort, column } = props;
     const wrapper = shallow(<DataGridHeaderCellContent {...props} />);
 
     wrapper.find('button').simulate('click');
