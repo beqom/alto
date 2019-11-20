@@ -41,10 +41,7 @@ describe('DataGridCell', () => {
     column: {
       key: '1',
       title: 'fullname',
-      cellDropdownItems: [
-        { key: '1', value: '1' },
-        { key: '2', value: '2' },
-      ],
+      cellDropdownItems: [{ key: '1', value: '1' }, { key: '2', value: '2' }],
     },
     context: {
       columns: [],
@@ -55,7 +52,6 @@ describe('DataGridCell', () => {
       formatters: {},
       onChange: jest.fn(),
       visible: jest.fn(),
-      tooltipVisible: jest.fn(),
       locale: 'en-US',
     },
     aria: {

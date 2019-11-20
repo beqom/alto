@@ -1,17 +1,33 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
-import { DATAGRID_DEFAULT_HEADER_COUNT } from '../../constants';
+import { DATAGRID_DEFAULT_HEADER_COUNT, DATAGRID_SCROLLBAR_SIZE } from '../../constants';
 import { bemClass } from '../../../helpers/bem';
 
-const DataGridContent = ({ labels }) => {
+const DataGridContent = ({
+  id,
+  rows,
+  frozenColumns,
+  staticColumns,
+  hasCheckbox,
+  labels,
+  hasRenderSummaryCell,
+  rowsWidth,
+}) => {
   const containerRef = useRef();
+  const staticRowsNode = useRef();
+  const scrollNode = useRef();
+  const frozenRowsNode = useRef();
+  const { offsetWidth: frozenRowsWidth = 0 } = frozenRowsNode || {};
+
+  const isFrozenRowsAvailable = !!frozenColumns.length || hasCheckbox;
+
 
   return (
     <div
       id={id}
       role="grid"
-      aria-rowcount={DATAGRID_DEFAULT_HEADER_COUNT + rows.length}
-      className={bemClass('Datagrid', { 'with-summary': !!renderSummaryCell }, className)}
+      aria-rowcount={rows.length}
+      className={bemClass('Datagrid', { 'with-summary': hasRenderSummaryCell })}
       ref={containerRef}
     >
       {renderHorizontalScroll(rowsWidth)}
@@ -19,7 +35,7 @@ const DataGridContent = ({ labels }) => {
       <div role="rowgroup" className="Datagrid__body">
         {rows.length ? (
           <>
-            {(!!frozenColumns.length || hasCheckbox) && (
+            {isFrozenRowsAvailable && (
               <div
                 role="presentation"
                 ref={frozenRowsNode}

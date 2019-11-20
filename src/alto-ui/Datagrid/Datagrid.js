@@ -389,24 +389,7 @@ function Datagrid({
     }, []);
   }
 
-  function renderHorizontalScroll(rowsScrollWidth = 0) {
-    if (IS_MAC_OS || !rowsScrollWidth) {
-      return null;
-    }
 
-    return (
-      <div
-        className="Datagrid__horizontal-scroll-container"
-        ref={scrollNode}
-        style={{ width: `calc(100% - ${frozenRowsWidth + DATAGRID_SCROLLBAR_SIZE}px)` }}
-      >
-        <div
-          className="Datagrid__horizontal-scroll-element"
-          style={{ width: `${rowsScrollWidth}px` }}
-        />
-      </div>
-    );
-  }
 
   return (
     <DataGridContext.Provider value={getInitContextValue()}>
@@ -427,8 +410,12 @@ function Datagrid({
         staticColumnHeaders={staticColumnHeaders}
         staticColumns={staticColumns}
         hasCheckbox={hasCheckbox}
+        headerClassModifiers={{ comfortable, compact }}
+        context={getInitContextValue()}
+        renderSummaryCell={renderSummaryCell}
+        rowsWidth={rowsWidth}
       />
-      <DataGridContent labels={labels} />
+
     </DataGridContext.Provider>
   );
 }
