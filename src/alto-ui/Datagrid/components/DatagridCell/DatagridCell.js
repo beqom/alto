@@ -326,7 +326,8 @@ class DatagridCell extends React.Component {
     const style = this.getStyle();
     const modifiers = this.getModifiers();
     const value = this.getFormattedValue();
-    const tooltipVisible = context.tooltipVisible(column);
+    const tooltipVisible =
+      typeof context.tooltipVisible === 'function' ? context.tooltipVisible(column) : true;
 
     return (
       <div
