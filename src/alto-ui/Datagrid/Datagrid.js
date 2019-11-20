@@ -443,9 +443,7 @@ class Datagrid extends React.PureComponent {
       return null;
     }
 
-    const {
-      offsetWidth: frozenRowsWidth = 0,
-    } = this.frozenRowsNode || {};
+    const { offsetWidth: frozenRowsWidth = 0 } = this.frozenRowsNode || {};
 
     return (
       <div
@@ -453,10 +451,7 @@ class Datagrid extends React.PureComponent {
         ref={this.setScrollNode}
         style={{ width: `calc(100% - ${frozenRowsWidth + SCROLLBAR_SIZE}px)` }}
       >
-        <div
-          className="Datagrid__horizontal-scroll-element"
-          style={{ width: `${rowsWidth}px`}}
-        />
+        <div className="Datagrid__horizontal-scroll-element" style={{ width: `${rowsWidth}px` }} />
       </div>
     );
   }
@@ -475,9 +470,7 @@ class Datagrid extends React.PureComponent {
     const hasCheckbox = typeof this.props.onSelectRow === 'function';
 
     const { labels } = this.getContext();
-    const {
-      offsetWidth: frozenRowsWidth = 0,
-    } = this.frozenRowsNode || {};
+    const { offsetWidth: frozenRowsWidth = 0 } = this.frozenRowsNode || {};
 
     const rowsWidth = sum(staticColumns, 'width');
 
