@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
 
 import DatagridCell from '../DatagridCell';
 import './DatagridRow.scss';
+import { DataGridContext } from '../../Datagrid';
 
 const DatagridRow = ({
   index,
@@ -15,7 +16,6 @@ const DatagridRow = ({
   render,
   header,
   summary,
-  context,
   children,
   collapsed,
   frozen,
@@ -25,7 +25,20 @@ const DatagridRow = ({
   cellClassName,
   lastRow,
 }) => {
-  const { onRowClick, rowKeyField, selectedRowKey, columnsWidth, compact, comfortable } = context;
+  const {
+    id,
+    editable,
+    edited,
+    disabled,
+    onRowClick,
+    rowKeyField,
+    selectedRowKey,
+    columnsWidth,
+    compact,
+    comfortable,
+    ...contextProps
+  } = useContext(DataGridContext);
+
   const clickable = typeof onRowClick === 'function';
   return (
     <div
@@ -40,43 +53,48 @@ const DatagridRow = ({
     >
       {children(
         columns.map((column, colIndex) => {
-          const editable =
-            !clickable && !header && !render && context.editable(column, row) && !column.formula;
-          const edited =
-            !header && !render && context.edited(column, row, columnIndexStart + colIndex, index);
-          const disabled =
-            !header &&
-            !render &&
-            typeof context.disabled === 'function' &&
-            context.disabled(column, row);
+          const cellEditable =
+            !clickable && !header && !render && editable(column, row) && !column.formula;
+          const cellEdited =
+            !header && !render && edited(column, row, columnIndexStart + colIndex, index);
+          const cellDisabled =
+            !header && !render && typeof disabled === 'function' && disabled(column, row);
 
-          const id =
-            context.id && row
-              ? `${context.id}__cell--${column.key}-${rowKeyField(row)}`
-              : undefined;
+          const cellId = id && row ? `${id}__cell--${column.key}-${rowKeyField(row)}` : undefined;
 
           return (
             <DatagridCell
-              id={id}
+              id={cellId}
               key={column.key}
               row={row}
               rowIndex={index}
               column={column}
               colIndex={colIndex + columnIndexStart}
-              editable={editable}
-              edited={edited}
-              disabled={disabled}
+              editable={cellEditable}
+              edited={cellEdited}
+              disabled={cellDisabled}
               render={render}
               header={header}
               summary={summary}
-              context={context}
               aria={{ rowIndex, colIndex: colIndex + columnIndexStart + 1 }}
               selectedRowKey={selectedRowKey}
-              inputProps={context.getInputProps(column, row)}
               width={columnsWidth[column.key] || column.width}
               detached={detached}
               className={cellClassName}
               lastRow={lastRow}
+              context={{
+                id,
+                editable,
+                edited,
+                disabled,
+                onRowClick,
+                rowKeyField,
+                selectedRowKey,
+                columnsWidth,
+                compact,
+                comfortable,
+                ...contextProps,
+              }}
             />
           );
         })
@@ -109,10 +127,6 @@ DatagridRow.propTypes = {
   columnIndexStart: PropTypes.number,
   header: PropTypes.bool,
   summary: PropTypes.bool,
-  context: PropTypes.shape({
-    id: PropTypes.string,
-    rowKeyField: PropTypes.func.isRequired,
-  }).isRequired,
   children: PropTypes.func,
   collapsed: PropTypes.bool,
   extraCell: PropTypes.bool,

@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { evaluateFormula } from '../../../helpers/formula';
-import { bemClass } from '../../../helpers/bem';
+import { getFormattedValue } from '../../helpers';
+import { evaluateFormula, bemClass } from '../../../helpers';
 
 import DatagridRow from '../DatagridRow';
 import ChevronDownIcon from '../../../Icons/ChevronDown';
-
-import { getFormattedValue } from '../../helpers';
 
 import './DatagridGroupedRow.scss';
 
@@ -122,6 +120,7 @@ DatagridGroupedRow.displayName = 'DatagridGroupedRow';
 
 DatagridGroupedRow.defaultProps = {
   children: x => x,
+  columnIndexStart: 0,
 };
 
 const columnPropType = PropTypes.shape({
