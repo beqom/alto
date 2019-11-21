@@ -19,6 +19,7 @@ describe('DatagridResizer component', () => {
 
   const getWrapper = (props = {}, fn = shallow) =>
     fn(<DatagridResizer {...mockedProps} {...props} />);
+
   it('should render Draggable component', () => {
     const wrapper = getWrapper();
 
@@ -72,13 +73,13 @@ describe('DatagridResizer component', () => {
     const mouseMove = new Event('mousemove');
     wrapper.find(Draggable).invoke('onDrag')(mouseMove, { x: 900 });
 
-    expect(wrapper.state('x')).toBe(900);
+    expect(wrapper.find(Draggable).prop('position')).toEqual({ x: 900, y: 0 });
   });
 
   it('should properly update state when props changed', () => {
     const wrapper = getWrapper();
     wrapper.setProps({ left: 500 });
 
-    expect(wrapper.state('x')).toBe(0);
+    expect(wrapper.find(Draggable).prop('position')).toEqual({ x: 0, y: 0 });
   });
 });
