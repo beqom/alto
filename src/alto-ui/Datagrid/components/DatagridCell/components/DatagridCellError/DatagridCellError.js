@@ -5,7 +5,7 @@ import Tooltip from '../../../../../Tooltip';
 import ExclamationTriangleIcon from '../../../../../Icons/ExclamationTriangle';
 import ExclamationCircleIcon from '../../../../../Icons/ExclamationCircle';
 
-const DataGridCellError = ({ column, row, value, showError, isWarningError, replaceRowValues }) => {
+const DatagridCellError = ({ column, row, value, showError, isWarningError, replaceRowValues }) => {
   const error = typeof showError === 'function' ? showError(value, column, row) : false;
   if (!error) {
     return null;
@@ -19,7 +19,7 @@ const DataGridCellError = ({ column, row, value, showError, isWarningError, repl
   );
   return <Tooltip content={tooltipContent}>{tooltipIcon}</Tooltip>;
 };
-DataGridCellError.propTypes = {
+DatagridCellError.propTypes = {
   column: PropTypes.shape({
     key: PropTypes.any.isRequired,
     title: PropTypes.any.isRequired,
@@ -35,4 +35,4 @@ DataGridCellError.propTypes = {
   replaceRowValues: PropTypes.func,
 };
 
-export default DataGridCellError;
+export default DatagridCellError;

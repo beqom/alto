@@ -1,11 +1,11 @@
-import React, { forwardRef, useMemo } from 'react';
-import { DATAGRID_SCROLLBAR_SIZE } from '../../constants';
-import { isMacOS } from '../../../helpers/navigator';
+import React, { forwardRef } from 'react';
+import PropTypes from 'prop-types';
 
-const DataGridHorizontalScroll = forwardRef(
+import { DATAGRID_SCROLLBAR_SIZE } from '../../constants';
+
+const DatagridHorizontalScroll = forwardRef(
   ({ rowsScrollWidth, frozenRowsWidth }, scrollNodeRef) => {
-    const IS_MAC = useMemo(isMacOS, []);
-    if (IS_MAC || !rowsScrollWidth) {
+    if (!rowsScrollWidth) {
       return null;
     }
 
@@ -24,4 +24,10 @@ const DataGridHorizontalScroll = forwardRef(
   }
 );
 
-export default DataGridHorizontalScroll;
+DatagridHorizontalScroll.propTypes = {
+  rowsScrollWidth: PropTypes.number,
+  frozenRowsWidth: PropTypes.number,
+};
+
+DatagridHorizontalScroll.displayName = 'DatagridHorizontalScroll';
+export default DatagridHorizontalScroll;
