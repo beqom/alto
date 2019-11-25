@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/aria-role */
-import React from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import isEqual from 'lodash.isequal';
 
@@ -8,74 +8,6 @@ import DataGridHeaderCellContent from './DatagridHeaderCellContent';
 import { bemClass } from '../../../helpers/bem';
 
 import './DatagridHeaderCell.scss';
-
-const DatagridHeaderCell = ({
-  column,
-  context: {
-    wrapHeader,
-    columnSorted,
-    onSort,
-    onMouseEnterResizeHandle,
-    sortDirection,
-    id,
-    labels,
-  },
-  rowIndex,
-  colIndex,
-  last,
-  width,
-  firstCellInRow,
-  lastCellInRow,
-  firstRow,
-}) => {
-  const wrapped = wrapHeader;
-  const style = {
-    width,
-    minWidth: column.editable ? '4.625rem' : '2rem',
-    maxWidth: width,
-  };
-
-  const sorted = column.key === columnSorted || [1, -1].includes(column.sortDirection);
-
-  const handleMouseEnterResizeHandle = e => {
-    onMouseEnterResizeHandle(e, column);
-  };
-
-  return (
-    <div
-      key={column.key}
-      className={bemClass('DatagridHeaderCell', {
-        sortable: !!onSort && column.sortable !== false,
-        sorted,
-        filtered: column.filtered,
-        'first-row': firstRow,
-        'first-in-row': firstCellInRow,
-        'last-in-row': lastCellInRow,
-        last,
-        wrapped,
-      })}
-      style={style}
-      role="columheader"
-      aria-rowindex={rowIndex}
-      aria-colindex={colIndex}
-    >
-      <DataGridHeaderCellContent
-        style={style}
-        sorted={sorted}
-        wrapped={wrapped}
-        onSort={onSort}
-        sortDirection={sortDirection}
-        id={id}
-        labels={labels}
-        column={column}
-      />
-      <div
-        className="DatagridHeaderCell__resize-handle"
-        onMouseEnter={handleMouseEnterResizeHandle}
-      />
-    </div>
-  );
-};
 
 const areEqual = (prevProps, nextProps) => {
   return (
@@ -87,6 +19,77 @@ const areEqual = (prevProps, nextProps) => {
     isEqual(prevProps.column, nextProps.column)
   );
 };
+
+const DatagridHeaderCell = memo(
+  ({
+    column,
+    context: {
+      wrapHeader,
+      columnSorted,
+      onSort,
+      onMouseEnterResizeHandle,
+      sortDirection,
+      id,
+      labels,
+    },
+    rowIndex,
+    colIndex,
+    last,
+    width,
+    firstCellInRow,
+    lastCellInRow,
+    firstRow,
+  }) => {
+    const wrapped = wrapHeader;
+    const style = {
+      width,
+      minWidth: column.editable ? '4.625rem' : '2rem',
+      maxWidth: width,
+    };
+
+    const sorted = column.key === columnSorted || [1, -1].includes(column.sortDirection);
+
+    const handleMouseEnterResizeHandle = e => {
+      onMouseEnterResizeHandle(e, column);
+    };
+
+    return (
+      <div
+        key={column.key}
+        className={bemClass('DatagridHeaderCell', {
+          sortable: !!onSort && column.sortable !== false,
+          sorted,
+          filtered: column.filtered,
+          'first-row': firstRow,
+          'first-in-row': firstCellInRow,
+          'last-in-row': lastCellInRow,
+          last,
+          wrapped,
+        })}
+        style={style}
+        role="columheader"
+        aria-rowindex={rowIndex}
+        aria-colindex={colIndex}
+      >
+        <DataGridHeaderCellContent
+          style={style}
+          sorted={sorted}
+          wrapped={wrapped}
+          onSort={onSort}
+          sortDirection={sortDirection}
+          id={id}
+          labels={labels}
+          column={column}
+        />
+        <div
+          className="DatagridHeaderCell__resize-handle"
+          onMouseEnter={handleMouseEnterResizeHandle}
+        />
+      </div>
+    );
+  },
+  areEqual
+);
 
 DatagridHeaderCell.defaultProps = {
   first: false,
@@ -126,5 +129,6 @@ DatagridHeaderCell.propTypes = {
   last: PropTypes.bool,
   width: PropTypes.number,
 };
+DatagridHeaderCell.displayName='DataGridHeaderCell';
 
-export default React.memo(DatagridHeaderCell, areEqual);
+export default DatagridHeaderCell;
