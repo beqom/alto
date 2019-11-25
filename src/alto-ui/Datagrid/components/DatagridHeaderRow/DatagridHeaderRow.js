@@ -2,67 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
-import CheckBox from '../../../Form/CheckBox';
 
+import DatagridHeaderRowCheckbox from './DatagridHeaderRowCheckbox';
 import DatagridHeaderCell from '../DatagridHeaderCell';
 
 import './DatagridHeaderRow.scss';
-
-const renderCheckbox = (context, columns) => {
-  const { columnHeaders, labels, id, onSelectAllRows, isDisplayedRowsSelected } = context;
-
-  const column = (columnHeaders || [])[0] || {};
-  const checkboxId = `${id}__header-checkbox`;
-
-  if (column.children && column.children.length) {
-    return (
-      <div
-        className={bemClass('DatagridHeaderRow__group', {
-          last: !columns.length,
-          'first-in-row': true,
-        })}
-      >
-        <div
-          className={bemClass('DatagridHeaderRow__group-title', {
-            empty: true,
-            'followed-by-empty': !column.title,
-          })}
-        />
-        <div className="DatagridHeaderRow__group-columns">
-          <div
-            className={bemClass('DatagridHeaderRow__checkbox-container', { last: !columns.length })}
-          >
-            <CheckBox
-              id={checkboxId}
-              className="DatagridHeaderRow__checkbox"
-              checked={isDisplayedRowsSelected}
-              onChange={onSelectAllRows}
-              hideLabel
-              label={labels.checkboxLabel}
-            />
-          </div>
-        </div>
-      </div>
-    );
-  }
-  return (
-    <div
-      className={bemClass('DatagridHeaderRow__checkbox-container', {
-        last: !columns.length,
-        'first-row': true,
-      })}
-    >
-      <CheckBox
-        id={checkboxId}
-        className="DatagridHeaderRow__checkbox"
-        checked={isDisplayedRowsSelected}
-        onChange={onSelectAllRows}
-        hideLabel
-        label={labels.checkboxLabel}
-      />
-    </div>
-  );
-};
 
 const DatagridHeaderRow = ({
   columns,
@@ -73,7 +17,7 @@ const DatagridHeaderRow = ({
   frozen,
 }) => (
   <div role="row" aria-rowindex={rowIndex} className={bemClass('DatagridHeaderRow', { frozen })}>
-    {hasCheckBox && renderCheckbox(context, columns)}
+    {hasCheckBox && <DatagridHeaderRowCheckbox context={context} columns={columns} />}
     {columns.map((column, colIndex) => {
       const { columnsWidth } = context;
       const firstCellInRow =
@@ -158,7 +102,7 @@ DatagridHeaderRow.propTypes = {
     PropTypes.shape({
       key: PropTypes.string,
       title: PropTypes.string,
-      childrem: PropTypes.array,
+      children: PropTypes.array,
     }).isRequired
   ).isRequired,
   rowIndex: PropTypes.number.isRequired,
