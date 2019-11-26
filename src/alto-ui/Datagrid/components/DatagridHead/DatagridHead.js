@@ -1,10 +1,11 @@
-import React, { forwardRef, memo } from 'react';
+import React, { useRef, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
 import { DATAGRID_HEADER_ROW_INDEX } from '../../constants';
 import DatagridHeaderRow from '../DatagridHeaderRow';
 import { DatagridHeadSummaryRow } from './components/DatagridHeadSummaryRow';
+
 
 const DatagridHead = memo(
   ({
@@ -16,9 +17,16 @@ const DatagridHead = memo(
     rowsWidth,
     staticColumnHeaders,
     staticColumns,
-    scrollHeaderNode,
+    horizontalScrollPosition,
   }) => {
+    const scrollHeaderNode = useRef();
     const isFrozenColumnsAvailable = frozenColumns.length || hasCheckbox;
+
+    useEffect(() => {
+      const { current: scrollHeader } = scrollHeaderNode;
+      scrollHeader.scrollLeft = horizontalScrollPosition;
+    }, [horizontalScrollPosition]);
+
     console.log('Head Render');
     return (
       <div role="rowgroup" className="Datagrid__head">
@@ -54,17 +62,6 @@ const DatagridHead = memo(
               columnIndexStart={frozenColumns.length}
               frozen={false}
             />
-            {staticColumns.length && renderSummaryCell && (
-              <DatagridHeadSummaryRow
-                columns={staticColumns}
-                isFrozen={false}
-                rowHasCheckbox={hasCheckbox && false}
-                rowHeadersCount={1}
-                columnIndexStart={frozenColumns.length}
-                renderSummaryCell={renderSummaryCell}
-                headerClassModifiers={headerClassModifiers}
-              />
-            )}
           </div>
         </div>
       </div>
@@ -89,9 +86,7 @@ DatagridHead.propTypes = {
   staticColumns: PropTypes.arrayOf(
     PropTypes.shape({ key: PropTypes.string.isRequired, title: PropTypes.string.isRequired })
   ),
-  scrollHeaderNode: PropTypes.any,
+  horizontalScrollPosition: PropTypes.number,
 };
 
-export default forwardRef(({ ...props }, ref) => (
-  <DatagridHead {...props} scrollHeaderNode={ref} />
-));
+export default DatagridHead;
