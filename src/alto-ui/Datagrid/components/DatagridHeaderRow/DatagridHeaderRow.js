@@ -160,11 +160,6 @@ DatagridHeaderRow.propTypes = {
   ).isRequired,
   rowIndex: PropTypes.number.isRequired,
   columnIndexStart: PropTypes.number,
-  context: PropTypes.shape({
-    columnHeaders: PropTypes.array,
-    labels: PropTypes.object,
-    columnsWidth: PropTypes.object.isRequired,
-  }).isRequired,
   hasCheckBox: PropTypes.bool,
   frozen: PropTypes.bool,
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import sum from '../helpers/sum';
 import { isMacOS as isMacOSHelper } from '../helpers/navigator';
@@ -29,7 +29,7 @@ export const DatagridContext = React.createContext({
 
 DatagridContext.displayName = 'DataGridContext';
 
-function Datagrid({
+export default function Datagrid({
   // className,
   columnHeaders,
   columns,
@@ -72,13 +72,10 @@ function Datagrid({
 }) {
   const [collapsedGroups, setCollapsedGroups] = useState({});
   const [columnsWidth, setColumnsWidth] = useState({});
-  const [initializedScrollListener, setInitializedScrollListener] = useState(false);
   const [resizer, setResizer] = useState(DATAGRID_INITIAL_STATE_RESIZER);
+  const [horizontalScrollPosition, setHorizontalScrollPosition] = useState(0);
 
   const containerRef = useRef();
-  const scrollHeaderNode = useRef();
-  const scrollNode = useRef();
-  const staticRowsNode = useRef();
   const { target, container, parent, resizing, column } = resizer;
   const minWidth = column && column.editable ? 74 : 64;
   const hasCheckbox = typeof onSelectRow === 'function';
@@ -92,36 +89,6 @@ function Datagrid({
     [columnHeaders]
   );
   const rowsWidth = sum(staticColumns, 'width');
-
-  function defaultScrollListener() {
-    const { scrollLeft } = scrollNode.current;
-    staticRowsNode.current.scrollLeft = scrollLeft;
-    scrollHeaderNode.current.scrollLeft = scrollLeft;
-  }
-
-  function scrollMacOSListener() {
-    const { scrollLeft } = staticRowsNode.current;
-    scrollHeaderNode.current.scrollLeft = scrollLeft;
-  }
-
-  function getScrollNode() {
-    return IS_MAC_OS ? staticRowsNode : scrollNode;
-  }
-
-  useEffect(() => {
-    const scrollListener = IS_MAC_OS ? scrollMacOSListener : defaultScrollListener;
-    const scrollingNode = getScrollNode().current;
-
-    if (initializedScrollListener || !scrollingNode) {
-      return undefined;
-    }
-    scrollingNode.addEventListener('scroll', scrollListener);
-    setInitializedScrollListener(true);
-    return () => {
-      scrollingNode.removeEventListener('scroll', scrollListener);
-      setInitializedScrollListener(false);
-    };
-  }, []);
 
   function handleMouseEnterResizeHandle(e, col) {
     if (resizer.resizing) return;
@@ -234,7 +201,7 @@ function Datagrid({
         renderSummaryCell={renderSummaryCell}
         rowsWidth={rowsWidth}
         id={id}
-        ref={scrollHeaderNode}
+        horizontalScrollPosition={horizontalScrollPosition}
       />
       <DatagridContent
         hasCheckbox={hasCheckbox}
@@ -246,7 +213,8 @@ function Datagrid({
         rows={rows}
         rowsWidth={rowsWidth}
         columnsWidth={columnsWidth}
-        ref={{ containerRef, scrollNode, staticRowsNode }}
+        ref={containerRef}
+        setHorizontalScrollPosition={setHorizontalScrollPosition}
       />
     </DatagridContext.Provider>
   );
@@ -325,5 +293,3 @@ Datagrid.propTypes = {
   visible: PropTypes.func,
   wrapHeader: PropTypes.bool,
 };
-
-export default Datagrid;
