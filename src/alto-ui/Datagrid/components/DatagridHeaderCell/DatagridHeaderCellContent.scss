@@ -89,14 +89,14 @@
   }
 }
 
+.DatagridHeaderCell--sorted .DatagridHeaderCellContent__sortable-icons {
+  opacity: 1;
+}
+
 .DatagridHeaderCell--sortable {
   padding: 0;
 
   &:hover .DatagridHeaderCellContent__sortable-icons {
     opacity: 1;
   }
-}
-
-.DatagridHeaderCell--sorted .DatagridHeaderCellContent__sortable-icons {
-  opacity: 1;
 }

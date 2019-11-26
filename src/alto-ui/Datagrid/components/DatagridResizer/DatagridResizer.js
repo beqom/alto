@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 
@@ -32,16 +32,8 @@ const DatagridResizer = ({
   const handleDrag = (e, { x: xValue }) => {
     setX(xValue);
   };
-
-  return (
-    <Draggable
-      axis="x"
-      position={{ x, y: 0 }}
-      bounds={{ left: maxLeft - left, right: maxRight - left, top: 0, bottom: 0 }}
-      onStart={onStart}
-      onDrag={handleDrag}
-      onStop={handleStop}
-    >
+  const resizerElement = useMemo(
+    () => (
       <div
         className={bemClass('DatagridResizer', { dragging: resizing })}
         style={{
@@ -52,6 +44,19 @@ const DatagridResizer = ({
       >
         <div className="DatagridResizer__ruler" style={{ height }} />
       </div>
+    ),
+    [left]
+  );
+  return (
+    <Draggable
+      axis="x"
+      position={{ x, y: 0 }}
+      bounds={{ left: maxLeft - left, right: maxRight - left, top: 0, bottom: 0 }}
+      onStart={onStart}
+      onDrag={handleDrag}
+      onStop={handleStop}
+    >
+      {resizerElement}
     </Draggable>
   );
 };

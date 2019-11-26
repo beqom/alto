@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import DataGridCellError from '../components/DataGridCellError';
+import DatagridCellError from '../components/DatagridCellError';
 
 describe('DatagridCellError', () => {
   const showError = jest.fn(val => () => val);
@@ -13,7 +13,7 @@ describe('DatagridCellError', () => {
     value: 'aa',
   };
 
-  const getWrapper = ({ ...props }) => shallow(<DataGridCellError {...defaultProps} {...props} />);
+  const getWrapper = ({ ...props }) => shallow(<DatagridCellError {...defaultProps} {...props} />);
 
   it('should return null values when there is no showError function', () => {
     expect(getWrapper().getElement()).toBeNull();

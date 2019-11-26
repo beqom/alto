@@ -9,7 +9,7 @@ import DatagridCellInput from '../DatagridCellInput/DatagridCellInput';
 import Calendar from '../../../Icons/Calendar';
 import CaretDown from '../../../Icons/CaretDown';
 
-import DataGridCellError from './components/DataGridCellError';
+import DatagridCellError from './components/DatagridCellError';
 
 import {
   getFormattedValue,
@@ -280,7 +280,7 @@ class DatagridCell extends React.Component {
 
     return (
       <>
-        <DataGridCellError
+        <DatagridCellError
           column={column}
           row={row}
           value={value}

@@ -30,7 +30,6 @@ jest.mock('../../../../Dropdown', () => {
   return ({ id, context }) => (
     <button
       id={id}
-      renderTrigger={jest.fn()}
       onClick={(...props) => context.onClickCellDropdownItem(...props)}
     />
   );
@@ -41,10 +40,7 @@ describe('DataGridCell', () => {
     column: {
       key: '1',
       title: 'fullname',
-      cellDropdownItems: [
-        { key: '1', value: '1' },
-        { key: '2', value: '2' },
-      ],
+      cellDropdownItems: [{ key: '1', value: '1' }, { key: '2', value: '2' }],
     },
     context: {
       columns: [],

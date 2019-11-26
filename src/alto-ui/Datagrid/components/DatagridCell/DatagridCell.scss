@@ -9,15 +9,6 @@
   border-bottom: 1px solid $coolgrey-20;
   background-color: $white;
 
-  .DatagridRow--clickable:hover & {
-    transition: background-color $transition;
-    background-color: $blue-10;
-
-    &--selected {
-      background-color: $blue-20;
-    }
-  }
-
   &--detached {
     border-top: 1px solid $coolgrey-20;
   }
@@ -56,6 +47,9 @@
 
   &--header {
     height: 2.5rem;
+    background-color: $coolgrey-10;
+    font-weight: $font-weight-semibold;
+    padding: 0;
 
     &.DatagridCell--comfortable {
       height: 3.5rem;
@@ -80,12 +74,6 @@
     font-size: $font-size-large;
   }
 
-  &--header {
-    background-color: $coolgrey-10;
-    font-weight: $font-weight-semibold;
-    padding: 0;
-  }
-
   &--summary {
     background: $color-row-header-bkgd;
   }
@@ -104,6 +92,15 @@
 
   &--right {
     text-align: right;
+  }
+
+  .DatagridRow--clickable:hover & {
+    transition: background-color $transition;
+    background-color: $blue-10;
+
+    &--selected {
+      background-color: $blue-20;
+    }
   }
 }
 
@@ -217,11 +214,13 @@
     color: $orange-70;
   }
 
+  /* stylelint-disable */
   .DatagridCell--danger &,
   .DatagridCell--danger &:hover {
     border-color: $red;
     color: $red;
   }
+  /* stylelint-enable */
 
   &.DatagridCell__content--compact {
     height: $height-datagrid-compact - 0.125;
@@ -253,15 +252,25 @@
     box-shadow: inset 0 0 0 1px $color-input-border-disabled;
   }
 
+  /* stylelint-disable */
   .DatagridCell--danger &,
   .DatagridCell--danger &:hover {
     box-shadow: inset 0 0 0 1px $color-input-border-disabled;
   }
+  /* stylelint-enable */
 }
 
 .DatagridCell__error-icon-wrapper {
   margin-right: $spacing-small;
   width: 1.25rem;
+}
+
+.DatagridCell__error-icon {
+  color: $red;
+}
+
+.DatagridCell__warning-icon {
+  color: $orange;
 }
 
 .DatagridCell__error-icon,
@@ -271,14 +280,6 @@
   .DatagridCell--comfortable & {
     font-size: 1.25rem;
   }
-}
-
-.DatagridCell__error-icon {
-  color: $red;
-}
-
-.DatagridCell__warning-icon {
-  color: $orange;
 }
 
 .DatagridCell__spinner {
