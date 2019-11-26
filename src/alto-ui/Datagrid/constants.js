@@ -14,6 +14,7 @@ export const DEFAULT_LABELS = {
 export const DATAGRID_CHECKBOX_WIDTH = 32;
 export const DATAGRID_SCROLLBAR_SIZE = 17;
 export const DATAGRID_HEADER_ROW_INDEX = 1;
+export const DATAGRID_DEFAULT_COL_WIDTH = 150;
 
 const emptyBoundingClientRect = { top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 };
 

@@ -8,6 +8,7 @@ import DatagridResizer from './components/DatagridResizer';
 
 import './Datagrid.scss';
 import {
+  DATAGRID_DEFAULT_COL_WIDTH,
   DATAGRID_INITIAL_STATE_RESIZER,
   DEFAULT_LABELS,
   FORMATTERS,
@@ -75,20 +76,26 @@ export default function Datagrid({
   const [resizer, setResizer] = useState(DATAGRID_INITIAL_STATE_RESIZER);
   const [horizontalScrollPosition, setHorizontalScrollPosition] = useState(0);
 
+  const scrollHeaderRef = useRef();
+
   const containerRef = useRef();
   const { target, container, parent, resizing, column } = resizer;
   const minWidth = column && column.editable ? 74 : 64;
   const hasCheckbox = typeof onSelectRow === 'function';
 
-  const { staticColumns, frozenColumns } = useMemo(() => mapStaticFrozenColumns(columns), [
-    columns,
-  ]);
+  const { staticColumns, frozenColumns, rowsWidth } = useMemo(() => {
+    const { staticColumns: staticCols, frozenColumns: frozenCols } = mapStaticFrozenColumns(columns);
+    return {
+      staticColumns: staticCols,
+      frozenColumns: frozenCols,
+      rowsWidth: sum(staticCols, 'width', DATAGRID_DEFAULT_COL_WIDTH),
+    }
+  }, [columns]);
 
   const { staticColumnHeaders, frozenColumnHeaders } = useMemo(
     () => mapStaticFrozenColumnsHeaders(columnHeaders, staticColumns, frozenColumns),
     [columnHeaders]
   );
-  const rowsWidth = sum(staticColumns, 'width');
 
   function handleMouseEnterResizeHandle(e, col) {
     if (resizer.resizing) return;
@@ -202,6 +209,7 @@ export default function Datagrid({
         rowsWidth={rowsWidth}
         id={id}
         horizontalScrollPosition={horizontalScrollPosition}
+        ref={scrollHeaderRef}
       />
       <DatagridContent
         hasCheckbox={hasCheckbox}
@@ -213,7 +221,7 @@ export default function Datagrid({
         rows={rows}
         rowsWidth={rowsWidth}
         columnsWidth={columnsWidth}
-        ref={containerRef}
+        ref={{containerRef, scrollHeaderRef}}
         setHorizontalScrollPosition={setHorizontalScrollPosition}
       />
     </DatagridContext.Provider>

@@ -1,11 +1,11 @@
-import React, { forwardRef, useRef, useState, useEffect, useMemo } from 'react';
+import React, { forwardRef, useRef, useState, useEffect, useMemo, memo } from 'react';
 import PropTypes from 'prop-types';
 import { bemClass } from '../../../helpers/bem';
 import DatagridContentRow from './components/DatagridContentRow';
 
 import { DATAGRID_SCROLLBAR_SIZE } from '../../constants';
 
-function DatagridContent({
+const DatagridContent = memo(({
   frozenColumns,
   hasCheckbox,
   hasRenderSummaryCell,
@@ -15,9 +15,11 @@ function DatagridContent({
   rows,
   rowsWidth,
   staticColumns,
-  containerRef,
-  setHorizontalScrollPosition,
-}) {
+  refs: {
+    scrollHeaderRef, containerRef,
+  },
+}) => {
+  console.log('render content');
   const scrollNode = useRef();
   const staticRowsNode = useRef();
   const frozenRowsNode = useRef();
@@ -32,12 +34,14 @@ function DatagridContent({
   const [scrollMacOSListener, defaultScrollListener] = useMemo(() => ([
     () => {
       const { scrollLeft } = staticRowsNode.current;
-      setHorizontalScrollPosition(scrollLeft);
+      // eslint-disable-next-line no-param-reassign
+      scrollHeaderRef.current.scrollLeft = scrollLeft;
     },
     () => {
       const { scrollLeft } = scrollNode.current;
       staticRowsNode.current.scrollLeft = scrollLeft;
-      setHorizontalScrollPosition(scrollLeft);
+      // eslint-disable-next-line no-param-reassign
+      scrollHeaderRef.current.scrollLeft = scrollLeft;
     },
   ]), []);
 
@@ -121,7 +125,7 @@ function DatagridContent({
       </div>
     </div>
   );
-};
+});
 
 DatagridContent.propTypes = {
   frozenColumns: PropTypes.arrayOf(
@@ -144,8 +148,7 @@ DatagridContent.propTypes = {
   staticColumns: PropTypes.arrayOf(
     PropTypes.shape({ key: PropTypes.string.isRequired, title: PropTypes.string.isRequired })
   ),
-  containerRef: PropTypes.object,
-  setHorizontalScrollPosition: PropTypes.func,
+  refs: PropTypes.object,
 };
 
-export default forwardRef(({ ...props }, ref) => <DatagridContent {...props} containerRef={ref} />);
+export default forwardRef(({ ...props }, ref) => <DatagridContent {...props} refs={ref} />);

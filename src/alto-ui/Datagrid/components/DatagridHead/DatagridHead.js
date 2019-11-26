@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, memo } from 'react';
+import React, { memo, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { bemClass } from '../../../helpers/bem';
@@ -17,15 +17,9 @@ const DatagridHead = memo(
     rowsWidth,
     staticColumnHeaders,
     staticColumns,
-    horizontalScrollPosition,
+    scrollHeaderRef,
   }) => {
-    const scrollHeaderNode = useRef();
     const isFrozenColumnsAvailable = frozenColumns.length || hasCheckbox;
-
-    useEffect(() => {
-      const { current: scrollHeader } = scrollHeaderNode;
-      scrollHeader.scrollLeft = horizontalScrollPosition;
-    }, [horizontalScrollPosition]);
 
     console.log('Head Render');
     return (
@@ -50,7 +44,7 @@ const DatagridHead = memo(
             )}
           </div>
         )}
-        <div ref={scrollHeaderNode} className="Datagrid__header-row-container">
+        <div ref={scrollHeaderRef} className="Datagrid__header-row-container">
           <div
             role="presentation"
             className={bemClass('Datagrid__header-row', { static: true })}
@@ -62,6 +56,17 @@ const DatagridHead = memo(
               columnIndexStart={frozenColumns.length}
               frozen={false}
             />
+            {staticColumns.length && renderSummaryCell && (
+              <DatagridHeadSummaryRow
+                columns={staticColumns}
+                isFrozen={false}
+                rowHasCheckbox={hasCheckbox && false}
+                rowHeadersCount={1}
+                columnIndexStart={frozenColumns.length}
+                renderSummaryCell={renderSummaryCell}
+                headerClassModifiers={headerClassModifiers}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -86,7 +91,7 @@ DatagridHead.propTypes = {
   staticColumns: PropTypes.arrayOf(
     PropTypes.shape({ key: PropTypes.string.isRequired, title: PropTypes.string.isRequired })
   ),
-  horizontalScrollPosition: PropTypes.number,
+  scrollHeaderRef: PropTypes.object,
 };
 
-export default DatagridHead;
+export default forwardRef(({ ...props }, ref) => <DatagridHead {...props} scrollHeaderRef={ref} />);
