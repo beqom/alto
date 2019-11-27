@@ -65,13 +65,21 @@ const renderCheckbox = (context, columns) => {
   );
 };
 
-function DatagridHeaderRow({ columns, rowIndex, columnIndexStart, hasCheckBox, frozen }) {
+function DatagridHeaderRow({
+  columns,
+  rowIndex,
+  columnIndexStart,
+  hasCheckBox,
+  frozen,
+  onMouseEnterResizeHandle,
+}) {
   const context = useContext(DatagridContext);
+  const { wrapHeader, columnSorted, onSort, sortDirection, id, labels } = context;
+  const { columnsWidth } = context;
   return (
     <div role="row" aria-rowindex={rowIndex} className={bemClass('DatagridHeaderRow', { frozen })}>
       {hasCheckBox && renderCheckbox(context, columns)}
       {columns.map((column, colIndex) => {
-        const { columnsWidth } = context;
         const firstCellInRow =
           typeof context.onSelectRow !== 'function' && columnIndexStart + colIndex === 0;
         if (!column.children) {
@@ -87,6 +95,13 @@ function DatagridHeaderRow({ columns, rowIndex, columnIndexStart, hasCheckBox, f
               firstRow
               firstCellInRow={firstCellInRow}
               lastCellInRow={columnIndexStart + colIndex === context.columns.length - 1}
+              wrapHeader={wrapHeader}
+              columnSorted={columnSorted}
+              onSort={onSort}
+              onMouseEnterResizeHandle={onMouseEnterResizeHandle}
+              sortDirection={sortDirection}
+              id={id}
+              labels={labels}
             />
           );
         }
@@ -162,6 +177,7 @@ DatagridHeaderRow.propTypes = {
   columnIndexStart: PropTypes.number,
   hasCheckBox: PropTypes.bool,
   frozen: PropTypes.bool,
+  onMouseEnterResizeHandle: PropTypes.func,
 };
 
 export default DatagridHeaderRow;

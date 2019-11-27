@@ -23,15 +23,13 @@ const areEqual = (prevProps, nextProps) => {
 const DatagridHeaderCell = memo(
   ({
     column,
-    context: {
-      wrapHeader,
-      columnSorted,
-      onSort,
-      onMouseEnterResizeHandle,
-      sortDirection,
-      id,
-      labels,
-    },
+    wrapHeader,
+    columnSorted,
+    onSort,
+    onMouseEnterResizeHandle,
+    sortDirection,
+    id,
+    labels,
     rowIndex,
     colIndex,
     last,
@@ -49,9 +47,7 @@ const DatagridHeaderCell = memo(
 
     const sorted = column.key === columnSorted || [1, -1].includes(column.sortDirection);
 
-    const handleMouseEnterResizeHandle = e => {
-      onMouseEnterResizeHandle(e, column);
-    };
+    const handleMouseEnterResizeHandle = e => onMouseEnterResizeHandle(e, column);
 
     return (
       <div
@@ -98,24 +94,22 @@ DatagridHeaderCell.defaultProps = {
 };
 
 DatagridHeaderCell.propTypes = {
-  context: PropTypes.shape({
-    labels: PropTypes.shape({
-      a11ySortLabel: PropTypes.string.isRequired,
-    }).isRequired,
-    onMouseEnterResizeHandle: PropTypes.func.isRequired,
-    sortDirection: PropTypes.number,
-    onSort: PropTypes.func,
-    columnSorted: PropTypes.arrayOf(
-      PropTypes.shape({
-        key: PropTypes.any.isRequired,
-        title: PropTypes.any.isRequired,
-        description: PropTypes.string,
-        type: PropTypes.string,
-        width: PropTypes.number,
-        formula: PropTypes.string,
-      })
-    ),
+  labels: PropTypes.shape({
+    a11ySortLabel: PropTypes.string.isRequired,
   }).isRequired,
+  onMouseEnterResizeHandle: PropTypes.func.isRequired,
+  sortDirection: PropTypes.number,
+  onSort: PropTypes.func,
+  columnSorted: PropTypes.arrayOf(
+    PropTypes.shape({
+      key: PropTypes.any.isRequired,
+      title: PropTypes.any.isRequired,
+      description: PropTypes.string,
+      type: PropTypes.string,
+      width: PropTypes.number,
+      formula: PropTypes.string,
+    })
+  ),
   column: PropTypes.shape({
     key: PropTypes.any.isRequired,
     title: PropTypes.any.isRequired,
@@ -129,6 +123,6 @@ DatagridHeaderCell.propTypes = {
   last: PropTypes.bool,
   width: PropTypes.number,
 };
-DatagridHeaderCell.displayName='DataGridHeaderCell';
+DatagridHeaderCell.displayName = 'DataGridHeaderCell';
 
 export default DatagridHeaderCell;

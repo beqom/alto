@@ -6,14 +6,12 @@ import DataGridHeaderCellContent from '../DatagridHeaderCellContent';
 
 describe('DatagridHeaderCell component', () => {
   const props = {
-    context: {
-      labels: {
-        a11ySortLabel: 'title',
-      },
-      onMouseEnterResizeHandle: jest.fn(),
-      wrapHeader: true,
-      onSort: jest.fn(),
+    labels: {
+      a11ySortLabel: 'title',
     },
+    onMouseEnterResizeHandle: jest.fn(),
+    wrapHeader: true,
+    onSort: jest.fn(),
     column: {
       key: '1',
       title: 'Column Title',
@@ -46,10 +44,7 @@ describe('DatagridHeaderCell component', () => {
         minWidth: '2rem',
         maxWidth: 200,
       };
-      const {
-        context: { onSort, sortDirection, id, labels },
-        column,
-      } = props;
+      const { onSort, sortDirection, id, labels, column } = props;
 
       expect(wrapper.find(DataGridHeaderCellContent).prop('style')).toEqual(style);
       expect(wrapper.find(DataGridHeaderCellContent).prop('sorted')).toBe(true);
@@ -83,9 +78,7 @@ describe('DatagridHeaderCell component', () => {
 
     it('to .DatagridHeaderCell__resize-handle', () => {
       const wrapper = shallow(<DatagridHeaderCell {...props} />);
-      const {
-        context: { onMouseEnterResizeHandle },
-      } = props;
+      const { onMouseEnterResizeHandle } = props;
 
       expect(typeof wrapper.find('.DatagridHeaderCell__resize-handle').prop('onMouseEnter')).toBe(
         'function'

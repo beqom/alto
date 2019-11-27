@@ -4,16 +4,13 @@ import sum from '../helpers/sum';
 import { isMacOS as isMacOSHelper } from '../helpers/navigator';
 import { mapStaticFrozenColumns, mapStaticFrozenColumnsHeaders } from './helpers';
 
-import DatagridResizer from './components/DatagridResizer';
-
 import './Datagrid.scss';
 import {
-  DATAGRID_DEFAULT_COL_WIDTH,
-  DATAGRID_INITIAL_STATE_RESIZER,
   DEFAULT_LABELS,
   FORMATTERS,
   PARSERS,
   RENDERERS,
+  DATAGRID_DEFAULT_COL_WIDTH,
 } from './constants';
 import DatagridHead from './components/DatagridHead';
 import DatagridContent from './components/DatagridContent';
@@ -31,7 +28,6 @@ export const DatagridContext = React.createContext({
 DatagridContext.displayName = 'DataGridContext';
 
 export default function Datagrid({
-  // className,
   columnHeaders,
   columns,
   comfortable,
@@ -73,43 +69,28 @@ export default function Datagrid({
 }) {
   const [collapsedGroups, setCollapsedGroups] = useState({});
   const [columnsWidth, setColumnsWidth] = useState({});
-  const [resizer, setResizer] = useState(DATAGRID_INITIAL_STATE_RESIZER);
   const [horizontalScrollPosition, setHorizontalScrollPosition] = useState(0);
 
   const scrollHeaderRef = useRef();
 
   const containerRef = useRef();
-  const { target, container, parent, resizing, column } = resizer;
-  const minWidth = column && column.editable ? 74 : 64;
   const hasCheckbox = typeof onSelectRow === 'function';
 
   const { staticColumns, frozenColumns, rowsWidth } = useMemo(() => {
-    const { staticColumns: staticCols, frozenColumns: frozenCols } = mapStaticFrozenColumns(columns);
+    const { staticColumns: staticCols, frozenColumns: frozenCols } = mapStaticFrozenColumns(
+      columns
+    );
     return {
       staticColumns: staticCols,
       frozenColumns: frozenCols,
       rowsWidth: sum(staticCols, 'width', DATAGRID_DEFAULT_COL_WIDTH),
-    }
+    };
   }, [columns]);
 
   const { staticColumnHeaders, frozenColumnHeaders } = useMemo(
     () => mapStaticFrozenColumnsHeaders(columnHeaders, staticColumns, frozenColumns),
     [columnHeaders]
   );
-
-  function handleMouseEnterResizeHandle(e, col) {
-    if (resizer.resizing) return;
-    const resizerTarget = e.target.getBoundingClientRect();
-    const resizerParent = e.target.parentNode.getBoundingClientRect();
-    const resizerContainer = containerRef.current.getBoundingClientRect();
-    setResizer({
-      column: col,
-      target: resizerTarget,
-      parent: resizerParent,
-      container: resizerContainer,
-      resizing: false,
-    });
-  }
 
   function onToggleGroup(groupId) {
     setCollapsedGroups({
@@ -150,7 +131,6 @@ export default function Datagrid({
       onChange,
       onChangeDebounceTime,
       onClickCellDropdownItem,
-      onMouseEnterResizeHandle: handleMouseEnterResizeHandle,
       onRowClick,
       onSelectAllRows,
       onSelectRow,
@@ -171,32 +151,8 @@ export default function Datagrid({
     };
   }
 
-  function handleStartResize() {
-    setResizer({ ...resizer, resizing: true });
-  }
-
-  function handleStopResize(deltaX) {
-    if (typeof onChangeWidth === 'function') {
-      const value = resizer.parent.width + deltaX;
-      onChangeWidth(value, resizer.column);
-    }
-    setResizer(DATAGRID_INITIAL_STATE_RESIZER);
-    setColumnsWidth({ ...columnsWidth, [resizer.column.key]: resizer.parent.width + deltaX });
-  }
-
   return (
     <DatagridContext.Provider value={getInitContextValue()}>
-      <DatagridResizer
-        left={target.left}
-        top={target.top}
-        handleHeight={target.height}
-        height={container.bottom - target.top}
-        maxLeft={parent.left + minWidth}
-        maxRight={column && column.frozen ? container.right - minWidth : container.right}
-        onStart={handleStartResize}
-        onStop={handleStopResize}
-        resizing={resizing}
-      />
       <DatagridHead
         frozenColumnHeaders={frozenColumnHeaders}
         frozenColumns={frozenColumns}
@@ -208,7 +164,10 @@ export default function Datagrid({
         rowsWidth={rowsWidth}
         id={id}
         horizontalScrollPosition={horizontalScrollPosition}
-        ref={scrollHeaderRef}
+        containerRef={containerRef}
+        columnsWidth={columnsWidth}
+        setColumnsWidth={setColumnsWidth}
+        onChangeWidth={onChangeWidth}
       />
       <DatagridContent
         hasCheckbox={hasCheckbox}
@@ -220,7 +179,7 @@ export default function Datagrid({
         rows={rows}
         rowsWidth={rowsWidth}
         columnsWidth={columnsWidth}
-        ref={{containerRef, scrollHeaderRef}}
+        ref={{ containerRef, scrollHeaderRef }}
         setHorizontalScrollPosition={setHorizontalScrollPosition}
       />
     </DatagridContext.Provider>
@@ -242,7 +201,6 @@ Datagrid.defaultProps = {
 };
 
 Datagrid.propTypes = {
-  // className: PropTypes.string,
   columnHeaders: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,

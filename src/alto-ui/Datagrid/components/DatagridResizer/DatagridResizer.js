@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import Draggable from 'react-draggable';
 
@@ -45,8 +45,9 @@ const DatagridResizer = ({
         <div className="DatagridResizer__ruler" style={{ height }} />
       </div>
     ),
-    [left]
+    [resizing, left]
   );
+
   return (
     <Draggable
       axis="x"
