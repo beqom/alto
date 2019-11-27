@@ -35,7 +35,6 @@ jest.mock('../../../../Input', () => {
   });
 });
 
-
 describe('DatagridCellInput', () => {
   const ENTER_KEY_CODE = 13;
   const ESC_KEY_CODE = 27;
@@ -60,7 +59,6 @@ describe('DatagridCellInput', () => {
   const secondMockValue = { value: 'mockedData2' };
 
   const getWrapper = props => mount(<DatagridCellInput {...propsMock} {...props} />);
-
 
   it('should mount input', () => {
     const input = getWrapper().find('input');
@@ -130,7 +128,6 @@ describe('DatagridCellInput', () => {
       expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ ...firstMockValue }));
       expect(onStopEditing).toHaveBeenCalledWith(expect.objectContaining({ ...firstMockValue }));
 
-
       wrapper.simulate('change', secondMockValue);
       expect(onChange).toHaveBeenCalledWith(expect.objectContaining({ ...secondMockValue }));
       expect(onStopEditing).toHaveBeenCalledWith(expect.objectContaining({ ...secondMockValue }));
@@ -176,67 +173,63 @@ describe('DatagridCellInput', () => {
   });
 
   describe('Check passed props', () => {
-    const getValuesWithoutUdefined = values => Object.keys(values).reduce((acc, key) => {
-      const prop = values[key];
-      if (typeof prop === 'undefined') {
-        return acc;
-      }
+    const getValuesWithoutUdefined = values =>
+      Object.keys(values).reduce((acc, key) => {
+        const prop = values[key];
+        if (typeof prop === 'undefined') {
+          return acc;
+        }
 
-      return {
-        ...acc,
-        [key]: prop,
-      };
-    }, {});
+        return {
+          ...acc,
+          [key]: prop,
+        };
+      }, {});
 
     const getPropsWithoutUndefined = wrapper => {
       const props = wrapper.find('input').props();
 
-      const {
-        otherprops,
-        ...result
-      } = getValuesWithoutUdefined(props);
+      const { otherprops, ...result } = getValuesWithoutUdefined(props);
 
       return {
         ...result,
         otherprops: getValuesWithoutUdefined(otherprops),
-      }
+      };
     };
 
     const expectChangeInputProps = wrapper => {
       const onKeyDown = jest.fn();
-        const onChange = jest.fn();
-        const onClose = jest.fn();
-        const onBlur = jest.fn();
-        wrapper.setProps({
-          inputProps: {
-            onKeyDown,
-            onChange,
-            onClose,
-            onBlur,
-            value: 'abc',
-          },
-        });
-        const input = wrapper.find('input');
+      const onChange = jest.fn();
+      const onClose = jest.fn();
+      const onBlur = jest.fn();
+      wrapper.setProps({
+        inputProps: {
+          onKeyDown,
+          onChange,
+          onClose,
+          onBlur,
+          value: 'abc',
+        },
+      });
+      const input = wrapper.find('input');
 
-        expect(input.prop('value')).toBe('abc');
+      expect(input.prop('value')).toBe('abc');
 
-        input.simulate('keyDown', { keyCode: ESC_KEY_CODE });
-        expect(onKeyDown).toHaveBeenCalledTimes(1);
-        input.simulate('change');
-        expect(onChange).toHaveBeenCalledTimes(1);
-        input.simulate('close');
-        expect(onClose).toHaveBeenCalledTimes(1);
-        input.simulate('blur');
-        expect(onBlur).toHaveBeenCalledTimes(1);
+      input.simulate('keyDown', { keyCode: ESC_KEY_CODE });
+      expect(onKeyDown).toHaveBeenCalledTimes(1);
+      input.simulate('change');
+      expect(onChange).toHaveBeenCalledTimes(1);
+      input.simulate('close');
+      expect(onClose).toHaveBeenCalledTimes(1);
+      input.simulate('blur');
+      expect(onBlur).toHaveBeenCalledTimes(1);
     };
 
     describe('list && select types', () => {
       const wrapper = getWrapper();
       const {
         id,
-        column: {
-          title: label,
-        },
+        column: { title: label },
       } = propsMock;
 
       const expected = {
@@ -291,9 +284,7 @@ describe('DatagridCellInput', () => {
       const wrapper = getWrapper();
       const {
         id,
-        column: {
-          title: label,
-        },
+        column: { title: label },
       } = propsMock;
 
       const expected = {
@@ -304,7 +295,7 @@ describe('DatagridCellInput', () => {
         onChange: expect.any(Function),
         className: expect.any(String),
         value: '',
-        otherprops: { hideLabel: true }
+        otherprops: { hideLabel: true },
       };
 
       beforeEach(() => {
@@ -324,9 +315,7 @@ describe('DatagridCellInput', () => {
       const wrapper = getWrapper();
       const {
         id,
-        column: {
-          title: label,
-        },
+        column: { title: label },
       } = propsMock;
 
       const expected = {
@@ -352,7 +341,11 @@ describe('DatagridCellInput', () => {
         wrapper.setProps({ type: 'integer' });
         expect(getPropsWithoutUndefined(wrapper)).toEqual({ ...expected, type: 'integer' });
         wrapper.setProps({ type: 'float', value: 'abc' });
-        expect(getPropsWithoutUndefined(wrapper)).toEqual({ ...expected, type: 'float', value: 'abc' });
+        expect(getPropsWithoutUndefined(wrapper)).toEqual({
+          ...expected,
+          type: 'float',
+          value: 'abc',
+        });
       });
 
       it('should insert additional inputProps', () => {
@@ -364,9 +357,7 @@ describe('DatagridCellInput', () => {
       const wrapper = getWrapper();
       const {
         id,
-        column: {
-          title: label,
-        },
+        column: { title: label },
       } = propsMock;
 
       const expected = {
@@ -395,7 +386,11 @@ describe('DatagridCellInput', () => {
         wrapper.setProps({ type: 'datetime' });
         expect(getPropsWithoutUndefined(wrapper)).toEqual({ ...expected, type: 'datetime' });
         wrapper.setProps({ value: 'ooo' });
-        expect(getPropsWithoutUndefined(wrapper)).toEqual({ ...expected, type: 'datetime', value: 'ooo' });
+        expect(getPropsWithoutUndefined(wrapper)).toEqual({
+          ...expected,
+          type: 'datetime',
+          value: 'ooo',
+        });
       });
 
       it('should insert additional inputProps', () => {
