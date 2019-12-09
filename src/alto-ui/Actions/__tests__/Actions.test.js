@@ -73,7 +73,7 @@ describe('Actions', () => {
     expect(wrapper.find(Dropdown).prop('selected')).toEqual(mockedOutput)
   })
 
-  it('items prop should be checked', () => {
+  it('should check items prop', () => {
     const mockedOutput = [
       {
         key: '1',
@@ -92,7 +92,7 @@ describe('Actions', () => {
     expect(JSON.stringify(wrapper.find(Dropdown).prop('items'))).toEqual(JSON.stringify(mockedOutput))
   })
 
-  it('handleClick prop should be checked', () => {
+  it('should call onClick props function', () => {
 
     const mockOnClick = jest.fn()
 
