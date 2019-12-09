@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import Actions from '../Actions';
 import Dropdown from '../../Dropdown';
@@ -7,7 +7,13 @@ import Group from '../../Group';
 
 jest.mock('../../Dropdown', () => {
   return props => {
-    return <button className="Dropdown" onClick={() => props.onClick()} />;
+    return <div className="Dropdown" onClick={() => props.onClick} >
+      {props.items.map(action => {
+        return (
+          <button key={`key_${action.key}`} id={`key_${action.key}`} onClick={() => action.onClick || props.onClick()} />
+        )
+      })}
+    </div>;
   };
 });
 
@@ -38,12 +44,12 @@ describe('Actions', () => {
     max: 1
   };
 
-  const getWrapper = ({ ...props }) => shallow(<Actions {...defaultProps} {...props} />);
+  const getWrapper = ({ ...props }) => mount(<Actions {...defaultProps} {...props} />);
 
   it('should not render if no items are provided', () => {
-    expect(getWrapper({items: undefined}).type()).toBeNull();
-    expect(getWrapper({items: null}).type()).toBeNull();
-    expect(getWrapper({items: []}).type()).toBeNull();
+    expect(getWrapper({items: undefined}).html()).toBeNull();
+    expect(getWrapper({items: null}).html()).toBeNull();
+    expect(getWrapper({items: []}).html()).toBeNull();
   });
 
   it('should render Dropdown if more items than max value', () => {
@@ -59,5 +65,61 @@ describe('Actions', () => {
 
     expect(GroupMock).toHaveLength(1);
   });
+
+  it('should check selected prop', () => {
+    const wrapper = getWrapper({items: [{key: '1', active: true}, {key: '2', active: true}, {key: '3', active: false}, {key: '4', active: true}], max: 3});
+    const mockedOutput = ["1", "2", "4"]
+
+    expect(wrapper.find(Dropdown).prop('selected')).toEqual(mockedOutput)
+  })
+
+  it('items prop should be checked', () => {
+    const mockedOutput = [
+      {
+        key: '1',
+        title: 'Edit',
+        onClick: jest.fn(),
+      },
+      {
+        key: '2',
+        title: 'Edit',
+        onClick: jest.fn(),
+      }
+    ]
+
+    const wrapper = getWrapper({});
+
+    expect(JSON.stringify(wrapper.find(Dropdown).prop('items'))).toEqual(JSON.stringify(mockedOutput))
+  })
+
+  it('handleClick prop should be checked', () => {
+
+    const mockOnClick = jest.fn()
+
+    const props = {
+      className: 'classTest',
+      id: 'id_',
+      items: [
+        {
+          key: '1',
+          title: 'Edit',
+        },
+        {
+          key: '2',
+          title: 'Edit',
+        },
+      ],
+      max: 3,
+      onClick: mockOnClick()
+    };
+
+    const wrapper = getWrapper({ props });
+
+    const action = wrapper.find('#key_1')
+
+    action.simulate('click')
+
+    expect(mockOnClick).toHaveBeenCalledTimes(1)
+  })
 })
 
