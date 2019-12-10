@@ -5,7 +5,7 @@ import Badge from '../Badge';
 
 describe('Badge', () => {
 
-  it('is Badge', () => {
+  it('should render without error', () => {
     const wrapper = shallow(<Badge />);
     expect(wrapper.find('.Badge')).toHaveLength(1)
   });
@@ -16,6 +16,22 @@ describe('Badge', () => {
     }
 
     const wrapper = shallow(<Badge {...props} />);
-    expect(wrapper.html()).toBe('<div class="Badge Badge--red"></div>');
+    expect(wrapper.hasClass('Badge')).toBe(true);
+    expect(wrapper.hasClass('Badge--red')).toBe(true);
+  });
+
+  it('should update className when color props change', () => {
+    const props = {
+      red: true,
+      blue: false
+    }
+    const wrapper = shallow(<Badge {...props} />);
+    expect(wrapper.hasClass('Badge--red')).toBe(true);
+
+    wrapper.setProps({
+      red: false,
+      blue: true
+    });
+    expect(wrapper.hasClass('Badge--blue')).toBe(true);
   });
 });
