@@ -6,18 +6,9 @@ import Dialog from '../Dialog';
 import CloseButton from '../../CloseButton';
 import Button from '../../Button';
 
-jest.mock('../../CloseButton', () => ({onClick}) => (
-  <button className="CloseButton" onClick={() => onClick()} />
-));
+jest.mock('../../CloseButton', () => ({onClick}) => ( <button className="CloseButton" onClick={() => onClick()} /> ));
 
-jest.mock('../../Button', () => ({onClick}) => (
-  <button
-    className="Dialog__button"
-    onClick={() => onClick()}
-    // flat={index < buttons.length - 1}
-    // disabled={inert || btn.disabled}
-  />
-));
+jest.mock('../../Button', () => ({onClick}) => ( <button className="Dialog__button" onClick={() => onClick()}/> ));
 
 describe('Dialog', () => {
 
