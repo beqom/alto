@@ -4,53 +4,59 @@ import { mount } from 'enzyme';
 import Aside from '../Aside';
 import CloseButton from '../../CloseButton';
 
-jest.mock('../../CloseButton', () => {
-  return () => {
-    return <div className="CloseButton" />;
-  };
-});
+jest.mock('../../CloseButton', () => () => <div className="CloseButton" />)
 
-describe('<Aside />', () => {
+describe('Aside', () => {
 
-  const getWrapper = props => {
-    console.log(props);
-    return mount(<Aside {...props} />);
-  };
+  const getWrapper = props => mount(<Aside {...props} />)
 
-  it('should return null if show props is falsy', () => {
+  it('should no render if show prop is falsy', () => {
     const props = {
       show: false,
     };
     const wrapper = getWrapper(props);
 
-    expect(wrapper.find('.Aside__header')).toHaveLength(0);
-    expect(wrapper.find('.Aside__content').exists()).toBe(false);
+    expect(wrapper.find('aside')).toHaveLength(0);
   });
 
   it('should render if show prop is truthy', () => {
     const wrapper = getWrapper();
 
-    expect(wrapper.find('.Aside__header')).toHaveLength(1);
-    expect(wrapper.find('.Aside__content').exists()).toBe(true);
+    expect(wrapper.find('aside')).toHaveLength(1);
   });
 
-  it('should support show and a11yCloseLabel prop', () => {
+  it('should render element form children props', () => {
     const props = {
-      a11yCloseLabel: 'test',
-    };
-    const wrapper = getWrapper(props);
-
-    expect(wrapper.find(Aside).prop('show')).toBe(true);
-    expect(wrapper.find(Aside).prop('a11yCloseLabel')).toBe('test');
-  });
-
-  it('should render CloseButton if onClose prop is truthy', () => {
-    const props = {
-      onClose: jest.fn()
+      children: 'test'
     }
     const wrapper = getWrapper(props);
 
-    const CloseButtonMock = wrapper.find(CloseButton);
-    expect(CloseButtonMock).toHaveLength(1);
+    expect(wrapper.find('.Aside__content').html()).toContain('test')
   });
+
+  describe('CloseButton', () => {
+    it('should render if onClose prop is truthy', () => {
+      const props = {
+        onClose: jest.fn()
+      }
+      const wrapper = getWrapper(props);
+  
+      const CloseButtonMock = wrapper.find(CloseButton);
+      expect(CloseButtonMock).toHaveLength(1);
+    });
+
+    it('should support show and a11yCloseLabel prop', () => {
+      const props = {
+        a11yCloseLabel: 'test',
+        onClose: jest.fn(),
+        show: true,
+      };
+      
+      const wrapper = getWrapper(props)
+
+      const { show, a11yCloseLabel } = wrapper.find(Aside).props();
+      expect(show).toBe(true);
+      expect(a11yCloseLabel).toBe('test');
+    });
+  })
 });
