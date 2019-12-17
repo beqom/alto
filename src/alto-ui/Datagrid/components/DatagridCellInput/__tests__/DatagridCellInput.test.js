@@ -21,6 +21,15 @@ jest.mock('../../../../Input', () => {
       <input
         ref={ref}
         {...allowedProps}
+        otherprops={{
+          hideLabel,
+          clearable,
+          onStopEditing,
+          onOpen,
+          right,
+          disableThousandSeparator,
+          onSelectDate,
+        }}
       />
     );
   });
@@ -167,20 +176,30 @@ describe('DatagridCellInput', () => {
   });
 
   describe('Check passed props', () => {
+    const getValuesWithoutUdefined = values => Object.keys(values).reduce((acc, key) => {
+      const prop = values[key];
+      if (typeof prop === 'undefined') {
+        return acc;
+      }
+
+      return {
+        ...acc,
+        [key]: prop,
+      };
+    }, {});
+
     const getPropsWithoutUndefined = wrapper => {
       const props = wrapper.find('input').props();
 
-      return Object.keys(props).reduce((acc, key) => {
-        const prop = props[key];
-        if (typeof prop === 'undefined') {
-          return acc;
-        }
+      const {
+        otherprops,
+        ...result
+      } = getValuesWithoutUdefined(props);
 
-        return {
-          ...acc,
-          [key]: prop,
-        };
-      }, {});
+      return {
+        ...result,
+        otherprops: getValuesWithoutUdefined(otherprops),
+      }
     };
 
     const expectChangeInputProps = wrapper => {
@@ -229,6 +248,11 @@ describe('DatagridCellInput', () => {
         onClose: expect.any(Function),
         className: expect.any(String),
         value: '',
+        otherprops: {
+          clearable: true,
+          hideLabel: true,
+          onOpen: expect.any(Function),
+        },
       };
 
       beforeEach(() => {
@@ -280,6 +304,7 @@ describe('DatagridCellInput', () => {
         onChange: expect.any(Function),
         className: expect.any(String),
         value: '',
+        otherprops: { hideLabel: true }
       };
 
       beforeEach(() => {
@@ -315,6 +340,7 @@ describe('DatagridCellInput', () => {
         className: expect.any(String),
         locale: 'pl',
         value: '',
+        otherprops: { right: true, hideLabel: true },
       };
 
       beforeEach(() => {
@@ -353,6 +379,11 @@ describe('DatagridCellInput', () => {
         onChange: expect.any(Function),
         className: expect.any(String),
         value: '',
+        otherprops: {
+          hideLabel: true,
+          onSelectDate: expect.any(Function),
+          right: true,
+        },
       };
 
       beforeEach(() => {
