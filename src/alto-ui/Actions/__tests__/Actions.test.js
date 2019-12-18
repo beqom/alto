@@ -7,13 +7,15 @@ import Group from '../../Group';
 
 jest.mock('../../Dropdown', () => {
   return props => {
-    return <div className="Dropdown" onClick={() => props.onClick} >
-      {props.items.map(action => {
-        return (
-          <button key={`key_${action.key}`} id={`key_${action.key}`} onClick={() => action.onClick || props.onClick()} />
-        )
-      })}
-    </div>;
+    return (
+      <div className="Dropdown" onClick={() => props.onClick} onKeyDown={() => props.onClick} role="menu" tabIndex="0">
+        {props.items.map(action => {
+          return (
+            <button key={`key_${action.key}`} id={`key_${action.key}`} onClick={() => action.onClick || props.onClick()} />
+          )
+        })}
+      </div>
+    )
   };
 });
 
@@ -41,7 +43,7 @@ describe('Actions', () => {
         title: 'Edit',
       },
     ],
-    max: 1
+    max: 1,
   };
 
   const getWrapper = ({ ...props }) => mount(<Actions {...defaultProps} {...props} />);
@@ -84,7 +86,7 @@ describe('Actions', () => {
         key: '2',
         title: 'Edit',
         onClick: jest.fn(),
-      }
+      },
     ]
 
     const wrapper = getWrapper({});
@@ -110,7 +112,7 @@ describe('Actions', () => {
         },
       ],
       max: 3,
-      onClick: mockOnClick()
+      onClick: mockOnClick(),
     };
 
     const wrapper = getWrapper({ props });
