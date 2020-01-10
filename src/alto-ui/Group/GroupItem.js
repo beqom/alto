@@ -4,27 +4,29 @@ import PropTypes from 'prop-types';
 import context from './context';
 import './Group.scss';
 
-const GroupItem = forwardRef(({ items, index, column, splitted, ...props }, ref) => (
-  <context.Provider
-    value={{
-      first: index === 0,
-      last: index === items.length - 1,
-      row: !column,
-      column: !!column,
-      splitted: !!splitted,
-      stacked: !splitted,
-    }}
-  >
-    <li {...props} ref={ref} />
-  </context.Provider>
-));
+export function GroupItemComponent({ items, index, column, splitted, groupRef, ...props }) {
+  return (
+    <context.Provider
+      value={{
+        first: index === 0,
+        last: index === items.length - 1,
+        row: !column,
+        column: !!column,
+        splitted: !!splitted,
+        stacked: !splitted,
+      }}
+    >
+      <li {...props} ref={groupRef} />
+    </context.Provider>
+  );
+}
 
-GroupItem.defaultProps = {};
+GroupItemComponent.defaultProps = {};
 
-GroupItem.displayName = 'GroupItem';
+GroupItemComponent.displayName = 'GroupItem';
 
-GroupItem.propTypes = {
+GroupItemComponent.propTypes = {
   items: PropTypes.array.isRequired,
 };
 
-export default GroupItem;
+export default forwardRef(({ ...props }, ref) => <GroupItemComponent {...props} groupRef={ref} />);

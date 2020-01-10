@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { bemClass } from '../helpers/bem';
 import getDefaultItemKey from '../helpers/getItemKey';
-import GroupItem from './GroupItem';
+import { GroupItemComponent as GroupItem } from './GroupItem';
 import './Group.scss';
 
-const renderGroupItem = (itemKey, column, splitted, children) => (item, index, items) => (
+export const renderGroupItem = (itemKey, column, splitted, children) => (item, index, items) => (
   <GroupItem key={itemKey(item) || item} items={items} column={column} splitted={splitted}>
     {children(item, index, items)}
   </GroupItem>
