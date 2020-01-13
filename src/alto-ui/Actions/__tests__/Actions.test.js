@@ -8,10 +8,10 @@ import Group from '../../Group';
 jest.mock('../../Dropdown', () => {
   return props => {
     return (
-      <div className="Dropdown" onClick={() => props.onClick} onKeyDown={() => props.onClick} role="menu" tabIndex="0">
+      <div role="menu" tabIndex="0">
         {props.items.map(action => {
           return (
-            <button key={`key_${action.key}`} id={`key_${action.key}`} onClick={() => action.onClick || props.onClick()} />
+            <button key={`key_${action.key}`} id={`key_${action.key}`} onClick={action.onClick || props.onClick} />
           )
         })}
       </div>
@@ -20,108 +20,115 @@ jest.mock('../../Dropdown', () => {
 });
 
 jest.mock('../../Group', () => {
-  return  () => {
-    return <div className="Group" />;
+  return props => {
+    return (
+      <div role="menu" tabIndex="0" items={props.items} />
+    )
   };
 });
 
 describe('Actions', () => {
-  const defaultProps = {
-    className: 'classTest',
-    id: 'id',
-    items: [
-      {
-        icon: null,
-        key: '1',
-        onClick: jest.fn(),
-        title: 'Edit',
-      },
-      {
-        icon: null,
-        key: '2',
-        onClick: jest.fn(),
-        title: 'Edit',
-      },
-    ],
-    max: 1,
-  };
+  const getWrapper = (defaultProps, props) => mount(<Actions {...defaultProps} {...props} />);
 
-  const getWrapper = ({ ...props }) => mount(<Actions {...defaultProps} {...props} />);
+  describe('should return Dropdown component', () => {
+    let wrapper;
+    let defaultProps;
+    let items;
 
-  it('should not render if no items are provided', () => {
-    expect(getWrapper({items: undefined}).html()).toBeNull();
-    expect(getWrapper({items: null}).html()).toBeNull();
-    expect(getWrapper({items: []}).html()).toBeNull();
-  });
+    beforeEach(() => {
+      jest.clearAllMocks();
+      items = [
+        {key: '1', title: '1', active: true},
+        {key: '2', title: '2'},
+        {key: '3', title: '3', active: true},
+      ]
+      defaultProps = {
+        id: 'id',
+        items,
+        max: 0,
+      }
+    });
 
-  it('should render Dropdown if more items than max value', () => {
-    const wrapper = getWrapper({items: [{key: '1'}, {key: '2'}], max: 1 });
-    const DropdownMock = wrapper.find(Dropdown);
+    it('without error', () => {
+      wrapper = getWrapper(defaultProps, {});
+      const DropdownMock = wrapper.find(Dropdown);
+  
+      expect(DropdownMock).toHaveLength(1);
+    });
 
-    expect(DropdownMock).toHaveLength(1);
-  });
+    it('with right selected prop', () => {
+      wrapper = getWrapper(defaultProps, {});
+      expect(wrapper.find(Dropdown).prop('selected')).toEqual(["1", "3"])
+    })
 
-  it('should render Group if less items than max value', () => {
-    const wrapper = getWrapper({items: [{key: '1'}, {key: '2'}], max: 3 });
-    const GroupMock = wrapper.find(Group);
+    describe('with right items prop:', () => {
+      it('without error', () => {
+        wrapper = getWrapper(defaultProps, {});
+        expect(wrapper.find('button').length).toBe(items.length)
+      })
 
-    expect(GroupMock).toHaveLength(1);
-  });
+      it('which should call onClick prop after click', () => {
+        const mockedOnClick = jest.fn()
+        const props = {
+          items: [
+            {key: '1', title: '1', onClick: mockedOnClick},
+          ],
+        }
 
-  it('should check selected prop', () => {
-    const wrapper = getWrapper({items: [{key: '1', active: true}, {key: '2', active: true}, {key: '3', active: false}, {key: '4', active: true}], max: 3});
-    const mockedOutput = ["1", "2", "4"]
+        wrapper = getWrapper(defaultProps, props);
+        const button = wrapper.find('button')
+        button.simulate('click')
 
-    expect(wrapper.find(Dropdown).prop('selected')).toEqual(mockedOutput)
+        expect(mockedOnClick).toHaveBeenCalledTimes(1)
+      })
+
+      it('which should call handleClick after click', () => {
+        const mockedHandleClick = jest.fn();
+        const props = {
+          items: [
+            {key: '1', title: '1'},
+          ],
+          onClick: mockedHandleClick,
+        }
+
+        wrapper = getWrapper(defaultProps, props);
+        const button = wrapper.find('button')
+        button.simulate('click')
+
+        expect(mockedHandleClick).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 
-  it('should check items prop', () => {
-    const mockedOutput = [
-      {
-        key: '1',
-        title: 'Edit',
-        onClick: jest.fn(),
-      },
-      {
-        key: '2',
-        title: 'Edit',
-        onClick: jest.fn(),
-      },
-    ]
+  describe('should return Group component', () => {
+    let wrapper;
+    let defaultProps;
+    let items;
 
-    const wrapper = getWrapper({});
+    beforeEach(() => {
+      jest.clearAllMocks();
+      items = [
+        {key: '1', title: '1', active: true},
+        {key: '2', title: '2'},
+        {key: '3', title: '3', active: true},
+      ]
+      defaultProps = {
+        id: 'id',
+        items,
+        max: 4,
+      }
+    });
 
-    expect(JSON.stringify(wrapper.find(Dropdown).prop('items'))).toEqual(JSON.stringify(mockedOutput))
-  })
+    it('without error', () => {
+      wrapper = getWrapper(defaultProps, {});
+      const GroupMock = wrapper.find(Group);
+  
+      expect(GroupMock).toHaveLength(1);
+    });
 
-  it('should call onClick props function', () => {
-
-    const mockOnClick = jest.fn()
-
-    const props = {
-      className: 'classTest',
-      id: 'id_',
-      items: [
-        {
-          key: '1',
-          title: 'Edit',
-        },
-        {
-          key: '2',
-          title: 'Edit',
-        },
-      ],
-      max: 3,
-      onClick: mockOnClick(),
-    };
-
-    const wrapper = getWrapper({ props });
-
-    const action = wrapper.find('#key_1')
-
-    action.simulate('click')
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1)
+    it('with right items prop length', () => {
+        wrapper = getWrapper(defaultProps, {});
+        expect(wrapper.prop('items').length).toBe(items.length)
+    })
   })
 })
-
