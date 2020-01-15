@@ -46,7 +46,7 @@ function Actions({ className, id, items, max, onClick }) {
           <Icon
             title={title}
             outline={!iconProps.active}
-            onClick={handleClick(action)}
+            onClick={() => {}}
             {...iconProps}
           />
         );

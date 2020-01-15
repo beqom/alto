@@ -30,6 +30,10 @@ jest.mock('../../Group', () => {
 describe('Actions', () => {
   const getWrapper = (defaultProps, props) => mount(<Actions {...defaultProps} {...props} />);
 
+  it('returns null if no items provided', () => {
+    expect(getWrapper({id: 'id'}).html()).toBeNull();
+  })
+
   describe('should return Dropdown component', () => {
     let wrapper;
     let defaultProps;
@@ -84,9 +88,12 @@ describe('Actions', () => {
 
       it('which should call handleClick after click', () => {
         const mockedHandleClick = jest.fn();
+        const obj = {
+          key: '1', title: '1'
+        }
         const props = {
           items: [
-            {key: '1', title: '1'},
+            obj,
           ],
           onClick: mockedHandleClick,
         }
@@ -96,6 +103,7 @@ describe('Actions', () => {
         button.simulate('click')
 
         expect(mockedHandleClick).toHaveBeenCalledTimes(1)
+        expect(mockedHandleClick).toHaveBeenCalledWith(obj)
       })
     })
   })
