@@ -22,4 +22,12 @@ export const getFormattedValue = context => (value, column, row) => {
   return format(value, column, row);
 };
 
-export const getTitleValue = value => ([undefined, null].includes(value) ? '' : value.toString());
+export const getTruthyValue = (value, defaultValue = '') => {
+  if (!value && value !== 0) {
+    return defaultValue;
+  }
+
+  return value;
+};
+
+export const getTitleValue = value => getTruthyValue(value).toString();
