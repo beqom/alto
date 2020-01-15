@@ -45,11 +45,16 @@ describe('Tabs', () => {
   });
 
   describe('renderButtons', () => {
+    let tabsButton;
     const getWrapper = getWrapperCurrying({
       id: 'id',
       value: true,
       items: [{ title: 'title_1', url: 'url_1', value: true }],
     });
+
+    beforeEach(() => {
+      tabsButton = wrapper.find('.tabs__button').at(0);
+    })
 
     it('should render if value prop is passed', () => {
       const wrapper = getWrapper();
@@ -58,12 +63,7 @@ describe('Tabs', () => {
     });
 
     it('should render and past correct props to tabs button container', () => {
-      const props = {
-        id: 'id',
-        onChange: jest.fn(),
-      };
-
-      const wrapper = getWrapper(defaultProps, props);
+      const wrapper = getWrapper({id: 'id',onChange: jest.fn()});
 
       expect(
         wrapper
@@ -86,7 +86,7 @@ describe('Tabs', () => {
     });
 
     it('should render button inner text from props', () => {
-      const wrapper = getWrapper(defaultProps, {});
+      const wrapper = getWrapper();
 
       expect(
         wrapper
@@ -97,44 +97,55 @@ describe('Tabs', () => {
     });
 
     describe('getHandleChange', () => {
-      let mockFunc = jest.fn();
+      // let mockFunc = jest.fn();
 
-      let button;
-      let wrapper;
+      // let button;
+      // let wrapper;
 
-      beforeEach(() => {
-        //let mockFunc = jest.fn();
-        mockFunc.mockClear();
+      // beforeEach(() => {
+      //   //let mockFunc = jest.fn();
+      //   mockFunc.mockClear();
+
+      //   // const props = {
+      //   //   items: [{ title: 'title_1', url: 'url_1', value: true }],
+      //   // }
+
+      //   // button = wrapper.find('.tabs__button').at(0);
+      //   // // wrapper = getWrapper(defaultProps, props);
+      // })
+
+      it('should return null',() => {
+        const mockFunc = jest.fn()
 
         const props = {
-          items: [{ title: 'title_1', url: 'url_1', value: true }],
+            items: [{title: 'title_1', url: 'url_1', value: true}],
+            onChange: mockFunc,
         }
 
-        button = wrapper.find('.tabs__button').at(0);
-        // wrapper = getWrapper(defaultProps, props);
+        const wrapper = getWrapper(props)
+        const button = wrapper.find('.tabs__button').at(0)
+        button.simulate('click');
+
+        expect(mockFunc).toHaveBeenCalledTimes(0)
       })
 
-      it('should return null', () => {
-        //const mockFunc = jest.fn();
+      
 
-        const props = {onChange: mockFunc};
+      it('should call onChange prop function',() => {
+        const mockFunc = jest.fn()
 
-        const wrapper = getWrapper(defaultProps, props);
+        const props = {
+            items: [{title: 'title_1', url: 'url_1', value: false}],
+            onChange: mockFunc,
+        }
+
+        const wrapper = getWrapper(props)
+        const button = wrapper.find('.tabs__button').at(0)
+
         button.simulate('click');
 
-        expect(mockFunc).toHaveBeenCalledTimes(0);
-      });
-
-      it('should call onChange prop function', () => {
-        const mockFunc = jest.fn();
-
-        const props = {onChange: mockFunc};
-
-        const wrapper = getWrapper(defaultProps, props);
-        button.simulate('click');
-
-        expect(mockFunc).toHaveBeenCalledTimes(1);
-      });
+        expect(mockFunc).toHaveBeenCalledTimes(1)
+    })
     });
   });
 });
