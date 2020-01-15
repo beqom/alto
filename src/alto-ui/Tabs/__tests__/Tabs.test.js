@@ -4,16 +4,18 @@ import { mount } from 'enzyme';
 import Tabs from '../Tabs';
 
 describe('Tabs', () => {
+  let defaultProps;
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  const getWrapper = (defaultProps, props) => mount(<Tabs {...defaultProps} {...props} />);
+  const getWrapperCurrying = defaultProps => props =>  mount(<Tabs {...defaultProps} {...props} />);
 
   describe('renderLinks', () => {
-    const defaultProps = {
+    const getWrapper = getWrapperCurrying({
       items: [{ title: 'title_1', url: 'url_1' }],
-    };
+    });
 
     it('should render if value prop is not passed', () => {
       const wrapper = getWrapper(defaultProps);
@@ -22,18 +24,18 @@ describe('Tabs', () => {
     });
 
     it('should render li Link element with key prop', () => {
-      const wrapper = getWrapper(defaultProps, {});
+      const wrapper = getWrapper(defaultProps);
 
       expect(wrapper.find('.tabs__tab').getElement()).toHaveProperty('key', 'url_1');
     });
 
     it('should render Link element', () => {
-      const wrapper = getWrapper(defaultProps, {});
+      const wrapper = getWrapper(defaultProps);
 
       expect(wrapper.find('.tabs__tab').exists()).toBe(true);
     });
 
-    it('should render Link element with correct props',() => {
+    it.only('should render Link element with correct props',() => {
       const tabWithoutProps = getWrapper(defaultProps).find('.tabs__link').at(0);
       const tabWithProps = getWrapper(defaultProps, {id: 'id', currentUrl: `url_1`}).find('.tabs__link').at(0);
     
@@ -45,11 +47,11 @@ describe('Tabs', () => {
   });
 
   describe('renderButtons', () => {
-    const defaultProps = {
+    const getWrapper = getWrapperCurrying({
       id: 'id',
       value: true,
       items: [{ title: 'title_1', url: 'url_1', value: true }],
-    };
+    });
 
     it('should render if value prop is passed', () => {
       const wrapper = getWrapper(defaultProps, {});
