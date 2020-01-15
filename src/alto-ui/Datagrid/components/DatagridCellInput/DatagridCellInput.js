@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import Input from '../../../Input';
+import {
+  getListProps,
+  getBooleanProps,
+  getNumberProps,
+  getDateProps,
+  getTextProps,
+} from './DatagridCellInputAdapters';
 
 import { bemClass } from '../../../helpers/bem';
 
@@ -10,147 +17,91 @@ import './DatagridCellInput.scss';
 const ENTER_KEY_CODE = 13;
 const ESC_KEY_CODE = 27;
 
-class DatagridCellInput extends React.Component {
-  constructor(props) {
-    super(props);
+const DatagridCellInput = props => {
+  const {
+    editing,
+    modifiers,
+    onChange,
+    onStopEditing,
+    onStartEditing,
+    value,
+    type,
+  } = props;
+  const inputRef = useRef();
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleBlur = this.handleBlur.bind(this);
-    this.handleStartEditing = this.handleStartEditing.bind(this);
-    this.handleChangeFromOverlay = this.handleChangeFromOverlay.bind(this);
+  useEffect(() => {
+    if (editing) {
+      const { current: inputRefCurrent } = inputRef;
 
-    this.inputRef = React.createRef();
+      if (inputRefCurrent) {
+        inputRefCurrent.focus();
+      }
+    }
+  }, [editing]);
+
+  function handleBlur() {
+    onStopEditing(value);
   }
 
-  componentDidUpdate(prevProps) {
-    const becameEditing = !prevProps.editing && this.props.editing;
+  function handleChangeFromOverlay(currentValue) {
+    onChange(currentValue);
+    onStopEditing(currentValue);
+  }
 
-    if (becameEditing) {
-      this.focus();
+  function handleStartEditing() {
+    onStartEditing(value);
+  }
+
+  function handleKeyDown({ keyCode }) {
+    if ([ESC_KEY_CODE, ENTER_KEY_CODE].includes(keyCode)) {
+      onStopEditing();
     }
   }
 
-  getSharedProps() {
-    const { value, id, context, column, type } = this.props;
-    return {
-      ref: this.inputRef,
-      id,
-      type,
-      label: column.title,
-      hideLabel: true,
-      small: context.compact,
-      value: [undefined, null].includes(value) ? '' : value,
-      onBlur: this.handleBlur,
-      onFocus: this.handleStartEditing,
-      onKeyDown: this.handleKeyDown,
-      onChange: this.handleChange,
+  function getInputProps() {
+    const inputProps = {
+      ...props,
+      ref: inputRef,
+      handleChange: onChange,
+      handleChangeFromOverlay,
+      handleStartEditing,
+      handleBlur,
+      handleKeyDown,
     };
-  }
 
-  getInputProps() {
-    const {
-      type,
-      context: { locale, labels },
-      column,
-      inputProps,
-      modifiers,
-    } = this.props;
-
-    const sharedProps = this.getSharedProps();
     switch (type) {
       case 'list':
       case 'select':
-        return {
-          ...sharedProps,
-          onFocus: undefined,
-          onBlur: undefined,
-          onChange: this.handleChangeFromOverlay,
-          onOpen: this.handleStartEditing,
-          onClose: this.handleBlur,
-          clearable: true,
-          edited: modifiers.edited,
-          ...inputProps,
-        };
+        return getListProps(inputProps);
       case 'boolean':
-        return {
-          ...sharedProps,
-          onBlur: undefined,
-          onFocus: undefined,
-          ...inputProps,
-        };
+        return getBooleanProps(inputProps);
       case 'number':
       case 'integer':
       case 'float':
-        return {
-          ...sharedProps,
-          locale,
-          precision: column.precision,
-          right: true,
-          disableThousandSeparator: column.disableThousandSeparator,
-          percent: column.percent,
-          ...inputProps,
-        };
+        return getNumberProps(inputProps);
       case 'date':
       case 'datetime':
-        return {
-          ...sharedProps,
-          onBlur: undefined,
-          onClose: this.handleBlur,
-          onChange: this.handleChange,
-          onSelectDate: this.handleChangeFromOverlay,
-          ...inputProps,
-          labels,
-        };
+        return getDateProps(inputProps);
       default:
-        return {
-          ...sharedProps,
-          type: 'text',
-          ...inputProps,
-        };
+        return getTextProps(inputProps);
     }
   }
 
-  handleChange(value) {
-    this.props.onChange(value);
-  }
-
-  handleBlur() {
-    this.props.onStopEditing(this.props.value);
-  }
-
-  handleChangeFromOverlay(value) {
-    this.props.onChange(value);
-    this.props.onStopEditing(value);
-  }
-
-  handleStartEditing() {
-    this.props.onStartEditing(this.props.value);
-  }
-
-  focus() {
-    if (this.inputRef.current) this.inputRef.current.focus();
-  }
-
-  handleKeyDown(e) {
-    if (e.keyCode === ESC_KEY_CODE || e.keyCode === ENTER_KEY_CODE) {
-      this.props.onStopEditing();
-    }
-  }
-
-  render() {
-    return (
-      <Input
-        {...this.getInputProps()}
-        className={bemClass('DatagridCellInput', this.props.modifiers)}
-      />
-    );
-  }
-}
+  return (
+    <Input
+      ref={inputRef}
+      {...getInputProps()}
+      className={bemClass('DatagridCellInput', modifiers)}
+    />
+  );
+};
 
 DatagridCellInput.displayName = 'DatagridCellInput';
 
-DatagridCellInput.defaultProps = {};
+DatagridCellInput.defaultProps = {
+  value: '',
+  inputProps: {},
+};
 
 DatagridCellInput.propTypes = {
   value: PropTypes.any,
