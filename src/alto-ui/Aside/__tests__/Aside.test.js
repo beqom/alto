@@ -4,11 +4,10 @@ import { mount } from 'enzyme';
 import Aside from '../Aside';
 import CloseButton from '../../CloseButton';
 
-jest.mock('../../CloseButton', () => () => <div className="CloseButton" />)
+jest.mock('../../CloseButton', () => () => <div className="CloseButton" />);
 
 describe('Aside', () => {
-
-  const getWrapper = props => mount(<Aside {...props} />)
+  const getWrapper = props => mount(<Aside {...props} />);
 
   it('should no render if show prop is falsy', () => {
     const props = {
@@ -27,20 +26,20 @@ describe('Aside', () => {
 
   it('should render element form children props', () => {
     const props = {
-      children: 'test'
-    }
+      children: 'test',
+    };
     const wrapper = getWrapper(props);
 
-    expect(wrapper.find('.Aside__content').html()).toContain('test')
+    expect(wrapper.find('.Aside__content').html()).toContain('test');
   });
 
   describe('CloseButton', () => {
     it('should render if onClose prop is truthy', () => {
       const props = {
-        onClose: jest.fn()
-      }
+        onClose: jest.fn(),
+      };
       const wrapper = getWrapper(props);
-  
+
       const CloseButtonMock = wrapper.find(CloseButton);
       expect(CloseButtonMock).toHaveLength(1);
     });
@@ -51,12 +50,12 @@ describe('Aside', () => {
         onClose: jest.fn(),
         show: true,
       };
-      
-      const wrapper = getWrapper(props)
+
+      const wrapper = getWrapper(props);
 
       const { show, a11yCloseLabel } = wrapper.find(Aside).props();
       expect(show).toBe(true);
       expect(a11yCloseLabel).toBe('test');
     });
-  })
+  });
 });
