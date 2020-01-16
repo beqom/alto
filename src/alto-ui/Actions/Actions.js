@@ -42,7 +42,14 @@ function Actions({ className, id, items, max, onClick }) {
           ...iconProps
         } = action;
         const Icon = oldIconNameToRemove || newIconNameToRefactor;
-        return <Icon title={title} outline={!iconProps.active} onClick={() => {}} {...iconProps} />;
+        return (
+          <Icon
+            title={title}
+            outline={!iconProps.active}
+            onClick={handleClick(action)}
+            {...iconProps}
+          />
+        );
       }}
     </Group>
   );
