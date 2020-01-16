@@ -39,7 +39,7 @@ describe('<Icon /> (used in icons)', () => {
   it('should render foward props', () => {
     const wrapper = shallow(<Icon {...props} title="hello" className="my-icon" />);
     expect(wrapper.prop('title')).toBe('hello');
-    expect(wrapper.prop('className')).toBe('Icon  my-icon');
+    expect(wrapper.prop('className')).toBe('Icon my-icon');
   });
 
   it('should add modifier', () => {
