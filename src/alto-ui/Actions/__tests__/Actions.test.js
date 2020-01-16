@@ -5,31 +5,27 @@ import Actions from '../Actions';
 import Dropdown from '../../Dropdown';
 import Group from '../../Group';
 
-jest.mock('../../Dropdown', () => {
-  return props => {
-    return (
-      <div role="menu" tabIndex="0">
-        {props.items.map(action => {
-          return (
-            <button
-              key={`key_${action.key}`}
-              id={`key_${action.key}`}
-              onClick={action.onClick || props.onClick}
-            />
-          );
-        })}
-      </div>
-    );
-  };
-});
+jest.mock('../../Dropdown', () => ({items, onClick: onClickProp}) => (
+  <div role="menu" tabIndex="0">
+    {items.map(({ key, onClick }) => (
+      <button
+        key={`key_${key}`}
+        id={`key_${key}`}
+        onClick={onClick || onClickProp}
+      />
+    ))}
+  </div>
+));
 
-jest.mock('../../Group', () => {
-  return props => {
-    return <div role="menu" tabIndex="0" items={props.items} />;
-  };
-});
+jest.mock('../../Group', () => ({ items }) => (<div role="menu" tabIndex="0" items={items} />));
 
 describe('Actions', () => {
+  const defaultItems = [
+    { key: '1', title: '1', active: true },
+    { key: '2', title: '2'},
+    { key: '3', title: '3', active: true },
+  ];
+
   const getWrapper = (defaultProps, props) => mount(<Actions {...defaultProps} {...props} />);
 
   it('returns null if no items provided', () => {
@@ -39,38 +35,31 @@ describe('Actions', () => {
   describe('should return Dropdown component', () => {
     let wrapper;
     let defaultProps;
-    let items;
 
     beforeEach(() => {
       jest.clearAllMocks();
-      items = [
-        { key: '1', title: '1', active: true },
-        { key: '2', title: '2' },
-        { key: '3', title: '3', active: true },
-      ];
       defaultProps = {
         id: 'id',
-        items,
+        items: defaultItems,
         max: 0,
       };
     });
 
     it('without error', () => {
-      wrapper = getWrapper(defaultProps, {});
+      wrapper = getWrapper(defaultProps);
       const DropdownMock = wrapper.find(Dropdown);
-
       expect(DropdownMock).toHaveLength(1);
     });
 
     it('with right selected prop', () => {
-      wrapper = getWrapper(defaultProps, {});
+      wrapper = getWrapper(defaultProps);
       expect(wrapper.find(Dropdown).prop('selected')).toEqual(['1', '3']);
     });
 
     describe('with right items prop:', () => {
       it('without error', () => {
-        wrapper = getWrapper(defaultProps, {});
-        expect(wrapper.find('button').length).toBe(items.length);
+        wrapper = getWrapper(defaultProps);
+        expect(wrapper.find('button').length).toBe(defaultItems.length);
       });
 
       it('which should call onClick prop after click', () => {
@@ -124,17 +113,15 @@ describe('Actions', () => {
         items,
         max: 4,
       };
+      wrapper = getWrapper(defaultProps);
     });
 
     it('without error', () => {
-      wrapper = getWrapper(defaultProps, {});
       const GroupMock = wrapper.find(Group);
-
       expect(GroupMock).toHaveLength(1);
     });
 
     it('with right items prop length', () => {
-      wrapper = getWrapper(defaultProps, {});
       expect(wrapper.prop('items').length).toBe(items.length);
     });
   });
