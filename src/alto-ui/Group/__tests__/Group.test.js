@@ -15,6 +15,7 @@ describe('Group', () => {
     const wrapper = getWrapper();
     expect(wrapper.find('.Group').exists()).toBe(true);
   });
+
   it('should render with classNames from props', () => {
     const props = {
       prop_mock: 'prop_mock',
@@ -28,7 +29,8 @@ describe('Group', () => {
     expect(wrapper.find('.Group--column')).toBeTruthy();
     expect(wrapper.find('.Group--splitted')).toBeTruthy();
   });
-  it('should render children element if children no functions', () => {
+
+  it('should render children element if children prop no functions', () => {
     const props = {
       children: 'Children text',
     };
@@ -59,19 +61,19 @@ describe('Group', () => {
       wrapper = getWrapper(props);
     });
 
-    it('should render GroupItem', () => {
+    it('without error', () => {
       expect(wrapper.find(GroupItemComponent)).toHaveLength(items.length);
     });
 
-    it('props', () => {
+    it('should call itemKey function', () => {
+      expect(itemKey).toHaveBeenCalledTimes(items.length);
+    });
+
+    it('should call children function', () => {
       expect(children).toHaveBeenNthCalledWith(1, items[0], 0, items);
       expect(children).toHaveBeenNthCalledWith(2, items[1], 1, items);
 
       expect(children).toHaveBeenCalledTimes(items.length);
-    });
-
-    it('should call itemKey from props', () => {
-      expect(itemKey).toHaveBeenCalledTimes(items.length);
     });
   });
 });
