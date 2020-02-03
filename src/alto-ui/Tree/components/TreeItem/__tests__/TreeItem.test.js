@@ -172,7 +172,7 @@ describe('TreeItem', () => {
       ).toBe(false);
     });
       
-    it('should call getKey with right value', () => {
+    it('should call getKey with right', () => {
         const props = {
           item: { key: 'value' },
           keyField: '1',
