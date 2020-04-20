@@ -53,6 +53,7 @@ const TreeItem = props => {
     href,
     onClick,
     isClickable,
+    disableIcon,
   } = props;
   const isSelected = selected === item || selected === getKey(item, keyField);
   const Icon = renderIcon ? renderIcon(item, isSelected) : null;
@@ -72,8 +73,8 @@ const TreeItem = props => {
         )}
         <div>{state.fetching && <Spinner className="TreeItem__spinner" small />}</div>
         {Icon && (
-          <div className={bemClass('TreeItem__icon', { isSelected })}>
-            <Icon outline={!isSelected} />
+          <div className={bemClass('TreeItem__icon', { isSelected: isSelected && !disableIcon })}>
+            <Icon outline={disableIcon || !isSelected} />
           </div>
         )}
         {isClickable ? (
@@ -107,13 +108,14 @@ TreeItem.propTypes = {
     fetching: PropTypes.bool,
     children: PropTypes.any,
   }),
-  selected: PropTypes.string,
+  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   handleToggle: PropTypes.func,
   handleClick: PropTypes.func,
   renderItem: PropTypes.func,
   href: PropTypes.any,
   onClick: PropTypes.func,
   isClickable: PropTypes.bool,
+  disableIcon: PropTypes.bool,
 };
 
 export default TreeItem;
