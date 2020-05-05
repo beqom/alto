@@ -64,6 +64,8 @@ class TreeItemContainer extends React.Component {
       } else {
         this.setState({ children });
       }
+      // eslint-disable-next-line consistent-return
+      return Promise.resolve()
     }
   }
 
@@ -78,8 +80,8 @@ class TreeItemContainer extends React.Component {
   toggle() {
     const open = !this.state.open;
     this.setState(() => ({ open }));
-    this.checkChildren(open);
     if (this.props.onToggle) this.props.onToggle(this.props.item, open);
+    return this.checkChildren(open);
   }
 
   render() {

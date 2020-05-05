@@ -107,7 +107,7 @@ TreeItem.propTypes = {
     fetching: PropTypes.bool,
     children: PropTypes.any,
   }),
-  selected: PropTypes.string,
+  selected: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   handleToggle: PropTypes.func,
   handleClick: PropTypes.func,
   renderItem: PropTypes.func,
