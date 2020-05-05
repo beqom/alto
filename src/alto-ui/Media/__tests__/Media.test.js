@@ -21,7 +21,7 @@ describe('<Media />', () => {
 
   it('should support className props', () => {
     const wrapper = shallow(<Media {...props} className="My__classname" />);
-    expect(wrapper.prop('className')).toBe(`Media  My__classname`);
+    expect(wrapper.prop('className')).toBe(`Media My__classname`);
   });
 
   it('should render an <Avatar />', () => {
