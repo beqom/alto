@@ -69,7 +69,7 @@
     "hugo-cli": "^0.5.4",
     "jest-cli": "^24.9.0",
     "jest-junit": "^9.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.6.1",
     "raw-loader": "^0.5.1",
