@@ -105,7 +105,7 @@
     "lodash.throttle": "^4.1.1",
     "luxon": "^1.2.0",
     "quill-magic-url": "^1.0.3",
-    "quill-mention": "^2.1.5",
+    "quill-mention": "^4.0.0",
     "react-beautiful-dnd": "^12.1.1",
     "react-day-picker": "^7.1.4",
     "react-draggable": "^4.1.0",
